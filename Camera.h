@@ -31,7 +31,7 @@ private:
 public:
 
 	Camera(Vector3 position, Vector3 target, Vector3 up);
-	Matrix UpdateWorldView();
+
 
 	void PrintInfo();
 
@@ -40,19 +40,26 @@ public:
 	void MoveOY(int diretion);
 	void MoveOZ(int diretion);
 
-	void RotateOY();
+	void RotateOX(int direction);
+	void RotateOY(int direction);
+	void RotateOZ(int direction);
 
 	void SetPerspective(GLfloat fov, GLfloat aspectRatio, GLfloat nearClip, GLfloat farClip);
 
 	inline void SetDeltaTime(float deltaTime) { _deltaTime = deltaTime; }
 	inline float GetDeltaTime() { return _deltaTime; }
 
+	inline Matrix GetMVP() { return _viewMatrix * _projMatrix; }
+
 private:
 	
 	Matrix _R;
 	Matrix _T;
 
+	Vector3 _localUp = Vector3(0.0f, 1.0f, 0.0f);
+
 	void UpdateAxis();
+	void UpdateWorldView();
 	void UpdateWorldMatrix();
 	void UpdateViewMatrix();
 };

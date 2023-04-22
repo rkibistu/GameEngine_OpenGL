@@ -22,32 +22,19 @@ GLfloat g_pasAngle = 0.5f;
 Camera* g_camera;
 Vector3 g_moveDirection;
 
-/*
-INTREBARE
-
-	Fara sa adaug si projection matrix, daca pun camera la 0,0,0 si triunghiul la x,y,-1 totul e bine.
-
-	Dar daca adaug projection matrix, se inverseaza OZ;
-	Adica, trb sa pun triunghiul la o valoare pozitiva ca sa il vad (x,y,1). Ceea ce nu e bine.
-
-	???????????????
-
-
-	p.s. in versiunea asta, vezi Camera.cpp randul 160. Comenteaza-l sa vezi fara proj amtrix. Decomenteaza-l sa vezi cu proj matrix
-
-*/
-
 
 int Init ( ESContext *esContext )
 {
 	glClearColor ( 0.0f, 0.0f, 0.0f, 0.0f );
 
+	g_moveDirection = Vector3();
+
 	//triangle data (heap)
 	Vertex verticesData[3];
 
-	verticesData[0].pos.x =  0.0f;  verticesData[0].pos.y =  0.5f;  verticesData[0].pos.z =  1.0f;
-	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z =  1.0f;
-	verticesData[2].pos.x =  0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z =  1.0f;
+	verticesData[0].pos.x =  0.0f;  verticesData[0].pos.y =  0.5f;  verticesData[0].pos.z =  2.0f;
+	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z =  2.0f;
+	verticesData[2].pos.x =  0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z =  2.0f;
 
 	verticesData[0].color.x = 1.0f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.0f;
 	verticesData[1].color.x = 0.0f; verticesData[1].color.y = 1.0f; verticesData[1].color.z = 0.0f;
@@ -89,28 +76,7 @@ void Draw ( ESContext *esContext )
 	
 	if (g_myShaders.mvpUniform != -1) {
 
-		//glUniformMatrix4fv(g_myShaders.matrixUniform, 1, GL_FALSE, (GLfloat*)rotateMatrix.m);
-
-		Matrix test;
-		test.SetPerspective(45.0f, 800.0f / 600.0f, 0.1f, 3.0f);
-		
-
-		Matrix nothing;
-		nothing.SetIdentity();
-
-		//glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)nothing.m);
-
-		Matrix temp = g_camera->UpdateWorldView();
-
-		Matrix res = temp * test;
-
-		
-
-		glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)( temp  ).m);
-
-
-		//glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)g_camera->UpdateWorldView().m);
-		
+		glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)g_camera->GetMVP().m);
 	}
 
 	glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -126,10 +92,12 @@ void Update ( ESContext *esContext, float deltaTime )
 	g_camera->SetDeltaTime(deltaTime);
 	g_camera->Move(g_moveDirection);
 
-	//g_camera->RotateOY();
+	//g_camera->RotateOX(1);
+	//g_camera->RotateOY(1);
+	//g_camera->RotateOZ(1);
 
 
-	g_moveDirection = Vector3();
+	
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
@@ -138,32 +106,50 @@ void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 	if (key == 'W') {
 
 		//g_camera->MoveOY(1);
-		g_moveDirection.z = -1;
+		if(bIsPressed)
+			g_moveDirection.z = -1;
+		else
+			g_moveDirection.z = 0;
 	}
 	else if (key == 'S') {
 
 		//g_camera->MoveOY(-1);
-		g_moveDirection.z = 1;
+		if (bIsPressed)
+			g_moveDirection.z = 1;
+		else
+			g_moveDirection.z = 0;
 	}
 
 	if (key == 'A') {
 
 		//g_camera->MoveOX(1);
-		g_moveDirection.x = -1;
+		if (bIsPressed)
+			g_moveDirection.x = -1;
+		else
+			g_moveDirection.x = 0;
 	}
 	else if (key == 'D') {
 
 		//g_camera->MoveOX(-1);
-		g_moveDirection.x = 1;
+		if (bIsPressed)
+			g_moveDirection.x = 1;
+		else
+			g_moveDirection.x = 0;
 	}
 
 	if (key == 'Q') {
 
-		g_moveDirection.y = -1;
+		if (bIsPressed)
+			g_moveDirection.y = -1;
+		else
+			g_moveDirection.y = 0;
 	}
 	else if (key == 'E') {
 
-		g_moveDirection.y = 1;
+		if (bIsPressed)
+			g_moveDirection.y = 1;
+		else
+			g_moveDirection.y = 0;
 	}
 }
 

@@ -21,19 +21,13 @@ Camera::Camera(Vector3 position, Vector3 target, Vector3 up)
 	UpdateWorldView();
 }
 
-Matrix Camera::UpdateWorldView() {
 
-	UpdateAxis();
-	UpdateWorldMatrix();
-	UpdateViewMatrix();
-
-	return _viewMatrix;
-}
 
 
 void Camera::PrintInfo() {
 
-	std::cout << "Pos: (" << _position.x << ", " << _position.y << ", " << _position.z << ")" << std::endl;
+	std::cout << "Pos: (" << _position.x << ", " << _position.y << ", " << _position.z << ") ";
+	std:: cout << "Up: (" << _up.x << ", " << _up.y << ", " << _up.z << ") " << std::endl;
 }
 
 void Camera::Move(Vector3 direction){
@@ -75,7 +69,25 @@ void Camera::MoveOZ(int direction) {
 }
 
 
-void Camera::RotateOY() {
+void Camera::RotateOX(int direction) {
+
+	Matrix rotateOX;
+	rotateOX.SetRotationX(_rotationSpeed * _deltaTime);
+
+	Vector4 rotateLocalUp = Vector4(_localUp,1.0f) * rotateOX;
+	Vector4 up = (rotateLocalUp * _worldMatrix).Normalize();
+	_up = Vector3(up.x, up.y, up.z);
+
+	Vector4 localTarget(0.0f, 0.0f, -(_target - _position).Length(), 1.0f);
+	Vector4 rotatedTarget = localTarget * rotateOX;
+	Vector4 target = rotatedTarget * _worldMatrix;
+	_target = Vector3(target.x, target.y, target.z);
+
+	UpdateAxis();
+	UpdateWorldView();
+}
+
+void Camera::RotateOY(int direction) {
 
 	Vector4 localTarget(0.0f, 0.0f, -(_target - _position).Length(), 1.0f);
 
@@ -89,6 +101,23 @@ void Camera::RotateOY() {
 	_target.y = temp.y;
 	_target.z = temp.z;
 
+	UpdateWorldView();
+}
+void Camera::RotateOZ(int direction) {
+
+	Matrix rotateOZ;
+	rotateOZ.SetRotationZ(_rotationSpeed * _deltaTime * direction);
+
+	Vector4 rotateLocalUp = Vector4(_localUp, 1.0f) * rotateOZ;
+	Vector4 up = (rotateLocalUp * _worldMatrix).Normalize();
+	_up = Vector3(up.x, up.y, up.z);
+
+	Vector4 localTarget(0.0f, 0.0f, -(_target - _position).Length(), 1.0f);
+	Vector4 rotatedTarget = localTarget * rotateOZ;
+	Vector4 target = rotatedTarget * _worldMatrix;
+	_target = Vector3(target.x, target.y, target.z);
+
+	UpdateAxis();
 	UpdateWorldView();
 }
 
@@ -108,7 +137,12 @@ void Camera::UpdateAxis() {
 	_zAxis = -(_target - _position).Normalize();
 	_xAxis = (_zAxis.Cross(_yAxis)).Normalize();
 }
+void Camera::UpdateWorldView() {
 
+	UpdateAxis();
+	UpdateWorldMatrix();
+	UpdateViewMatrix();
+}
 void Camera::UpdateWorldMatrix() {
 
 	//rotation matrix
@@ -164,6 +198,4 @@ void Camera::UpdateViewMatrix() {
 	_T.SetTranslation(-_position.x, -_position.y, -_position.z);
 
 	_viewMatrix =   _T * _R;
-
-	_viewMatrix =  _viewMatrix * _projMatrix;
 }
