@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Camera.h"
 
+#include <iostream>
+
 Camera::Camera(Vector3 position, Vector3 target, Vector3 up) 
 	: _position(position),_target(target),_up(up) {
 
@@ -26,6 +28,12 @@ Matrix Camera::UpdateWorldView() {
 	UpdateViewMatrix();
 
 	return _viewMatrix;
+}
+
+
+void Camera::PrintInfo() {
+
+	std::cout << "Pos: (" << _position.x << ", " << _position.y << ", " << _position.z << ")" << std::endl;
 }
 
 void Camera::Move(Vector3 direction){
@@ -72,7 +80,7 @@ void Camera::RotateOY() {
 	Vector4 localTarget(0.0f, 0.0f, -(_target - _position).Length(), 1.0f);
 
 	Matrix rotateOY;
-	rotateOY.SetRotationY(_rotationSpeed);
+	rotateOY.SetRotationY(_rotationSpeed * _deltaTime);
 
 	Vector4 rotatedTarget = localTarget * rotateOY;
 

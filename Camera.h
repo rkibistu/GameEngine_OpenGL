@@ -33,6 +33,7 @@ public:
 	Camera(Vector3 position, Vector3 target, Vector3 up);
 	Matrix UpdateWorldView();
 
+	void PrintInfo();
 
 	void Move(Vector3 direction);
 	void MoveOX(int diretion);

@@ -122,11 +122,11 @@ void Draw ( ESContext *esContext )
 
 void Update ( ESContext *esContext, float deltaTime )
 {
-
+	g_camera->PrintInfo();
 	g_camera->SetDeltaTime(deltaTime);
 	g_camera->Move(g_moveDirection);
 
-
+	//g_camera->RotateOY();
 
 
 	g_moveDirection = Vector3();
