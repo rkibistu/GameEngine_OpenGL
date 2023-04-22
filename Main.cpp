@@ -22,6 +22,22 @@ GLfloat g_pasAngle = 0.5f;
 Camera* g_camera;
 Vector3 g_moveDirection;
 
+/*
+INTREBARE
+
+	Fara sa adaug si projection matrix, daca pun camera la 0,0,0 si triunghiul la x,y,-1 totul e bine.
+
+	Dar daca adaug projection matrix, se inverseaza OZ;
+	Adica, trb sa pun triunghiul la o valoare pozitiva ca sa il vad (x,y,1). Ceea ce nu e bine.
+
+	???????????????
+
+
+	p.s. in versiunea asta, vezi Camera.cpp randul 160. Comenteaza-l sa vezi fara proj amtrix. Decomenteaza-l sa vezi cu proj matrix
+
+*/
+
+
 int Init ( ESContext *esContext )
 {
 	glClearColor ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -29,9 +45,9 @@ int Init ( ESContext *esContext )
 	//triangle data (heap)
 	Vertex verticesData[3];
 
-	verticesData[0].pos.x =  0.0f;  verticesData[0].pos.y =  0.5f;  verticesData[0].pos.z =  3.0f;
-	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z =  3.0f;
-	verticesData[2].pos.x =  0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z =  3.0f;
+	verticesData[0].pos.x =  0.0f;  verticesData[0].pos.y =  0.5f;  verticesData[0].pos.z =  1.0f;
+	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z =  1.0f;
+	verticesData[2].pos.x =  0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z =  1.0f;
 
 	verticesData[0].color.x = 1.0f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.0f;
 	verticesData[1].color.x = 0.0f; verticesData[1].color.y = 1.0f; verticesData[1].color.z = 0.0f;
