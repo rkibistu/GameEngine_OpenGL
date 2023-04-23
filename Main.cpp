@@ -15,6 +15,7 @@
 #define PI 3.14f
 
 GLuint g_vboId;
+GLuint g_iboId;
 Shaders g_myShaders;
 
 GLfloat g_rotationAngle = 0.0f;
@@ -29,35 +30,50 @@ float g_deltaTimer;
 
 
 //Mouse
-Vector3 g_mouseClickedButtons; // (left, middle, right)
+Vector3 g_mouseClickedButtons; // (left, middle, right) 1 for being clicked, 0 for not
 Vector3 g_mouseOldPos;
 Vector3 g_mouseCurrentPos;
-Vector3 g_mouseMoveDirection;
+Vector3 g_mouseMoveDirection; 
 
 int Init ( ESContext *esContext )
 {
 	glClearColor ( 0.0f, 0.0f, 0.0f, 0.0f );
 
-	g_moveDirection = Vector3();
-	g_rotationDirection = Vector3();
-	g_deltaTimer = g_deltaThreshold;
 
 	//triangle data (heap)
-	Vertex verticesData[3];
+	Vertex verticesData[4];
 
-	verticesData[0].pos.x =  0.0f;  verticesData[0].pos.y =  0.5f;  verticesData[0].pos.z =  2.0f;
-	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z =  2.0f;
-	verticesData[2].pos.x =  0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z =  2.0f;
+	verticesData[0].pos.x =  0.5f;  verticesData[0].pos.y =  0.5f;  verticesData[0].pos.z =  2.0f;
+	verticesData[1].pos.x =  -0.5f; verticesData[1].pos.y = 0.5f;   verticesData[1].pos.z =  2.0f;
+	verticesData[2].pos.x = -0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z =  2.0f;
+	verticesData[3].pos.x =  0.5f;  verticesData[3].pos.y = -0.5f;  verticesData[3].pos.z =  2.0f;
 
 	verticesData[0].color.x = 1.0f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.0f;
 	verticesData[1].color.x = 0.0f; verticesData[1].color.y = 1.0f; verticesData[1].color.z = 0.0f;
 	verticesData[2].color.x = 0.0f; verticesData[2].color.y = 0.0f; verticesData[2].color.z = 1.0f;
+	verticesData[3].color.x = 1.0f; verticesData[3].color.y = 1.0f; verticesData[3].color.z = 1.0f;
 
 	//buffer object
 	glGenBuffers(1, &g_vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, g_vboId);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesData), verticesData, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	
+	GLuint indexBuffer[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	//index array
+	glGenBuffers(1, &g_iboId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_iboId);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(GLuint), indexBuffer, GL_STATIC_DRAW);
+
+	//intit global values
+	g_moveDirection = Vector3();
+	g_rotationDirection = Vector3();
+	g_deltaTimer = g_deltaThreshold;
 
 	//creation of shaders and program 
 	return g_myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
@@ -71,6 +87,7 @@ void Draw ( ESContext *esContext )
 	glUseProgram(g_myShaders.program);
 
 	glBindBuffer(GL_ARRAY_BUFFER, g_vboId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_iboId);
 
 	
 	if(g_myShaders.positionAttribute != -1)
@@ -92,9 +109,11 @@ void Draw ( ESContext *esContext )
 		glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)g_camera->GetMVP().m);
 	}
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	//glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr );
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	eglSwapBuffers ( esContext->eglDisplay, esContext->eglSurface );
 }

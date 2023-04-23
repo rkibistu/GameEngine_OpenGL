@@ -93,7 +93,6 @@ void Camera::RotateOX(int direction) {
 	Vector4 target = rotatedTarget * _worldMatrix;
 	_target = Vector3(target.x, target.y, target.z);
 
-	UpdateAxis();
 	UpdateWorldView();
 }
 void Camera::RotateOY(int direction) {
@@ -130,7 +129,6 @@ void Camera::RotateOZ(int direction) {
 	Vector4 target = rotatedTarget * _worldMatrix;
 	_target = Vector3(target.x, target.y, target.z);
 
-	UpdateAxis();
 	UpdateWorldView();
 }
 
