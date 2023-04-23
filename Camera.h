@@ -40,6 +40,7 @@ public:
 	void MoveOY(int diretion);
 	void MoveOZ(int diretion);
 
+	void Rotate(Vector3 direction);
 	void RotateOX(int direction);
 	void RotateOY(int direction);
 	void RotateOZ(int direction);

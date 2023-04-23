@@ -36,30 +36,33 @@ void Camera::Move(Vector3 direction){
 	MoveOY(direction.y);
 	MoveOZ(direction.z);
 }
-
 void Camera::MoveOX(int direction) {
+	if (direction == 0)
+		return;
 
-	Vector3 velocity = _xAxis * direction * _moveSpeed * _deltaTime;
+	Vector3 velocity = _xAxis * Math::Sign(direction) * _moveSpeed * _deltaTime;
 
 	_position += velocity;
 	_target += velocity;
 
 	UpdateWorldView();
 }
-
 void Camera::MoveOY(int direction) {
+	if (direction == 0)
+		return;
 
-	Vector3 velocity = _up * direction * _moveSpeed * _deltaTime;
+	Vector3 velocity = _up * Math::Sign(direction) * _moveSpeed * _deltaTime;
 
 	_position += velocity;
 	_target += velocity;
 
 	UpdateWorldView();
 }
-
 void Camera::MoveOZ(int direction) {
+	if (direction == 0)
+		return;
 
-	Vector3 forward = -(_target - _position).Normalize() * direction;
+	Vector3 forward = -(_target - _position).Normalize() * Math::Sign(direction);
 	Vector3 velocity = forward * _moveSpeed * _deltaTime;
 
 	_position += velocity;
@@ -68,11 +71,18 @@ void Camera::MoveOZ(int direction) {
 	UpdateWorldView();
 }
 
+void Camera::Rotate(Vector3 direction) {
 
+	RotateOX(direction.x);
+	RotateOY(direction.y);
+	RotateOZ(direction.z);
+}
 void Camera::RotateOX(int direction) {
+	if (direction == 0)
+		return;
 
 	Matrix rotateOX;
-	rotateOX.SetRotationX(_rotationSpeed * _deltaTime);
+	rotateOX.SetRotationX(_rotationSpeed * _deltaTime * Math::Sign(direction));
 
 	Vector4 rotateLocalUp = Vector4(_localUp,1.0f) * rotateOX;
 	Vector4 up = (rotateLocalUp * _worldMatrix).Normalize();
@@ -86,13 +96,14 @@ void Camera::RotateOX(int direction) {
 	UpdateAxis();
 	UpdateWorldView();
 }
-
 void Camera::RotateOY(int direction) {
+	if (direction == 0)
+		return;
 
 	Vector4 localTarget(0.0f, 0.0f, -(_target - _position).Length(), 1.0f);
 
 	Matrix rotateOY;
-	rotateOY.SetRotationY(_rotationSpeed * _deltaTime);
+	rotateOY.SetRotationY(_rotationSpeed * _deltaTime * Math::Sign(direction));
 
 	Vector4 rotatedTarget = localTarget * rotateOY;
 
@@ -104,9 +115,11 @@ void Camera::RotateOY(int direction) {
 	UpdateWorldView();
 }
 void Camera::RotateOZ(int direction) {
+	if (direction == 0)
+		return;
 
 	Matrix rotateOZ;
-	rotateOZ.SetRotationZ(_rotationSpeed * _deltaTime * direction);
+	rotateOZ.SetRotationZ(_rotationSpeed * _deltaTime * Math::Sign(direction));
 
 	Vector4 rotateLocalUp = Vector4(_localUp, 1.0f) * rotateOZ;
 	Vector4 up = (rotateLocalUp * _worldMatrix).Normalize();
