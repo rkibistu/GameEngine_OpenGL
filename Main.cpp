@@ -17,6 +17,23 @@
 
 #define PI 3.14f
 
+
+/* 
+	INTREBARE!!! PROBLEMA!!
+
+		g_camera = new Camera(
+		Vector3(0, 0, 0),
+		Vector3(0, 0, 1),
+		Vector3(0, 1, 0)
+	);
+	Cu camera la pos 0,0,0 merg toate roatiile.
+
+	Insa daca modific pozitia camerei (ori din cod, ori prin translate la runtime), nu mai merg rotatiile in jur la Ox si la Oz.\
+
+	De ce?
+
+*/
+
 GLuint g_vboId;
 GLuint g_iboId;
 Shaders g_myShaders;
@@ -46,10 +63,10 @@ int Init(ESContext* esContext)
 	//triangle data (heap)
 	Vertex verticesData[4];
 
-	verticesData[0].pos.x = 0.5f;  verticesData[0].pos.y = 0.5f;  verticesData[0].pos.z =   0.0f;
-	verticesData[1].pos.x = -0.5f; verticesData[1].pos.y = 0.5f;   verticesData[1].pos.z =  0.0f;
-	verticesData[2].pos.x = -0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z = 0.0f;
-	verticesData[3].pos.x = 0.5f;  verticesData[3].pos.y = -0.5f;  verticesData[3].pos.z =  0.0f;
+	verticesData[0].pos.x = 0.5f;  verticesData[0].pos.y = 0.5f;  verticesData[0].pos.z =   4.0f;
+	verticesData[1].pos.x = -0.5f; verticesData[1].pos.y = 0.5f;   verticesData[1].pos.z =  4.0f;
+	verticesData[2].pos.x = -0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z = 4.0f;
+	verticesData[3].pos.x = 0.5f;  verticesData[3].pos.y = -0.5f;  verticesData[3].pos.z =  4.0f;
 
 	verticesData[0].color.x = 1.0f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.0f;
 	verticesData[1].color.x = 0.0f; verticesData[1].color.y = 1.0f; verticesData[1].color.z = 0.0f;
@@ -76,7 +93,7 @@ int Init(ESContext* esContext)
 	//intit global values
 	g_moveDirection = Vector3();
 	g_rotationDirection = Vector3();
-	g_deltaTimer = g_deltaThreshold;
+	g_deltaTimer = 0;
 
 	//creation of shaders and program 
 	return g_myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
@@ -113,7 +130,7 @@ void Draw(ESContext* esContext)
 	}
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -123,11 +140,13 @@ void Draw(ESContext* esContext)
 
 void Update(ESContext* esContext, float deltaTime)
 {
-	/*g_deltaTimer -= deltaTime;
-	if (g_deltaTimer > 0)
+	g_deltaTimer += deltaTime;
+	if (g_deltaTimer < g_deltaThreshold)
 		return;
 
-	g_deltaTimer = g_deltaThreshold;*/
+	g_camera->SetDeltaTime(g_deltaTimer);
+	g_deltaTimer = 0;
+
 
 	//if (g_mouseClickedButtons.x == 1)
 	//	g_rotationDirection = Vector3(g_mouseMoveDirection.y, g_mouseMoveDirection.x, 0);
@@ -136,7 +155,7 @@ void Update(ESContext* esContext, float deltaTime)
 	//	g_rotationDirection = Vector3();
 
 	//g_camera->PrintInfo();
-	g_camera->SetDeltaTime(deltaTime);
+	
 	g_camera->Move(g_moveDirection);
 	g_camera->Rotate(g_rotationDirection);
 
@@ -362,8 +381,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 
 	g_camera = new Camera(
-		Vector3(0, 0, -2),
 		Vector3(0, 0, 0),
+		Vector3(0, 0, 1),
 		Vector3(0, 1, 0)
 	);
 
@@ -381,7 +400,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	if (Init(&esContext) != 0)
 		return 0;
 
-	//TestLoadObj();
+	TestLoadObj();
 
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);
