@@ -12,6 +12,9 @@
 #include "Camera.h"
 #include <iostream>
 
+#define FAST_OBJ_IMPLEMENTATION
+#include "fast_obj.h"
+
 #define PI 3.14f
 
 GLuint g_vboId;
@@ -33,20 +36,20 @@ float g_deltaTimer;
 Vector3 g_mouseClickedButtons; // (left, middle, right) 1 for being clicked, 0 for not
 Vector3 g_mouseOldPos;
 Vector3 g_mouseCurrentPos;
-Vector3 g_mouseMoveDirection; 
+Vector3 g_mouseMoveDirection;
 
-int Init ( ESContext *esContext )
+int Init(ESContext* esContext)
 {
-	glClearColor ( 0.0f, 0.0f, 0.0f, 0.0f );
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 
 	//triangle data (heap)
 	Vertex verticesData[4];
 
-	verticesData[0].pos.x =  0.5f;  verticesData[0].pos.y =  0.5f;  verticesData[0].pos.z =  2.0f;
-	verticesData[1].pos.x =  -0.5f; verticesData[1].pos.y = 0.5f;   verticesData[1].pos.z =  2.0f;
-	verticesData[2].pos.x = -0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z =  2.0f;
-	verticesData[3].pos.x =  0.5f;  verticesData[3].pos.y = -0.5f;  verticesData[3].pos.z =  2.0f;
+	verticesData[0].pos.x = 0.5f;  verticesData[0].pos.y = 0.5f;  verticesData[0].pos.z =   0.0f;
+	verticesData[1].pos.x = -0.5f; verticesData[1].pos.y = 0.5f;   verticesData[1].pos.z =  0.0f;
+	verticesData[2].pos.x = -0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z = 0.0f;
+	verticesData[3].pos.x = 0.5f;  verticesData[3].pos.y = -0.5f;  verticesData[3].pos.z =  0.0f;
 
 	verticesData[0].color.x = 1.0f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.0f;
 	verticesData[1].color.x = 0.0f; verticesData[1].color.y = 1.0f; verticesData[1].color.z = 0.0f;
@@ -59,7 +62,7 @@ int Init ( ESContext *esContext )
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesData), verticesData, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	
+
 	GLuint indexBuffer[] = {
 		0, 1, 2,
 		2, 3, 0
@@ -80,7 +83,7 @@ int Init ( ESContext *esContext )
 
 }
 
-void Draw ( ESContext *esContext )
+void Draw(ESContext* esContext)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -89,8 +92,8 @@ void Draw ( ESContext *esContext )
 	glBindBuffer(GL_ARRAY_BUFFER, g_vboId);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_iboId);
 
-	
-	if(g_myShaders.positionAttribute != -1)
+
+	if (g_myShaders.positionAttribute != -1)
 	{
 		glEnableVertexAttribArray(g_myShaders.positionAttribute);
 		glVertexAttribPointer(g_myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
@@ -103,34 +106,34 @@ void Draw ( ESContext *esContext )
 
 	Matrix rotateMatrix;
 	rotateMatrix.SetRotationZ(g_rotationAngle);
-	
+
 	if (g_myShaders.mvpUniform != -1) {
 
 		glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)g_camera->GetMVP().m);
 	}
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr );
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	eglSwapBuffers ( esContext->eglDisplay, esContext->eglSurface );
+	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
-void Update ( ESContext *esContext, float deltaTime )
+void Update(ESContext* esContext, float deltaTime)
 {
-	g_deltaTimer -= deltaTime;
+	/*g_deltaTimer -= deltaTime;
 	if (g_deltaTimer > 0)
 		return;
 
-	g_deltaTimer = g_deltaThreshold;
+	g_deltaTimer = g_deltaThreshold;*/
 
-	if (g_mouseClickedButtons.x == 1)
-		g_rotationDirection = Vector3(g_mouseMoveDirection.y, g_mouseMoveDirection.x, 0);
-		
-	else
-		g_rotationDirection = Vector3();
+	//if (g_mouseClickedButtons.x == 1)
+	//	g_rotationDirection = Vector3(g_mouseMoveDirection.y, g_mouseMoveDirection.x, 0);
+
+	//else
+	//	g_rotationDirection = Vector3();
 
 	//g_camera->PrintInfo();
 	g_camera->SetDeltaTime(deltaTime);
@@ -144,16 +147,16 @@ void Update ( ESContext *esContext, float deltaTime )
 	//g_camera->RotateOZ(1);
 }
 
-void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
+void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 {
 
 	if (key == 'W') {
 
 		//g_camera->MoveOY(1);
-		if (bIsPressed) 
+		if (bIsPressed)
 			g_moveDirection.z = -1;
-		else 
-			g_moveDirection.z = 0;	
+		else
+			g_moveDirection.z = 0;
 	}
 	if (key == 'S') {
 
@@ -242,6 +245,8 @@ void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 		else
 			g_rotationDirection.z = 0;
 	}
+
+	
 }
 
 void Mouse(ESContext* esContext, unsigned int mouseButton, unsigned int mosueEvent, int x, int y)
@@ -264,7 +269,7 @@ void Mouse(ESContext* esContext, unsigned int mouseButton, unsigned int mosueEve
 			g_mouseClickedButtons.z = 0;
 		}
 	}
-	 
+
 	if (mosueEvent == MouseEvents::MoveStart) {
 		g_mouseCurrentPos = Vector3(x, y, 0);
 		g_mouseMoveDirection = (g_mouseOldPos - g_mouseCurrentPos);
@@ -281,34 +286,109 @@ void CleanUp()
 	glDeleteBuffers(1, &g_vboId);
 }
 
+static void TestLoadObj() {
+
+	fastObjMesh* m = fast_obj_read("test.obj");
+
+	int count = m->index_count;
+
+
+
+	fastObjIndex* indeces = m->indices;
+
+	//for (int i = 0; i < count; i++) {
+
+	//	std::cout << indeces[i].p << " ";
+	//}
+	//std::cout << std::endl;
+
+	//count = m->position_count;
+	//for (size_t i = 3; i < m->position_count * 3; i += 3) {
+	//	float x = m->positions[i];
+	//	float y = m->positions[i + 1];
+	//	float z = m->positions[i + 2];
+
+	//}
+
+
+	// apply
+	Vertex testVertexes[8];
+	count = m->position_count;
+	int j = 0;
+	for (size_t i = 3; i < m->position_count * 3; i += 3) {
+		float x = m->positions[i];
+		float y = m->positions[i + 1];
+		float z = m->positions[i + 2];
+		
+		printf("Vertex %zu: (%f, %f, %f)\n", i / 3, x, y, z);
+
+		testVertexes[j].pos.x = x;
+		testVertexes[j].pos.y = y;
+		testVertexes[j].pos.z = z;
+
+		testVertexes[j].color.x = 1.0f;
+		testVertexes[j].color.y = 1.0f;
+		testVertexes[j].color.z = 1.0f;
+
+		j++;
+	}
+	glBindBuffer(GL_ARRAY_BUFFER, g_vboId);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(testVertexes), testVertexes, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+
+
+
+	count = m->index_count;
+	
+
+
+	GLuint indexBuffer[36];
+
+	for (int i = 0; i < count; i++) {
+
+		//std::cout << indeces[i].p << " ";
+		indexBuffer[i] = indeces[i].p - 1;
+	}
+	std::cout << std::endl;
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_iboId);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLuint), indexBuffer, GL_STATIC_DRAW);
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
+	
+
 	g_camera = new Camera(
+		Vector3(0, 0, -2),
 		Vector3(0, 0, 0),
-		Vector3(0, 0, 1),
 		Vector3(0, 1, 0)
 	);
 
-	
+
 
 	//identifying memory leaks
-	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF ); 
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	ESContext esContext;
 
-    esInitContext ( &esContext );
+	esInitContext(&esContext);
 
-	esCreateWindow ( &esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
+	esCreateWindow(&esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 
-	if ( Init ( &esContext ) != 0 )
+	if (Init(&esContext) != 0)
 		return 0;
 
-	esRegisterDrawFunc ( &esContext, Draw );
-	esRegisterUpdateFunc ( &esContext, Update );
-	esRegisterKeyFunc ( &esContext, Key);
+	//TestLoadObj();
+
+	esRegisterDrawFunc(&esContext, Draw);
+	esRegisterUpdateFunc(&esContext, Update);
+	esRegisterKeyFunc(&esContext, Key);
 	esRegisterMouseFunc(&esContext, Mouse);
 
-	esMainLoop ( &esContext );
+	esMainLoop(&esContext);
 
 	//releasing OpenGL resources
 	CleanUp();
@@ -318,7 +398,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	printf("Press any key...\n");
 	_getch();
 
-	
+
 
 
 	return 0;
