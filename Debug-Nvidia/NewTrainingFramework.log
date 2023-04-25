@@ -3,4 +3,15 @@
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\fast_obj.h(291,12): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Main.cpp(293,34): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Main.cpp(293,31): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+  Camera.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Camera.cpp(35,18): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Camera.cpp(36,18): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Camera.cpp(37,18): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Camera.cpp(43,40): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Camera.cpp(54,37): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Camera.cpp(65,67): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Camera.cpp(80,20): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Camera.cpp(81,20): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Camera.cpp(82,20): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+  Generating Code...
   NewTrainingFramework.vcxproj -> E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\BIN-Nvidia\NewTrainingFramework.exe

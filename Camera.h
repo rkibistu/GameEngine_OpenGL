@@ -35,10 +35,13 @@ public:
 
 	void PrintInfo();
 
+	//Astea iau in calcul _moveSpeed si _deltaTime
 	void Move(Vector3 direction);
 	void MoveOX(int diretion);
 	void MoveOY(int diretion);
 	void MoveOZ(int diretion);
+
+	
 
 	void Rotate(Vector3 direction);
 	void RotateOX(int direction);
@@ -46,6 +49,8 @@ public:
 	void RotateOZ(int direction);
 
 	void SetPerspective(GLfloat fov, GLfloat aspectRatio, GLfloat nearClip, GLfloat farClip);
+
+	
 
 	inline void SetDeltaTime(float deltaTime) { _deltaTime = deltaTime; }
 	inline float GetDeltaTime() { return _deltaTime; }
@@ -63,5 +68,7 @@ private:
 	void UpdateWorldView();
 	void UpdateWorldMatrix();
 	void UpdateViewMatrix();
+
+	void SetPosition(Vector3 position);
 };
 

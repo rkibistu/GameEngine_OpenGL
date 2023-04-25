@@ -71,6 +71,10 @@ void Camera::MoveOZ(int direction) {
 	UpdateWorldView();
 }
 
+
+
+
+
 void Camera::Rotate(Vector3 direction) {
 
 	RotateOX(direction.x);
@@ -80,6 +84,10 @@ void Camera::Rotate(Vector3 direction) {
 void Camera::RotateOX(int direction) {
 	if (direction == 0)
 		return;
+
+	// go to center -> for rotation to be correct
+	Vector3 goBackPos(_position);
+	SetPosition(Vector3(0, 0, 0));
 
 	Matrix rotateOX;
 	rotateOX.SetRotationX(_rotationSpeed * _deltaTime * Math::Sign(direction));
@@ -94,6 +102,10 @@ void Camera::RotateOX(int direction) {
 	_target = Vector3(target.x, target.y, target.z);
 
 	UpdateWorldView();
+
+
+	// go back to initial pos before starting rotation
+	SetPosition(goBackPos);
 }
 void Camera::RotateOY(int direction) {
 	if (direction == 0)
@@ -117,6 +129,13 @@ void Camera::RotateOZ(int direction) {
 	if (direction == 0)
 		return;
 
+	// go to center -> for rotation to be correct
+	Vector3 goBackPos(_position);
+	SetPosition(Vector3(0, 0, 0));
+
+	std::cout << "RESET: " << _position.x << " " << _position.y << " " << _position.z << std::endl;
+
+
 	Matrix rotateOZ;
 	rotateOZ.SetRotationZ(_rotationSpeed * _deltaTime * Math::Sign(direction));
 
@@ -130,6 +149,9 @@ void Camera::RotateOZ(int direction) {
 	_target = Vector3(target.x, target.y, target.z);
 
 	UpdateWorldView();
+
+	// go back to initial pos before starting rotation
+	SetPosition(goBackPos);
 }
 
 void Camera::SetPerspective(GLfloat fov, GLfloat aspectRatio, GLfloat nearClip, GLfloat farClip){
@@ -209,4 +231,11 @@ void Camera::UpdateViewMatrix() {
 	_T.SetTranslation(-_position.x, -_position.y, -_position.z);
 
 	_viewMatrix =   _T * _R;
+}
+
+void Camera::SetPosition(Vector3 position) {
+
+	_position = position;
+
+	UpdateWorldView();
 }
