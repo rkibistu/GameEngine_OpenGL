@@ -159,11 +159,12 @@ void initCube() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
+	// SI AICI! De ce conteaza daca pun setul 2 de index sa fie primul? 
+	// In functie de ce set d eindexi pun primul, o alta altura va sta "deasupra"
 	GLuint indexBuffer[] = {
 
 		0, 1, 2,
 		2, 3, 0,
-
 
 		4, 5, 6,
 		6, 7, 4,
