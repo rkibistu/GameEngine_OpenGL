@@ -12,7 +12,7 @@ Camera::Camera(Vector3 position, Vector3 target, Vector3 up)
 	_deltaTime = 1.0f;
 
 	_nearClip = 0.1f;
-	_farClip = 10.0f;
+	_farClip = 2000.0f;
 	_fov = 45.0f;
 	_aspectRatio = 800.0f / 600.0f;
 	_projMatrix.SetPerspective(_fov, _aspectRatio, _nearClip, _farClip);

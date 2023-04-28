@@ -18,7 +18,7 @@
 #define PI 3.14f
 
 
-/* 
+/*
 	INTREBARE!!! PROBLEMA!!
 
 		g_camera = new Camera(
@@ -39,7 +39,7 @@ GLuint g_iboId;
 Shaders g_myShaders;
 
 GLfloat g_rotationAngle = 0.0f;
-GLfloat g_pasAngle = 0.5f;
+GLfloat g_pasAngle = 0.005f;
 
 Camera* g_camera;
 Vector3 g_moveDirection;
@@ -55,6 +55,140 @@ Vector3 g_mouseOldPos;
 Vector3 g_mouseCurrentPos;
 Vector3 g_mouseMoveDirection;
 
+int g_testCount;
+
+// INTREBAREEEE
+
+/*
+Credeam ca sunt ceva probleme cu rotatia. Cand roteam ceva 2d, totul bine. Daca roteam un cub incarcat din model -> nu arata bine
+
+Asa ca am scris manual un cub pentru a putea sa colorez diferit fiecare fata.
+Insa se intampla un lucru ciudat.
+
+Chiar daca rulez doar cu 2 fete, primele 2, rosu si verde ( indexii 0-3 si 4-7) 
+		-> se roteste. Insa, mereu ramane in fata aceeasi culoare. Ea nu trece in spate. De ce?
+
+Inteleg ca e vedere ortogonala si obiectele nu se fac mai mici. Dar tot ar trb sa fie vivibile cele mai din fata.
+
+
+Chestii de luat in calcul pentru a replica:
+	- foloseste functia initCube in main
+	- in draw, trimite pentru u_mvp matricea identitate ca rotatia sa nu se faca pentru camera
+	- in main seteaza g_testCount = 12; (12 = 2 fete; 36 = toate fetele)
+
+
+
+Si de ce, chiar daca adaug si matricea de proiectie, pot sa vad mai multe laturi ale cubului?
+M-am uitat la tot cubul, fara sa includ matriciea de proiectie, si pare ca vad prin unele laturi.
+Ma gandesc ca deaia pare si ca, atunci cand rotesc doar 2 laturi, ramane mereu aceeasi deasupra. Dar de ce?
+	
+*/
+
+void initCube() {
+
+	//triangle data (heap)
+	Vertex verticesData[24];
+
+	verticesData[0].pos.x =  0.3f;  verticesData[0].pos.y =  0.3f;   verticesData[0].pos.z = 0.3f; //front
+	verticesData[1].pos.x = -0.3f;  verticesData[1].pos.y =  0.3f;   verticesData[1].pos.z = 0.3f;
+	verticesData[2].pos.x = -0.3f;  verticesData[2].pos.y = -0.3f;   verticesData[2].pos.z = 0.3f;
+	verticesData[3].pos.x =  0.3f;  verticesData[3].pos.y = -0.3f;   verticesData[3].pos.z = 0.3f;
+
+	verticesData[4].pos.x =  0.3f;  verticesData[4].pos.y =  0.3f;   verticesData[4].pos.z = -0.3f; //back
+	verticesData[5].pos.x = -0.3f;  verticesData[5].pos.y =  0.3f;   verticesData[5].pos.z = -0.3f;
+	verticesData[6].pos.x = -0.3f;  verticesData[6].pos.y = -0.3f;   verticesData[6].pos.z = -0.3f;
+	verticesData[7].pos.x =  0.3f;  verticesData[7].pos.y = -0.3f;   verticesData[7].pos.z = -0.3f;
+
+	verticesData[8].pos.x =  -0.3f;  verticesData[8].pos.y =  0.3f;   verticesData[8].pos.z =   0.3f; //left
+	verticesData[9].pos.x =  -0.3f;  verticesData[9].pos.y =  0.3f;   verticesData[9].pos.z =  -0.3f;
+	verticesData[10].pos.x = -0.3f;  verticesData[10].pos.y = -0.3f;  verticesData[10].pos.z =  0.3f;
+	verticesData[11].pos.x = -0.3f;  verticesData[11].pos.y = -0.3f;  verticesData[11].pos.z = -0.3f;
+
+	verticesData[12].pos.x = +0.3f;  verticesData[12].pos.y =  0.3f;   verticesData[12].pos.z =  0.3f; //right
+	verticesData[13].pos.x = +0.3f;  verticesData[13].pos.y =  0.3f;   verticesData[13].pos.z = -0.3f;
+	verticesData[14].pos.x = +0.3f;  verticesData[14].pos.y = -0.3f;   verticesData[14].pos.z =  0.3f;
+	verticesData[15].pos.x = +0.3f;  verticesData[15].pos.y = -0.3f;   verticesData[15].pos.z = -0.3f;
+
+	verticesData[16].pos.x = -0.3f;   verticesData[16].pos.y = 0.3f;   verticesData[16].pos.z =  0.3f; //up
+	verticesData[17].pos.x = -0.3f;   verticesData[17].pos.y = 0.3f;   verticesData[17].pos.z = -0.3f;
+	verticesData[18].pos.x =  0.3f;   verticesData[18].pos.y = 0.3f;   verticesData[18].pos.z =  0.3f;
+	verticesData[19].pos.x =  0.3f;   verticesData[19].pos.y = 0.3f;   verticesData[19].pos.z = -0.3f;
+
+	verticesData[20].pos.x = -0.3f;  verticesData[20].pos.y = -0.3f;   verticesData[20].pos.z =  0.3f; //down
+	verticesData[21].pos.x = -0.3f;  verticesData[21].pos.y = -0.3f;   verticesData[21].pos.z = -0.3f;
+	verticesData[22].pos.x =  0.3f;  verticesData[22].pos.y = -0.3f;   verticesData[22].pos.z =  0.3f;
+	verticesData[23].pos.x =  0.3f;  verticesData[23].pos.y = -0.3f;   verticesData[23].pos.z = -0.3f;
+
+
+
+	//colors
+	verticesData[0].color.x = 1.0f;   verticesData[0].color.y = 0.0f;    verticesData[0].color.z = 0.0f; //front red
+	verticesData[1].color.x = 1.0f;   verticesData[1].color.y = 0.0f;    verticesData[1].color.z = 0.0f;
+	verticesData[2].color.x = 1.0f;   verticesData[2].color.y = 0.0f;    verticesData[2].color.z = 0.0f;
+	verticesData[3].color.x = 1.0f;   verticesData[3].color.y = 0.0f;    verticesData[3].color.z = 0.0f;
+
+	verticesData[4].color.x = 0.0f;   verticesData[4].color.y = 1.0f;    verticesData[4].color.z = 0.0f; //back green
+	verticesData[5].color.x = 0.0f;   verticesData[5].color.y = 1.0f;    verticesData[5].color.z = 0.0f;
+	verticesData[6].color.x = 0.0f;   verticesData[6].color.y = 1.0f;    verticesData[6].color.z = 0.0f;
+	verticesData[7].color.x = 0.0f;   verticesData[7].color.y = 1.0f;    verticesData[7].color.z = 0.0f;
+
+	verticesData[8].color.x = 0.0f;  verticesData[8].color.y = 0.0f;   verticesData[8].color.z = 1.0f; //left blue
+	verticesData[9].color.x = 0.0f;  verticesData[9].color.y = 0.0f;   verticesData[9].color.z = 1.0f;
+	verticesData[10].color.x = 0.0f;  verticesData[10].color.y = 0.0f;   verticesData[10].color.z = 1.0f;
+	verticesData[11].color.x = 0.0f;  verticesData[11].color.y = 0.0f;   verticesData[11].color.z = 1.0f;
+
+	verticesData[12].color.x = 1.0f;  verticesData[12].color.y = 1.0f;   verticesData[12].color.z = 0.0f; //right galben
+	verticesData[13].color.x = 1.0f;  verticesData[13].color.y = 1.0f;   verticesData[13].color.z = 0.0f;
+	verticesData[14].color.x = 1.0f;  verticesData[14].color.y = 1.0f;   verticesData[14].color.z = 0.0f;
+	verticesData[15].color.x = 1.0f;  verticesData[15].color.y = 1.0f;   verticesData[15].color.z = 0.0f;
+
+	verticesData[16].color.x = 0.0f;  verticesData[16].color.y = 1.0f;   verticesData[16].color.z = 1.0f; //up mov
+	verticesData[17].color.x = 0.0f;  verticesData[17].color.y = 1.0f;   verticesData[17].color.z = 1.0f;
+	verticesData[18].color.x = 0.0f;  verticesData[18].color.y = 1.0f;   verticesData[18].color.z = 1.0f;
+	verticesData[19].color.x = 0.0f;  verticesData[19].color.y = 1.0f;   verticesData[19].color.z = 1.0f;
+
+	verticesData[20].color.x = 1.0f;  verticesData[20].color.y = 0.0f;   verticesData[20].color.z = 1.0f; //down
+	verticesData[21].color.x = 1.0f;  verticesData[21].color.y = 0.0f;   verticesData[21].color.z = 1.0f;
+	verticesData[22].color.x = 1.0f;  verticesData[22].color.y = 0.0f;   verticesData[22].color.z = 1.0f;
+	verticesData[23].color.x = 1.0f;  verticesData[23].color.y = 0.0f;   verticesData[23].color.z = 1.0f;
+
+	//buffer object
+	glGenBuffers(1, &g_vboId);
+	glBindBuffer(GL_ARRAY_BUFFER, g_vboId);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesData), verticesData, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+	GLuint indexBuffer[] = {
+
+		0, 1, 2,
+		2, 3, 0,
+
+
+		4, 5, 6,
+		6, 7, 4,
+
+		8,9,10,
+		10,11,9,
+
+		12,13,14,
+		14,15,13,
+
+		16,17,18,
+		18,19,17,
+
+		20,22,21,
+		22,23,21,
+
+
+	};
+
+	//index array
+	glGenBuffers(1, &g_iboId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_iboId);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * 12 * sizeof(GLuint), indexBuffer, GL_STATIC_DRAW);
+}
+
 int Init(ESContext* esContext)
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -63,10 +197,10 @@ int Init(ESContext* esContext)
 	//triangle data (heap)
 	Vertex verticesData[4];
 
-	verticesData[0].pos.x = 0.5f;  verticesData[0].pos.y = 0.5f;  verticesData[0].pos.z =   4.0f;
-	verticesData[1].pos.x = -0.5f; verticesData[1].pos.y = 0.5f;   verticesData[1].pos.z =  4.0f;
-	verticesData[2].pos.x = -0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z = 4.0f;
-	verticesData[3].pos.x = 0.5f;  verticesData[3].pos.y = -0.5f;  verticesData[3].pos.z =  4.0f;
+	verticesData[0].pos.x = 0.5f;  verticesData[0].pos.y = 0.5f;  verticesData[0].pos.z = 0.0f;
+	verticesData[1].pos.x = -0.5f; verticesData[1].pos.y = 0.5f;   verticesData[1].pos.z = 0.0f;
+	verticesData[2].pos.x = -0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z = 0.0f;
+	verticesData[3].pos.x = 0.5f;  verticesData[3].pos.y = -0.5f;  verticesData[3].pos.z = 0.0f;
 
 	verticesData[0].color.x = 1.0f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.0f;
 	verticesData[1].color.x = 0.0f; verticesData[1].color.y = 1.0f; verticesData[1].color.z = 0.0f;
@@ -115,22 +249,39 @@ void Draw(ESContext* esContext)
 		glEnableVertexAttribArray(g_myShaders.positionAttribute);
 		glVertexAttribPointer(g_myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	}
-	if (g_myShaders.positionAttribute != -1) {
+	if (g_myShaders.colorAttribute != -1) {
 
 		glEnableVertexAttribArray(g_myShaders.colorAttribute);
 		glVertexAttribPointer(g_myShaders.colorAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Vector3));
 	}
 
 	Matrix rotateMatrix;
-	rotateMatrix.SetRotationZ(g_rotationAngle);
+	rotateMatrix.SetRotationX(g_rotationAngle);
+
+	
+
+	if (g_myShaders.rotateUniform != -1) {
+
+		Matrix identity;
+		identity.SetIdentity();
+
+		glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)(rotateMatrix).m);
+		//glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)identity.m);
+	}
 
 	if (g_myShaders.mvpUniform != -1) {
 
-		glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)g_camera->GetMVP().m);
+		Matrix identity;
+		identity.SetIdentity();
+
+		//glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)g_camera->GetMVP().m);
+		glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)identity.m);
 	}
 
+
+
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, g_testCount, GL_UNSIGNED_INT, nullptr);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -148,6 +299,10 @@ void Update(ESContext* esContext, float deltaTime)
 	g_deltaTimer = 0;
 
 
+	g_rotationAngle += g_pasAngle;
+	if (g_rotationAngle > 180 * 2 * PI)
+		g_rotationAngle -= 180 * 2 * PI;
+
 	//if (g_mouseClickedButtons.x == 1)
 	//	g_rotationDirection = Vector3(g_mouseMoveDirection.y, g_mouseMoveDirection.x, 0);
 
@@ -155,7 +310,7 @@ void Update(ESContext* esContext, float deltaTime)
 	//	g_rotationDirection = Vector3();
 
 	//g_camera->PrintInfo();
-	
+
 	g_camera->Move(g_moveDirection);
 	g_camera->Rotate(g_rotationDirection);
 
@@ -265,7 +420,7 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 			g_rotationDirection.z = 0;
 	}
 
-	
+
 }
 
 void Mouse(ESContext* esContext, unsigned int mouseButton, unsigned int mosueEvent, int x, int y)
@@ -307,52 +462,47 @@ void CleanUp()
 
 static void TestLoadObj() {
 
-	fastObjMesh* m = fast_obj_read("test.obj");
+	fastObjMesh* m = fast_obj_read("cube.obj");
 
 	int count = m->index_count;
-
-
-
 	fastObjIndex* indeces = m->indices;
 
-	//for (int i = 0; i < count; i++) {
-
-	//	std::cout << indeces[i].p << " ";
-	//}
-	//std::cout << std::endl;
-
-	//count = m->position_count;
-	//for (size_t i = 3; i < m->position_count * 3; i += 3) {
-	//	float x = m->positions[i];
-	//	float y = m->positions[i + 1];
-	//	float z = m->positions[i + 2];
-
-	//}
 
 
 	// apply
-	Vertex testVertexes[8];
 	count = m->position_count;
+	//Vertex testVertexes[8];
+	Vertex* testVertexes = new Vertex[count - 1];
 	int j = 0;
 	for (size_t i = 3; i < m->position_count * 3; i += 3) {
 		float x = m->positions[i];
 		float y = m->positions[i + 1];
 		float z = m->positions[i + 2];
-		
+
 		printf("Vertex %zu: (%f, %f, %f)\n", i / 3, x, y, z);
 
 		testVertexes[j].pos.x = x;
 		testVertexes[j].pos.y = y;
 		testVertexes[j].pos.z = z;
 
-		testVertexes[j].color.x = 1.0f;
-		testVertexes[j].color.y = 1.0f;
-		testVertexes[j].color.z = 1.0f;
+		testVertexes[j].color.x = j / 10.;
+		testVertexes[j].color.y = 0.0f;
+		testVertexes[j].color.z = j / 10.;
 
 		j++;
 	}
+
+	testVertexes[0].color.x = 1.0f; testVertexes[0].color.y = 0.0f; testVertexes[0].color.z = 0.0f;
+	testVertexes[1].color.x = 1.0f; testVertexes[1].color.y = 0.0f; testVertexes[1].color.z = 0.0f;
+	testVertexes[2].color.x = 0.0f; testVertexes[2].color.y = 0.0f; testVertexes[2].color.z = 1.0f;
+	testVertexes[3].color.x = 0.0f; testVertexes[3].color.y = 0.0f; testVertexes[3].color.z = 1.0f;
+	testVertexes[4].color.x = 0.0f; testVertexes[4].color.y = 1.0f; testVertexes[4].color.z = 0.0f;
+	testVertexes[5].color.x = 0.0f; testVertexes[5].color.y = 1.0f; testVertexes[5].color.z = 0.0f;
+	testVertexes[6].color.x = 1.0f; testVertexes[6].color.y = 1.0f; testVertexes[6].color.z = 0.0f;
+	testVertexes[7].color.x = 1.0f; testVertexes[7].color.y = 1.0f; testVertexes[7].color.z = 0.0f;
+
 	glBindBuffer(GL_ARRAY_BUFFER, g_vboId);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(testVertexes), testVertexes, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, (count - 1) * sizeof(Vertex), testVertexes, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
@@ -360,10 +510,8 @@ static void TestLoadObj() {
 
 
 	count = m->index_count;
-	
 
-
-	GLuint indexBuffer[36];
+	GLuint* indexBuffer = new GLuint[count];
 
 	for (int i = 0; i < count; i++) {
 
@@ -372,17 +520,19 @@ static void TestLoadObj() {
 	}
 	std::cout << std::endl;
 
+	g_testCount = count;
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_iboId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLuint), indexBuffer, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLuint), indexBuffer, GL_STATIC_DRAW);
 }
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	
+
 
 	g_camera = new Camera(
-		Vector3(0, 0, 0),
-		Vector3(0, 0, 1),
+		Vector3(0, 0, -3),
+		Vector3(0, 0, -2),
 		Vector3(0, 1, 0)
 	);
 
@@ -400,7 +550,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	if (Init(&esContext) != 0)
 		return 0;
 
-	TestLoadObj();
+	// ASTA E PT LOAD LA CUBE
+	//TestLoadObj();
+	//g_testCount = 6;
+
+	// ASTEA 2 SUNT PENTRU A TESTA CUBUL FACUT MANUAL! AU LEAGTURA CU INTREBAREA DE SUS!
+	initCube();
+	g_testCount = 12;
 
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);

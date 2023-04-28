@@ -56,6 +56,7 @@ public:
 	inline float GetDeltaTime() { return _deltaTime; }
 
 	inline Matrix GetMVP() { return _viewMatrix * _projMatrix; }
+	//inline Matrix GetMVP() { return _projMatrix; }
 
 private:
 	

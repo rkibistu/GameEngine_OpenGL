@@ -22,6 +22,7 @@ int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
 	positionAttribute = glGetAttribLocation(program, "a_posL");
 	colorAttribute = glGetAttribLocation(program, "a_colL");
 	mvpUniform = glGetUniformLocation(program, "u_mvp");
+	rotateUniform = glGetUniformLocation(program, "u_rotate");
 
 	return 0;
 }
