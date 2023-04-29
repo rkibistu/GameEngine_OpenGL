@@ -15,6 +15,8 @@
 #define FAST_OBJ_IMPLEMENTATION
 #include "fast_obj.h"
 
+#include "stb_image/stb_image.h"
+
 #define PI 3.14f
 
 
@@ -37,6 +39,7 @@
 GLuint g_vboId;
 GLuint g_iboId;
 Shaders g_myShaders;
+GLuint g_texture;
 
 GLfloat g_rotationAngle = 0.0f;
 GLfloat g_pasAngle = 0.005f;
@@ -325,6 +328,8 @@ void Update(ESContext* esContext, float deltaTime)
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 {
 
+	std::cout << key << " " << bIsPressed << std::endl;
+
 	if (key == 'W') {
 
 		//g_camera->MoveOY(1);
@@ -527,6 +532,34 @@ static void TestLoadObj() {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLuint), indexBuffer, GL_STATIC_DRAW);
 }
 
+static void InitTexture() {
+
+	//load img
+	//unsigned char* imgBuffer = nullptr;
+	//std::string path = "border.jpg";
+	//int textureWidth, textureHeight;
+	//int BPP = 0;
+	//stbi_set_flip_vertically_on_load(1);
+	//imgBuffer = stbi_load(path.c_str(), &textureWidth, &textureHeight, &BPP, 4); //load img
+
+
+	////create texture
+	//glGenTextures(1, &g_texture);
+	//glBindTexture(GL_TEXTURE_2D, g_texture);
+
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imgBuffer);
+	//glActiveTexture(GL_TEXTURE0);
+
+	////free memory for img
+	//if (imgBuffer)
+	//	stbi_image_free(imgBuffer);
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 
@@ -536,6 +569,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		Vector3(0, 0, -2),
 		Vector3(0, 1, 0)
 	);
+
 
 
 
@@ -556,8 +590,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	//g_testCount = 6;
 
 	// ASTEA 2 SUNT PENTRU A TESTA CUBUL FACUT MANUAL! AU LEAGTURA CU INTREBAREA DE SUS!
-	initCube();
-	g_testCount = 12;
+	//initCube();
+	//g_testCount = 12;
+
+	InitTexture();
 
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);
