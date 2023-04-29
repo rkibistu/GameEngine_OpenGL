@@ -12,6 +12,7 @@
 #include <iostream>
 
 #include "NfgParser.h"
+#include "Model.h"
 
 #define FAST_OBJ_IMPLEMENTATION
 #include "fast_obj.h"
@@ -573,8 +574,8 @@ static void InitTexture() {
 
 static void TestParser() {
 
-	/*Model model;
-	model.Load("House.nfg");*/
+	Model model;
+	model.Load("House.nfg");
 }
 
 int _tmain(int argc, _TCHAR* argv[])
