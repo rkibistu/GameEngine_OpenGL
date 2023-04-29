@@ -15,7 +15,9 @@
 #define FAST_OBJ_IMPLEMENTATION
 #include "fast_obj.h"
 
-#include "stb_image/stb_image.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 
 #define PI 3.14f
 
@@ -210,6 +212,11 @@ int Init(ESContext* esContext)
 	verticesData[1].color.x = 0.0f; verticesData[1].color.y = 1.0f; verticesData[1].color.z = 0.0f;
 	verticesData[2].color.x = 0.0f; verticesData[2].color.y = 0.0f; verticesData[2].color.z = 1.0f;
 	verticesData[3].color.x = 1.0f; verticesData[3].color.y = 1.0f; verticesData[3].color.z = 1.0f;
+
+	verticesData[0].texture.x = 1.0f;   verticesData[0].texture.y = 1.0f;   
+	verticesData[1].texture.x = 0.0f;  verticesData[1].texture.y = 1.0f;   
+	verticesData[2].texture.x = 0.0f;  verticesData[2].texture.y = 0.0f;  
+	verticesData[3].texture.x = 1.0f;   verticesData[3].texture.y = 0.0f;  
 
 	//buffer object
 	glGenBuffers(1, &g_vboId);
@@ -535,29 +542,28 @@ static void TestLoadObj() {
 static void InitTexture() {
 
 	//load img
-	//unsigned char* imgBuffer = nullptr;
-	//std::string path = "border.jpg";
-	//int textureWidth, textureHeight;
-	//int BPP = 0;
-	//stbi_set_flip_vertically_on_load(1);
-	//imgBuffer = stbi_load(path.c_str(), &textureWidth, &textureHeight, &BPP, 4); //load img
+	unsigned char* imgBuffer = nullptr;
+	std::string path = "border.png";
+	int textureWidth, textureHeight;
+	int BPP = 0;
+	stbi_set_flip_vertically_on_load(1);
+	imgBuffer = stbi_load(path.c_str(), &textureWidth, &textureHeight, &BPP, 4); //load img
 
 
-	////create texture
-	//glGenTextures(1, &g_texture);
-	//glBindTexture(GL_TEXTURE_2D, g_texture);
+	//create texture
+	glGenTextures(1, &g_texture);
+	glBindTexture(GL_TEXTURE_2D, g_texture);
 
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imgBuffer);
-	//glActiveTexture(GL_TEXTURE0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imgBuffer);
+	glActiveTexture(GL_TEXTURE0);
 
-	////free memory for img
-	//if (imgBuffer)
-	//	stbi_image_free(imgBuffer);
+	if (imgBuffer)
+		stbi_image_free(imgBuffer);
 }
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -590,8 +596,12 @@ int _tmain(int argc, _TCHAR* argv[])
 	//g_testCount = 6;
 
 	// ASTEA 2 SUNT PENTRU A TESTA CUBUL FACUT MANUAL! AU LEAGTURA CU INTREBAREA DE SUS!
-	//initCube();
-	//g_testCount = 12;
+	/*initCube();
+	g_testCount = 12;*/
+
+
+	//normal square
+	g_testCount = 6;
 
 	InitTexture();
 
