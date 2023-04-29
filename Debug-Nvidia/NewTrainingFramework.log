@@ -1,8 +1,12 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  Main.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\fast_obj.h(291,12): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Main.cpp(467,34): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Main.cpp(467,31): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Main.cpp(507,31): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\Main.cpp(509,31): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+  NfgParser.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\NfgParser.cpp(45,20): warning C4018: '<': signed/unsigned mismatch
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\NfgParser.cpp(70,20): warning C4018: '<': signed/unsigned mismatch
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\NfgParser.cpp(27,21): warning C4101: 'index2': unreferenced local variable
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\NfgParser.cpp(27,29): warning C4101: 'index3': unreferenced local variable
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\NfgParser.cpp(27,8): warning C4101: 'aux': unreferenced local variable
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\NfgParser.cpp(27,13): warning C4101: 'index1': unreferenced local variable
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\NfgParser.cpp(132,8): warning C4101: 'arr': unreferenced local variable
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\NfgParser.cpp(153,8): warning C4101: 'arr': unreferenced local variable
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\NfgParser.cpp(80): warning C4715: 'NfgParser::Load': not all control paths return a value
   NewTrainingFramework.vcxproj -> E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\BIN-Nvidia\NewTrainingFramework.exe

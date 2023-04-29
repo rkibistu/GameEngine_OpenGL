@@ -12,6 +12,8 @@
 #include "Camera.h"
 #include <iostream>
 
+#include "NfgParser.h"
+
 #define FAST_OBJ_IMPLEMENTATION
 #include "fast_obj.h"
 
@@ -341,7 +343,7 @@ void Update(ESContext* esContext, float deltaTime)
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 {
 
-	std::cout << key << " " << bIsPressed << std::endl;
+	//std::cout << key << " " << bIsPressed << std::endl;
 
 	if (key == 'W') {
 
@@ -466,7 +468,7 @@ void Mouse(ESContext* esContext, unsigned int mouseButton, unsigned int mosueEve
 	if (mosueEvent == MouseEvents::MoveStart) {
 		g_mouseCurrentPos = Vector3(x, y, 0);
 		g_mouseMoveDirection = (g_mouseOldPos - g_mouseCurrentPos);
-		std::cout << g_mouseMoveDirection.x << " " << g_mouseMoveDirection.y << std::endl;
+		//std::cout << g_mouseMoveDirection.x << " " << g_mouseMoveDirection.y << std::endl;
 		g_mouseOldPos = g_mouseCurrentPos;
 	}
 	else {
@@ -498,7 +500,7 @@ static void TestLoadObj() {
 		float y = m->positions[i + 1];
 		float z = m->positions[i + 2];
 
-		printf("Vertex %zu: (%f, %f, %f)\n", i / 3, x, y, z);
+		//printf("Vertex %zu: (%f, %f, %f)\n", i / 3, x, y, z);
 
 		testVertexes[j].pos.x = x;
 		testVertexes[j].pos.y = y;
@@ -572,9 +574,15 @@ static void InitTexture() {
 		stbi_image_free(imgBuffer);
 }
 
+static void TestParser() {
+
+	NfgParser parser;
+	parser.Load("House.nfg");
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
-
+	TestParser();
 
 	g_camera = new Camera(
 		Vector3(0, 0, -3),
