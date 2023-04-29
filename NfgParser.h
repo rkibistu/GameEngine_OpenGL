@@ -25,7 +25,7 @@ struct Vertex;
 class NfgParser
 {
 public:
-	int Load(std::string filepath);
+	int Load(std::string filepath, std::vector<Vertex>& vertices, std::vector<short>& indices);
 
 	inline std::string GetError() { return _errorMessage; }
 
@@ -38,10 +38,8 @@ private:
 
 	int SetVector(std::string str, Vector3& vector);
 	int SetVector(std::string str, Vector2& vector);
-private:
-	std::vector<Vertex> _vertices;
-	std::vector<unsigned short> _indices;
 
+private:
 	std::string _errorMessage;
 };
 

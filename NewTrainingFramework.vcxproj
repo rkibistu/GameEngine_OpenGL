@@ -165,6 +165,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="fast_obj.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="NfgParser.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -179,6 +180,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="fast_obj.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="NfgParser.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="stb_image.h" />
