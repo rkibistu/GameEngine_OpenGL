@@ -66,6 +66,8 @@ Vector3 g_mouseMoveDirection;
 
 int g_testCount;
 
+Model* g_model1;
+
 // INTREBAREEEE
 
 /*
@@ -209,10 +211,10 @@ int Init(ESContext* esContext)
 	//triangle data (heap)
 	Vertex verticesData[4];
 
-	verticesData[0].pos.x = 0.5f;  verticesData[0].pos.y = 0.5f;  verticesData[0].pos.z = 0.0f;
-	verticesData[1].pos.x = -0.5f; verticesData[1].pos.y = 0.5f;   verticesData[1].pos.z = 0.0f;
-	verticesData[2].pos.x = -0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z = 0.0f;
-	verticesData[3].pos.x = 0.5f;  verticesData[3].pos.y = -0.5f;  verticesData[3].pos.z = 0.0f;
+	verticesData[0].pos.x = 0.5f;  verticesData[0].pos.y = 0.5f;    verticesData[0].pos.z = 3.0f;
+	verticesData[1].pos.x = -0.5f; verticesData[1].pos.y = 0.5f;    verticesData[1].pos.z = 3.0f;
+	verticesData[2].pos.x = -0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z = 3.0f;
+	verticesData[3].pos.x = 0.5f;  verticesData[3].pos.y = -0.5f;   verticesData[3].pos.z = 3.0f;
 
 	verticesData[0].color.x = 1.0f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.0f;
 	verticesData[1].color.x = 0.0f; verticesData[1].color.y = 1.0f; verticesData[1].color.z = 0.0f;
@@ -227,7 +229,7 @@ int Init(ESContext* esContext)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
-	GLuint indexBuffer[] = {
+	GLushort indexBuffer[] = {
 		0, 1, 2,
 		2, 3, 0
 	};
@@ -235,7 +237,7 @@ int Init(ESContext* esContext)
 	//index array
 	glGenBuffers(1, &g_iboId);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_iboId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(GLuint), indexBuffer, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(GLushort), indexBuffer, GL_STATIC_DRAW);
 
 	//intit global values
 	g_moveDirection = Vector3();
@@ -260,6 +262,8 @@ void Draw(ESContext* esContext)
 	glBindBuffer(GL_ARRAY_BUFFER, g_vboId);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_iboId);
 
+
+	g_model1->Bind();
 
 	if (g_myShaders.positionAttribute != -1)
 	{
@@ -298,7 +302,9 @@ void Draw(ESContext* esContext)
 
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDrawElements(GL_TRIANGLES, g_testCount, GL_UNSIGNED_INT, nullptr);
+	//glDrawElements(GL_TRIANGLES, g_testCount, GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, g_testCount, GL_UNSIGNED_SHORT, nullptr);
+
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -574,21 +580,24 @@ static void InitTexture() {
 
 static void TestParser() {
 
-	Model model;
-	model.Load("House.nfg");
+	g_model1 = new Model();
+	g_model1->Load("Models/Woman1.nfg");
+
+	
+
 }
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	TestParser();
+	
 
 	g_camera = new Camera(
-		Vector3(0, 0, -3),
-		Vector3(0, 0, -2),
+		Vector3(0, 0, -5),
+		Vector3(0, 0, -4),
 		Vector3(0, 1, 0)
 	);
 
-
+	
 
 
 	//identifying memory leaks
@@ -603,8 +612,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	if (Init(&esContext) != 0)
 		return 0;
 
+	TestParser();
+	g_testCount = g_model1->GetIndicesCount();
+
 	// ASTA E PT LOAD LA CUBE
-	TestLoadObj();
+	//TestLoadObj();
 	
 
 	// ASTEA 2 SUNT PENTRU A TESTA CUBUL FACUT MANUAL! AU LEAGTURA CU INTREBAREA DE SUS!
@@ -633,7 +645,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	_getch();
 
 
-
+	
 
 	return 0;
 }

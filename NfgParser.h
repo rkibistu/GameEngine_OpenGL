@@ -25,7 +25,7 @@ struct Vertex;
 class NfgParser
 {
 public:
-	int Load(std::string filepath, std::vector<Vertex>& vertices, std::vector<short>& indices);
+	int Load(std::string filepath, std::vector<Vertex>& vertices, std::vector<GLushort>& indices);
 
 	inline std::string GetError() { return _errorMessage; }
 
@@ -55,6 +55,7 @@ public:
 	static std::string VerticesBinormal;
 	static std::string VerticesTangent;
 	static std::string VerticesUV;
+	static std::string VerticesColor;
 	static std::string IndicesCount;
 };
 

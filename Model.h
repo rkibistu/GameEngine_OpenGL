@@ -8,9 +8,9 @@ struct Vertex;
 struct ModelResource {
 
 	std::vector<Vertex> Vertices;
-	std::vector<short> Indices;
+	std::vector<GLushort> Indices;
 
-	ModelResource(std::vector<Vertex> vertices, std::vector<short> indices)
+	ModelResource(std::vector<Vertex> vertices, std::vector<GLushort> indices)
 	 : Vertices(vertices), Indices(indices) {
 
 	}
@@ -25,10 +25,12 @@ public:
 	void Load(std::string filepath);
 	void Bind();
 	void Unbind();
+
+	inline unsigned int GetIndicesCount() { return (_modelResource != nullptr) ? _modelResource->Indices.size() : 0; }
 	
 private:
 
-	
+	void FillVerticesColor();
 
 private:
 	ModelResource* _modelResource;

@@ -17,14 +17,15 @@ std::string NfgElements::VerticesNormal = "norm";
 std::string NfgElements::VerticesBinormal = "binorm";
 std::string NfgElements::VerticesTangent = "tgt";
 std::string NfgElements::VerticesUV = "uv";
+std::string NfgElements::VerticesColor = "col";
 
 // NfgParser class
 
-int NfgParser::Load(std::string filepath, std::vector<Vertex>& vertices, std::vector<short>& indices) {
+int NfgParser::Load(std::string filepath, std::vector<Vertex>& vertices, std::vector<GLushort>& indices) {
 
 	int res;
 	unsigned int verticesCount, indicesCount;
-	short token, token1, token2, token3;
+	GLushort token, token1, token2, token3;
 	Vertex temp;
 	char c;
 	std::string line;
@@ -49,20 +50,11 @@ int NfgParser::Load(std::string filepath, std::vector<Vertex>& vertices, std::ve
 			line.end());
 
 		res = GetVertexAttribute(line,NfgElements::VerticesPosition, temp.pos);
-		if (res != NFG_SUCCES)
-			return res;
 		res = GetVertexAttribute(line,NfgElements::VerticesNormal, temp.norm);
-		if (res != NFG_SUCCES)
-			return res;
 		res = GetVertexAttribute(line,NfgElements::VerticesBinormal, temp.binorm);
-		if (res != NFG_SUCCES)
-			return res;
 		res = GetVertexAttribute(line,NfgElements::VerticesTangent, temp.tgt);
-		if (res != NFG_SUCCES)
-			return res;
 		res = GetVertexAttribute(line,NfgElements::VerticesUV, temp.uv);
-		if (res != NFG_SUCCES)
-			return res;
+		res = GetVertexAttribute(line,NfgElements::VerticesColor, temp.color);
 
 		vertices.push_back(temp);
 	}

@@ -9,8 +9,6 @@ Model::Model()
 	glGenBuffers(1, &_iboid);
 	glGenBuffers(1, &_iboidWired);
 	glGenBuffers(1, &_vboid);
-
-
 }
 Model::~Model() {
 
@@ -26,7 +24,7 @@ void Model::Load(std::string filepath) {
 
 	int res;
 	std::vector<Vertex> vertices;
-	std::vector<short> indices;
+	std::vector<GLushort> indices;
 
 	NfgParser parser;
 	res = parser.Load(filepath, vertices, indices);
@@ -37,6 +35,7 @@ void Model::Load(std::string filepath) {
 
 	_modelResource = new ModelResource(vertices,indices);
 
+	FillVerticesColor();
 	
 	//bind and load vertices buffer
 	glBindBuffer(GL_ARRAY_BUFFER, _vboid);
@@ -45,7 +44,7 @@ void Model::Load(std::string filepath) {
 
 	//bind and load indices buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _iboid);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _modelResource->Indices.size() * sizeof(short), _modelResource->Indices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _modelResource->Indices.size() * sizeof(GLushort), _modelResource->Indices.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
@@ -58,4 +57,14 @@ void Model::Unbind() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void Model::FillVerticesColor() {
+
+	for (int i = 0; i < _modelResource->Vertices.size(); i++) {
+
+		_modelResource->Vertices[i].color.x = 1.0f;
+		_modelResource->Vertices[i].color.y = 1.0f;
+		_modelResource->Vertices[i].color.z = 1.0f;
+	}
 }

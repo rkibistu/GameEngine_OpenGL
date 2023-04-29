@@ -6,7 +6,7 @@
 Camera::Camera(Vector3 position, Vector3 target, Vector3 up) 
 	: _position(position),_target(target),_up(up) {
 
-	_moveSpeed = 0.5f;
+	_moveSpeed = 20.0f;
 	_rotationSpeed = 0.5f;
 
 	_deltaTime = 1.0f;
@@ -111,6 +111,10 @@ void Camera::RotateOY(int direction) {
 	if (direction == 0)
 		return;
 
+	// go to center -> for rotation to be correct
+	Vector3 goBackPos(_position);
+	SetPosition(Vector3(0, 0, 0));
+
 	Vector4 localTarget(0.0f, 0.0f, -(_target - _position).Length(), 1.0f);
 
 	Matrix rotateOY;
@@ -124,6 +128,9 @@ void Camera::RotateOY(int direction) {
 	_target.z = temp.z;
 
 	UpdateWorldView();
+
+	// go back to initial pos before starting rotation
+	SetPosition(goBackPos);
 }
 void Camera::RotateOZ(int direction) {
 	if (direction == 0)
