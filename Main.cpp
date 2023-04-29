@@ -168,11 +168,13 @@ void initCube() {
 	// In functie de ce set d eindexi pun primul, o alta altura va sta "deasupra"
 	GLuint indexBuffer[] = {
 
+		
 		0, 1, 2,
 		2, 3, 0,
 
 		4, 5, 6,
 		6, 7, 4,
+
 
 		8,9,10,
 		10,11,9,
@@ -240,6 +242,9 @@ int Init(ESContext* esContext)
 	g_rotationDirection = Vector3();
 	g_deltaTimer = 0;
 
+
+	glEnable(GL_DEPTH_TEST);
+
 	//creation of shaders and program 
 	return g_myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 
@@ -247,7 +252,8 @@ int Init(ESContext* esContext)
 
 void Draw(ESContext* esContext)
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 
 	glUseProgram(g_myShaders.program);
 
@@ -276,8 +282,8 @@ void Draw(ESContext* esContext)
 		Matrix identity;
 		identity.SetIdentity();
 
-		glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)(rotateMatrix).m);
-		//glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)identity.m);
+		//glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)(rotateMatrix).m);
+		glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)identity.m);
 	}
 
 	if (g_myShaders.mvpUniform != -1) {
@@ -285,8 +291,8 @@ void Draw(ESContext* esContext)
 		Matrix identity;
 		identity.SetIdentity();
 
-		//glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)g_camera->GetMVP().m);
-		glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)identity.m);
+		glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)g_camera->GetMVP().m);
+		//glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)identity.m);
 	}
 
 
@@ -592,18 +598,18 @@ int _tmain(int argc, _TCHAR* argv[])
 		return 0;
 
 	// ASTA E PT LOAD LA CUBE
-	//TestLoadObj();
-	//g_testCount = 6;
+	TestLoadObj();
+	
 
 	// ASTEA 2 SUNT PENTRU A TESTA CUBUL FACUT MANUAL! AU LEAGTURA CU INTREBAREA DE SUS!
-	/*initCube();
-	g_testCount = 12;*/
+	//initCube();
+	//g_testCount = 36;
 
 
 	//normal square
-	g_testCount = 6;
+	//g_testCount = 6;
 
-	InitTexture();
+	//InitTexture();
 
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);
