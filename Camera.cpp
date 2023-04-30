@@ -6,7 +6,7 @@
 Camera::Camera(Vector3 position, Vector3 target, Vector3 up)
 	: _position(position), _target(target), _up(up) {
 
-	_moveSpeed = 1.0f;
+	_moveSpeed = 2.0f;
 	_rotationSpeed = 0.5f;
 
 	_deltaTime = 1.0f;

@@ -9,9 +9,10 @@ struct ModelResource {
 
 	std::vector<Vertex> Vertices;
 	std::vector<GLushort> Indices;
+	std::vector<GLushort> WiredIndices;
 
-	ModelResource(std::vector<Vertex> vertices, std::vector<GLushort> indices)
-	 : Vertices(vertices), Indices(indices) {
+	ModelResource(std::vector<Vertex> vertices, std::vector<GLushort> indices, std::vector<GLushort> wiredIndices)
+	 : Vertices(vertices), Indices(indices), WiredIndices(wiredIndices) {
 
 	}
 };
@@ -23,12 +24,16 @@ public:
 	~Model();
 
 	void Load(std::string filepath);
-	void Bind();
+	void BindFilled();
+	void BindWired();
 	void Unbind();
 
-	inline unsigned int GetIndicesCount() { return (_modelResource != nullptr) ? _modelResource->Indices.size() : 0; }
+	inline unsigned int GetIndicesFilledCount() { return (_modelResource != nullptr) ? _modelResource->Indices.size() : 0; }
+	inline unsigned int GetIndicesWiredCount() { return (_modelResource != nullptr) ? _modelResource->WiredIndices.size() : 0; }
 	
 private:
+
+	void CreateWiredindicesBuffer(std::vector<GLushort>& indices, std::vector<GLushort>& wiredIndices);
 
 	void FillVerticesColor();
 

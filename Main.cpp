@@ -67,7 +67,9 @@ Vector3 g_mouseMoveDirection;
 int g_testCount;
 
 Model* g_model1;
-Model* g_model2;
+
+Model* g_currentModel;
+bool g_filledMode = true;
 
 // INTREBAREEEE
 
@@ -77,7 +79,7 @@ Credeam ca sunt ceva probleme cu rotatia. Cand roteam ceva 2d, totul bine. Daca 
 Asa ca am scris manual un cub pentru a putea sa colorez diferit fiecare fata.
 Insa se intampla un lucru ciudat.
 
-Chiar daca rulez doar cu 2 fete, primele 2, rosu si verde ( indexii 0-3 si 4-7) 
+Chiar daca rulez doar cu 2 fete, primele 2, rosu si verde ( indexii 0-3 si 4-7)
 		-> se roteste. Insa, mereu ramane in fata aceeasi culoare. Ea nu trece in spate. De ce?
 
 Inteleg ca e vedere ortogonala si obiectele nu se fac mai mici. Dar tot ar trb sa fie vivibile cele mai din fata.
@@ -93,7 +95,7 @@ Chestii de luat in calcul pentru a replica:
 Si de ce, chiar daca adaug si matricea de proiectie, pot sa vad mai multe laturi ale cubului?
 M-am uitat la tot cubul, fara sa includ matriciea de proiectie, si pare ca vad prin unele laturi.
 Ma gandesc ca deaia pare si ca, atunci cand rotesc doar 2 laturi, ramane mereu aceeasi deasupra. Dar de ce?
-	
+
 */
 
 void initCube() {
@@ -101,35 +103,35 @@ void initCube() {
 	//triangle data (heap)
 	Vertex verticesData[24];
 
-	verticesData[0].pos.x =  0.3f;  verticesData[0].pos.y =  0.3f;   verticesData[0].pos.z = 0.3f; //front
-	verticesData[1].pos.x = -0.3f;  verticesData[1].pos.y =  0.3f;   verticesData[1].pos.z = 0.3f;
+	verticesData[0].pos.x = 0.3f;  verticesData[0].pos.y = 0.3f;   verticesData[0].pos.z = 0.3f; //front
+	verticesData[1].pos.x = -0.3f;  verticesData[1].pos.y = 0.3f;   verticesData[1].pos.z = 0.3f;
 	verticesData[2].pos.x = -0.3f;  verticesData[2].pos.y = -0.3f;   verticesData[2].pos.z = 0.3f;
-	verticesData[3].pos.x =  0.3f;  verticesData[3].pos.y = -0.3f;   verticesData[3].pos.z = 0.3f;
+	verticesData[3].pos.x = 0.3f;  verticesData[3].pos.y = -0.3f;   verticesData[3].pos.z = 0.3f;
 
-	verticesData[4].pos.x =  0.3f;  verticesData[4].pos.y =  0.3f;   verticesData[4].pos.z = -0.3f; //back
-	verticesData[5].pos.x = -0.3f;  verticesData[5].pos.y =  0.3f;   verticesData[5].pos.z = -0.3f;
+	verticesData[4].pos.x = 0.3f;  verticesData[4].pos.y = 0.3f;   verticesData[4].pos.z = -0.3f; //back
+	verticesData[5].pos.x = -0.3f;  verticesData[5].pos.y = 0.3f;   verticesData[5].pos.z = -0.3f;
 	verticesData[6].pos.x = -0.3f;  verticesData[6].pos.y = -0.3f;   verticesData[6].pos.z = -0.3f;
-	verticesData[7].pos.x =  0.3f;  verticesData[7].pos.y = -0.3f;   verticesData[7].pos.z = -0.3f;
+	verticesData[7].pos.x = 0.3f;  verticesData[7].pos.y = -0.3f;   verticesData[7].pos.z = -0.3f;
 
-	verticesData[8].pos.x =  -0.3f;  verticesData[8].pos.y =  0.3f;   verticesData[8].pos.z =   0.3f; //left
-	verticesData[9].pos.x =  -0.3f;  verticesData[9].pos.y =  0.3f;   verticesData[9].pos.z =  -0.3f;
-	verticesData[10].pos.x = -0.3f;  verticesData[10].pos.y = -0.3f;  verticesData[10].pos.z =  0.3f;
+	verticesData[8].pos.x = -0.3f;  verticesData[8].pos.y = 0.3f;   verticesData[8].pos.z = 0.3f; //left
+	verticesData[9].pos.x = -0.3f;  verticesData[9].pos.y = 0.3f;   verticesData[9].pos.z = -0.3f;
+	verticesData[10].pos.x = -0.3f;  verticesData[10].pos.y = -0.3f;  verticesData[10].pos.z = 0.3f;
 	verticesData[11].pos.x = -0.3f;  verticesData[11].pos.y = -0.3f;  verticesData[11].pos.z = -0.3f;
 
-	verticesData[12].pos.x = +0.3f;  verticesData[12].pos.y =  0.3f;   verticesData[12].pos.z =  0.3f; //right
-	verticesData[13].pos.x = +0.3f;  verticesData[13].pos.y =  0.3f;   verticesData[13].pos.z = -0.3f;
-	verticesData[14].pos.x = +0.3f;  verticesData[14].pos.y = -0.3f;   verticesData[14].pos.z =  0.3f;
+	verticesData[12].pos.x = +0.3f;  verticesData[12].pos.y = 0.3f;   verticesData[12].pos.z = 0.3f; //right
+	verticesData[13].pos.x = +0.3f;  verticesData[13].pos.y = 0.3f;   verticesData[13].pos.z = -0.3f;
+	verticesData[14].pos.x = +0.3f;  verticesData[14].pos.y = -0.3f;   verticesData[14].pos.z = 0.3f;
 	verticesData[15].pos.x = +0.3f;  verticesData[15].pos.y = -0.3f;   verticesData[15].pos.z = -0.3f;
 
-	verticesData[16].pos.x = -0.3f;   verticesData[16].pos.y = 0.3f;   verticesData[16].pos.z =  0.3f; //up
+	verticesData[16].pos.x = -0.3f;   verticesData[16].pos.y = 0.3f;   verticesData[16].pos.z = 0.3f; //up
 	verticesData[17].pos.x = -0.3f;   verticesData[17].pos.y = 0.3f;   verticesData[17].pos.z = -0.3f;
-	verticesData[18].pos.x =  0.3f;   verticesData[18].pos.y = 0.3f;   verticesData[18].pos.z =  0.3f;
-	verticesData[19].pos.x =  0.3f;   verticesData[19].pos.y = 0.3f;   verticesData[19].pos.z = -0.3f;
+	verticesData[18].pos.x = 0.3f;   verticesData[18].pos.y = 0.3f;   verticesData[18].pos.z = 0.3f;
+	verticesData[19].pos.x = 0.3f;   verticesData[19].pos.y = 0.3f;   verticesData[19].pos.z = -0.3f;
 
-	verticesData[20].pos.x = -0.3f;  verticesData[20].pos.y = -0.3f;   verticesData[20].pos.z =  0.3f; //down
+	verticesData[20].pos.x = -0.3f;  verticesData[20].pos.y = -0.3f;   verticesData[20].pos.z = 0.3f; //down
 	verticesData[21].pos.x = -0.3f;  verticesData[21].pos.y = -0.3f;   verticesData[21].pos.z = -0.3f;
-	verticesData[22].pos.x =  0.3f;  verticesData[22].pos.y = -0.3f;   verticesData[22].pos.z =  0.3f;
-	verticesData[23].pos.x =  0.3f;  verticesData[23].pos.y = -0.3f;   verticesData[23].pos.z = -0.3f;
+	verticesData[22].pos.x = 0.3f;  verticesData[22].pos.y = -0.3f;   verticesData[22].pos.z = 0.3f;
+	verticesData[23].pos.x = 0.3f;  verticesData[23].pos.y = -0.3f;   verticesData[23].pos.z = -0.3f;
 
 
 
@@ -175,7 +177,7 @@ void initCube() {
 	// In functie de ce set d eindexi pun primul, o alta altura va sta "deasupra"
 	GLuint indexBuffer[] = {
 
-		
+
 		0, 1, 2,
 		2, 3, 0,
 
@@ -253,18 +255,12 @@ int Init(ESContext* esContext)
 
 }
 
-void Draw(ESContext* esContext)
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+void DrawFilled(ESContext* esContext) {
 
 	glUseProgram(g_myShaders.program);
 
-	glBindBuffer(GL_ARRAY_BUFFER, g_vboId);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_iboId);
 
-
-	g_model1->Bind();
+	g_currentModel->BindFilled();
 
 	if (g_myShaders.positionAttribute != -1)
 	{
@@ -280,7 +276,7 @@ void Draw(ESContext* esContext)
 	Matrix rotateMatrix;
 	rotateMatrix.SetRotationX(g_rotationAngle);
 
-	
+
 
 	if (g_myShaders.rotateUniform != -1) {
 
@@ -304,14 +300,78 @@ void Draw(ESContext* esContext)
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 	//glDrawElements(GL_TRIANGLES, g_testCount, GL_UNSIGNED_INT, nullptr);
-	glDrawElements(GL_TRIANGLES, g_testCount, GL_UNSIGNED_SHORT, nullptr);
+	glDrawElements(GL_TRIANGLES, g_currentModel->GetIndicesFilledCount(), GL_UNSIGNED_SHORT, nullptr);
+
+	g_currentModel->Unbind();
+}
+
+void DrawWired(ESContext* esContext) {
+
+	glUseProgram(g_myShaders.program);
 
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	g_currentModel->BindWired();
+
+	if (g_myShaders.positionAttribute != -1)
+	{
+		glEnableVertexAttribArray(g_myShaders.positionAttribute);
+		glVertexAttribPointer(g_myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	}
+	if (g_myShaders.colorAttribute != -1) {
+
+		glEnableVertexAttribArray(g_myShaders.colorAttribute);
+		glVertexAttribPointer(g_myShaders.colorAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Vector3));
+	}
+
+	Matrix rotateMatrix;
+	rotateMatrix.SetRotationX(g_rotationAngle);
+
+
+
+	if (g_myShaders.rotateUniform != -1) {
+
+		Matrix identity;
+		identity.SetIdentity();
+
+		//glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)(rotateMatrix).m);
+		glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)identity.m);
+	}
+
+	if (g_myShaders.mvpUniform != -1) {
+
+		Matrix identity;
+		identity.SetIdentity();
+
+		glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)g_camera->GetMVP().m);
+		//glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)identity.m);
+	}
+
+
+
+	//glDrawArrays(GL_TRIANGLES, 0, 3);
+	//glDrawElements(GL_TRIANGLES, g_testCount, GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_LINES, g_currentModel->GetIndicesWiredCount(), GL_UNSIGNED_SHORT, nullptr);
+
+	g_currentModel->Unbind();
+}
+
+void Draw(ESContext* esContext)
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	if (g_filledMode) {
+
+		DrawFilled(esContext);
+	}
+	else {
+
+		DrawWired(esContext);
+	}
 
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
+
+
 
 void Update(ESContext* esContext, float deltaTime)
 {
@@ -445,7 +505,11 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 		else
 			g_rotationDirection.z = 0;
 	}
+	if (key == 'P') {
 
+		if(bIsPressed)
+			g_filledMode = !g_filledMode;
+	}	
 
 }
 
@@ -583,11 +647,13 @@ static void TestParser() {
 
 	g_model1 = new Model();
 	g_model1->Load("Models/Woman1.nfg");
+
+	g_currentModel = g_model1;
 }
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	
+
 
 	g_camera = new Camera(
 		Vector3(0, 0, 0),
@@ -595,7 +661,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		Vector3(0, 1, 0)
 	);
 
-	
+
 
 
 	//identifying memory leaks
@@ -611,11 +677,11 @@ int _tmain(int argc, _TCHAR* argv[])
 		return 0;
 
 	TestParser();
-	g_testCount = g_model1->GetIndicesCount();
+	//g_testCount = g_model1->GetIndicesCount();
 
 	// ASTA E PT LOAD LA CUBE
 	//TestLoadObj();
-	
+
 
 	// ASTEA 2 SUNT PENTRU A TESTA CUBUL FACUT MANUAL! AU LEAGTURA CU INTREBAREA DE SUS!
 	//initCube();
@@ -643,7 +709,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	_getch();
 
 
-	
+
 
 	return 0;
 }
