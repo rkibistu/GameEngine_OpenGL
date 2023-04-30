@@ -240,13 +240,7 @@ void Camera::UpdateViewMatrix() {
 	_viewMatrix = _T * _R;
 }
 
-void Camera::SetPosition(Vector3 position, Vector3 target) {
 
-	_position = position;
-	_target = _position;
-
-	UpdateWorldView();
-}
 void Camera::TranslateToOrigin() {
 
 

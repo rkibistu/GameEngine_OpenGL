@@ -581,10 +581,7 @@ static void InitTexture() {
 static void TestParser() {
 
 	g_model1 = new Model();
-	g_model1->Load("Models/cube.nfg");
-
-	
-
+	g_model1->Load("Models/Woman1.nfg");
 }
 
 int _tmain(int argc, _TCHAR* argv[])
