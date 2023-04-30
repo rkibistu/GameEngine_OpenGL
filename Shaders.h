@@ -9,6 +9,8 @@ public:
 	char fileFS[260];
 	GLint positionAttribute;
 	GLint colorAttribute;
+	GLint uvAttrivute;
+	GLint textureUniform;
 	GLint mvpUniform;
 	GLint rotateUniform;
 

@@ -21,6 +21,8 @@ int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
 	//finding location of uniforms / attributes
 	positionAttribute = glGetAttribLocation(program, "a_posL");
 	colorAttribute = glGetAttribLocation(program, "a_colL");
+	uvAttrivute = glGetAttribLocation(program, "a_texCoord");
+	textureUniform = glGetUniformLocation(program, "u_Texture");
 	mvpUniform = glGetUniformLocation(program, "u_mvp");
 	rotateUniform = glGetUniformLocation(program, "u_rotate");
 

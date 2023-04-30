@@ -209,50 +209,18 @@ void initCube() {
 int Init(ESContext* esContext)
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glEnable(GL_DEPTH_TEST);
 
-
-	//triangle data (heap)
-	Vertex verticesData[4];
-
-	verticesData[0].pos.x = 0.5f;  verticesData[0].pos.y = 0.5f;    verticesData[0].pos.z = 3.0f;
-	verticesData[1].pos.x = -0.5f; verticesData[1].pos.y = 0.5f;    verticesData[1].pos.z = 3.0f;
-	verticesData[2].pos.x = -0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z = 3.0f;
-	verticesData[3].pos.x = 0.5f;  verticesData[3].pos.y = -0.5f;   verticesData[3].pos.z = 3.0f;
-
-	verticesData[0].color.x = 1.0f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.0f;
-	verticesData[1].color.x = 0.0f; verticesData[1].color.y = 1.0f; verticesData[1].color.z = 0.0f;
-	verticesData[2].color.x = 0.0f; verticesData[2].color.y = 0.0f; verticesData[2].color.z = 1.0f;
-	verticesData[3].color.x = 1.0f; verticesData[3].color.y = 1.0f; verticesData[3].color.z = 1.0f;
-
-
-	//buffer object
-	glGenBuffers(1, &g_vboId);
-	glBindBuffer(GL_ARRAY_BUFFER, g_vboId);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesData), verticesData, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-
-	GLushort indexBuffer[] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-
-	//index array
-	glGenBuffers(1, &g_iboId);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_iboId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(GLushort), indexBuffer, GL_STATIC_DRAW);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//intit global values
 	g_moveDirection = Vector3();
 	g_rotationDirection = Vector3();
 	g_deltaTimer = 0;
 
-
-	glEnable(GL_DEPTH_TEST);
-
 	//creation of shaders and program 
 	return g_myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
-
 }
 
 void DrawFilled(ESContext* esContext) {
@@ -272,6 +240,12 @@ void DrawFilled(ESContext* esContext) {
 		glEnableVertexAttribArray(g_myShaders.colorAttribute);
 		glVertexAttribPointer(g_myShaders.colorAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Vector3));
 	}
+	if (g_myShaders.uvAttrivute != -1) {
+
+		glEnableVertexAttribArray(g_myShaders.uvAttrivute);
+		glVertexAttribPointer(g_myShaders.uvAttrivute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
+	}
+
 
 	Matrix rotateMatrix;
 	rotateMatrix.SetRotationX(g_rotationAngle);
@@ -296,6 +270,11 @@ void DrawFilled(ESContext* esContext) {
 		//glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)identity.m);
 	}
 
+	if (g_myShaders.textureUniform != -1) {
+
+		// aici e 0 ca avem o signura textura si am pus-o pe TEXTURE0. Vezi texture init
+		glUniform1i(g_myShaders.textureUniform, 0); 
+	}
 
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -387,11 +366,10 @@ void Update(ESContext* esContext, float deltaTime)
 	if (g_rotationAngle > 180 * 2 * PI)
 		g_rotationAngle -= 180 * 2 * PI;
 
-	//if (g_mouseClickedButtons.x == 1)
-	//	g_rotationDirection = Vector3(g_mouseMoveDirection.y, g_mouseMoveDirection.x, 0);
-
-	//else
-	//	g_rotationDirection = Vector3();
+	if (g_mouseClickedButtons.x == 1)
+		g_rotationDirection = Vector3(g_mouseMoveDirection.y, g_mouseMoveDirection.x, 0);
+	else
+		g_rotationDirection = Vector3();
 
 	//g_camera->PrintInfo();
 
@@ -616,37 +594,110 @@ static void TestLoadObj() {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLuint), indexBuffer, GL_STATIC_DRAW);
 }
 
-static void InitTexture() {
+bool loadTGA(const char* fileName, int* width, int* height, GLenum* format, unsigned char** pixels) {
+	FILE* file = fopen(fileName, "rb");
+	if (!file) {
+		printf("Error: could not open file: %s\n", fileName);
+		return false;
+	}
 
-	////load img
-	//unsigned char* imgBuffer = nullptr;
-	//std::string path = "border.png";
-	//int textureWidth, textureHeight;
-	//int BPP = 0;
-	//stbi_set_flip_vertically_on_load(1);
-	//imgBuffer = stbi_load(path.c_str(), &textureWidth, &textureHeight, &BPP, 4); //load img
+	// Read the header
+	unsigned char header[18];
+	if (fread(header, sizeof(unsigned char), 18, file) != 18) {
+		printf("Error: could not read TGA header\n");
+		fclose(file);
+		return false;
+	}
 
+	// Check if it is a supported format
+	if (header[2] != 2 && header[2] != 3) {
+		printf("Error: unsupported TGA format\n");
+		fclose(file);
+		return false;
+	}
 
-	////create texture
-	//glGenTextures(1, &g_texture);
-	//glBindTexture(GL_TEXTURE_2D, g_texture);
+	// Get image dimensions
+	*width = header[12] + (header[13] << 8);
+	*height = header[14] + (header[15] << 8);
+	int bpp = header[16] / 8;
 
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	// Allocate memory for image data
+	int imageSize = *width * *height * bpp;
+	*pixels = (unsigned char*)malloc(imageSize);
+	if (!*pixels) {
+		printf("Error: could not allocate memory for image data\n");
+		fclose(file);
+		return false;
+	}
 
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imgBuffer);
-	//glActiveTexture(GL_TEXTURE0);
+	// Read the image data
+	if (fread(*pixels, sizeof(unsigned char), imageSize, file) != imageSize) {
+		printf("Error: could not read image data\n");
+		fclose(file);
+		free(*pixels);
+		return false;
+	}
 
-	//if (imgBuffer)
-	//	stbi_image_free(imgBuffer);
+	fclose(file);
+
+	// Set the format based on the number of bytes per pixel
+	if (bpp == 3) {
+		*format = GL_RGB;
+	}
+	else {
+		*format = GL_RGBA;
+	}
+
+	// We want it in RGB format for openGL
+	if ((header[17] & (1 << 4)) == 0) {
+		// BGR format. Convert ro RGB
+		for (int i = 0; i < imageSize; i += bpp) {
+			unsigned char temp = (*pixels)[i];
+			(*pixels)[i] = (*pixels)[i + 2];
+			(*pixels)[i + 2] = temp;
+		}
+	}
+
+	
+	
+	
+	
+
+	return true;
 }
 
+
+static void InitTexture() {
+
+	//load img
+	unsigned char* imgBuffer = nullptr;
+	std::string path = "Textures/Croco.tga";
+	int textureWidth, textureHeight;
+	GLenum BPP = 0;
+
+	loadTGA(path.c_str(), &textureWidth, &textureHeight, &BPP, &imgBuffer);
+
+
+	//create texture
+	glGenTextures(1, &g_texture);
+	glBindTexture(GL_TEXTURE_2D, g_texture);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, BPP, textureWidth, textureHeight, 0, BPP, GL_UNSIGNED_BYTE, imgBuffer);
+	
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, g_texture);
+
+	free(imgBuffer);
+}
 static void TestParser() {
 
 	g_model1 = new Model();
-	g_model1->Load("Models/Woman1.nfg");
+	g_model1->Load("Models/Croco.nfg");
 
 	g_currentModel = g_model1;
 }
@@ -678,6 +729,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	TestParser();
 	//g_testCount = g_model1->GetIndicesCount();
+
+	InitTexture();
 
 	// ASTA E PT LOAD LA CUBE
 	//TestLoadObj();
