@@ -65,11 +65,16 @@ private:
 
 	Vector3 _localUp = Vector3(0.0f, 1.0f, 0.0f);
 
+	Vector3 _translateMemory;
+
 	void UpdateAxis();
 	void UpdateWorldView();
 	void UpdateWorldMatrix();
 	void UpdateViewMatrix();
 
-	void SetPosition(Vector3 position);
+	void SetPosition(Vector3 position, Vector3 target);
+
+	void TranslateToOrigin();
+	void TranslateToPosition(Vector3 position);
 };
 

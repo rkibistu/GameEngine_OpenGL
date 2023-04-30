@@ -3,10 +3,10 @@
 
 #include <iostream>
 
-Camera::Camera(Vector3 position, Vector3 target, Vector3 up) 
-	: _position(position),_target(target),_up(up) {
+Camera::Camera(Vector3 position, Vector3 target, Vector3 up)
+	: _position(position), _target(target), _up(up) {
 
-	_moveSpeed = 20.0f;
+	_moveSpeed = 1.0f;
 	_rotationSpeed = 0.5f;
 
 	_deltaTime = 1.0f;
@@ -27,10 +27,10 @@ Camera::Camera(Vector3 position, Vector3 target, Vector3 up)
 void Camera::PrintInfo() {
 
 	std::cout << "Pos: (" << _position.x << ", " << _position.y << ", " << _position.z << ") ";
-	std:: cout << "Up: (" << _up.x << ", " << _up.y << ", " << _up.z << ") " << std::endl;
+	std::cout << "Up: (" << _up.x << ", " << _up.y << ", " << _up.z << ") " << std::endl;
 }
 
-void Camera::Move(Vector3 direction){
+void Camera::Move(Vector3 direction) {
 
 	MoveOX(direction.x);
 	MoveOY(direction.y);
@@ -87,12 +87,12 @@ void Camera::RotateOX(int direction) {
 
 	// go to center -> for rotation to be correct
 	Vector3 goBackPos(_position);
-	SetPosition(Vector3(0, 0, 0));
+	TranslateToOrigin();
 
 	Matrix rotateOX;
 	rotateOX.SetRotationX(_rotationSpeed * _deltaTime * Math::Sign(direction));
 
-	Vector4 rotateLocalUp = Vector4(_localUp,1.0f) * rotateOX;
+	Vector4 rotateLocalUp = Vector4(_localUp, 1.0f) * rotateOX;
 	Vector4 up = (rotateLocalUp * _worldMatrix).Normalize();
 	_up = Vector3(up.x, up.y, up.z);
 
@@ -105,7 +105,7 @@ void Camera::RotateOX(int direction) {
 
 
 	// go back to initial pos before starting rotation
-	SetPosition(goBackPos);
+	TranslateToPosition(goBackPos);
 }
 void Camera::RotateOY(int direction) {
 	if (direction == 0)
@@ -113,7 +113,7 @@ void Camera::RotateOY(int direction) {
 
 	// go to center -> for rotation to be correct
 	Vector3 goBackPos(_position);
-	SetPosition(Vector3(0, 0, 0));
+	TranslateToOrigin();
 
 	Vector4 localTarget(0.0f, 0.0f, -(_target - _position).Length(), 1.0f);
 
@@ -130,7 +130,7 @@ void Camera::RotateOY(int direction) {
 	UpdateWorldView();
 
 	// go back to initial pos before starting rotation
-	SetPosition(goBackPos);
+	TranslateToPosition(goBackPos);
 }
 void Camera::RotateOZ(int direction) {
 	if (direction == 0)
@@ -138,7 +138,7 @@ void Camera::RotateOZ(int direction) {
 
 	// go to center -> for rotation to be correct
 	Vector3 goBackPos(_position);
-	SetPosition(Vector3(0, 0, 0));
+	TranslateToOrigin();
 
 	std::cout << "RESET: " << _position.x << " " << _position.y << " " << _position.z << std::endl;
 
@@ -158,10 +158,10 @@ void Camera::RotateOZ(int direction) {
 	UpdateWorldView();
 
 	// go back to initial pos before starting rotation
-	SetPosition(goBackPos);
+	TranslateToPosition(goBackPos);
 }
 
-void Camera::SetPerspective(GLfloat fov, GLfloat aspectRatio, GLfloat nearClip, GLfloat farClip){
+void Camera::SetPerspective(GLfloat fov, GLfloat aspectRatio, GLfloat nearClip, GLfloat farClip) {
 
 	_fov = fov;
 	_nearClip = nearClip;
@@ -209,7 +209,7 @@ void Camera::UpdateWorldMatrix() {
 	//transpose matrix
 	_T.SetTranslation(_position.x, _position.y, _position.z);
 
-	_worldMatrix =  _R * _T;
+	_worldMatrix = _R * _T;
 }
 void Camera::UpdateViewMatrix() {
 
@@ -237,12 +237,30 @@ void Camera::UpdateViewMatrix() {
 	//transpose matrix
 	_T.SetTranslation(-_position.x, -_position.y, -_position.z);
 
-	_viewMatrix =   _T * _R;
+	_viewMatrix = _T * _R;
 }
 
-void Camera::SetPosition(Vector3 position) {
+void Camera::SetPosition(Vector3 position, Vector3 target) {
 
 	_position = position;
+	_target = _position;
+
+	UpdateWorldView();
+}
+void Camera::TranslateToOrigin() {
+
+
+	_target -= _position;
+	_position -= _position;
+
+	UpdateWorldView();
+}
+void Camera::TranslateToPosition(Vector3 position) {
+
+	TranslateToOrigin();
+
+	_target += position;
+	_position += position;
 
 	UpdateWorldView();
 }

@@ -581,7 +581,7 @@ static void InitTexture() {
 static void TestParser() {
 
 	g_model1 = new Model();
-	g_model1->Load("Models/Woman1.nfg");
+	g_model1->Load("Models/cube.nfg");
 
 	
 
@@ -592,8 +592,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 
 	g_camera = new Camera(
-		Vector3(0, 0, -5),
-		Vector3(0, 0, -4),
+		Vector3(0, 0, 0),
+		Vector3(0, 0, 1),
 		Vector3(0, 1, 0)
 	);
 
