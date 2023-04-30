@@ -67,6 +67,7 @@ Vector3 g_mouseMoveDirection;
 int g_testCount;
 
 Model* g_model1;
+Model* g_model2;
 
 // INTREBAREEEE
 
