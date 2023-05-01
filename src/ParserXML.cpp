@@ -11,7 +11,7 @@
 void ParserXML::TestRapidXml() {
 
 	rapidxml::xml_document<> doc;
-	std::ifstream file("exemplu_xml.xml");
+	std::ifstream file("Resources/XMLs/exemplu_xml.xml");
 	std::stringstream buffer;
 	buffer << file.rdbuf();
 	file.close();
@@ -61,7 +61,7 @@ void ParserXML::TestRapidXml() {
 	rapidxml::print(std::back_inserter(xml_as_string), doc);
 
 	// Save to file
-	std::ofstream file_stored("Modified.xml");
+	std::ofstream file_stored("Resources/XMLs/Modified.xml");
 	file_stored << doc;
 	file_stored.close();
 	doc.clear();

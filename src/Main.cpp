@@ -17,30 +17,16 @@
 #define FAST_OBJ_IMPLEMENTATION
 #include "fastObj/fast_obj.h"
 
+#include "ParserXML.h"
 
-
-#include "../Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
+#include "../../Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 
 
 
 #define PI 3.14f
 
 
-/*
-	INTREBARE!!! PROBLEMA!!
 
-		g_camera = new Camera(
-		Vector3(0, 0, 0),
-		Vector3(0, 0, 1),
-		Vector3(0, 1, 0)
-	);
-	Cu camera la pos 0,0,0 merg toate roatiile.
-
-	Insa daca modific pozitia camerei (ori din cod, ori prin translate la runtime), nu mai merg rotatiile in jur la Ox si la Oz.\
-
-	De ce?
-
-*/
 
 GLuint g_vboId;
 GLuint g_iboId;
@@ -220,7 +206,7 @@ int Init(ESContext* esContext)
 	g_deltaTimer = 0;
 
 	//creation of shaders and program 
-	return g_myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
+	return g_myShaders.Init("Resources/Shaders/TriangleShaderVS.vs", "Resources/Shaders/TriangleShaderFS.fs");
 }
 
 void DrawFilled(ESContext* esContext) {
@@ -671,7 +657,7 @@ static void InitTexture() {
 
 	//load img
 	unsigned char* imgBuffer = nullptr;
-	std::string path = "Textures/Croco.tga";
+	std::string path = "Resources/Textures/Croco.tga";
 	int textureWidth, textureHeight;
 	GLenum BPP = 0;
 
@@ -697,14 +683,19 @@ static void InitTexture() {
 static void TestParser() {
 
 	g_model1 = new Model();
-	g_model1->Load("Models/Croco.nfg");
+	g_model1->Load("Resources/Models/Croco.nfg");
 
 	g_currentModel = g_model1;
 }
 
+static void TestXml() {
+
+	ParserXML::TestRapidXml();
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
-
+	TestXml();
 
 	g_camera = new Camera(
 		Vector3(0, 0, 0),
