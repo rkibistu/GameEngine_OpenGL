@@ -15,7 +15,7 @@
 #include "Model.h"
 
 #define FAST_OBJ_IMPLEMENTATION
-#include "fast_obj.h"
+#include "fastObj/fast_obj.h"
 
 
 

@@ -1,0 +1,15 @@
+<obiecte>
+	<obiect id="100" nume="zar">
+		<model info="cub">1</model>
+		<textura folder="texturi_zar">7</textura>
+	</obiect>
+	<obiect id="27" nume="minge">
+		<model info="sfera">3</model>
+		<textura folder="texturi_jucarii">23</textura>
+	</obiect>
+	<obiect id="33" nume="add_from_code">
+		<model info="ceva">10</model>
+		<texture folder="undeva">123</texture>
+	</obiect>
+</obiecte>
+
