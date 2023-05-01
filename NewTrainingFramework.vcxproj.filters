@@ -109,7 +109,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Readme.doc" />
     <None Include="pcviewer_es2.cfg" />
     <None Include="NewTrainingFramework.vcproj" />
   </ItemGroup>

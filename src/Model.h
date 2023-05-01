@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "../../Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
+#include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 
 struct Vertex;
 
