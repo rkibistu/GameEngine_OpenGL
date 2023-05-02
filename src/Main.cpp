@@ -20,6 +20,8 @@
 
 #include "Texture.h"
 
+#include "SceneObject.h"
+
 #include <cstddef> // for offsetof
 
 #include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
@@ -33,7 +35,7 @@
 
 GLuint g_vboId;
 GLuint g_iboId;
-Shader g_myShaders;
+Shader* g_myShaders;
 GLuint g_tex;
 
 GLfloat g_rotationAngle = 0.0f;
@@ -61,7 +63,11 @@ Model* g_currentModel;
 bool g_filledMode = true;
 
 Texture* g_texture;
+SceneObject* sceneObject;
 
+Model* g_model2;
+Texture* g_texture2;
+SceneObject* g_sceneObject2;
 
 
 int Init(ESContext* esContext)
@@ -78,18 +84,19 @@ int Init(ESContext* esContext)
 	g_deltaTimer = 0;
 
 	//creation of shaders and program 
-	return g_myShaders.Init("Resources/Shaders/TriangleShaderVS.vs", "Resources/Shaders/TriangleShaderFS.fs");
+	g_myShaders = new Shader();
+	return g_myShaders->Init("Resources/Shaders/TriangleShaderVS.vs", "Resources/Shaders/TriangleShaderFS.fs");
 }
 
 void DrawFilled(ESContext* esContext) {
 
-	g_myShaders.Bind();
+	g_myShaders->Bind();
 
 
 	g_currentModel->BindFilled();
 
 
-	g_myShaders.SetAttributes();
+	g_myShaders->SetAttributes();
 	
 
 	//Matrix rotateMatrix;
@@ -98,10 +105,10 @@ void DrawFilled(ESContext* esContext) {
 
 	Matrix identity;
 	identity.SetIdentity();
-	g_myShaders.SetUniformMatrix4fv("u_rotate", identity);
+	g_myShaders->SetUniformMatrix4fv("u_rotate", identity);
 
-	g_myShaders.SetUniformMatrix4fv("u_mvp", g_camera->GetMVP());
-	g_myShaders.SetUniform1i("u_Texture", 0);
+	g_myShaders->SetUniformMatrix4fv("u_mvp", g_camera->GetMVP());
+	g_myShaders->SetUniform1i("u_Texture", 0);
 
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -113,12 +120,12 @@ void DrawFilled(ESContext* esContext) {
 
 void DrawWired(ESContext* esContext) {
 
-	g_myShaders.Bind();
+	g_myShaders->Bind();
 
 
 	g_currentModel->BindWired();
 
-	g_myShaders.SetAttributes();
+	g_myShaders->SetAttributes();
 
 
 	//Matrix rotateMatrix;
@@ -127,10 +134,10 @@ void DrawWired(ESContext* esContext) {
 
 	Matrix identity;
 	identity.SetIdentity();
-	g_myShaders.SetUniformMatrix4fv("u_rotate", identity);
+	g_myShaders->SetUniformMatrix4fv("u_rotate", identity);
 
-	g_myShaders.SetUniformMatrix4fv("u_mvp", g_camera->GetMVP());
-	g_myShaders.SetUniform1i("u_Texture", 0);
+	g_myShaders->SetUniformMatrix4fv("u_mvp", g_camera->GetMVP());
+	g_myShaders->SetUniform1i("u_Texture", 0);
 
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -142,19 +149,14 @@ void DrawWired(ESContext* esContext) {
 
 void Draw(ESContext* esContext)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	g_texture->Bind(0);
-
 	if (g_filledMode) {
 
-		DrawFilled(esContext);
+		sceneObject->Draw(g_camera);
 	}
 	else {
 
-		DrawWired(esContext);
+		sceneObject->DrawWired(g_camera);
 	}
-
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
@@ -377,6 +379,11 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	LoadModel();
 	InitTexture();
+
+	sceneObject = new SceneObject();
+	sceneObject->SetModel(g_model1);
+	sceneObject->SetShader(g_myShaders);
+	sceneObject->AddTexture(g_texture);
 
 
 	esRegisterDrawFunc(&esContext, Draw);
