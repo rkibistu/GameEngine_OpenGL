@@ -33,7 +33,7 @@
 
 GLuint g_vboId;
 GLuint g_iboId;
-Shaders g_myShaders;
+Shader g_myShaders;
 GLuint g_tex;
 
 GLfloat g_rotationAngle = 0.0f;

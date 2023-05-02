@@ -10,10 +10,10 @@ struct ShaderResources {
 	std::string FragmentShaderPath;
 };
 
-class Shaders 
+class Shader 
 {
 public:
-	~Shaders();
+	~Shader();
 
 	int Init(char* fileVertexShader,char* fileFragmentShader);
 

@@ -4,14 +4,14 @@
 
 
 
-Shaders::~Shaders()
+Shader::~Shader()
 {
 	glDeleteProgram(_programId);
 	glDeleteShader(_vertexShader);
 	glDeleteShader(_fragmentShader);
 }
 
-int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
+int Shader::Init(char * fileVertexShader, char * fileFragmentShader)
 {
 	_vertexShader = esLoadShader(GL_VERTEX_SHADER, fileVertexShader);
 
@@ -46,17 +46,17 @@ int Shaders::Init(char * fileVertexShader, char * fileFragmentShader)
 	return 0;
 }
 
-void Shaders::Bind() {
+void Shader::Bind() {
 
 	glUseProgram(_programId);
 }
-void Shaders::Unbind() {
+void Shader::Unbind() {
 
 	glUseProgram(0);
 }
 
 
-void Shaders::SetAttributes() {
+void Shader::SetAttributes() {
 
 	if (positionAttribute != -1)
 	{
@@ -95,7 +95,7 @@ void Shaders::SetAttributes() {
 	}
 }
 
-int Shaders::GetUniformLocation(const std::string& name) {
+int Shader::GetUniformLocation(const std::string& name) {
 
 	if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
 		return m_UniformLocationCache[name];
@@ -109,19 +109,19 @@ int Shaders::GetUniformLocation(const std::string& name) {
 	return location;
 }
 
-void Shaders::SetUniform1i(const std::string& name, int value) {
+void Shader::SetUniform1i(const std::string& name, int value) {
 
 	glUniform1i(GetUniformLocation(name), value);
 }
-void Shaders::SetUniform1f(const std::string& name, float value) {
+void Shader::SetUniform1f(const std::string& name, float value) {
 
 	glUniform1f(GetUniformLocation(name), value);
 }
-void Shaders::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) {
+void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) {
 
 	glUniform4f(GetUniformLocation(name), v0, v1, v2, v3);
 }
-void Shaders::SetUniformMatrix4fv(const std::string& name, const Matrix& matrix) {
+void Shader::SetUniformMatrix4fv(const std::string& name, const Matrix& matrix) {
 
 	glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix.m[0][0]);
 }

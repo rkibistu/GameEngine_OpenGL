@@ -54,6 +54,9 @@
     <ClCompile Include="src\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\SceneObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rapidXML\rapidxml.hpp">
@@ -116,12 +119,22 @@
     <ClInclude Include="src\ShadersMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\SceneObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="pcviewer_es2.cfg" />
     <None Include="NewTrainingFramework.vcproj" />
+    <None Include="Resources\Shaders\TriangleShaderVS.vs" />
+    <None Include="Resources\Shaders\TriangleShaderFS.fs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resources\XMLs\exemplu_xml.xml" />
+    <Xml Include="Resources\XMLs\file_stored.xml" />
+    <Xml Include="Resources\XMLs\Modified.xml" />
   </ItemGroup>
 </Project>

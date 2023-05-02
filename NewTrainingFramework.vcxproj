@@ -167,6 +167,7 @@
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\NfgParser.cpp" />
     <ClCompile Include="src\ParserXML.cpp" />
+    <ClCompile Include="src\SceneObject.cpp" />
     <ClCompile Include="src\Shaders.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
     <ClCompile Include="src\vendor\fastObj\fast_obj.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\NfgParser.h" />
     <ClInclude Include="src\ParserXML.h" />
+    <ClInclude Include="src\SceneObject.h" />
     <ClInclude Include="src\Shaders.h" />
     <ClInclude Include="src\ShadersMacros.h" />
     <ClInclude Include="src\stdafx.h" />
@@ -197,6 +199,8 @@
   <ItemGroup>
     <None Include="NewTrainingFramework.vcproj" />
     <None Include="pcviewer_es2.cfg" />
+    <None Include="Resources\Shaders\TriangleShaderFS.fs" />
+    <None Include="Resources\Shaders\TriangleShaderVS.vs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
@@ -206,6 +210,11 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resources\XMLs\exemplu_xml.xml" />
+    <Xml Include="Resources\XMLs\file_stored.xml" />
+    <Xml Include="Resources\XMLs\Modified.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
