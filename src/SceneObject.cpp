@@ -30,7 +30,6 @@ void SceneObject::Draw(Camera* camera) {
 	if (_shader == nullptr)
 		return;
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	_model->BindFilled();
 	_shader->Bind();
@@ -52,8 +51,6 @@ void SceneObject::DrawWired(Camera* camera) {
 		return;
 	if (_shader == nullptr)
 		return;
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	_shader->Bind();
 	_model->BindWired();

@@ -63,7 +63,7 @@ Model* g_currentModel;
 bool g_filledMode = true;
 
 Texture* g_texture;
-SceneObject* sceneObject;
+SceneObject* g_sceneObject;
 
 Model* g_model2;
 Texture* g_texture2;
@@ -149,14 +149,21 @@ void DrawWired(ESContext* esContext) {
 
 void Draw(ESContext* esContext)
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	if (g_filledMode) {
 
-		sceneObject->Draw(g_camera);
+		g_sceneObject->Draw(g_camera);
+		
+		g_sceneObject2->Draw(g_camera);
+		
 	}
 	else {
-
-		sceneObject->DrawWired(g_camera);
+		
+		g_sceneObject->DrawWired(g_camera);
+		g_sceneObject2->DrawWired(g_camera);
 	}
+
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
@@ -339,7 +346,9 @@ static void InitTexture() {
 
 	g_texture = new Texture("Resources/Textures/Croco.tga");
 	g_texture->Load();
-	g_texture->Bind(0);
+
+	g_texture2 = new Texture("Resources/Textures/Radar.tga");
+	g_texture2->Load();
 
 }
 static void LoadModel() {
@@ -347,7 +356,10 @@ static void LoadModel() {
 	g_model1 = new Model();
 	g_model1->Load("Resources/Models/Croco.nfg");
 
-	g_currentModel = g_model1;
+	//g_currentModel = g_model1;
+
+	g_model2 = new Model();
+	g_model2->Load("Resources/Models/Radar.nfg");
 }
 
 static void TestXml() {
@@ -380,10 +392,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	LoadModel();
 	InitTexture();
 
-	sceneObject = new SceneObject();
-	sceneObject->SetModel(g_model1);
-	sceneObject->SetShader(g_myShaders);
-	sceneObject->AddTexture(g_texture);
+	g_sceneObject = new SceneObject();
+	g_sceneObject->SetModel(g_model1);
+	g_sceneObject->SetShader(g_myShaders);
+	g_sceneObject->AddTexture(g_texture);
+
+	g_sceneObject2 = new SceneObject();
+	g_sceneObject2->SetModel(g_model2);
+	g_sceneObject2->SetShader(g_myShaders);
+	g_sceneObject2->AddTexture(g_texture2);
 
 
 	esRegisterDrawFunc(&esContext, Draw);
