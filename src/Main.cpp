@@ -36,7 +36,6 @@
 GLuint g_vboId;
 GLuint g_iboId;
 Shader* g_myShaders;
-GLuint g_tex;
 
 GLfloat g_rotationAngle = 0.0f;
 GLfloat g_pasAngle = 0.005f;
@@ -86,65 +85,6 @@ int Init(ESContext* esContext)
 	//creation of shaders and program 
 	g_myShaders = new Shader();
 	return g_myShaders->Init("Resources/Shaders/TriangleShaderVS.vs", "Resources/Shaders/TriangleShaderFS.fs");
-}
-
-void DrawFilled(ESContext* esContext) {
-
-	g_myShaders->Bind();
-
-
-	g_currentModel->BindFilled();
-
-
-	g_myShaders->SetAttributes();
-	
-
-	//Matrix rotateMatrix;
-	//rotateMatrix.SetRotationX(g_rotationAngle);
-	//g_myShaders.SetUniformMatrix4fv("u_rotate", rotateMatrix);
-
-	Matrix identity;
-	identity.SetIdentity();
-	g_myShaders->SetUniformMatrix4fv("u_rotate", identity);
-
-	g_myShaders->SetUniformMatrix4fv("u_mvp", g_camera->GetMVP());
-	g_myShaders->SetUniform1i("u_Texture", 0);
-
-
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
-	//glDrawElements(GL_TRIANGLES, g_testCount, GL_UNSIGNED_INT, nullptr);
-	glDrawElements(GL_TRIANGLES, g_currentModel->GetIndicesFilledCount(), GL_UNSIGNED_SHORT, nullptr);
-
-	g_currentModel->Unbind();
-}
-
-void DrawWired(ESContext* esContext) {
-
-	g_myShaders->Bind();
-
-
-	g_currentModel->BindWired();
-
-	g_myShaders->SetAttributes();
-
-
-	//Matrix rotateMatrix;
-	//rotateMatrix.SetRotationX(g_rotationAngle);
-	//g_myShaders.SetUniformMatrix4fv("u_rotate", rotateMatrix);
-
-	Matrix identity;
-	identity.SetIdentity();
-	g_myShaders->SetUniformMatrix4fv("u_rotate", identity);
-
-	g_myShaders->SetUniformMatrix4fv("u_mvp", g_camera->GetMVP());
-	g_myShaders->SetUniform1i("u_Texture", 0);
-
-
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
-	//glDrawElements(GL_TRIANGLES, g_testCount, GL_UNSIGNED_INT, nullptr);
-	glDrawElements(GL_LINES, g_currentModel->GetIndicesWiredCount(), GL_UNSIGNED_SHORT, nullptr);
-
-	g_currentModel->Unbind();
 }
 
 void Draw(ESContext* esContext)
