@@ -4,13 +4,18 @@
 
 #include "Utilities/utilities.h"
 
+struct ShaderResources {
+
+	std::string VertexShaderPath;
+	std::string FragmentShaderPath;
+};
 
 class Shaders 
 {
 public:
 	~Shaders();
 
-	int Init(char* fileVertexShader, char* fileFragmentShader);
+	int Init(char* fileVertexShader,char* fileFragmentShader);
 
 	void Bind();
 	void Unbind();
@@ -24,10 +29,6 @@ public:
 	void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
 	void SetUniformMatrix4fv(const std::string& name, const Matrix& matrix);
 
-
-public:
-	char fileVS[260];
-	char fileFS[260];
 private:
 	int GetUniformLocation(const std::string& name);
 

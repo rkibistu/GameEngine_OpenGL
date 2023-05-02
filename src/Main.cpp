@@ -243,8 +243,6 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 			g_moveDirection.y = 0;
 	}
 
-	std::cout << key << "\n";
-
 	if (key == 0x25) {
 
 		if (bIsPressed)
