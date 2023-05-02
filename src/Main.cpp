@@ -9,7 +9,6 @@
 #include "Globals.h"
 
 #include "Camera.h"
-#include <iostream>
 
 #include "NfgParser.h"
 #include "Model.h"
@@ -18,6 +17,10 @@
 #include "fastObj/fast_obj.h"
 
 #include "ParserXML.h"
+
+#include "Texture.h"
+
+#include <cstddef> // for offsetof
 
 #include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 
@@ -31,7 +34,7 @@
 GLuint g_vboId;
 GLuint g_iboId;
 Shaders g_myShaders;
-GLuint g_texture;
+GLuint g_tex;
 
 GLfloat g_rotationAngle = 0.0f;
 GLfloat g_pasAngle = 0.005f;
@@ -51,10 +54,14 @@ Vector3 g_mouseCurrentPos;
 Vector3 g_mouseMoveDirection;
 
 
+
 Model* g_model1;
 
 Model* g_currentModel;
 bool g_filledMode = true;
+
+Texture* g_texture;
+
 
 
 int Init(ESContext* esContext)
@@ -76,56 +83,25 @@ int Init(ESContext* esContext)
 
 void DrawFilled(ESContext* esContext) {
 
-	glUseProgram(g_myShaders.program);
+	g_myShaders.Bind();
 
 
 	g_currentModel->BindFilled();
 
-	if (g_myShaders.positionAttribute != -1)
-	{
-		glEnableVertexAttribArray(g_myShaders.positionAttribute);
-		glVertexAttribPointer(g_myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	}
-	if (g_myShaders.colorAttribute != -1) {
 
-		glEnableVertexAttribArray(g_myShaders.colorAttribute);
-		glVertexAttribPointer(g_myShaders.colorAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Vector3));
-	}
-	if (g_myShaders.uvAttrivute != -1) {
+	g_myShaders.SetAttributes();
+	
 
-		glEnableVertexAttribArray(g_myShaders.uvAttrivute);
-		glVertexAttribPointer(g_myShaders.uvAttrivute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(Vector3)));
-	}
+	//Matrix rotateMatrix;
+	//rotateMatrix.SetRotationX(g_rotationAngle);
+	//g_myShaders.SetUniformMatrix4fv("u_rotate", rotateMatrix);
 
+	Matrix identity;
+	identity.SetIdentity();
+	g_myShaders.SetUniformMatrix4fv("u_rotate", identity);
 
-	Matrix rotateMatrix;
-	rotateMatrix.SetRotationX(g_rotationAngle);
-
-
-
-	if (g_myShaders.rotateUniform != -1) {
-
-		Matrix identity;
-		identity.SetIdentity();
-
-		//glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)(rotateMatrix).m);
-		glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)identity.m);
-	}
-
-	if (g_myShaders.mvpUniform != -1) {
-
-		Matrix identity;
-		identity.SetIdentity();
-
-		glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)g_camera->GetMVP().m);
-		//glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)identity.m);
-	}
-
-	if (g_myShaders.textureUniform != -1) {
-
-		// aici e 0 ca avem o signura textura si am pus-o pe TEXTURE0. Vezi texture init
-		glUniform1i(g_myShaders.textureUniform, 0); 
-	}
+	g_myShaders.SetUniformMatrix4fv("u_mvp", g_camera->GetMVP());
+	g_myShaders.SetUniform1i("u_Texture", 0);
 
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -137,45 +113,24 @@ void DrawFilled(ESContext* esContext) {
 
 void DrawWired(ESContext* esContext) {
 
-	glUseProgram(g_myShaders.program);
+	g_myShaders.Bind();
 
 
 	g_currentModel->BindWired();
 
-	if (g_myShaders.positionAttribute != -1)
-	{
-		glEnableVertexAttribArray(g_myShaders.positionAttribute);
-		glVertexAttribPointer(g_myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	}
-	if (g_myShaders.colorAttribute != -1) {
-
-		glEnableVertexAttribArray(g_myShaders.colorAttribute);
-		glVertexAttribPointer(g_myShaders.colorAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Vector3));
-	}
-
-	Matrix rotateMatrix;
-	rotateMatrix.SetRotationX(g_rotationAngle);
+	g_myShaders.SetAttributes();
 
 
+	//Matrix rotateMatrix;
+	//rotateMatrix.SetRotationX(g_rotationAngle);
+	//g_myShaders.SetUniformMatrix4fv("u_rotate", rotateMatrix);
 
-	if (g_myShaders.rotateUniform != -1) {
+	Matrix identity;
+	identity.SetIdentity();
+	g_myShaders.SetUniformMatrix4fv("u_rotate", identity);
 
-		Matrix identity;
-		identity.SetIdentity();
-
-		//glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)(rotateMatrix).m);
-		glUniformMatrix4fv(g_myShaders.rotateUniform, 1, GL_FALSE, (GLfloat*)identity.m);
-	}
-
-	if (g_myShaders.mvpUniform != -1) {
-
-		Matrix identity;
-		identity.SetIdentity();
-
-		glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)g_camera->GetMVP().m);
-		//glUniformMatrix4fv(g_myShaders.mvpUniform, 1, GL_FALSE, (GLfloat*)identity.m);
-	}
-
+	g_myShaders.SetUniformMatrix4fv("u_mvp", g_camera->GetMVP());
+	g_myShaders.SetUniform1i("u_Texture", 0);
 
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -188,6 +143,8 @@ void DrawWired(ESContext* esContext) {
 void Draw(ESContext* esContext)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	g_texture->Bind(0);
 
 	if (g_filledMode) {
 
@@ -374,107 +331,16 @@ void Mouse(ESContext* esContext, unsigned int mouseButton, unsigned int mosueEve
 
 void CleanUp()
 {
-	
-}
-
-bool loadTGA(const char* fileName, int* width, int* height, GLenum* format, unsigned char** pixels) {
-	FILE* file = fopen(fileName, "rb");
-	if (!file) {
-		printf("Error: could not open file: %s\n", fileName);
-		return false;
-	}
-
-	// Read the header
-	unsigned char header[18];
-	if (fread(header, sizeof(unsigned char), 18, file) != 18) {
-		printf("Error: could not read TGA header\n");
-		fclose(file);
-		return false;
-	}
-
-	// Check if it is a supported format
-	if (header[2] != 2 && header[2] != 3) {
-		printf("Error: unsupported TGA format\n");
-		fclose(file);
-		return false;
-	}
-
-	// Get image dimensions
-	*width = header[12] + (header[13] << 8);
-	*height = header[14] + (header[15] << 8);
-	int bpp = header[16] / 8;
-
-	// Allocate memory for image data
-	int imageSize = *width * *height * bpp;
-	*pixels = (unsigned char*)malloc(imageSize);
-	if (!*pixels) {
-		printf("Error: could not allocate memory for image data\n");
-		fclose(file);
-		return false;
-	}
-
-	// Read the image data
-	if (fread(*pixels, sizeof(unsigned char), imageSize, file) != imageSize) {
-		printf("Error: could not read image data\n");
-		fclose(file);
-		free(*pixels);
-		return false;
-	}
-
-	fclose(file);
-
-	// Set the format based on the number of bytes per pixel
-	if (bpp == 3) {
-		*format = GL_RGB;
-	}
-	else {
-		*format = GL_RGBA;
-	}
-
-	// We want it in RGB format for openGL
-	if ((header[17] & (1 << 4)) == 0) {
-		// BGR format. Convert ro RGB
-		for (int i = 0; i < imageSize; i += bpp) {
-			unsigned char temp = (*pixels)[i];
-			(*pixels)[i] = (*pixels)[i + 2];
-			(*pixels)[i + 2] = temp;
-		}
-	}
-
-	
-	
-	
-	
-
-	return true;
+	delete g_camera;
+	delete g_model1;
 }
 
 static void InitTexture() {
 
-	//load img
-	unsigned char* imgBuffer = nullptr;
-	std::string path = "Resources/Textures/Croco.tga";
-	int textureWidth, textureHeight;
-	GLenum BPP = 0;
+	g_texture = new Texture("Resources/Textures/Croco.tga");
+	g_texture->Load();
+	g_texture->Bind(0);
 
-	loadTGA(path.c_str(), &textureWidth, &textureHeight, &BPP, &imgBuffer);
-
-
-	//create texture
-	glGenTextures(1, &g_texture);
-	glBindTexture(GL_TEXTURE_2D, g_texture);
-
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, BPP, textureWidth, textureHeight, 0, BPP, GL_UNSIGNED_BYTE, imgBuffer);
-	
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, g_texture);
-
-	free(imgBuffer);
 }
 static void LoadModel() {
 
@@ -525,7 +391,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//releasing OpenGL resources
 	CleanUp();
 
-	delete g_camera;
+	
 
 	printf("Press any key...\n");
 	_getch();

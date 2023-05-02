@@ -170,6 +170,7 @@
     <ClCompile Include="src\Shaders.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
     <ClCompile Include="src\vendor\fastObj\fast_obj.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rapidXML\rapidxml.hpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="src\NfgParser.h" />
     <ClInclude Include="src\ParserXML.h" />
     <ClInclude Include="src\Shaders.h" />
+    <ClInclude Include="src\ShadersMacros.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\targetver.h" />
     <ClInclude Include="src\vendor\fastObj\fast_obj.h" />
@@ -190,6 +192,7 @@
     <ClInclude Include="src\vendor\rapidXML\rapidxml_print.hpp" />
     <ClInclude Include="src\vendor\rapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="src\Vertex.h" />
+    <ClInclude Include="src\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NewTrainingFramework.vcproj" />
