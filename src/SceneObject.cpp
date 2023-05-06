@@ -15,12 +15,12 @@ SceneObject::~SceneObject(){
 	if (_shader) {
 		delete _shader;
 	}
-	for (int i = 0; i < _textures.size(); i++) {
+	for (int i = 0; i < _textureResources.size(); i++) {
 
-		if (_textures[i])
-			delete _textures[i];
+		if (_textureResources[i])
+			delete _textureResources[i];
 	}
-	_textures.clear();
+	_textureResources.clear();
 }
 
 void SceneObject::Draw(Camera* camera) {
@@ -33,8 +33,8 @@ void SceneObject::Draw(Camera* camera) {
 
 	_model->BindFilled();
 	_shader->Bind();
-	for (int i = 0; i < _textures.size(); i++) {
-		_textures[i]->Bind(i);
+	for (int i = 0; i < _textureResources.size(); i++) {
+		_textureResources[i]->Bind(i);
 	}
 
 	_shader->SetAttributes();
@@ -54,8 +54,8 @@ void SceneObject::DrawWired(Camera* camera) {
 
 	_shader->Bind();
 	_model->BindWired();
-	for (int i = 0; i < _textures.size(); i++) {
-		_textures[i]->Bind(i);
+	for (int i = 0; i < _textureResources.size(); i++) {
+		_textureResources[i]->Bind(i);
 	}
 
 	_shader->SetAttributes();
@@ -82,5 +82,5 @@ void SceneObject::SetShader(Shader* shader){
 
 void SceneObject::AddTexture(Texture* texture){
 
-	_textures.push_back(texture);
+	_textureResources.push_back(texture);
 }

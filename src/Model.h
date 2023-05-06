@@ -17,6 +17,7 @@ struct ModelResource {
 	std::string Path;
 	std::string Filename;
 
+	std::string FilePath() { return Path + Filename; }
 
 	/*ModelResource(std::vector<Vertex> vertices, std::vector<GLushort> indices, std::vector<GLushort> wiredIndices)
 	 : Vertices(vertices), Indices(indices), WiredIndices(wiredIndices) {
@@ -30,7 +31,7 @@ public:
 	Model();
 	~Model();
 
-	void Load(std::string filepath);
+	void Load(ModelResource* modelResurce);
 	void BindFilled();
 	void BindWired();
 	void Unbind();

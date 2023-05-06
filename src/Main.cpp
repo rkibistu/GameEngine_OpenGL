@@ -70,6 +70,8 @@ Texture* g_texture2;
 SceneObject* g_sceneObject2;
 
 
+ResourceManager& resourceManager = ResourceManager::GetInstance();
+
 int Init(ESContext* esContext)
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -84,8 +86,8 @@ int Init(ESContext* esContext)
 	g_deltaTimer = 0;
 
 	//creation of shaders and program 
-	g_myShaders = new Shader();
-	return g_myShaders->Init("Resources/Shaders/TriangleShaderVS.vs", "Resources/Shaders/TriangleShaderFS.fs");
+	g_myShaders = resourceManager.GetShader(10);
+	return 0;
 }
 
 void Draw(ESContext* esContext)
@@ -102,7 +104,7 @@ void Draw(ESContext* esContext)
 	else {
 		
 		g_sceneObject->DrawWired(g_camera);
-		g_sceneObject2->DrawWired(g_camera);
+		//g_sceneObject2->DrawWired(g_camera);
 	}
 
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
@@ -285,35 +287,26 @@ void CleanUp()
 
 static void InitTexture() {
 
-	g_texture = new Texture("Resources/Textures/Croco.tga");
-	g_texture->Load();
 
-	g_texture2 = new Texture("Resources/Textures/Radar.tga");
-	g_texture2->Load();
+	g_texture = resourceManager.GetTexture(4);
 
 }
 static void LoadModel() {
 
-	g_model1 = new Model();
-	g_model1->Load("Resources/Models/Croco.nfg");
-
-	//g_currentModel = g_model1;
-
-	g_model2 = new Model();
-	g_model2->Load("Resources/Models/Radar.nfg");
+	g_model1 = resourceManager.GetModel(1);
 }
 
 static void TestXml() {
 
 	//ParserXML::TestRapidXml();
 
-	ResourceManager& resourceManager = ResourceManager::GetInstance();
-	resourceManager.Init();
+
+	
 }
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	TestXml();
+	resourceManager.Init();
 
 	g_camera = new Camera(
 		Vector3(0, 0, 0),
@@ -341,10 +334,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	g_sceneObject->SetShader(g_myShaders);
 	g_sceneObject->AddTexture(g_texture);
 
-	g_sceneObject2 = new SceneObject();
-	g_sceneObject2->SetModel(g_model2);
-	g_sceneObject2->SetShader(g_myShaders);
-	g_sceneObject2->AddTexture(g_texture2);
+	//g_sceneObject2 = new SceneObject();
+	//g_sceneObject2->SetModel(g_model2);
+	//g_sceneObject2->SetShader(g_myShaders);
+	//g_sceneObject2->AddTexture(g_texture2);
 
 
 	esRegisterDrawFunc(&esContext, Draw);

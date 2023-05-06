@@ -31,6 +31,6 @@ private:
 
 	Model* _model;
 	Shader* _shader;
-	std::vector<Texture*> _textures;
+	std::vector<Texture*> _textureResources;
 
 };

@@ -30,9 +30,9 @@ void ResourceManager::DestroyInstance() {
 
 	 // VErifica aici daca e okay sa dai doar clear, fara sa apelzi delete pt fiecare
 
-	_models.clear();
-	_shaders.clear();
-	_textures.clear();
+	_modelResources.clear();
+	_shaderResources.clear();
+	_textureResources.clear();
 
 	if (_spInstance)
 		delete _spInstance;
@@ -56,13 +56,13 @@ void ResourceManager::Init() {
 	doc.parse<0>(&content[0]);
 	_pRoot = doc.first_node();
 
-
-	LoadModels();
-	LoadShaders();
-	LoadTextures();
+	 
+	InitModels();
+	InitShaders();
+	InitTextures();
 }
 
-void ResourceManager::LoadModels() {
+void ResourceManager::InitModels() {
 
 	std::string path;
 	rapidxml::xml_node<>* pNode = _pRoot->first_node(ResourceManager::Elements::ModelsRoot.c_str());
@@ -108,7 +108,7 @@ void ResourceManager::LoadModels() {
 				tempModel->Filename = fileNode->value();
 			}
 			
-			_models.push_back(tempModel);
+			_modelResources.insert({ tempModel->ID, tempModel });
 		}
 
 		std::cout << std::endl;
@@ -117,8 +117,7 @@ void ResourceManager::LoadModels() {
 	std::cout << std::endl;
 
 }
-
-void ResourceManager::LoadShaders() {
+void ResourceManager::InitShaders() {
 
 	std::string path;
 	rapidxml::xml_node<>* pNode = _pRoot->first_node(ResourceManager::Elements::ShadersRoot.c_str());
@@ -141,7 +140,7 @@ void ResourceManager::LoadShaders() {
 		//get in every shader
 		for (rapidxml::xml_node<>* modelNode = resourceNode->first_node(); modelNode; modelNode = modelNode->next_sibling())
 		{
-			ShaderResources* tempShader = new ShaderResources();
+			ShaderResource* tempShader = new ShaderResource();
 			tempShader->Path = path;
 
 			//get the IDs
@@ -172,12 +171,11 @@ void ResourceManager::LoadShaders() {
 				}
 			}
 
-			_shaders.push_back(tempShader);
+			_shaderResources.insert({ tempShader->ID,tempShader });
 		}
 	}
 }
-
-void ResourceManager::LoadTextures() {
+void ResourceManager::InitTextures() {
 
 	std::string path;
 
@@ -247,11 +245,82 @@ void ResourceManager::LoadTextures() {
 				}
 			}
 
-			_textures.push_back(tempTexture);
+			_textureResources.insert({ tempTexture->ID,tempTexture });
 		}
 
 		std::cout << std::endl;
 	}
 
 	std::cout << std::endl;
+}
+
+Model* ResourceManager::GetModel(unsigned int id) {
+
+	auto itModels = _models.find(id);
+	if (itModels != _models.end()) {
+		return itModels->second;
+	}
+
+	return LoadModel(id);
+}
+Shader* ResourceManager::GetShader(unsigned int id) {
+
+	auto itModels = _shaders.find(id);
+	if (itModels != _shaders.end()) {
+		return itModels->second;
+	}
+
+	return LoadShader(id);
+}
+Texture* ResourceManager::GetTexture(unsigned int id) {
+
+	auto itModels = _textures.find(id);
+	if (itModels != _textures.end()) {
+		return itModels->second;
+	}
+
+	return LoadTexture(id);
+}
+
+Model* ResourceManager::LoadModel(unsigned int id) {
+
+	auto itResources = _modelResources.find(id);
+	if (itResources == _modelResources.end()) {
+		std::cout << "Resursa pentru modelul cu ID-ul " << id << " nu exista!" << std::endl;
+		return nullptr;
+	}
+
+	Model* model = new Model();
+	model->Load(itResources->second);
+
+	_models.insert({ id,model });
+	return model;
+}
+Shader* ResourceManager::LoadShader(unsigned int id) {
+
+	auto itResources = _shaderResources.find(id);
+	if (itResources == _shaderResources.end()) {
+		std::cout << "Resursa pentru shader-ul cu ID-ul " << id << " nu exista!" << std::endl;
+	return nullptr;
+	}
+
+	Shader* shader = new Shader();
+	shader->Load(itResources->second);
+
+	_shaders.insert({ id,shader });
+	return shader;
+}
+Texture* ResourceManager::LoadTexture(unsigned int id) {
+
+	auto itResources = _textureResources.find(id);
+	if (itResources == _textureResources.end()) {
+		std::cout << "Resursa pentru modelul cu ID-ul " << id << " nu exista!" << std::endl;
+		return nullptr;
+	}
+
+	Texture* texture = new Texture();
+	texture->Load(itResources->second);
+
+	_textures.insert({ id,texture });
+	return texture;
 }

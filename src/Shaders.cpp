@@ -45,6 +45,11 @@ int Shader::Init(char * fileVertexShader, char * fileFragmentShader)
 
 	return 0;
 }
+void Shader::Load(ShaderResource* shaderResource) {
+
+	_shaderResource = shaderResource;
+	Init((char*)_shaderResource->VertexFilePath().c_str(), (char*)_shaderResource->FragmentFilePath().c_str());
+}
 
 void Shader::Bind() {
 

@@ -10,6 +10,8 @@ struct TextureResource {
 	std::string Path;
 	std::string Filename;
 
+	std::string FilePath() { return Path + Filename; }
+
 	std::string Type;
 
 	std::string MinFilter;
@@ -22,10 +24,9 @@ class Texture{
 
 public:
 	Texture();
-	Texture(std::string path);
 	~Texture();
 
-	void Load();
+	void Load(TextureResource* textureResource);
 
 	void Bind(int slot);
 	void Unbind();

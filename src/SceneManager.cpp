@@ -20,15 +20,15 @@ void SceneManager::Init() {
 
 	ResourceManager& resourceManager = ResourceManager::GetInstance();
 
-	_models.reserve(resourceManager.Models().size());
-	for (int i = 0; i < resourceManager.Models().size(); i++) {
+	//_modelResources.reserve(resourceManager.Models().size());
+	//for (int i = 0; i < resourceManager.Models().size(); i++) {
 
-		Model* tempModel = new Model();
-		//tempModel->Load()
-	}
+	//	Model* tempModel = new Model();
+	//	//tempModel->Load()
+	//}
 
-	_shaders.reserve(resourceManager.Shaders().size());
-	_textures.reserve(resourceManager.Textures().size());
+	//_shaderResources.reserve(resourceManager.Shaders().size());
+	//_textureResources.reserve(resourceManager.Textures().size());
 
 	
 }

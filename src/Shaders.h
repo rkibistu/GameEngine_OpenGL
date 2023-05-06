@@ -4,13 +4,16 @@
 
 #include "Utilities/utilities.h"
 
-struct ShaderResources {
+struct ShaderResource {
 
 	unsigned int ID;
 
 	std::string Path;
 	std::string VertexShaderFilename;
 	std::string FragmentShaderFilename;
+
+	std::string VertexFilePath() { return Path + VertexShaderFilename; }
+	std::string FragmentFilePath() { return Path + FragmentShaderFilename; }
 };
 
 class Shader 
@@ -19,6 +22,8 @@ public:
 	~Shader();
 
 	int Init(char* fileVertexShader,char* fileFragmentShader);
+
+	void Load(ShaderResource* shaderResource);
 
 	void Bind();
 	void Unbind();
@@ -36,6 +41,7 @@ private:
 	int GetUniformLocation(const std::string& name);
 
 private:
+	ShaderResource* _shaderResource;
 	GLint _programId, _vertexShader, _fragmentShader;
 	std::unordered_map<std::string, int> m_UniformLocationCache;
 

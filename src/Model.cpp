@@ -20,22 +20,23 @@ Model::~Model() {
 		delete _modelResource;
 }
 
-void Model::Load(std::string filepath) {
+void Model::Load(ModelResource* modelResurce) {
 
 	int res;
 	std::vector<Vertex> vertices;
 	std::vector<GLushort> indices;
 	std::vector<GLushort> wiredIndices;
 
+	_modelResource = modelResurce;
+
 	NfgParser parser;
-	res = parser.Load(filepath, vertices, indices);
+	res = parser.Load(_modelResource->FilePath(), vertices, indices);
 	if (res != NFG_SUCCES) {
 		std::cout << parser.GetError() << std::endl;
 		return;
 	}
 
 	CreateWiredindicesBuffer(indices, wiredIndices);
-	_modelResource = new ModelResource();
 	_modelResource->Vertices = vertices;
 	_modelResource->Indices = indices;
 	_modelResource->WiredIndices = wiredIndices;

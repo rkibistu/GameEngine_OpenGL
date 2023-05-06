@@ -5,15 +5,7 @@
 
 Texture::Texture(){
 
-	_textureResource = new TextureResource();
-	glGenTextures(1, &_textureId);
-}
-
-Texture::Texture(std::string path) {
-
-	_textureResource = new TextureResource();
-	_textureResource->Path = path;
-
+	_textureResource = nullptr;
 	glGenTextures(1, &_textureId);
 }
 
@@ -24,14 +16,16 @@ Texture::~Texture(){
 	glDeleteTextures(1, &_textureId);
 }
 
-void Texture::Load(){
+void Texture::Load(TextureResource* textureResource){
 
 	unsigned char* imgBuffer = nullptr;
 	int textureWidth, textureHeight;
 	GLenum BPP = 0;
 
+	_textureResource = textureResource;
+
 	//load img
-	loadTGA(_textureResource->Path.c_str(), &textureWidth, &textureHeight, &BPP, &imgBuffer);
+	loadTGA(_textureResource->FilePath().c_str(), &textureWidth, &textureHeight, &BPP, &imgBuffer);
 
 	//configure texture
 	

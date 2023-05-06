@@ -25,7 +25,7 @@ private:
 	SceneManager(const SceneManager&) = delete;
 	SceneManager& operator= (const SceneManager&) = delete;
 
-	std::vector<Model*> _models;
-	std::vector<Shader*> _shaders;
-	std::vector<Texture*> _textures;
+	std::vector<Model*> _modelResources;
+	std::vector<Shader*> _shaderResources;
+	std::vector<Texture*> _textureResources;
 };
