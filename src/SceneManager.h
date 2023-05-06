@@ -15,6 +15,8 @@ public:
 
 	void Init();
 
+	void Draw(Camera* camera);
+
 private:
 
 	

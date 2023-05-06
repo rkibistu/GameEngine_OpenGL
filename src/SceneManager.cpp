@@ -22,3 +22,10 @@ void SceneManager::Init() {
 	_xmlParser.Init("Resources/XMLs/sceneManager.xml");
 	_xmlParser.ReadObjects(_sceneObjects);
 }
+void SceneManager::Draw(Camera* camera) {
+
+	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
+
+		it->second->Draw(camera);
+	}
+}

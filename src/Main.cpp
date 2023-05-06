@@ -1,43 +1,20 @@
 // NewTrainingFramework.cpp : Defines the entry point for the console application.
 //
 
-#include <iostream>
 #include "stdafx.h"
-#include "Vertex.h"
-#include "Shaders.h"
-#include <conio.h>
 #include "Globals.h"
-
 #include "Camera.h"
-
-#include "NfgParser.h"
-#include "Model.h"
-
-#define FAST_OBJ_IMPLEMENTATION
-#include "fastObj/fast_obj.h"
-
-#include "ParserXML.h"
-
-#include "Texture.h"
-
-#include "SceneObject.h"
-
-#include <cstddef> // for offsetof
-
-#include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
-
 #include "ResourceManager.h"
 #include "SceneManager.h"
 
+#include <iostream>
+#include <conio.h>
+
+
+#include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
+
 
 #define PI 3.14f
-
-
-
-
-GLuint g_vboId;
-GLuint g_iboId;
-Shader* g_myShaders;
 
 GLfloat g_rotationAngle = 0.0f;
 GLfloat g_pasAngle = 0.005f;
@@ -46,30 +23,16 @@ Camera* g_camera;
 Vector3 g_moveDirection;
 Vector3 g_rotationDirection;
 
+bool g_filledMode = true;
+
 float g_deltaThreshold = 0.01f;
 float g_deltaTimer;
-
 
 //Mouse
 Vector3 g_mouseClickedButtons; // (left, middle, right) 1 for being clicked, 0 for not
 Vector3 g_mouseOldPos;
 Vector3 g_mouseCurrentPos;
 Vector3 g_mouseMoveDirection;
-
-
-
-Model* g_model1;
-
-Model* g_currentModel;
-bool g_filledMode = true;
-
-Texture* g_texture;
-SceneObject* g_sceneObject;
-
-Model* g_model2;
-Texture* g_texture2;
-SceneObject* g_sceneObject2;
-
 
 ResourceManager& resourceManager = ResourceManager::GetInstance();
 SceneManager& sceneManager = SceneManager::GetInstance();
@@ -82,17 +45,6 @@ int Init(ESContext* esContext)
 	resourceManager.Init();
 	sceneManager.Init();
 
-
-	//glEnable(GL_BLEND);
-//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	//intit global values
-	g_moveDirection = Vector3();
-	g_rotationDirection = Vector3();
-	g_deltaTimer = 0;
-
-	//creation of shaders and program 
-	g_myShaders = resourceManager.GetShader(10);
 	return 0;
 }
 
@@ -100,18 +52,7 @@ void Draw(ESContext* esContext)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	if (g_filledMode) {
-
-		g_sceneObject->Draw(g_camera);
-		
-		//g_sceneObject2->Draw(g_camera);
-		
-	}
-	else {
-		
-		g_sceneObject->DrawWired(g_camera);
-		//g_sceneObject2->DrawWired(g_camera);
-	}
+	sceneManager.Draw(g_camera);
 
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
@@ -291,28 +232,9 @@ void CleanUp()
 	resourceManager.DestroyInstance();
 }
 
-static void InitTexture() {
-
-
-	g_texture = resourceManager.GetTexture(4);
-
-}
-static void LoadModel() {
-
-	g_model1 = resourceManager.GetModel(1);
-}
-
-static void TestXml() {
-
-	//ParserXML::TestRapidXml();
-
-
-	
-}
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-
 	g_camera = new Camera(
 		Vector3(0, 0, 0),
 		Vector3(0, 0, 1),
@@ -331,25 +253,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	if (Init(&esContext) != 0)
 		return 0;
 	
-	
-	
-
-	LoadModel();
-	InitTexture();
-
-	
-
-	g_sceneObject = new SceneObject();
-	g_sceneObject->SetModel(g_model1);
-	g_sceneObject->SetShader(g_myShaders);
-	g_sceneObject->AddTexture(g_texture);
-
-	//g_sceneObject2 = new SceneObject();
-	//g_sceneObject2->SetModel(g_model2);
-	//g_sceneObject2->SetShader(g_myShaders);
-	//g_sceneObject2->AddTexture(g_texture2);
-
-
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);
 	esRegisterKeyFunc(&esContext, Key);
