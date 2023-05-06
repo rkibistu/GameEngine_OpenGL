@@ -12,9 +12,9 @@ Texture::Texture(){
 
 Texture::~Texture(){
 
-	if (_textureResource)
-		delete _textureResource;
 	glDeleteTextures(1, &_textureId);
+
+	//Don't delete texture resources, it is going to be deletele by ResourceManager
 }
 
 int Texture::Load(TextureResource* textureResource){

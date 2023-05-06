@@ -1,12 +1,9 @@
 #pragma once
 #include "stdafx.h"
+#include "SceneObject.h"
 
-#include "Model.h"
-#include "Texture.h"
-#include "Shaders.h"
-
-
-#include <vector>
+#include <unordered_map>
+#include <rapidXML/rapidxml.hpp>
 
 class SceneManager {
 
@@ -25,7 +22,7 @@ private:
 	SceneManager(const SceneManager&) = delete;
 	SceneManager& operator= (const SceneManager&) = delete;
 
-	std::vector<Model*> _modelResources;
-	std::vector<Shader*> _shaderResources;
-	std::vector<Texture*> _textureResources;
+	std::unordered_map<unsigned int, SceneObject*> _sceneObjects;
+
+	
 };

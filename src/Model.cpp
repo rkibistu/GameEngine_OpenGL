@@ -16,8 +16,8 @@ Model::~Model() {
 	glDeleteBuffers(1, &_iboidWired);
 	glDeleteBuffers(1, &_vboid);
 
-	if (_modelResource)
-		delete _modelResource;
+	//Do not delete ModelResource, it can be sued by another object
+	//ResourceManager is going to delete it
 }
 
 int Model::Load(ModelResource* modelResurce) {

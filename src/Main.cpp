@@ -281,8 +281,8 @@ void Mouse(ESContext* esContext, unsigned int mouseButton, unsigned int mosueEve
 
 void CleanUp()
 {
-	delete g_camera;
-	delete g_model1;
+
+	resourceManager.DestroyInstance();
 }
 
 static void InitTexture() {
@@ -308,6 +308,7 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	resourceManager.Init();
 
+
 	g_camera = new Camera(
 		Vector3(0, 0, 0),
 		Vector3(0, 0, 1),
@@ -329,6 +330,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	LoadModel();
 	InitTexture();
 
+
+
 	g_sceneObject = new SceneObject();
 	g_sceneObject->SetModel(g_model1);
 	g_sceneObject->SetShader(g_myShaders);
@@ -349,6 +352,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//releasing OpenGL resources
 	CleanUp();
+;
 
 	
 

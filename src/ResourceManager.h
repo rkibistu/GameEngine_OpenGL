@@ -45,18 +45,23 @@ public:
 private:
 
 	//read them from xml
-	int InitModels();
-	int InitShaders();
-	int InitTextures();
+	int InitModels(rapidxml::xml_node<>* pRoot);
+	int InitShaders(rapidxml::xml_node<>* pRoot);
+	int InitTextures(rapidxml::xml_node<>* pRoot);
 
 	Model* LoadModel(unsigned int id);
 	Shader* LoadShader(unsigned int id);
 	Texture* LoadTexture(unsigned int id);
 
-	//inline std::unordered_map<unsigned int, ModelResource*>& Models()  { return _modelResources; }
-	//inline std::unordered_map<unsigned int, ShaderResource*>& Shaders() { return _shaderResources; }
-	//inline std::unordered_map<unsigned int, TextureResource*>& Textures() { return _textureResources; }
-	//
+	template <typename T>
+	void Clear(std::unordered_map<unsigned int, T>& unorderedMap) {
+
+		for (auto it = unorderedMap.begin(); it != unorderedMap.end(); ++it) {
+			delete it->second;
+		}
+		unorderedMap.clear();
+	}
+
 private:
 
 	static ResourceManager* _spInstance;
@@ -66,7 +71,7 @@ private:
 
 	std::string _configureFilepath = "Resources/XMLs/resourceManager.xml";
 
-	rapidxml::xml_node<>* _pRoot = nullptr;
+	
 
 	std::unordered_map<unsigned int, ModelResource*> _modelResources;
 	std::unordered_map<unsigned int, TextureResource*> _textureResources;

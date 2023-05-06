@@ -28,11 +28,16 @@ ResourceManager& ResourceManager::GetInstance() {
 }
 void ResourceManager::DestroyInstance() {
 
-	 // VErifica aici daca e okay sa dai doar clear, fara sa apelzi delete pt fiecare
+	// VErifica aici daca e okay sa dai doar clear, fara sa apelzi delete pt fiecare
 
-	_modelResources.clear();
-	_shaderResources.clear();
-	_textureResources.clear();
+
+	Clear(_modelResources);
+	Clear(_shaderResources);
+	Clear(_textureResources);
+
+	Clear(_models);
+	Clear(_textures);
+	Clear(_shaders);
 
 	if (_spInstance)
 		delete _spInstance;
@@ -55,31 +60,31 @@ int ResourceManager::Init() {
 
 	content = buffer.str();
 	doc.parse<0>(&content[0]);
-	_pRoot = doc.first_node();
+	rapidxml::xml_node<>* pRoot = doc.first_node();
 
-	 
-	res = InitModels();
+
+	res = InitModels(pRoot);
 	if (res != MY_SUCCES_CODE)
 		return res;
-	res = InitShaders();
+	res = InitShaders(pRoot);
 	if (res != MY_SUCCES_CODE)
 		return res;
-	res = InitTextures();
+	res = InitTextures(pRoot);
 	if (res != MY_SUCCES_CODE)
 		return res;
 
 	return MY_SUCCES_CODE;
 }
 
-int ResourceManager::InitModels() {
+int ResourceManager::InitModels(rapidxml::xml_node<>* pRoot) {
 
-	if (_pRoot == nullptr) {
+	if (pRoot == nullptr) {
 		std::cout << "pRoot for xml parser is nullptr" << std::endl;
 		return MY_ERROR_CODE;
 	}
 
 	std::string path;
-	rapidxml::xml_node<>* pNode = _pRoot->first_node(ResourceManager::Elements::ModelsRoot.c_str());
+	rapidxml::xml_node<>* pNode = pRoot->first_node(ResourceManager::Elements::ModelsRoot.c_str());
 	//get in every <folder>
 	for (rapidxml::xml_node<>* resourceNode = pNode->first_node(); resourceNode; resourceNode = resourceNode->next_sibling())
 	{
@@ -121,22 +126,22 @@ int ResourceManager::InitModels() {
 				}
 				tempModel->Filename = fileNode->value();
 			}
-			
+
 			_modelResources.insert({ tempModel->ID, tempModel });
 		}
 	}
 
 	return MY_SUCCES_CODE;
 }
-int ResourceManager::InitShaders() {
+int ResourceManager::InitShaders(rapidxml::xml_node<>* pRoot) {
 
-	if (_pRoot == nullptr) {
+	if (pRoot == nullptr) {
 		std::cout << "pRoot for xml parser is nullptr" << std::endl;;
 		return MY_ERROR_CODE;
 	}
 
 	std::string path;
-	rapidxml::xml_node<>* pNode = _pRoot->first_node(ResourceManager::Elements::ShadersRoot.c_str());
+	rapidxml::xml_node<>* pNode = pRoot->first_node(ResourceManager::Elements::ShadersRoot.c_str());
 
 	//get in every <folder>
 	for (rapidxml::xml_node<>* resourceNode = pNode->first_node(); resourceNode; resourceNode = resourceNode->next_sibling())
@@ -194,16 +199,16 @@ int ResourceManager::InitShaders() {
 
 	return MY_SUCCES_CODE;
 }
-int ResourceManager::InitTextures() {
+int ResourceManager::InitTextures(rapidxml::xml_node<>* pRoot) {
 
-	if (_pRoot == nullptr) {
+	if (pRoot == nullptr) {
 		std::cout << "pRoot for xml parser is nullptr" << std::endl;;
 		return MY_ERROR_CODE;
 	}
 
 	std::string path;
 
-	rapidxml::xml_node<>* pNode = _pRoot->first_node(ResourceManager::Elements::TexturesRoot.c_str());
+	rapidxml::xml_node<>* pNode = pRoot->first_node(ResourceManager::Elements::TexturesRoot.c_str());
 
 	//get in every <folder>
 	for (rapidxml::xml_node<>* resourceNode = pNode->first_node(); resourceNode; resourceNode = resourceNode->next_sibling())
@@ -237,7 +242,7 @@ int ResourceManager::InitTextures() {
 					std::cout << "Wrong texture attribute, expected if or type!" << std::endl;
 					return MY_ERROR_CODE;
 				}
-				
+
 			}
 
 			// get in every property
@@ -324,7 +329,7 @@ Shader* ResourceManager::LoadShader(unsigned int id) {
 	auto itResources = _shaderResources.find(id);
 	if (itResources == _shaderResources.end()) {
 		std::cout << "Resursa pentru shader-ul cu ID-ul " << id << " nu exista!" << std::endl;
-	return nullptr;
+		return nullptr;
 	}
 
 	Shader* shader = new Shader();
