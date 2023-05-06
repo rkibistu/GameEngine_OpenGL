@@ -57,6 +57,9 @@
     <ClCompile Include="src\SceneObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rapidXML\rapidxml.hpp">
@@ -122,6 +125,9 @@
     <ClInclude Include="src\SceneObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="pcviewer_es2.cfg" />
@@ -136,5 +142,7 @@
     <Xml Include="Resources\XMLs\exemplu_xml.xml" />
     <Xml Include="Resources\XMLs\file_stored.xml" />
     <Xml Include="Resources\XMLs\Modified.xml" />
+    <Xml Include="Resources\XMLs\resourceManager.xml" />
+    <Xml Include="Resources\XMLs\sceneManager.xml" />
   </ItemGroup>
 </Project>

@@ -11,6 +11,10 @@ struct ModelResource {
 	std::vector<GLushort> Indices;
 	std::vector<GLushort> WiredIndices;
 
+	unsigned int ID;
+	std::string Path;
+	std::string Filename;
+
 	ModelResource(std::vector<Vertex> vertices, std::vector<GLushort> indices, std::vector<GLushort> wiredIndices)
 	 : Vertices(vertices), Indices(indices), WiredIndices(wiredIndices) {
 

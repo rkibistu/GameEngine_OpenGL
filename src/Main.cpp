@@ -26,6 +26,7 @@
 
 #include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 
+#include "ResourceManager.h"
 
 
 #define PI 3.14f
@@ -74,8 +75,8 @@ int Init(ESContext* esContext)
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_BLEND);
+//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//intit global values
 	g_moveDirection = Vector3();
@@ -95,7 +96,7 @@ void Draw(ESContext* esContext)
 
 		g_sceneObject->Draw(g_camera);
 		
-		g_sceneObject2->Draw(g_camera);
+		//g_sceneObject2->Draw(g_camera);
 		
 	}
 	else {
@@ -304,7 +305,10 @@ static void LoadModel() {
 
 static void TestXml() {
 
-	ParserXML::TestRapidXml();
+	//ParserXML::TestRapidXml();
+
+	ResourceManager resourceManager;
+	resourceManager.LoadResources();
 }
 
 int _tmain(int argc, _TCHAR* argv[])

@@ -10,6 +10,11 @@
 			</model>
 		</folder>
 
+		<folder path="Res/Models2/">
+			<model id="1001">
+				<file>altceva.nfg</file>
+			</model>
+		</folder>
 		<!-- un tag folder doar specifica folderul comun pentru un grup de modele (pot sa le am in mai multe foldere)
 		<folder path="Res/Models2/">
 			<model id="1001">

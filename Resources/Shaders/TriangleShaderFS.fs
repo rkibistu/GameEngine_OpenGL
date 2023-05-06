@@ -10,6 +10,9 @@ void main()
 {
 	//gl_FragColor = vec4(v_color, 1.0);
 
-	vec4 texColor = texture2D(u_Texture, v_texCoord);;
+	vec4 texColor = texture2D(u_Texture, v_texCoord);
+
+	if(texColor.a < 0.2)
+		discard;
 	gl_FragColor = texColor;
 }
