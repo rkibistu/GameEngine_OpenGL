@@ -48,10 +48,11 @@ int ResourceManager::Init() {
 	int res;
 	std::stringstream buffer;
 	std::string content;
-	rapidxml::xml_document<> doc;
+	rapidxml::xml_document<>* doc = new rapidxml::xml_document<>();
 	std::fstream file(_configureFilepath);
 	if (!file.is_open()) {
 		std::cout << "Configure file '" << _configureFilepath << "' doesn't exist!" << std::endl;
+		delete doc;
 		return MY_ERROR_CODE;
 	}
 
@@ -59,20 +60,28 @@ int ResourceManager::Init() {
 	file.close();
 
 	content = buffer.str();
-	doc.parse<0>(&content[0]);
-	rapidxml::xml_node<>* pRoot = doc.first_node();
+	doc->parse<0>(&content[0]);
+	rapidxml::xml_node<>* pRoot = doc->first_node();
 
 
 	res = InitModels(pRoot);
-	if (res != MY_SUCCES_CODE)
+	if (res != MY_SUCCES_CODE) {
+		delete doc;
 		return res;
+	}
 	res = InitShaders(pRoot);
-	if (res != MY_SUCCES_CODE)
+	if (res != MY_SUCCES_CODE) {
+		delete doc;
 		return res;
+	}
 	res = InitTextures(pRoot);
-	if (res != MY_SUCCES_CODE)
+	if (res != MY_SUCCES_CODE) {
+		delete doc;
 		return res;
+	}
 
+
+	delete doc;
 	return MY_SUCCES_CODE;
 }
 
@@ -103,8 +112,6 @@ int ResourceManager::InitModels(rapidxml::xml_node<>* pRoot) {
 		{
 			ModelResource* tempModel = new ModelResource();
 			tempModel->Path = path;
-
-			std::cout << "Node: " << modelNode->name() << " " << modelNode->value() << std::endl;
 
 			//get the IDs
 			for (rapidxml::xml_attribute<>* pAttr = modelNode->first_attribute(); pAttr; pAttr = pAttr->next_attribute())

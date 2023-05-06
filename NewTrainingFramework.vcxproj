@@ -169,6 +169,7 @@
     <ClCompile Include="src\ParserXML.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
+    <ClCompile Include="src\SceneManagerXmlParser.cpp" />
     <ClCompile Include="src\SceneObject.cpp" />
     <ClCompile Include="src\Shaders.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="src\ParserXML.h" />
     <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\SceneManager.h" />
+    <ClInclude Include="src\SceneManagerXmlParser.h" />
     <ClInclude Include="src\SceneObject.h" />
     <ClInclude Include="src\Shaders.h" />
     <ClInclude Include="src\ShadersMacros.h" />

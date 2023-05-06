@@ -18,9 +18,7 @@ void SceneManager::DestroyInstance() {
 
 void SceneManager::Init() {
 
-	ResourceManager& resourceManager = ResourceManager::GetInstance();
 
-
-
-	
+	_xmlParser.Init("Resources/XMLs/sceneManager.xml");
+	_xmlParser.ReadObjects(_sceneObjects);
 }

@@ -1,9 +1,10 @@
 #pragma once
 #include "stdafx.h"
 #include "SceneObject.h"
+#include "SceneManagerXmlParser.h"
 
 #include <unordered_map>
-#include <rapidXML/rapidxml.hpp>
+
 
 class SceneManager {
 
@@ -16,6 +17,8 @@ public:
 
 private:
 
+	
+
 private:
 	static SceneManager* _spInstance;
 	SceneManager() { ; }
@@ -24,5 +27,6 @@ private:
 
 	std::unordered_map<unsigned int, SceneObject*> _sceneObjects;
 
-	
+	SceneManagerXmlParser _xmlParser;
+
 };

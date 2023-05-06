@@ -21,6 +21,10 @@ public:
 	void SetModel(Model* model);
 	void SetShader(Shader* shader);
 	void AddTexture(Texture* texture);
+
+	inline void SetId(unsigned int id) { _id = id; }
+	inline unsigned int GetId() { return _id; }
+
 private:
 	unsigned int _id;
 	bool _depthTest;

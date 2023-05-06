@@ -27,6 +27,7 @@
 #include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 
 #include "ResourceManager.h"
+#include "SceneManager.h"
 
 
 #define PI 3.14f
@@ -71,11 +72,16 @@ SceneObject* g_sceneObject2;
 
 
 ResourceManager& resourceManager = ResourceManager::GetInstance();
+SceneManager& sceneManager = SceneManager::GetInstance();
 
 int Init(ESContext* esContext)
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
+
+	resourceManager.Init();
+	sceneManager.Init();
+
 
 	//glEnable(GL_BLEND);
 //	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -306,8 +312,6 @@ static void TestXml() {
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	resourceManager.Init();
-
 
 	g_camera = new Camera(
 		Vector3(0, 0, 0),
@@ -326,11 +330,14 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	if (Init(&esContext) != 0)
 		return 0;
+	
+	
+	
 
 	LoadModel();
 	InitTexture();
 
-
+	
 
 	g_sceneObject = new SceneObject();
 	g_sceneObject->SetModel(g_model1);
