@@ -5,8 +5,17 @@
 #include "Utilities/utilities.h"
 
 struct TextureResource {
-
+	
+	unsigned int ID;
 	std::string Path;
+	std::string Filename;
+
+	std::string Type;
+
+	std::string MinFilter;
+	std::string MagFilter;
+	std::string WrapS;
+	std::string WrapT;
 };
 
 class Texture{

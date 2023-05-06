@@ -1,5 +1,7 @@
 #pragma once
 
+
+
 #include <vector>
 #include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 
@@ -15,10 +17,11 @@ struct ModelResource {
 	std::string Path;
 	std::string Filename;
 
-	ModelResource(std::vector<Vertex> vertices, std::vector<GLushort> indices, std::vector<GLushort> wiredIndices)
+
+	/*ModelResource(std::vector<Vertex> vertices, std::vector<GLushort> indices, std::vector<GLushort> wiredIndices)
 	 : Vertices(vertices), Indices(indices), WiredIndices(wiredIndices) {
 
-	}
+	}*/
 };
 
 class Model{
@@ -43,6 +46,7 @@ private:
 
 private:
 	ModelResource* _modelResource;
+	
 	GLuint _iboid; //index buffer
 	GLuint _iboidWired; //index buffer
 	GLuint _vboid; //vertex buffer

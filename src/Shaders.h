@@ -6,8 +6,11 @@
 
 struct ShaderResources {
 
-	std::string VertexShaderPath;
-	std::string FragmentShaderPath;
+	unsigned int ID;
+
+	std::string Path;
+	std::string VertexShaderFilename;
+	std::string FragmentShaderFilename;
 };
 
 class Shader 

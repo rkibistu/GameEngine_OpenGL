@@ -35,8 +35,10 @@ void Model::Load(std::string filepath) {
 	}
 
 	CreateWiredindicesBuffer(indices, wiredIndices);
-	_modelResource = new ModelResource(vertices,indices,wiredIndices);
-
+	_modelResource = new ModelResource();
+	_modelResource->Vertices = vertices;
+	_modelResource->Indices = indices;
+	_modelResource->WiredIndices = wiredIndices;
 
 	FillVerticesColor();
 	

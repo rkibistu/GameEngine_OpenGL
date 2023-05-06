@@ -307,8 +307,8 @@ static void TestXml() {
 
 	//ParserXML::TestRapidXml();
 
-	ResourceManager resourceManager;
-	resourceManager.LoadResources();
+	ResourceManager& resourceManager = ResourceManager::GetInstance();
+	resourceManager.Init();
 }
 
 int _tmain(int argc, _TCHAR* argv[])
