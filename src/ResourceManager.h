@@ -8,6 +8,7 @@
 #include "Model.h"
 #include "Texture.h"
 #include "Shaders.h"
+#include "Defines.h"
 
 class ResourceManager {
 public:
@@ -34,7 +35,7 @@ public:
 	static ResourceManager& GetInstance();
 	void DestroyInstance();
 
-	void Init();
+	int Init();
 
 	Model* GetModel(unsigned int id);
 	Shader* GetShader(unsigned int id);
@@ -44,9 +45,9 @@ public:
 private:
 
 	//read them from xml
-	void InitModels();
-	void InitShaders();
-	void InitTextures();
+	int InitModels();
+	int InitShaders();
+	int InitTextures();
 
 	Model* LoadModel(unsigned int id);
 	Shader* LoadShader(unsigned int id);
@@ -64,7 +65,6 @@ private:
 	ResourceManager& operator= (const ResourceManager&) = delete;
 
 	std::string _configureFilepath = "Resources/XMLs/resourceManager.xml";
-	std::fstream _configureFile;
 
 	rapidxml::xml_node<>* _pRoot = nullptr;
 

@@ -26,7 +26,7 @@ public:
 	Texture();
 	~Texture();
 
-	void Load(TextureResource* textureResource);
+	int Load(TextureResource* textureResource);
 
 	void Bind(int slot);
 	void Unbind();

@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "Defines.h"
 
 #include <vector>
 #include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
@@ -18,11 +18,6 @@ struct ModelResource {
 	std::string Filename;
 
 	std::string FilePath() { return Path + Filename; }
-
-	/*ModelResource(std::vector<Vertex> vertices, std::vector<GLushort> indices, std::vector<GLushort> wiredIndices)
-	 : Vertices(vertices), Indices(indices), WiredIndices(wiredIndices) {
-
-	}*/
 };
 
 class Model{
@@ -31,7 +26,7 @@ public:
 	Model();
 	~Model();
 
-	void Load(ModelResource* modelResurce);
+	int Load(ModelResource* modelResurce);
 	void BindFilled();
 	void BindWired();
 	void Unbind();

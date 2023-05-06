@@ -38,31 +38,45 @@ void ResourceManager::DestroyInstance() {
 		delete _spInstance;
 }
 
-void ResourceManager::Init() {
+int ResourceManager::Init() {
 
+	int res;
 	std::stringstream buffer;
 	std::string content;
 	rapidxml::xml_document<> doc;
-	_configureFile.open(_configureFilepath);
-	if (!_configureFile.is_open()) {
+	std::fstream file(_configureFilepath);
+	if (!file.is_open()) {
 		std::cout << "Configure file '" << _configureFilepath << "' doesn't exist!" << std::endl;
-		return;
+		return MY_ERROR_CODE;
 	}
 
-	buffer << _configureFile.rdbuf();
-	_configureFile.close();
+	buffer << file.rdbuf();
+	file.close();
 
 	content = buffer.str();
 	doc.parse<0>(&content[0]);
 	_pRoot = doc.first_node();
 
 	 
-	InitModels();
-	InitShaders();
-	InitTextures();
+	res = InitModels();
+	if (res != MY_SUCCES_CODE)
+		return res;
+	res = InitShaders();
+	if (res != MY_SUCCES_CODE)
+		return res;
+	res = InitTextures();
+	if (res != MY_SUCCES_CODE)
+		return res;
+
+	return MY_SUCCES_CODE;
 }
 
-void ResourceManager::InitModels() {
+int ResourceManager::InitModels() {
+
+	if (_pRoot == nullptr) {
+		std::cout << "pRoot for xml parser is nullptr" << std::endl;
+		return MY_ERROR_CODE;
+	}
 
 	std::string path;
 	rapidxml::xml_node<>* pNode = _pRoot->first_node(ResourceManager::Elements::ModelsRoot.c_str());
@@ -74,7 +88,7 @@ void ResourceManager::InitModels() {
 		{
 			if (pAttr->name() != Elements::Path) {
 				std::cout << "Wrong path attribute!" << std::endl;
-				return;
+				return MY_ERROR_CODE;
 			}
 			path = pAttr->value();
 		}
@@ -92,7 +106,7 @@ void ResourceManager::InitModels() {
 			{
 				if (pAttr->name() != Elements::Id) {
 					std::cout << "Wrong id attribute!" << std::endl;
-					return;
+					return MY_ERROR_CODE;
 				}
 				tempModel->ID = atoi(pAttr->value());
 			}
@@ -103,21 +117,23 @@ void ResourceManager::InitModels() {
 				//get the files
 				if (fileNode->name() != Elements::Filename) {
 					std::cout << "Wrong node, expecting file!" << std::endl;
-					return;
+					return MY_ERROR_CODE;
 				}
 				tempModel->Filename = fileNode->value();
 			}
 			
 			_modelResources.insert({ tempModel->ID, tempModel });
 		}
-
-		std::cout << std::endl;
 	}
 
-	std::cout << std::endl;
-
+	return MY_SUCCES_CODE;
 }
-void ResourceManager::InitShaders() {
+int ResourceManager::InitShaders() {
+
+	if (_pRoot == nullptr) {
+		std::cout << "pRoot for xml parser is nullptr" << std::endl;;
+		return MY_ERROR_CODE;
+	}
 
 	std::string path;
 	rapidxml::xml_node<>* pNode = _pRoot->first_node(ResourceManager::Elements::ShadersRoot.c_str());
@@ -132,7 +148,7 @@ void ResourceManager::InitShaders() {
 			//std::cout << "Attr: " << pAttr->name() << " " << pAttr->value() << std::endl;
 			if (pAttr->name() != Elements::Path) {
 				std::cout << "Wrong path attribute!" << std::endl;
-				return;
+				return MY_ERROR_CODE;
 			}
 			path = pAttr->value();
 		}
@@ -148,7 +164,7 @@ void ResourceManager::InitShaders() {
 			{
 				if (pAttr->name() != Elements::Id) {
 					std::cout << "Wrong id attribute!" << std::endl;
-					return;
+					return MY_ERROR_CODE;
 				}
 				tempShader->ID = atoi(pAttr->value());
 			}
@@ -168,14 +184,22 @@ void ResourceManager::InitShaders() {
 				}
 				else {
 					std::cout << "Wrong node, expected VS or FS" << std::endl;
+					return MY_ERROR_CODE;
 				}
 			}
 
 			_shaderResources.insert({ tempShader->ID,tempShader });
 		}
 	}
+
+	return MY_SUCCES_CODE;
 }
-void ResourceManager::InitTextures() {
+int ResourceManager::InitTextures() {
+
+	if (_pRoot == nullptr) {
+		std::cout << "pRoot for xml parser is nullptr" << std::endl;;
+		return MY_ERROR_CODE;
+	}
 
 	std::string path;
 
@@ -189,7 +213,7 @@ void ResourceManager::InitTextures() {
 		{
 			if (pAttr->name() != Elements::Path) {
 				std::cout << "Wrong path attribute!" << std::endl;
-				return;
+				return MY_ERROR_CODE;
 			}
 			path = pAttr->value();
 		}
@@ -211,7 +235,7 @@ void ResourceManager::InitTextures() {
 				}
 				else {
 					std::cout << "Wrong texture attribute, expected if or type!" << std::endl;
-					return;
+					return MY_ERROR_CODE;
 				}
 				
 			}
@@ -242,16 +266,15 @@ void ResourceManager::InitTextures() {
 				}
 				else {
 					std::cout << "Wrong node, expected file, min_filter, mag_filter, wrap_s, wrap_t" << std::endl;
+					return MY_ERROR_CODE;
 				}
 			}
 
 			_textureResources.insert({ tempTexture->ID,tempTexture });
 		}
-
-		std::cout << std::endl;
 	}
 
-	std::cout << std::endl;
+	return MY_SUCCES_CODE;
 }
 
 Model* ResourceManager::GetModel(unsigned int id) {

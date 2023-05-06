@@ -9,18 +9,9 @@ SceneObject::SceneObject()
 
 SceneObject::~SceneObject(){
 
-	if (_model) {
-		delete _model;
-	}
-	if (_shader) {
-		delete _shader;
-	}
-	for (int i = 0; i < _textureResources.size(); i++) {
-
-		if (_textureResources[i])
-			delete _textureResources[i];
-	}
-	_textureResources.clear();
+	//i dont want to free the pointers here, because they are create in Resource manager
+	/// they can be used later or by more SceneObjects
+	//	they will be destroyd bu ResourceManager when it is the case
 }
 
 void SceneObject::Draw(Camera* camera) {
@@ -68,15 +59,12 @@ void SceneObject::DrawWired(Camera* camera) {
 }
 
 void SceneObject::SetModel(Model* model){
-	if (_model)
-		delete _model;
+
 	_model = model;
 }
 
 void SceneObject::SetShader(Shader* shader){
 
-	if (_shader)
-		delete _shader;
 	_shader = shader;
 }
 

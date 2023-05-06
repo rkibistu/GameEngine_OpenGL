@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Texture.h"
 
+#include "Defines.h"
 
 
 Texture::Texture(){
@@ -16,8 +17,9 @@ Texture::~Texture(){
 	glDeleteTextures(1, &_textureId);
 }
 
-void Texture::Load(TextureResource* textureResource){
+int Texture::Load(TextureResource* textureResource){
 
+	bool res;
 	unsigned char* imgBuffer = nullptr;
 	int textureWidth, textureHeight;
 	GLenum BPP = 0;
@@ -25,8 +27,9 @@ void Texture::Load(TextureResource* textureResource){
 	_textureResource = textureResource;
 
 	//load img
-	loadTGA(_textureResource->FilePath().c_str(), &textureWidth, &textureHeight, &BPP, &imgBuffer);
-
+	res = loadTGA(_textureResource->FilePath().c_str(), &textureWidth, &textureHeight, &BPP, &imgBuffer);
+	if (res == false)
+		return MY_ERROR_CODE;
 	//configure texture
 	
 	glBindTexture(GL_TEXTURE_2D, _textureId);
@@ -38,9 +41,9 @@ void Texture::Load(TextureResource* textureResource){
 
 	glTexImage2D(GL_TEXTURE_2D, 0, BPP, textureWidth, textureHeight, 0, BPP, GL_UNSIGNED_BYTE, imgBuffer);
 
-
-
 	free(imgBuffer);
+
+	return MY_SUCCES_CODE;
 }
 
 void Texture::Bind(int slot){

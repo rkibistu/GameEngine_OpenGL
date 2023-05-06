@@ -20,7 +20,7 @@ Model::~Model() {
 		delete _modelResource;
 }
 
-void Model::Load(ModelResource* modelResurce) {
+int Model::Load(ModelResource* modelResurce) {
 
 	int res;
 	std::vector<Vertex> vertices;
@@ -33,7 +33,7 @@ void Model::Load(ModelResource* modelResurce) {
 	res = parser.Load(_modelResource->FilePath(), vertices, indices);
 	if (res != NFG_SUCCES) {
 		std::cout << parser.GetError() << std::endl;
-		return;
+		return MY_ERROR_CODE;
 	}
 
 	CreateWiredindicesBuffer(indices, wiredIndices);
@@ -57,6 +57,8 @@ void Model::Load(ModelResource* modelResurce) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _iboidWired);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _modelResource->WiredIndices.size() * sizeof(GLushort), _modelResource->WiredIndices.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	return MY_SUCCES_CODE;
 }
 
 void Model::BindFilled() {
