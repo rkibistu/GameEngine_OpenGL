@@ -1,3 +1,5 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  SceneManager.cpp
+  Main.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Main.cpp(222,34): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Main.cpp(222,31): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
   NewTrainingFramework.vcxproj -> E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\BIN-Nvidia\NewTrainingFramework.exe

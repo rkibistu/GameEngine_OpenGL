@@ -32,6 +32,7 @@
 #define TARGET_NODE "target"
 #define UP_NODE "up"
 #define TRANSLATION_SPEED_NODE "translationSpeed"
+#define ROTATION_SPEED_NODE "rotationSpeed"
 #define FOV_NODE "fov"
 #define NEAR_CLIP_NODE "near"
 #define FAR_CLIP_NODE "far"

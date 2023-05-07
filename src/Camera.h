@@ -35,6 +35,9 @@ public:
 	inline void SetDeltaTime(float deltaTime) { _deltaTime = deltaTime; }
 	inline float GetDeltaTime() { return _deltaTime; }
 
+	inline void SetMoveSpeed(float value) { _moveSpeed = value; }
+	inline void SetRotationSpeed(float value) { _rotationSpeed = value; }
+
 	inline Matrix GetMVP() { return _viewMatrix * _projMatrix; }
 	//inline Matrix GetMVP() { return _projMatrix; }
 

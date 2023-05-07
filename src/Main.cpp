@@ -64,6 +64,7 @@ void Update(ESContext* esContext, float deltaTime)
 		return;
 
 	g_camera->SetDeltaTime(g_deltaTimer);
+	sceneManager.GetActiveCamera()->SetDeltaTime(g_deltaTimer);
 	g_deltaTimer = 0;
 
 
@@ -81,6 +82,8 @@ void Update(ESContext* esContext, float deltaTime)
 	g_camera->Move(g_moveDirection);
 	g_camera->Rotate(g_rotationDirection);
 
+	sceneManager.GetActiveCamera()->Move(g_moveDirection);
+	sceneManager.GetActiveCamera()->Rotate(g_rotationDirection);
 
 
 	//g_camera->RotateOX(1);

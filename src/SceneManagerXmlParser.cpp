@@ -172,6 +172,7 @@ Camera* SceneManagerXmlParser::ReadCamera(rapidxml::xml_node<>* ccameraNode) {
 
 	Vector3 position, target, up;
 	float fov, nearClip, farClip;
+	float translationSpeed, rotationSpeed;
 	for (rapidxml::xml_node<>* node = ccameraNode->first_node(); node; node = node->next_sibling()) {
 		if (strcmp(node->name(), COMMENT_NODE) == 0)
 			continue;
@@ -183,9 +184,14 @@ Camera* SceneManagerXmlParser::ReadCamera(rapidxml::xml_node<>* ccameraNode) {
 		ReadFloat(node, FOV_NODE, fov);
 		ReadFloat(node, NEAR_CLIP_NODE, nearClip);
 		ReadFloat(node, FAR_CLIP_NODE, farClip);
+
+		ReadFloat(node, TRANSLATION_SPEED_NODE, translationSpeed);
+		ReadFloat(node, ROTATION_SPEED_NODE, rotationSpeed);
 	}
 
 	camera->Init(position, target, up, fov, nearClip, farClip);
+	camera->SetMoveSpeed(translationSpeed);
+	camera->SetRotationSpeed(rotationSpeed);
 	return camera;
 }
 void SceneManagerXmlParser::ReadVector3(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result) {

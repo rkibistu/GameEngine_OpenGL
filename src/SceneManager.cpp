@@ -23,7 +23,7 @@ void SceneManager::Init() {
 	_xmlParser.ReadObjects(_sceneObjects);
 	_xmlParser.ReadCameras(_cameras, &_activeCamera);
 }
-void SceneManager::Draw(Camera* camera) {
+void SceneManager::Draw(Camera* oldCamera) {
 
 	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
 
