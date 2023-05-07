@@ -15,7 +15,7 @@ public:
 
 	void Init();
 
-	void Draw(Camera* oldCamera);
+	void Draw();
 
 	inline Camera* GetActiveCamera() { return _activeCamera; }
 

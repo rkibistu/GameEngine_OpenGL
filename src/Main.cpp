@@ -19,7 +19,6 @@
 GLfloat g_rotationAngle = 0.0f;
 GLfloat g_pasAngle = 0.005f;
 
-Camera* g_camera;
 Vector3 g_moveDirection;
 Vector3 g_rotationDirection;
 
@@ -52,7 +51,7 @@ void Draw(ESContext* esContext)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	sceneManager.Draw(g_camera);
+	sceneManager.Draw();
 
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
@@ -63,7 +62,6 @@ void Update(ESContext* esContext, float deltaTime)
 	if (g_deltaTimer < g_deltaThreshold)
 		return;
 
-	g_camera->SetDeltaTime(g_deltaTimer);
 	sceneManager.GetActiveCamera()->SetDeltaTime(g_deltaTimer);
 	g_deltaTimer = 0;
 
@@ -77,18 +75,9 @@ void Update(ESContext* esContext, float deltaTime)
 	else
 		g_rotationDirection = Vector3();
 
-	//g_camera->PrintInfo();
-
-	g_camera->Move(g_moveDirection);
-	g_camera->Rotate(g_rotationDirection);
 
 	sceneManager.GetActiveCamera()->Move(g_moveDirection);
 	sceneManager.GetActiveCamera()->Rotate(g_rotationDirection);
-
-
-	//g_camera->RotateOX(1);
-	//g_camera->RotateOY(1);
-	//g_camera->RotateOZ(1);
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
@@ -238,12 +227,6 @@ void CleanUp()
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	g_camera = new Camera(
-		Vector3(0, 0, 0),
-		Vector3(0, 0, -1),
-		Vector3(0, 1, 0)
-	);
-
 	//identifying memory leaks
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
@@ -267,11 +250,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	CleanUp();
 ;
 
-	
-
 	printf("Press any key...\n");
 	_getch();
-
 
 
 
