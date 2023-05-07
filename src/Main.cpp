@@ -237,7 +237,7 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	g_camera = new Camera(
 		Vector3(0, 0, 0),
-		Vector3(0, 0, 1),
+		Vector3(0, 0, -1),
 		Vector3(0, 1, 0)
 	);
 

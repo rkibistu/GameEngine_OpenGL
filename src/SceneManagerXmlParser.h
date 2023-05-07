@@ -11,6 +11,7 @@
 #define OBJECTS_ROOT "objects"
 #define CONTROLS_ROOT "controls"
 #define CAMERAS_ROOT "cameras"
+#define ACTIVE_CAMERA_NODE "activeCamera"
 
 #define COMMENT_NODE "comment"
 #define OBJECT_NODE "object"
@@ -27,6 +28,13 @@
 #define X_AX_NODE "x"
 #define Y_AX_NODE "y"
 #define Z_AX_NODE "z"
+#define POSITION_NODE "position"
+#define TARGET_NODE "target"
+#define UP_NODE "up"
+#define TRANSLATION_SPEED_NODE "translationSpeed"
+#define FOV_NODE "fov"
+#define NEAR_CLIP_NODE "near"
+#define FAR_CLIP_NODE "far"
 
 #define ID_ATTRIBUTE "id"
 
@@ -36,17 +44,21 @@ public:
 	int Init(std::string filepath);
 
 	int ReadObjects(std::unordered_map<unsigned int, SceneObject*>& sceneObjects);
-
+	int ReadCameras(std::unordered_map<unsigned int, Camera*>& camers, Camera** activeCamera);
 private:
 
 	SceneObject* ReadSceneObject(rapidxml::xml_node<>* objectNode);
-
 	//check if is model_node -> update sceneObject if true
 	void ReadModel(rapidxml::xml_node<>* node, SceneObject* sceneObject);
 	void ReadShader(rapidxml::xml_node<>* node, SceneObject* sceneObject);
 	void ReadTextures(rapidxml::xml_node<>* node, SceneObject* sceneObject);
 
+	Camera* ReadCamera(rapidxml::xml_node<>* ccameraNode);
 
+
+	//functia asta primeste nodul pentru care cuatam copii, numele nodului copil cuatat si un vector3 unde sa puen rezzultatul
+	void ReadVector3(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result);
+	void ReadFloat(rapidxml::xml_node<>* node, std::string nodeName, float& result);
 private:
 	//Pastram pointeri spre locurile importante din XML
 	// Ma gandesc ca daca creez un obiect la runtime, vreau sa il scriu in fisier
@@ -57,17 +69,7 @@ private:
 	rapidxml::xml_node<>* _objectsRoot;
 	rapidxml::xml_node<>* _controlsRoot;
 	rapidxml::xml_node<>* _camerasRoot;
+	rapidxml::xml_node<>* _activeCameraNode;
 
-	
 
-	std::unordered_map<std::string, int> _objectNodes = {
-		{MODEL_NODE,	1},
-		{SHADER_NODE,	2},
-		{TYPE_NODE,		3},
-		{NAME_NODE,		4},
-		{TEXTURES_NODE,	5},
-		{POSITION_NODE,	6},
-		{ROTATION_NODE,	7},
-		{SCALE_NODE,	8},
-	};
 };

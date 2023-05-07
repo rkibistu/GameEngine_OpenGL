@@ -4,34 +4,12 @@
 
 class Camera
 {
-private:
 
-	Vector3 _position;
-	Vector3 _target;
-	Vector3 _up;
-
-	float _moveSpeed;
-	float _rotationSpeed;
-
-	float _deltaTime;
-	
-	GLfloat _nearClip;
-	GLfloat _farClip;
-	GLfloat _fov;
-	GLfloat _aspectRatio;
-
-	Vector3 _xAxis;
-	Vector3 _yAxis;
-	Vector3 _zAxis;
-
-	Matrix _worldMatrix; //g_camera transform
-	Matrix _viewMatrix;; //inverse of world matrix
-
-	Matrix _projMatrix;
 public:
-
+	Camera() { ; }
 	Camera(Vector3 position, Vector3 target, Vector3 up);
-
+	
+	void Init(Vector3 position, Vector3 target, Vector3 up, float fov, float nearClip, float farClip);
 
 	void PrintInfo();
 
@@ -51,6 +29,8 @@ public:
 	void SetPerspective(GLfloat fov, GLfloat aspectRatio, GLfloat nearClip, GLfloat farClip);
 
 	
+	inline void SetId(unsigned int id) { _ID = id; }
+	inline unsigned int GetId() { return _ID; }
 
 	inline void SetDeltaTime(float deltaTime) { _deltaTime = deltaTime; }
 	inline float GetDeltaTime() { return _deltaTime; }
@@ -73,5 +53,31 @@ private:
 
 	void TranslateToOrigin();
 	void TranslateToPosition(Vector3 position);
+private:
+
+	unsigned int _ID;
+
+	Vector3 _position;
+	Vector3 _target;
+	Vector3 _up;
+
+	float _moveSpeed;
+	float _rotationSpeed;
+
+	float _deltaTime;
+
+	GLfloat _nearClip;
+	GLfloat _farClip;
+	GLfloat _fov;
+	GLfloat _aspectRatio;
+
+	Vector3 _xAxis;
+	Vector3 _yAxis;
+	Vector3 _zAxis;
+
+	Matrix _worldMatrix; //g_camera transform
+	Matrix _viewMatrix;; //inverse of world matrix
+
+	Matrix _projMatrix;
 };
 

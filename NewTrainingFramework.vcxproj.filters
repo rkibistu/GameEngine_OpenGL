@@ -149,6 +149,8 @@
     <None Include="NewTrainingFramework.vcproj" />
     <None Include="Resources\Shaders\TriangleShaderVS.vs" />
     <None Include="Resources\Shaders\TriangleShaderFS.fs" />
+    <None Include="Resources\Shaders\BasicColorShaderFS.fs" />
+    <None Include="Resources\Shaders\BasicColorShaderVS.vs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />

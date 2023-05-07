@@ -114,7 +114,7 @@
 		<object id="3">
 			
 			<model>5</model>
-			<shader>10</shader>
+			<shader>20</shader>
 			<type>normal</type>
 			<wired/>
 			<name>Mesh_minge</name>

@@ -22,7 +22,22 @@ Camera::Camera(Vector3 position, Vector3 target, Vector3 up)
 }
 
 
+void Camera::Init(Vector3 position, Vector3 target, Vector3 up, float fov, float nearClip, float farClip) {
 
+	_position = position;
+	_target = target;
+	_up = up;
+	_fov = fov;
+	_nearClip = nearClip;
+	_farClip = farClip;
+
+	_aspectRatio = 800.0f / 600.0f;
+
+	_projMatrix.SetPerspective(_fov, _aspectRatio, _nearClip, _farClip);
+
+	UpdateAxis();
+	UpdateWorldView();
+}
 
 void Camera::PrintInfo() {
 

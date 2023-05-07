@@ -206,6 +206,8 @@
   <ItemGroup>
     <None Include="NewTrainingFramework.vcproj" />
     <None Include="pcviewer_es2.cfg" />
+    <None Include="Resources\Shaders\BasicColorShaderFS.fs" />
+    <None Include="Resources\Shaders\BasicColorShaderVS.vs" />
     <None Include="Resources\Shaders\TriangleShaderFS.fs" />
     <None Include="Resources\Shaders\TriangleShaderVS.vs" />
   </ItemGroup>

@@ -28,6 +28,8 @@ private:
 	SceneManager& operator= (const SceneManager&) = delete;
 
 	std::unordered_map<unsigned int, SceneObject*> _sceneObjects;
+	std::unordered_map<unsigned int, Camera*> _cameras;
+	Camera* _activeCamera;
 
 	SceneManagerXmlParser _xmlParser;
 
