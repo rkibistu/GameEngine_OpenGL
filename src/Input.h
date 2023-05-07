@@ -40,6 +40,9 @@ public:
 	//true one frame when key is released
 	static bool GetKeyUp(unsigned char key);
 
+
+	static float GetAxis(std::string axis);
+
 private:
 	Input() { ; }
 	Input(const Input& other) = delete;

@@ -27,9 +27,13 @@ void SceneManager::Init() {
 
 void SceneManager::Update() {
 
-	if (Input::GetKey(KeyCode::W)) {
+	Vector3 cameraMoveDirection;
 
-	}
+	cameraMoveDirection.z = Input::GetAxis("Depth");
+	cameraMoveDirection.x = Input::GetAxis("Horizontal");
+	cameraMoveDirection.y = Input::GetAxis("Vertical");
+
+	_activeCamera->Move(cameraMoveDirection);
 }
 
 void SceneManager::Draw() {

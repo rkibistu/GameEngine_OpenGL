@@ -1,9 +1,9 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  SceneManager.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(87,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
   Main.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(84,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Main.cpp(229,34): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Main.cpp(229,31): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-  Input.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(84,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(87,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Main.cpp(171,34): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Main.cpp(171,31): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
   Generating Code...
   NewTrainingFramework.vcxproj -> E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\BIN-Nvidia\NewTrainingFramework.exe

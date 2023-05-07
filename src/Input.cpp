@@ -93,6 +93,42 @@ bool Input::GetKeyUp(unsigned char key) {
 	return it->second->KeyUp;
 }
 
+float Input::GetAxis(std::string axis) {
+
+	if (axis == "Horizontal") {
+
+		if (GetKey(KeyCode::A)) {
+			return -1;
+		}
+		if (GetKey(KeyCode::D)) {
+			return 1;
+		}
+		return 0;
+	}
+
+	if (axis == "Vertical") {
+
+		if (GetKey(KeyCode::Q)) {
+			return -1;
+		}
+		if (GetKey(KeyCode::E)) {
+			return 1;
+		}
+		return 0;
+	}
+
+	if (axis == "Depth") {
+
+		if (GetKey(KeyCode::W)) {
+			return -1;
+		}
+		if (GetKey(KeyCode::S)) {
+			return 1;
+		}
+		return 0;
+	}
+}
+
 void Input::Init() {
 
 	unsigned char c; 

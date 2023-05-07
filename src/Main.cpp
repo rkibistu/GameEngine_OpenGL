@@ -69,29 +69,18 @@ void Update(ESContext* esContext, float deltaTime)
 	sceneManager.GetActiveCamera()->SetDeltaTime(g_deltaTimer);
 	g_deltaTimer = 0;
 
-
-	g_rotationAngle += g_pasAngle;
-	if (g_rotationAngle > 180 * 2 * PI)
-		g_rotationAngle -= 180 * 2 * PI;
-
 	if (g_mouseClickedButtons.x == 1)
 		g_rotationDirection = Vector3(g_mouseMoveDirection.y, g_mouseMoveDirection.x, 0);
 	else
 		g_rotationDirection = Vector3();
 
 
-	sceneManager.GetActiveCamera()->Move(g_moveDirection);
+	//sceneManager.GetActiveCamera()->Move(g_moveDirection);
+
+	sceneManager.Update();
+
 	sceneManager.GetActiveCamera()->Rotate(g_rotationDirection);
 
-	if (Input::GetKeyDown(KeyCode::G)) {
-		std::cout << "G\n";
-	}
-	if (Input::GetKeyUp(KeyCode::H)) {
-		std::cout << "H\n";
-	}
-	if (Input::GetKey(KeyCode::J)) {
-		std::cout << "J\n";
-	}
 
 	Input::Update();
 }
@@ -101,56 +90,9 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 
 	Input::UpdateKey(key, bIsPressed);
 
-	//std::cout << key << " " << bIsPressed << std::endl;
-
-	if (key == 'W') {
-
-		//g_camera->MoveOY(1);
-		if (bIsPressed)
-			g_moveDirection.z = -1;
-		else
-			g_moveDirection.z = 0;
-	}
-	if (key == 'S') {
-
-		//g_camera->MoveOY(-1);
-		if (bIsPressed)
-			g_moveDirection.z = 1;
-		else
-			g_moveDirection.z = 0;
-	}
-
-	if (key == 'A') {
-
-		//g_camera->MoveOX(1);
-		if (bIsPressed)
-			g_moveDirection.x = -1;
-		else
-			g_moveDirection.x = 0;
-	}
-	if (key == 'D') {
-
-		//g_camera->MoveOX(-1);
-		if (bIsPressed)
-			g_moveDirection.x = 1;
-		else
-			g_moveDirection.x = 0;
-	}
-
-	if (key == 'Q') {
-
-		if (bIsPressed)
-			g_moveDirection.y = -1;
-		else
-			g_moveDirection.y = 0;
-	}
-	if (key == 'E') {
-
-		if (bIsPressed)
-			g_moveDirection.y = 1;
-		else
-			g_moveDirection.y = 0;
-	}
+	g_moveDirection.z = Input::GetAxis("Depth");
+	g_moveDirection.x = Input::GetAxis("Horizontal");
+	g_moveDirection.y = Input::GetAxis("Vertical");
 
 	if (key == 0x25) {
 
