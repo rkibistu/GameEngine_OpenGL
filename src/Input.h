@@ -83,5 +83,9 @@ public:
 	static const unsigned char X = 'X';
 	static const unsigned char Y = 'Y';
 	static const unsigned char Z = 'Z';
+	static const unsigned char LEFT_ARROW = 0x25;
+	static const unsigned char UP_ARROW = 0x26;
+	static const unsigned char RIGHT_ARROW = 0x27;
+	static const unsigned char DOWN_ARROW = 0x28;
 
 };

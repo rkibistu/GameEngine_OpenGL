@@ -11,6 +11,8 @@ public:
 	
 	void Init(Vector3 position, Vector3 target, Vector3 up, float fov, float nearClip, float farClip);
 
+	void Update(float deltaTime);
+
 	void PrintInfo();
 
 	//Astea iau in calcul _moveSpeed si _deltaTime
@@ -19,8 +21,6 @@ public:
 	void MoveOY(int diretion);
 	void MoveOZ(int diretion);
 
-	
-
 	void Rotate(Vector3 direction);
 	void RotateOX(int direction);
 	void RotateOY(int direction);
@@ -28,7 +28,6 @@ public:
 
 	void SetPerspective(GLfloat fov, GLfloat aspectRatio, GLfloat nearClip, GLfloat farClip);
 
-	
 	inline void SetId(unsigned int id) { _ID = id; }
 	inline unsigned int GetId() { return _ID; }
 

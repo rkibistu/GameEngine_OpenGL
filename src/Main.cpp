@@ -20,7 +20,7 @@
 GLfloat g_rotationAngle = 0.0f;
 GLfloat g_pasAngle = 0.005f;
 
-Vector3 g_moveDirection;
+
 Vector3 g_rotationDirection;
 
 bool g_filledMode = true;
@@ -61,13 +61,9 @@ void Draw(ESContext* esContext)
 
 void Update(ESContext* esContext, float deltaTime)
 {
-
-
 	g_deltaTimer += deltaTime;
 	if (g_deltaTimer < g_deltaThreshold)
 		return;
-	sceneManager.GetActiveCamera()->SetDeltaTime(g_deltaTimer);
-	g_deltaTimer = 0;
 
 	if (g_mouseClickedButtons.x == 1)
 		g_rotationDirection = Vector3(g_mouseMoveDirection.y, g_mouseMoveDirection.x, 0);
@@ -75,12 +71,9 @@ void Update(ESContext* esContext, float deltaTime)
 		g_rotationDirection = Vector3();
 
 
-	//sceneManager.GetActiveCamera()->Move(g_moveDirection);
+	sceneManager.Update(g_deltaTimer);
 
-	sceneManager.Update();
-
-	sceneManager.GetActiveCamera()->Rotate(g_rotationDirection);
-
+	g_deltaTimer = 0;
 
 	Input::Update();
 }
@@ -90,54 +83,8 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 
 	Input::UpdateKey(key, bIsPressed);
 
-	g_moveDirection.z = Input::GetAxis("Depth");
-	g_moveDirection.x = Input::GetAxis("Horizontal");
-	g_moveDirection.y = Input::GetAxis("Vertical");
 
-	if (key == 0x25) {
-
-		if (bIsPressed)
-			g_rotationDirection.x = 1;
-		else
-			g_rotationDirection.x = 0;
-	}
-	if (key == 0x27) {
-
-		if (bIsPressed)
-			g_rotationDirection.x = -1;
-		else
-			g_rotationDirection.x = 0;
-	}
-
-	if (key == 0x26) {
-
-		if (bIsPressed)
-			g_rotationDirection.y = 1;
-		else
-			g_rotationDirection.y = 0;
-	}
-	if (key == 0x28) {
-
-		if (bIsPressed)
-			g_rotationDirection.y = -1;
-		else
-			g_rotationDirection.y = 0;
-	}
-
-	if (key == 'K') {
-
-		if (bIsPressed)
-			g_rotationDirection.z = 1;
-		else
-			g_rotationDirection.z = 0;
-	}
-	if (key == 'L') {
-
-		if (bIsPressed)
-			g_rotationDirection.z = -1;
-		else
-			g_rotationDirection.z = 0;
-	}
+	
 	if (key == 'P') {
 
 		if(bIsPressed)

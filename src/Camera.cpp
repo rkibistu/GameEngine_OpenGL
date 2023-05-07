@@ -2,6 +2,7 @@
 #include "Camera.h"
 
 #include <iostream>
+#include "Input.h"
 
 Camera::Camera(Vector3 position, Vector3 target, Vector3 up)
 	: _position(position), _target(target), _up(up) {
@@ -37,6 +38,55 @@ void Camera::Init(Vector3 position, Vector3 target, Vector3 up, float fov, float
 
 	UpdateAxis();
 	UpdateWorldView();
+}
+
+void Camera::Update(float deltaTime) {
+
+	SetDeltaTime(deltaTime);
+
+	//Movement
+	Vector3 cameraMoveDirection;
+	cameraMoveDirection.z = Input::GetAxis("Depth");
+	cameraMoveDirection.x = Input::GetAxis("Horizontal");
+	cameraMoveDirection.y = Input::GetAxis("Vertical");
+	Move(cameraMoveDirection);
+
+
+	//Rotation
+	Vector3 cameraRotationDirection;
+	if (Input::GetKey(KeyCode::UP_ARROW)) {
+
+		cameraRotationDirection.x = 1;
+	}
+	else if (Input::GetKey(KeyCode::DOWN_ARROW)) {
+
+		cameraRotationDirection.x = -1;
+	}
+	else
+		cameraRotationDirection.x = 0;
+
+	if (Input::GetKey(KeyCode::LEFT_ARROW)) {
+
+		cameraRotationDirection.y = 1;
+	}
+	else if (Input::GetKey(KeyCode::RIGHT_ARROW)) {
+
+		cameraRotationDirection.y = -1;
+	}
+	else
+		cameraRotationDirection.y = 0;
+
+	if (Input::GetKey(KeyCode::K)) {
+
+		cameraRotationDirection.z = 1;
+	}
+	else if (Input::GetKey(KeyCode::L)) {
+
+		cameraRotationDirection.z = -1;
+	}
+	else
+		cameraRotationDirection.z = 0;
+	Rotate(cameraRotationDirection);
 }
 
 void Camera::PrintInfo() {

@@ -25,15 +25,9 @@ void SceneManager::Init() {
 	_xmlParser.ReadCameras(_cameras, &_activeCamera);
 }
 
-void SceneManager::Update() {
+void SceneManager::Update(float deltaTime) {
 
-	Vector3 cameraMoveDirection;
-
-	cameraMoveDirection.z = Input::GetAxis("Depth");
-	cameraMoveDirection.x = Input::GetAxis("Horizontal");
-	cameraMoveDirection.y = Input::GetAxis("Vertical");
-
-	_activeCamera->Move(cameraMoveDirection);
+	_activeCamera->Update(deltaTime);
 }
 
 void SceneManager::Draw() {

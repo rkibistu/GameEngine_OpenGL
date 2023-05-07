@@ -56,7 +56,7 @@ void Input::UpdateKey(unsigned char key, bool bIsPressed) {
 		}
 
 	}
-	
+
 }
 
 bool Input::GetKey(unsigned char key) {
@@ -108,10 +108,10 @@ float Input::GetAxis(std::string axis) {
 
 	if (axis == "Vertical") {
 
-		if (GetKey(KeyCode::Q)) {
+		if (GetKey(KeyCode::E)) {
 			return -1;
 		}
-		if (GetKey(KeyCode::E)) {
+		if (GetKey(KeyCode::Q)) {
 			return 1;
 		}
 		return 0;
@@ -131,11 +131,20 @@ float Input::GetAxis(std::string axis) {
 
 void Input::Init() {
 
-	unsigned char c; 
+	unsigned char c;
 	KeyInfo* keyInfo;
 	for (c = 'A'; c <= 'Z'; c++) {
-	
+
 		keyInfo = new KeyInfo();
 		_keys.insert({ c,keyInfo });
 	}
+
+	keyInfo = new KeyInfo();
+	_keys.insert({ KeyCode::LEFT_ARROW,keyInfo });
+	keyInfo = new KeyInfo();
+	_keys.insert({ KeyCode::UP_ARROW,keyInfo });
+	keyInfo = new KeyInfo();
+	_keys.insert({ KeyCode::DOWN_ARROW,keyInfo });
+	keyInfo = new KeyInfo();
+	_keys.insert({ KeyCode::RIGHT_ARROW,keyInfo });
 }
