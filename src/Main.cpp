@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
+#include "Input.h"
 
 #include <iostream>
 #include <conio.h>
@@ -35,6 +36,7 @@ Vector3 g_mouseMoveDirection;
 
 ResourceManager& resourceManager = ResourceManager::GetInstance();
 SceneManager& sceneManager = SceneManager::GetInstance();
+Input& input = Input::GetInstance();
 
 int Init(ESContext* esContext)
 {
@@ -58,10 +60,11 @@ void Draw(ESContext* esContext)
 
 void Update(ESContext* esContext, float deltaTime)
 {
+
+
 	g_deltaTimer += deltaTime;
 	if (g_deltaTimer < g_deltaThreshold)
 		return;
-
 	sceneManager.GetActiveCamera()->SetDeltaTime(g_deltaTimer);
 	g_deltaTimer = 0;
 
@@ -78,10 +81,24 @@ void Update(ESContext* esContext, float deltaTime)
 
 	sceneManager.GetActiveCamera()->Move(g_moveDirection);
 	sceneManager.GetActiveCamera()->Rotate(g_rotationDirection);
+
+	if (input.GetKeyDown('G')) {
+		std::cout << "G\n";
+	}
+	if (input.GetKeyUp('H')) {
+		std::cout << "H\n";
+	}
+	if (input.GetKey('J')) {
+		std::cout << "J\n";
+	}
+
+	input.Update();
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 {
+
+	input.UpdateKey(key, bIsPressed);
 
 	//std::cout << key << " " << bIsPressed << std::endl;
 

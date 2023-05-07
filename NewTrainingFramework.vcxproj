@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Model.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Defines.h" />
     <ClInclude Include="src\Globals.h" />
+    <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\NfgParser.h" />
     <ClInclude Include="src\ParserXML.h" />
