@@ -4,24 +4,11 @@
 
 
 
+std::unordered_map<unsigned char, KeyInfo*> Input::_keys;
 
-Input* Input::_spInstance = nullptr;
 
-Input& Input::GetInstance() {
 
-	if (_spInstance == nullptr)
-		_spInstance = new Input();
-	return *_spInstance;
-}
-void Input::DestroyInstance() {
 
-	if (_spInstance)
-		delete _spInstance;
-}
-Input::Input() {
-
-	InitKeys();
-}
 
 void Input::Update() {
 
@@ -106,7 +93,7 @@ bool Input::GetKeyUp(unsigned char key) {
 	return it->second->KeyUp;
 }
 
-void Input::InitKeys() {
+void Input::Init() {
 
 	unsigned char c; 
 	KeyInfo* keyInfo;

@@ -20,26 +20,33 @@ class Input {
 	
 public:
 
-	static Input& GetInstance();
-	void DestroyInstance();
+	//called at the start of the applicaition
+	static void Init();
 
-	void Update();
-	void UpdateKey(unsigned char key, bool bIsPressed);
+	//called once every frame, at the end of the frame (to reset values)
+	static void Update();
 
-	bool GetKey(unsigned char key);
-	bool GetKeyDown(unsigned char key);
-	bool GetKeyUp(unsigned char key);
+
+	//called when a key is pressed/released
+	static void UpdateKey(unsigned char key, bool bIsPressed);
+
+
+	//true if key is held down
+	static bool GetKey(unsigned char key);
+
+	//true one frame when key is pressed
+	static bool GetKeyDown(unsigned char key);
+
+	//true one frame when key is released
+	static bool GetKeyUp(unsigned char key);
 
 private:
-	Input();
+	Input() { ; }
 	Input(const Input& other) = delete;
 	Input& operator=(const Input& other) = delete;
 
-	void InitKeys();
 
 private:
 
-	static Input* _spInstance;
-
-	std::unordered_map<unsigned char, KeyInfo*> _keys;
+	static std::unordered_map<unsigned char, KeyInfo*> _keys;
 };

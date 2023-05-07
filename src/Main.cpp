@@ -36,13 +36,14 @@ Vector3 g_mouseMoveDirection;
 
 ResourceManager& resourceManager = ResourceManager::GetInstance();
 SceneManager& sceneManager = SceneManager::GetInstance();
-Input& input = Input::GetInstance();
+
 
 int Init(ESContext* esContext)
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 
+	Input::Init();
 	resourceManager.Init();
 	sceneManager.Init();
 
@@ -82,23 +83,23 @@ void Update(ESContext* esContext, float deltaTime)
 	sceneManager.GetActiveCamera()->Move(g_moveDirection);
 	sceneManager.GetActiveCamera()->Rotate(g_rotationDirection);
 
-	if (input.GetKeyDown('G')) {
+	if (Input::GetKeyDown('G')) {
 		std::cout << "G\n";
 	}
-	if (input.GetKeyUp('H')) {
+	if (Input::GetKeyUp('H')) {
 		std::cout << "H\n";
 	}
-	if (input.GetKey('J')) {
+	if (Input::GetKey('J')) {
 		std::cout << "J\n";
 	}
 
-	input.Update();
+	Input::Update();
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 {
 
-	input.UpdateKey(key, bIsPressed);
+	Input::UpdateKey(key, bIsPressed);
 
 	//std::cout << key << " " << bIsPressed << std::endl;
 
