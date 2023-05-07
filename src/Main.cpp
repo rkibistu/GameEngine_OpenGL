@@ -83,13 +83,13 @@ void Update(ESContext* esContext, float deltaTime)
 	sceneManager.GetActiveCamera()->Move(g_moveDirection);
 	sceneManager.GetActiveCamera()->Rotate(g_rotationDirection);
 
-	if (Input::GetKeyDown('G')) {
+	if (Input::GetKeyDown(KeyCode::G)) {
 		std::cout << "G\n";
 	}
-	if (Input::GetKeyUp('H')) {
+	if (Input::GetKeyUp(KeyCode::H)) {
 		std::cout << "H\n";
 	}
-	if (Input::GetKey('J')) {
+	if (Input::GetKey(KeyCode::J)) {
 		std::cout << "J\n";
 	}
 

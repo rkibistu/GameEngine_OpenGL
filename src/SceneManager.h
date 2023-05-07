@@ -15,6 +15,8 @@ public:
 
 	void Init();
 
+	void Update();
+
 	void Draw();
 
 	inline Camera* GetActiveCamera() { return _activeCamera; }

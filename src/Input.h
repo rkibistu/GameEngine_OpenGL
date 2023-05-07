@@ -50,3 +50,35 @@ private:
 
 	static std::unordered_map<unsigned char, KeyInfo*> _keys;
 };
+
+static class KeyCode {
+
+public:
+	static const unsigned char A = 'A';
+	static const unsigned char B = 'B';
+	static const unsigned char C = 'C';
+	static const unsigned char D = 'D';
+	static const unsigned char E = 'E';
+	static const unsigned char F = 'F';
+	static const unsigned char G = 'G';
+	static const unsigned char H = 'H';
+	static const unsigned char I = 'I';
+	static const unsigned char J = 'J';
+	static const unsigned char K = 'K';
+	static const unsigned char L = 'L';
+	static const unsigned char M = 'M';
+	static const unsigned char N = 'N';
+	static const unsigned char O = 'O';
+	static const unsigned char P = 'P';
+	static const unsigned char Q = 'Q';
+	static const unsigned char R = 'R';
+	static const unsigned char S = 'S';
+	static const unsigned char T = 'T';
+	static const unsigned char U = 'U';
+	static const unsigned char V = 'V';
+	static const unsigned char W = 'W';
+	static const unsigned char X = 'X';
+	static const unsigned char Y = 'Y';
+	static const unsigned char Z = 'Z';
+
+};

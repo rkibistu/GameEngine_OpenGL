@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include "Input.h"
 
 SceneManager* SceneManager::_spInstance = nullptr;
 
@@ -23,6 +24,14 @@ void SceneManager::Init() {
 	_xmlParser.ReadObjects(_sceneObjects);
 	_xmlParser.ReadCameras(_cameras, &_activeCamera);
 }
+
+void SceneManager::Update() {
+
+	if (Input::GetKey(KeyCode::W)) {
+
+	}
+}
+
 void SceneManager::Draw() {
 
 	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
