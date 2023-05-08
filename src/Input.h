@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 
 
 
@@ -22,6 +23,7 @@ public:
 
 	//called at the start of the applicaition
 	static void Init();
+	static void Destroy();
 
 	//called once every frame, at the end of the frame (to reset values)
 	static void Update();
@@ -29,7 +31,7 @@ public:
 
 	//called when a key is pressed/released
 	static void UpdateKey(unsigned char key, bool bIsPressed);
-
+	static void UpdateMouse(unsigned char mouseButton, unsigned int mouseEvent, int x, int y);
 
 	//true if key is held down
 	static bool GetKey(unsigned char key);
@@ -52,6 +54,10 @@ private:
 private:
 
 	static std::unordered_map<unsigned char, KeyInfo*> _keys;
+
+	static Vector2 _mouseCurrentPosition;
+	static Vector2 _mouseOldPosition;
+	static Vector2 _mouseMoveDirection;
 };
 
 static class KeyCode {
@@ -87,5 +93,7 @@ public:
 	static const unsigned char UP_ARROW = 0x26;
 	static const unsigned char RIGHT_ARROW = 0x27;
 	static const unsigned char DOWN_ARROW = 0x28;
-
+	static const unsigned char MOUSE_BUTTON_0 = 0x1; //sa corespunda cu ce e in esUtil_win.h la enum MouseButtons
+	static const unsigned char MOUSE_BUTTON_1 = 0x2;
+	static const unsigned char MOUSE_BUTTON_2 = 0x3;
 };

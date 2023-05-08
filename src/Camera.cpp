@@ -44,6 +44,9 @@ void Camera::Update(float deltaTime) {
 
 	SetDeltaTime(deltaTime);
 
+	DoFirstPersonMovement();
+}
+void Camera::DoFirstPersonMovement() {
 	//Movement
 	Vector3 cameraMoveDirection;
 	cameraMoveDirection.z = Input::GetAxis("Depth");
@@ -52,6 +55,11 @@ void Camera::Update(float deltaTime) {
 	Move(cameraMoveDirection);
 
 
+	//RotateUsingArrows();
+	RotateUsingMouse();
+
+}
+void Camera::RotateUsingArrows() {
 	//Rotation
 	Vector3 cameraRotationDirection;
 	if (Input::GetKey(KeyCode::UP_ARROW)) {
@@ -86,6 +94,20 @@ void Camera::Update(float deltaTime) {
 	}
 	else
 		cameraRotationDirection.z = 0;
+
+	Rotate(cameraRotationDirection);
+}
+void Camera::RotateUsingMouse() {
+
+	Vector3 cameraRotationDirection;
+	if (Input::GetKey(KeyCode::MOUSE_BUTTON_0)) {
+		cameraRotationDirection.y = Input::GetAxis("Mouse X");
+		cameraRotationDirection.x = Input::GetAxis("Mouse Y");
+		cameraRotationDirection.z = 0;
+	}
+	else
+		cameraRotationDirection = Vector3();
+
 	Rotate(cameraRotationDirection);
 }
 

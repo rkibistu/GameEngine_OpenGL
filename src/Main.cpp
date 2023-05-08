@@ -73,6 +73,8 @@ void Update(ESContext* esContext, float deltaTime)
 
 	sceneManager.Update(g_deltaTimer);
 
+	//sceneManager.GetActiveCamera()->Rotate(g_rotationDirection);
+
 	g_deltaTimer = 0;
 
 	Input::Update();
@@ -80,22 +82,13 @@ void Update(ESContext* esContext, float deltaTime)
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 {
-
-	Input::UpdateKey(key, bIsPressed);
-
-
-	
-	if (key == 'P') {
-
-		if(bIsPressed)
-			g_filledMode = !g_filledMode;
-	}	
-
+	Input::UpdateKey(key, bIsPressed);	
 }
 
 void Mouse(ESContext* esContext, unsigned int mouseButton, unsigned int mosueEvent, int x, int y)
 {
 	// handle mouse event
+	Input::UpdateMouse(mouseButton, mosueEvent,x,y);
 
 	if (mouseButton == MouseButtons::LeftButton) {
 		if (mosueEvent == MouseEvents::Down) {
@@ -113,7 +106,7 @@ void Mouse(ESContext* esContext, unsigned int mouseButton, unsigned int mosueEve
 			g_mouseClickedButtons.z = 0;
 		}
 	}
-
+	
 	if (mosueEvent == MouseEvents::MoveStart) {
 		g_mouseCurrentPos = Vector3(x, y, 0);
 		g_mouseMoveDirection = (g_mouseOldPos - g_mouseCurrentPos);
@@ -129,6 +122,8 @@ void CleanUp()
 {
 
 	resourceManager.DestroyInstance();
+
+	Input::Destroy();
 }
 
 

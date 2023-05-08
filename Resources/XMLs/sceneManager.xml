@@ -49,7 +49,7 @@
 				<z>0</z>
 			</up>
 			<translationSpeed>300</translationSpeed>
-			<rotationSpeed>0.5</rotationSpeed>
+			<rotationSpeed>0.75</rotationSpeed>
 			<fov>45</fov>
 			<near>0.2</near>
 			<far>10000</far>

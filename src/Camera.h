@@ -12,6 +12,9 @@ public:
 	void Init(Vector3 position, Vector3 target, Vector3 up, float fov, float nearClip, float farClip);
 
 	void Update(float deltaTime);
+	void DoFirstPersonMovement();
+	void RotateUsingArrows();
+	void RotateUsingMouse();
 
 	void PrintInfo();
 

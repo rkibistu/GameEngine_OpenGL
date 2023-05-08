@@ -2,12 +2,15 @@
 #include "Input.h"
 
 
+#include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 
 
 std::unordered_map<unsigned char, KeyInfo*> Input::_keys;
 
 
-
+Vector2 Input::_mouseCurrentPosition;
+Vector2 Input::_mouseOldPosition;
+Vector2 Input::_mouseMoveDirection ;
 
 
 void Input::Update() {
@@ -57,6 +60,60 @@ void Input::UpdateKey(unsigned char key, bool bIsPressed) {
 
 	}
 
+}
+void Input::UpdateMouse(unsigned char mouseButton, unsigned int mouseEvent, int x, int y) {
+
+	if (mouseButton != MouseButtons::None) {
+
+		auto it = _keys.find(mouseButton);
+		if (it == _keys.end()) {
+
+			std::cout << "Key is not treated in Input class: " << mouseButton << std::endl;
+			return;
+		}
+
+		KeyInfo* keyInfo = it->second;
+
+		if (mouseEvent == MouseEvents::Down) {
+
+			if (keyInfo->KeyHold == false) {
+				keyInfo->KeyDown = true;
+				keyInfo->KeyHold = true;
+				keyInfo->KeyUp = false;
+			}
+			else {
+				keyInfo->KeyDown = false;
+				keyInfo->KeyHold = true;
+				keyInfo->KeyUp = false;
+			}
+		}
+		else if (mouseEvent == MouseEvents::Up) {
+			if (keyInfo->KeyHold == true) {
+				keyInfo->KeyDown = false;
+				keyInfo->KeyHold = false;
+				keyInfo->KeyUp = true;
+			}
+			else {
+				keyInfo->KeyDown = false;
+				keyInfo->KeyHold = false;
+				keyInfo->KeyUp = false;
+			}
+
+		}
+	}
+	
+
+	//No button pressed -> mouse is just moved. We update positions
+	if (mouseEvent == MouseEvents::MoveStart) {
+		_mouseCurrentPosition = Vector2(x, y);
+		_mouseMoveDirection = (_mouseOldPosition - _mouseCurrentPosition);
+		_mouseOldPosition = _mouseCurrentPosition;
+		//std::cout << _mouseMoveDirection.x << " " << _mouseMoveDirection.y << std::endl;
+	}
+	else {
+		_mouseMoveDirection = Vector2();
+	}
+	
 }
 
 bool Input::GetKey(unsigned char key) {
@@ -127,6 +184,17 @@ float Input::GetAxis(std::string axis) {
 		}
 		return 0;
 	}
+
+	if (axis == "Mouse X") {
+
+		return _mouseMoveDirection.x;
+	}
+	if (axis == "Mouse Y") {
+
+		return _mouseMoveDirection.y;
+	}
+
+	return 0;
 }
 
 void Input::Init() {
@@ -139,6 +207,7 @@ void Input::Init() {
 		_keys.insert({ c,keyInfo });
 	}
 
+	//arrows
 	keyInfo = new KeyInfo();
 	_keys.insert({ KeyCode::LEFT_ARROW,keyInfo });
 	keyInfo = new KeyInfo();
@@ -147,4 +216,22 @@ void Input::Init() {
 	_keys.insert({ KeyCode::DOWN_ARROW,keyInfo });
 	keyInfo = new KeyInfo();
 	_keys.insert({ KeyCode::RIGHT_ARROW,keyInfo });
+
+	//mouse
+	keyInfo = new KeyInfo();
+	_keys.insert({ KeyCode::MOUSE_BUTTON_0,keyInfo });
+	keyInfo = new KeyInfo();
+	_keys.insert({ KeyCode::MOUSE_BUTTON_1,keyInfo });
+	keyInfo = new KeyInfo();
+	_keys.insert({ KeyCode::MOUSE_BUTTON_2,keyInfo });
+
+}
+void Input::Destroy() {
+
+	for (auto it = _keys.begin(); it != _keys.end(); it++) {
+
+		if (it->second)
+			delete it->second;
+	}
+	_keys.clear();
 }
