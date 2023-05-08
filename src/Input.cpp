@@ -117,6 +117,35 @@ void Input::UpdateMouse(unsigned char mouseButton, unsigned int mouseEvent, int 
 	
 }
 
+void Input::SetMovementAxis(std::string axisName, unsigned char pozitiveKey, unsigned char negativeKey) {
+
+	auto it = _movementAxes.find(axisName);
+	if (it == _movementAxes.end()) {
+		std::cout << "Axis '" << axisName << " ' does not exist!";
+		return;
+	}
+
+	it->second->PozitiveKey = pozitiveKey;
+	it->second->NegativeKey = negativeKey;
+}
+void Input::SetMovementAxisPozitiveKey(std::string axisName, unsigned char pozitiveKey) {
+	auto it = _movementAxes.find(axisName);
+	if (it == _movementAxes.end()) {
+		std::cout << "Axis '" << axisName << " ' does not exist!";
+		return;
+	}
+
+	it->second->PozitiveKey = pozitiveKey;
+}
+void Input::SetMovementAxisNegativeKey(std::string axisName, unsigned char negativeKey) {
+	auto it = _movementAxes.find(axisName);
+	if (it == _movementAxes.end()) {
+		std::cout << "Axis '" << axisName << " ' does not exist!";
+		return;
+	}
+	it->second->NegativeKey = negativeKey;
+}
+
 bool Input::GetKey(unsigned char key) {
 
 	auto it = _keys.find(key);

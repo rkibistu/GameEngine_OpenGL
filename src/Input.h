@@ -42,6 +42,10 @@ public:
 	static void UpdateKey(unsigned char key, bool bIsPressed);
 	static void UpdateMouse(unsigned char mouseButton, unsigned int mouseEvent, int x, int y);
 
+	static void SetMovementAxis(std::string axisName, unsigned char pozitiveKey, unsigned char negativeKey);
+	static void SetMovementAxisPozitiveKey(std::string axisName, unsigned char pozitiveKey);
+	static void SetMovementAxisNegativeKey(std::string axisName, unsigned char negativeKey);
+
 	//true if key is held down
 	static bool GetKey(unsigned char key);
 

@@ -23,6 +23,7 @@ void SceneManager::Init() {
 	_xmlParser.Init("Resources/XMLs/sceneManager.xml");
 	_xmlParser.ReadObjects(_sceneObjects);
 	_xmlParser.ReadCameras(_cameras, &_activeCamera);
+	_xmlParser.ReadControls();
 }
 
 void SceneManager::Update(float deltaTime) {

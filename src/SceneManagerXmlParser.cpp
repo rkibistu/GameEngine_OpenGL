@@ -30,11 +30,12 @@ int SceneManagerXmlParser::Init(std::string filepath) {
 	_controlsRoot = _xmlRoot->first_node(CONTROLS_ROOT);
 	_camerasRoot = _xmlRoot->first_node(CAMERAS_ROOT);
 	_activeCameraNode = _xmlRoot->first_node(ACTIVE_CAMERA_NODE);
-	_controlsRoot = _xmlRoot->first_node(CONTROLS_ROOT);
 	
 
 }
 
+//citest toate obiectele din cml aflate dub nodul <objects>
+//	creeaza un SceneObject pt fiecare <object> si il adauga in mapa data ca parametru
 int SceneManagerXmlParser::ReadObjects(std::unordered_map<unsigned int, SceneObject*>& sceneObjects) {
 
 	for (rapidxml::xml_node<>* objectNode = _objectsRoot->first_node(); objectNode; objectNode = objectNode->next_sibling()) {
@@ -48,6 +49,10 @@ int SceneManagerXmlParser::ReadObjects(std::unordered_map<unsigned int, SceneObj
 
 	return MY_SUCCES_CODE;
 }
+
+//citeste toate camerer din xml aflate sub nodul <cameras>
+//	creaza o clasa Camera pt fiecare <camera> si populeaza mapa din parametru cameras
+//	seteaa activeCamera sa pointeze spre camera setata in xml <activeCamera>
 int SceneManagerXmlParser::ReadCameras(std::unordered_map<unsigned int, Camera*>& cameras, Camera** activeCamera) {
 
 	unsigned int activeCameraID;
@@ -82,6 +87,56 @@ int SceneManagerXmlParser::ReadCameras(std::unordered_map<unsigned int, Camera*>
 	return MY_SUCCES_CODE;
 }
 
+//Citeste toate controale de sub nodul <controls>
+//	Actualizeaza direct valorile corespunzatoare axelor de miscare din clasa Input
+int SceneManagerXmlParser::ReadControls() {
+
+	for (rapidxml::xml_node<>* controlNode = _controlsRoot->first_node(); controlNode; controlNode = controlNode->next_sibling()) {
+		if (strcmp(controlNode->name(), COMMENT_NODE) == 0)
+			continue;
+
+		unsigned char currentKey;
+		for (rapidxml::xml_node<>* node = controlNode->first_node(); node; node = node->next_sibling()) {
+
+			if (strcmp(node->name(),KEY_NODE) == 0) {
+				currentKey = node->value()[0];
+			}
+			if (strcmp(node->name(), ACTION_NODE) == 0) {
+
+				if (strcmp(node->value(), "MOVE_CAMERA_POSITIVE_Z") == 0) {
+
+					Input::SetMovementAxisPozitiveKey("Depth", currentKey);
+				}
+				if (strcmp(node->value(), "MOVE_CAMERA_NEGATIVE_Z") == 0) {
+
+					Input::SetMovementAxisNegativeKey("Depth", currentKey);
+				}
+
+				if (strcmp(node->value(), "MOVE_CAMERA_POSITIVE_X") == 0) {
+
+					Input::SetMovementAxisPozitiveKey("Horizontal", currentKey);
+				}
+				if (strcmp(node->value(), "MOVE_CAMERA_NEGATIVE_X") == 0) {
+
+					Input::SetMovementAxisNegativeKey("Horizontal", currentKey);
+				}
+
+
+				if (strcmp(node->value(), "MOVE_CAMERA_POSITIVE_Y") == 0) {
+
+					Input::SetMovementAxisPozitiveKey("Vertical", currentKey);
+				}
+				if (strcmp(node->value(), "MOVE_CAMERA_NEGATIVE_Y") == 0) {
+
+					Input::SetMovementAxisNegativeKey("Vertical", currentKey);
+				}
+			}
+			std::cout << node->name() << " " << node->value() << std::endl;
+		}
+	}
+
+	return MY_SUCCES_CODE;
+}
 
 SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* objectNode) {
 

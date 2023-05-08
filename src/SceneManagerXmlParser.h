@@ -3,6 +3,7 @@
 #include <rapidXML/rapidxml.hpp>
 
 #include "SceneObject.h"
+#include "Input.h"
 
 #include <unordered_map>
 
@@ -42,6 +43,8 @@
 #define FAR_CLIP_NODE "far"
 #define SCREEN_WIDTH "width"
 #define SCREEN_HEIGTH "height"
+#define ACTION_NODE "action"
+#define KEY_NODE "key"
 
 #define ID_ATTRIBUTE "id"
 
@@ -52,6 +55,8 @@ public:
 
 	int ReadObjects(std::unordered_map<unsigned int, SceneObject*>& sceneObjects);
 	int ReadCameras(std::unordered_map<unsigned int, Camera*>& camers, Camera** activeCamera);
+	int ReadControls();
+
 private:
 
 	SceneObject* ReadSceneObject(rapidxml::xml_node<>* objectNode);

@@ -19,11 +19,27 @@
 	<controls>
 		<control>
 			<key>W</key>
-			<action>MOVE_CAMERA_POSITIVE_Z</action>
+			<action>MOVE_CAMERA_NEGATIVE_Z</action>
 		</control>
 		<control>
 			<key>S</key>
-			<action>MOVE_CAMERA_NEGATIVE_Z</action>
+			<action>MOVE_CAMERA_POSITIVE_Z</action>
+		</control>
+		<control>
+			<key>D</key>
+			<action>MOVE_CAMERA_POSITIVE_X</action>
+		</control>
+		<control>
+			<key>A</key>
+			<action>MOVE_CAMERA_NEGATIVE_X</action>
+		</control>
+		<control>
+			<key>Q</key>
+			<action>MOVE_CAMERA_POSITIVE_Y</action>
+		</control>
+		<control>
+			<key>E</key>
+			<action>MOVE_CAMERA_NEGATIVE_Y</action>
 		</control>
 		<!-- adaugati restul -->
 	</controls>
