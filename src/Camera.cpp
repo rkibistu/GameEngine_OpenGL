@@ -46,6 +46,7 @@ void Camera::Update(float deltaTime) {
 
 	DoFirstPersonMovement();
 }
+
 void Camera::DoFirstPersonMovement() {
 	//Movement
 	Vector3 cameraMoveDirection;
@@ -57,7 +58,6 @@ void Camera::DoFirstPersonMovement() {
 
 	//RotateUsingArrows();
 	RotateUsingMouse();
-
 }
 void Camera::RotateUsingArrows() {
 	//Rotation
@@ -101,8 +101,8 @@ void Camera::RotateUsingMouse() {
 
 	Vector3 cameraRotationDirection;
 	if (Input::GetKey(KeyCode::MOUSE_BUTTON_0)) {
-		cameraRotationDirection.y = Input::GetAxis("Mouse X");
-		cameraRotationDirection.x = Input::GetAxis("Mouse Y");
+		cameraRotationDirection.y = Input::GetAxisOld("Mouse X");
+		cameraRotationDirection.x = Input::GetAxisOld("Mouse Y");
 		cameraRotationDirection.z = 0;
 	}
 	else
@@ -157,9 +157,6 @@ void Camera::MoveOZ(int direction) {
 
 	UpdateWorldView();
 }
-
-
-
 
 
 void Camera::Rotate(Vector3 direction) {

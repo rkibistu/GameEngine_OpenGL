@@ -6,6 +6,7 @@
 
 
 std::unordered_map<unsigned char, KeyInfo*> Input::_keys;
+std::unordered_map<std::string, AxisMovement*> Input::_movementAxes;
 
 
 Vector2 Input::_mouseCurrentPosition;
@@ -150,7 +151,7 @@ bool Input::GetKeyUp(unsigned char key) {
 	return it->second->KeyUp;
 }
 
-float Input::GetAxis(std::string axis) {
+float Input::GetAxisOld(std::string axis) {
 
 	if (axis == "Horizontal") {
 
@@ -196,9 +197,36 @@ float Input::GetAxis(std::string axis) {
 
 	return 0;
 }
+float Input::GetAxis(std::string axis) {
+
+	auto it = _movementAxes.find(axis);
+	if (it == _movementAxes.end())
+		return 0;
+
+	if (GetKey(it->second->PozitiveKey))
+		return 1;
+	if (GetKey(it->second->NegativeKey))
+		return -1;
+	return 0;
+}
 
 void Input::Init() {
 
+	InitKeys();
+	InitMovementAxis();
+}
+void Input::Destroy() {
+
+	//keys
+	for (auto it = _keys.begin(); it != _keys.end(); it++) {
+
+		if (it->second)
+			delete it->second;
+	}
+	_keys.clear();
+}
+
+void Input::InitKeys() {
 	unsigned char c;
 	KeyInfo* keyInfo;
 	for (c = 'A'; c <= 'Z'; c++) {
@@ -226,12 +254,25 @@ void Input::Init() {
 	_keys.insert({ KeyCode::MOUSE_BUTTON_2,keyInfo });
 
 }
-void Input::Destroy() {
+void Input::InitMovementAxis() {
 
-	for (auto it = _keys.begin(); it != _keys.end(); it++) {
+	AxisMovement* axis;
 
-		if (it->second)
-			delete it->second;
-	}
-	_keys.clear();
+	axis = new AxisMovement();
+	axis->AxisName = "Horizontal";
+	axis->PozitiveKey = KeyCode::D;
+	axis->NegativeKey = KeyCode::A;
+	_movementAxes.insert({ axis->AxisName, axis });
+
+	axis = new AxisMovement();
+	axis->AxisName = "Depth";
+	axis->PozitiveKey = KeyCode::S;
+	axis->NegativeKey = KeyCode::W;
+	_movementAxes.insert({ axis->AxisName, axis });
+
+	axis = new AxisMovement();
+	axis->AxisName = "Vertical";
+	axis->PozitiveKey = KeyCode::Q;
+	axis->NegativeKey = KeyCode::E;
+	_movementAxes.insert({ axis->AxisName, axis });
 }

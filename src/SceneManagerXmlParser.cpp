@@ -30,7 +30,8 @@ int SceneManagerXmlParser::Init(std::string filepath) {
 	_controlsRoot = _xmlRoot->first_node(CONTROLS_ROOT);
 	_camerasRoot = _xmlRoot->first_node(CAMERAS_ROOT);
 	_activeCameraNode = _xmlRoot->first_node(ACTIVE_CAMERA_NODE);
-
+	_controlsRoot = _xmlRoot->first_node(CONTROLS_ROOT);
+	
 
 }
 
@@ -47,7 +48,6 @@ int SceneManagerXmlParser::ReadObjects(std::unordered_map<unsigned int, SceneObj
 
 	return MY_SUCCES_CODE;
 }
-
 int SceneManagerXmlParser::ReadCameras(std::unordered_map<unsigned int, Camera*>& cameras, Camera** activeCamera) {
 
 	unsigned int activeCameraID;

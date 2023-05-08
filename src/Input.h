@@ -3,7 +3,9 @@
 #include <unordered_map>
 #include "Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 
-
+#define HORIZONTAL_AXIS		"Horizontal"
+#define VERTICAL_AXIS		"Vertical"
+#define DEPTH_AXIS			"Depth"
 
 struct KeyInfo {
 
@@ -15,6 +17,13 @@ struct KeyInfo {
 		: KeyDown(false), KeyUp(false), KeyHold(false) {
 
 	}
+};
+
+struct AxisMovement {
+
+	std::string AxisName;
+	unsigned char PozitiveKey;
+	unsigned char NegativeKey;
 };
 
 class Input {
@@ -43,6 +52,7 @@ public:
 	static bool GetKeyUp(unsigned char key);
 
 
+	static float GetAxisOld(std::string axis);
 	static float GetAxis(std::string axis);
 
 private:
@@ -50,10 +60,13 @@ private:
 	Input(const Input& other) = delete;
 	Input& operator=(const Input& other) = delete;
 
+	static void InitKeys();
+	static void InitMovementAxis();
 
 private:
 
 	static std::unordered_map<unsigned char, KeyInfo*> _keys;
+	static std::unordered_map<std::string, AxisMovement*> _movementAxes;
 
 	static Vector2 _mouseCurrentPosition;
 	static Vector2 _mouseOldPosition;

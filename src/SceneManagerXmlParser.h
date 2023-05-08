@@ -12,6 +12,10 @@
 #define CONTROLS_ROOT "controls"
 #define CAMERAS_ROOT "cameras"
 #define ACTIVE_CAMERA_NODE "activeCamera"
+#define GAME_NAME_NODE "gameName"
+#define SCREEN_SIZE_NODE "defaultScreenSize"
+#define BACKGROUND_COLOR_NODE "backgroundColor"
+#define CONTROLS_ROOT_NODE "controls"
 
 #define COMMENT_NODE "comment"
 #define OBJECT_NODE "object"
@@ -36,6 +40,8 @@
 #define FOV_NODE "fov"
 #define NEAR_CLIP_NODE "near"
 #define FAR_CLIP_NODE "far"
+#define SCREEN_WIDTH "width"
+#define SCREEN_HEIGTH "height"
 
 #define ID_ATTRIBUTE "id"
 

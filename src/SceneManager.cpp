@@ -28,8 +28,6 @@ void SceneManager::Init() {
 void SceneManager::Update(float deltaTime) {
 
 	_activeCamera->Update(deltaTime);
-
-	
 }
 
 void SceneManager::Draw() {

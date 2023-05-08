@@ -17,22 +17,9 @@
 
 #define PI 3.14f
 
-GLfloat g_rotationAngle = 0.0f;
-GLfloat g_pasAngle = 0.005f;
-
-
-Vector3 g_rotationDirection;
-
-bool g_filledMode = true;
-
 float g_deltaThreshold = 0.01f;
 float g_deltaTimer;
 
-//Mouse
-Vector3 g_mouseClickedButtons; // (left, middle, right) 1 for being clicked, 0 for not
-Vector3 g_mouseOldPos;
-Vector3 g_mouseCurrentPos;
-Vector3 g_mouseMoveDirection;
 
 ResourceManager& resourceManager = ResourceManager::GetInstance();
 SceneManager& sceneManager = SceneManager::GetInstance();
@@ -65,15 +52,7 @@ void Update(ESContext* esContext, float deltaTime)
 	if (g_deltaTimer < g_deltaThreshold)
 		return;
 
-	if (g_mouseClickedButtons.x == 1)
-		g_rotationDirection = Vector3(g_mouseMoveDirection.y, g_mouseMoveDirection.x, 0);
-	else
-		g_rotationDirection = Vector3();
-
-
 	sceneManager.Update(g_deltaTimer);
-
-	//sceneManager.GetActiveCamera()->Rotate(g_rotationDirection);
 
 	g_deltaTimer = 0;
 
@@ -89,40 +68,11 @@ void Mouse(ESContext* esContext, unsigned int mouseButton, unsigned int mosueEve
 {
 	// handle mouse event
 	Input::UpdateMouse(mouseButton, mosueEvent,x,y);
-
-	if (mouseButton == MouseButtons::LeftButton) {
-		if (mosueEvent == MouseEvents::Down) {
-			g_mouseClickedButtons.x = 1;
-		}
-		if (mosueEvent == MouseEvents::Up) {
-			g_mouseClickedButtons.x = 0;
-		}
-	}
-	if (mouseButton == MouseButtons::RightButton) {
-		if (mosueEvent == MouseEvents::Down) {
-			g_mouseClickedButtons.z = 1;
-		}
-		if (mosueEvent == MouseEvents::Up) {
-			g_mouseClickedButtons.z = 0;
-		}
-	}
-	
-	if (mosueEvent == MouseEvents::MoveStart) {
-		g_mouseCurrentPos = Vector3(x, y, 0);
-		g_mouseMoveDirection = (g_mouseOldPos - g_mouseCurrentPos);
-		//std::cout << g_mouseMoveDirection.x << " " << g_mouseMoveDirection.y << std::endl;
-		g_mouseOldPos = g_mouseCurrentPos;
-	}
-	else {
-		g_mouseMoveDirection = Vector3();
-	}
 }
 
 void CleanUp()
 {
-
 	resourceManager.DestroyInstance();
-
 	Input::Destroy();
 }
 
