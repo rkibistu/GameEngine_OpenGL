@@ -52,12 +52,12 @@
 			<position>
 				<x>0</x>
 				<y>0</y>
-				<z>1</z>
+				<z>0</z>
 			</position>
 			<target>
 				<x>0</x>
 				<y>0</y>
-				<z>-1</z>
+				<z>1</z>
 			</target>
 			<up>
 				<x>0</x>
@@ -88,7 +88,7 @@
 				<y>1</y>
 				<z>0</z>
 			</up>
-			<translationSpeed>300</translationSpeed>
+			<translationSpeed>200</translationSpeed>
 			<rotationSpeed>0.75</rotationSpeed>
 			<fov>45</fov>
 			<near>0.2</near>
@@ -113,60 +113,9 @@
 				<texture id="4"/>
 			</textures>
 			<position>
-				<x>20.5</x>
-				<y>27</y>
-				<z>21.22</z>
-			</position>
-			<rotation>
-				<x>0.5</x>
-				<y>1.4</y>
-				<z>1</z>
-			</rotation>
-			<scale>
-				<x>1.0</x>
-				<y>1.0</y>
-				<z>1.0</z>
-			</scale>
-			<!--
-			Exemple de alte configurari care vor fi adaugate si parsate mai tarziu (pentru taskuri ulterioare)
-			<followingCamera>
-				<cameras>
-					<camera>1</camera>
-				</cameras>
-				<ox/>
-				<oy/>
-				<oz/>
-			</followingCamera>
-			<trajectory type="linear" iteration="infinite" direction="alternate">
-				<comment>startPoint e chiar Pos</comment>
-				<endPoint>
-					<x>0.5</x>
-					<y>100.0</y>
-					<z>1.0</z>				
-				</endPoint>
-				<speed>0.1</speed>
-			</trajectory>
-			<lights>
-				<light>1</light>
-			</lights>
-			-->
-		</object>
-		<object id="3">
-			
-			<model>5</model>
-			<shader>20</shader>
-			<type>normal</type>
-			<wired/>
-			<name>Mesh_minge</name>
-			<color>
-				<r>1.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</color>
-			<position>
-				<x>3.5</x>
-				<y>0</y>
-				<z>20</z>
+				<x>0</x>
+				<y>75</y>
+				<z>0</z>
 			</position>
 			<rotation>
 				<x>0</x>
@@ -201,6 +150,91 @@
 				<light>1</light>
 			</lights>
 			-->
+		</object>
+		
+		<object id="35">
+			
+			<model>2</model>
+			<shader>20</shader>
+			<type>normal</type>
+			<wired/>
+			<name>Mesh_minge</name>
+			<color>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</color>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>45</y>
+				<z>0</z>
+			</rotation>
+			<scale>
+				<x>1.0</x>
+				<y>1.0</y>
+				<z>1.0</z>
+			</scale>
+		</object>
+		<object id="36">
+			
+			<model>2</model>
+			<shader>20</shader>
+			<type>normal</type>
+			<wired/>
+			<name>Mesh_minge</name>
+			<color>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</color>
+			<position>
+				<x>-250</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>45</y>
+				<z>0</z>
+			</rotation>
+			<scale>
+				<x>1.0</x>
+				<y>1.0</y>
+				<z>1.0</z>
+			</scale>
+		</object>
+		<object id="37">
+			
+			<model>2</model>
+			<shader>20</shader>
+			<type>normal</type>
+			<wired/>
+			<name>Mesh_minge</name>
+			<color>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</color>
+			<position>
+				<x>250</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>45</y>
+				<z>0</z>
+			</rotation>
+			<scale>
+				<x>1.0</x>
+				<y>1.0</y>
+				<z>1.0</z>
+			</scale>
 		</object>
 		
 		<object id="8">

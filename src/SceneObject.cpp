@@ -29,7 +29,12 @@ void SceneObject::Draw(Camera* camera) {
 	}
 
 	_shader->SetAttributes();
-	_shader->SetUniformMatrix4fv("u_mvp", camera->GetMVP());
+
+	Matrix model = GetModelMatrix();
+	Matrix mvp = model * camera->GetMVP();
+	_shader->SetUniformMatrix4fv("u_mvp", mvp);
+
+	//_shader->SetUniformMatrix4fv("u_mvp", camera->GetMVP());
 	_shader->SetUniform1i("u_Texture", 0);
 
 	glDrawElements(GL_TRIANGLES, _model->GetIndicesFilledCount(), GL_UNSIGNED_SHORT, nullptr);
@@ -71,4 +76,17 @@ void SceneObject::SetShader(Shader* shader){
 void SceneObject::AddTexture(Texture* texture){
 
 	_textureResources.push_back(texture);
+}
+
+// PRIVATE
+
+Matrix SceneObject::GetModelMatrix() {
+
+	Matrix positionMat;
+	positionMat.SetTranslation(_position);
+
+	Matrix rotationMat;
+	rotationMat.SetRotationY(_rotation.y);
+
+	return rotationMat *  positionMat ;
 }

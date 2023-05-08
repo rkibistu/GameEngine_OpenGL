@@ -32,7 +32,8 @@ void SceneManager::Init(ESContext* esContext) {
 
 }
 
-void SceneManager::Update(ESContext* esContext, float deltaTime) {
+void SceneManager::Update(ESContext* esContext, 
+	float deltaTime) {
 
 	_activeCamera->Update(deltaTime);
 }

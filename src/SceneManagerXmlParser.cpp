@@ -160,12 +160,19 @@ SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* object
 	}
 
 	//treci prin fiecare nod copil: model, textures, shader, etc.
+	Vector3 pos, rotation, scale;
 	for (rapidxml::xml_node<>* node = objectNode->first_node(); node; node = node->next_sibling()) {
 
 		ReadModel(node, sceneObject);
 		ReadShader(node, sceneObject);
 		ReadTextures(node, sceneObject);
+		ReadVector3_xyz(node, POSITION_NODE, pos);
+		ReadVector3_xyz(node, ROTATION_NODE, rotation);
+		ReadVector3_xyz(node, SCALE_NODE, scale);
 	}
+	sceneObject->SetPosition(pos);
+	sceneObject->SetRotation(rotation);
+	sceneObject->SetScale(scale);
 
 	return sceneObject;
 }

@@ -8,6 +8,9 @@
 			<model id="5">
 				<file>Bila.nfg</file>
 			</model>
+			<model id="2">
+				<file>cube.nfg</file>
+			</model>
 		</folder>
 
 		<folder path="Res/Models2/">

@@ -24,6 +24,13 @@ public:
 
 	inline void SetId(unsigned int id) { _id = id; }
 	inline unsigned int GetId() { return _id; }
+	
+	inline void SetPosition(Vector3 position) { _position = position; }
+	inline void SetRotation(Vector3 rotation) { _rotation = rotation; }
+	inline void SetScale(Vector3 scale) { _scale = scale; }
+private:
+
+	Matrix GetModelMatrix();
 
 private:
 	unsigned int _id;
