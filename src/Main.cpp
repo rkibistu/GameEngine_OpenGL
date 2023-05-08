@@ -27,23 +27,18 @@ SceneManager& sceneManager = SceneManager::GetInstance();
 
 int Init(ESContext* esContext)
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glEnable(GL_DEPTH_TEST);
 
 	Input::Init();
 	resourceManager.Init();
-	sceneManager.Init();
+	sceneManager.Init(esContext);
 
 	return 0;
 }
 
 void Draw(ESContext* esContext)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	sceneManager.Draw();
-
-	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
+	sceneManager.Draw(esContext);
 }
 
 void Update(ESContext* esContext, float deltaTime)
@@ -52,7 +47,7 @@ void Update(ESContext* esContext, float deltaTime)
 	if (g_deltaTimer < g_deltaThreshold)
 		return;
 
-	sceneManager.Update(g_deltaTimer);
+	sceneManager.Update(esContext, g_deltaTimer);
 
 	g_deltaTimer = 0;
 

@@ -30,8 +30,6 @@ int SceneManagerXmlParser::Init(std::string filepath) {
 	_controlsRoot = _xmlRoot->first_node(CONTROLS_ROOT);
 	_camerasRoot = _xmlRoot->first_node(CAMERAS_ROOT);
 	_activeCameraNode = _xmlRoot->first_node(ACTIVE_CAMERA_NODE);
-	
-
 }
 
 //citest toate obiectele din cml aflate dub nodul <objects>
@@ -131,9 +129,17 @@ int SceneManagerXmlParser::ReadControls() {
 					Input::SetMovementAxisNegativeKey("Vertical", currentKey);
 				}
 			}
-			std::cout << node->name() << " " << node->value() << std::endl;
 		}
 	}
+
+	return MY_SUCCES_CODE;
+}
+
+//Citeste nodul <backgroundColor> si pune val in parametru
+int SceneManagerXmlParser::ReadBackgroundColor(Vector3& backgroundColor) {
+
+	rapidxml::xml_node<>* backgroundNode = _xmlRoot->first_node(BACKGROUND_COLOR_NODE);
+	ReadVector3_rgb(backgroundNode,BACKGROUND_COLOR_NODE, backgroundColor);
 
 	return MY_SUCCES_CODE;
 }
@@ -232,9 +238,9 @@ Camera* SceneManagerXmlParser::ReadCamera(rapidxml::xml_node<>* ccameraNode) {
 		if (strcmp(node->name(), COMMENT_NODE) == 0)
 			continue;
 
-		ReadVector3(node, POSITION_NODE, position);
-		ReadVector3(node, TARGET_NODE, target);
-		ReadVector3(node, UP_NODE, up);
+		ReadVector3_xyz(node, POSITION_NODE, position);
+		ReadVector3_xyz(node, TARGET_NODE, target);
+		ReadVector3_xyz(node, UP_NODE, up);
 
 		ReadFloat(node, FOV_NODE, fov);
 		ReadFloat(node, NEAR_CLIP_NODE, nearClip);
@@ -249,7 +255,7 @@ Camera* SceneManagerXmlParser::ReadCamera(rapidxml::xml_node<>* ccameraNode) {
 	camera->SetRotationSpeed(rotationSpeed);
 	return camera;
 }
-void SceneManagerXmlParser::ReadVector3(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result) {
+void SceneManagerXmlParser::ReadVector3_xyz(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result) {
 
 	if (strcmp(node->name(), nodeName.c_str()) == 0) {
 
@@ -260,6 +266,21 @@ void SceneManagerXmlParser::ReadVector3(rapidxml::xml_node<>* node, std::string 
 			if (strcmp(coordonateNode->name(), Y_AX_NODE) == 0)
 				result.y = atof(coordonateNode->value());
 			if (strcmp(coordonateNode->name(), Z_AX_NODE) == 0)
+				result.z = atof(coordonateNode->value());
+		}
+	}
+}
+void SceneManagerXmlParser::ReadVector3_rgb(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result) {
+
+	if (strcmp(node->name(), nodeName.c_str()) == 0) {
+
+		for (rapidxml::xml_node<>* coordonateNode = node->first_node(); coordonateNode; coordonateNode = coordonateNode->next_sibling()) {
+
+			if (strcmp(coordonateNode->name(), R_COLOR_NODE) == 0)
+				result.x = atof(coordonateNode->value());
+			if (strcmp(coordonateNode->name(), G_COLOR_NODE) == 0)
+				result.y = atof(coordonateNode->value());
+			if (strcmp(coordonateNode->name(), B_COLOR_NODE) == 0)
 				result.z = atof(coordonateNode->value());
 		}
 	}

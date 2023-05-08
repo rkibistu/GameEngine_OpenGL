@@ -33,6 +33,9 @@
 #define X_AX_NODE "x"
 #define Y_AX_NODE "y"
 #define Z_AX_NODE "z"
+#define R_COLOR_NODE "r"
+#define G_COLOR_NODE "g"
+#define B_COLOR_NODE "b"
 #define POSITION_NODE "position"
 #define TARGET_NODE "target"
 #define UP_NODE "up"
@@ -56,6 +59,7 @@ public:
 	int ReadObjects(std::unordered_map<unsigned int, SceneObject*>& sceneObjects);
 	int ReadCameras(std::unordered_map<unsigned int, Camera*>& camers, Camera** activeCamera);
 	int ReadControls();
+	int ReadBackgroundColor(Vector3& backgroundColor);
 
 private:
 
@@ -69,7 +73,8 @@ private:
 
 
 	//functia asta primeste nodul pentru care cuatam copii, numele nodului copil cuatat si un vector3 unde sa puen rezzultatul
-	void ReadVector3(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result);
+	void ReadVector3_xyz(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result);
+	void ReadVector3_rgb(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result);
 	void ReadFloat(rapidxml::xml_node<>* node, std::string nodeName, float& result);
 private:
 	//Pastram pointeri spre locurile importante din XML

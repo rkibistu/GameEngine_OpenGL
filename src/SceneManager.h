@@ -13,11 +13,11 @@ public:
 	static SceneManager& GetInstance();
 	void DestroyInstance();
 
-	void Init();
+	void Init(ESContext* esContext);
 
-	void Update(float deltaTime);
+	void Update(ESContext* esContext, float deltaTime);
 
-	void Draw();
+	void Draw(ESContext* esContext);
 
 	inline Camera* GetActiveCamera() { return _activeCamera; }
 
@@ -35,6 +35,7 @@ private:
 	std::unordered_map<unsigned int, Camera*> _cameras;
 	Camera* _activeCamera;
 
-	SceneManagerXmlParser _xmlParser;
+	Vector3 _backgroundColor;
 
+	SceneManagerXmlParser _xmlParser;
 };
