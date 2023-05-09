@@ -18,11 +18,11 @@ SceneObject::~SceneObject(){
 
 void SceneObject::Update(float deltaTime) {
 
-	//_rotation.y += 0.01f;
+	_rotation.y += 0.01f;
 
-	//if (_rotation.y > 180 * 2 * 3.14) {
-	//	_rotation.y -= 180 * 2 * 3.14;
-	//}
+	if (_rotation.y > 180 * 2 * 3.14) {
+		_rotation.y -= 180 * 2 * 3.14;
+	}
 
 	if (Input::GetKeyDown(KeyCode::K)) {
 
