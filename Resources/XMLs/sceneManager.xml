@@ -152,7 +152,7 @@
 			-->
 		</object>
 		
-		<object id="35">
+		<!-- <object id="35">
 			
 			<model>2</model>
 			<shader>20</shader>
@@ -235,7 +235,7 @@
 				<y>1.0</y>
 				<z>1.0</z>
 			</scale>
-		</object>
+		</object> -->
 		
 		<object id="8">
 			<model>generated</model>

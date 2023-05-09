@@ -15,6 +15,8 @@ public:
 	SceneObject();
 	~SceneObject();
 
+	void Update(float deltaTime);
+
 	void Draw(Camera* camera);
 	void DrawWired(Camera* camera);
 

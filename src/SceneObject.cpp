@@ -3,6 +3,8 @@
 #include "SceneObject.h"
 #include "Vertex.h"
 
+#include "Input.h"
+
 SceneObject::SceneObject()
 	: _model(nullptr), _shader(nullptr) {
 }
@@ -14,8 +16,23 @@ SceneObject::~SceneObject(){
 	//	they will be destroyd bu ResourceManager when it is the case
 }
 
-void SceneObject::Draw(Camera* camera) {
+void SceneObject::Update(float deltaTime) {
 
+	//_rotation.y += 0.01f;
+
+	//if (_rotation.y > 180 * 2 * 3.14) {
+	//	_rotation.y -= 180 * 2 * 3.14;
+	//}
+
+	if (Input::GetKeyDown(KeyCode::K)) {
+
+		_rotation.y += 0.25f;
+	}
+
+}
+
+void SceneObject::Draw(Camera* camera) {
+	
 	if (_model == nullptr)
 		return;
 	if (_shader == nullptr)
@@ -87,6 +104,7 @@ Matrix SceneObject::GetModelMatrix() {
 
 	Matrix rotationMat;
 	rotationMat.SetRotationY(_rotation.y);
+	std::cout << _rotation.y << std::endl;
 
 	return rotationMat *  positionMat ;
 }

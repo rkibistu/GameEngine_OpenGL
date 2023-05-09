@@ -36,6 +36,10 @@ void SceneManager::Update(ESContext* esContext,
 	float deltaTime) {
 
 	_activeCamera->Update(deltaTime);
+	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
+
+		it->second->Update(deltaTime);
+	}
 }
 
 void SceneManager::Draw(ESContext* esContext) {
