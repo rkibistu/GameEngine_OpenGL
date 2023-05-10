@@ -3,6 +3,7 @@
 #include <rapidXML/rapidxml.hpp>
 
 #include "SceneObject.h"
+#include "TerrainObject.h"
 #include "Input.h"
 
 #include <unordered_map>
@@ -51,6 +52,10 @@
 
 #define ID_ATTRIBUTE "id"
 
+
+
+struct SceneObjectXmlFormat;
+
 class SceneManagerXmlParser {
 
 public:
@@ -68,14 +73,18 @@ private:
 	void ReadModel(rapidxml::xml_node<>* node, SceneObject* sceneObject);
 	void ReadShader(rapidxml::xml_node<>* node, SceneObject* sceneObject);
 	void ReadTextures(rapidxml::xml_node<>* node, SceneObject* sceneObject);
-
+	void ReadTexturesVector(rapidxml::xml_node<>* node, std::string rootNodeName, std::string nodeName, std::vector<int>& result);
+	
 	Camera* ReadCamera(rapidxml::xml_node<>* ccameraNode);
-
 
 	//functia asta primeste nodul pentru care cuatam copii, numele nodului copil cuatat si un vector3 unde sa puen rezzultatul
 	void ReadVector3_xyz(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result);
 	void ReadVector3_rgb(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result);
 	void ReadFloat(rapidxml::xml_node<>* node, std::string nodeName, float& result);
+	void ReadString(rapidxml::xml_node<>* node, std::string nodeName, std::string& result);
+	void ReadInt(rapidxml::xml_node<>* node, std::string nodeName, int& result);
+
+	SceneObject* CreateSceneObject(SceneObjectXmlFormat obj);
 private:
 	//Pastram pointeri spre locurile importante din XML
 	// Ma gandesc ca daca creez un obiect la runtime, vreau sa il scriu in fisier
@@ -89,4 +98,18 @@ private:
 	rapidxml::xml_node<>* _activeCameraNode;
 
 
+};
+
+struct SceneObjectXmlFormat {
+
+	int id;
+	std::string name;
+
+	std::string modelId;
+	int shaderId;
+	std::vector<int> texturesId;
+
+	Vector3 position;
+	Vector3 rotation;
+	Vector3 scale;
 };

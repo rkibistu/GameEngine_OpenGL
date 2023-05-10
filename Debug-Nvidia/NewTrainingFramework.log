@@ -1,7 +1,21 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  SceneObject.cpp
+  SceneManagerXmlParser.cpp
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(24,32): warning C4305: '-=': truncation from 'double' to 'GLfloat'
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(44,20): warning C4018: '<': signed/unsigned mismatch
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(70,20): warning C4018: '<': signed/unsigned mismatch
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(13,6): warning C4101: 'res': unreferenced local variable
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(154,6): warning C4101: 'id': unreferenced local variable
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(151,15): warning C4101: 'shaderId': unreferenced local variable
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(151,6): warning C4101: 'modelId': unreferenced local variable
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(293,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(295,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(297,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(308,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(310,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(312,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(320,16): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  SceneManager.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
+  Main.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
+  Generating Code...
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(34): warning C4715: 'SceneManagerXmlParser::Init': not all control paths return a value
   NewTrainingFramework.vcxproj -> E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\BIN-Nvidia\NewTrainingFramework.exe

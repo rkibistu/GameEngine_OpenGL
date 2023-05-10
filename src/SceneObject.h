@@ -13,7 +13,7 @@ class SceneObject {
 
 public:
 	SceneObject();
-	~SceneObject();
+	virtual ~SceneObject();
 
 	void Update(float deltaTime);
 
@@ -26,16 +26,20 @@ public:
 
 	inline void SetId(unsigned int id) { _id = id; }
 	inline unsigned int GetId() { return _id; }
+
+	inline void SetName(std::string name) { _name = name; }
+	inline std::string GetName() { return _name; }
 	
 	inline void SetPosition(Vector3 position) { _position = position; }
 	inline void SetRotation(Vector3 rotation) { _rotation = rotation; }
 	inline void SetScale(Vector3 scale) { _scale = scale; }
-private:
+protected:
 
 	Matrix GetModelMatrix();
 
-private:
+protected:
 	unsigned int _id;
+	std::string _name;
 	bool _depthTest;
 
 	Vector3 _position;

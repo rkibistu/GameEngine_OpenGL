@@ -6,6 +6,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <vector>
 
 int SceneManagerXmlParser::Init(std::string filepath) {
 
@@ -146,34 +147,37 @@ int SceneManagerXmlParser::ReadBackgroundColor(Vector3& backgroundColor) {
 
 SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* objectNode) {
 
-	SceneObject* sceneObject = new SceneObject();
+	Vector3 pos, rotation, scale;
+	int modelId, shaderId;
+	std::vector<int> texturesId;
+	std::string name;
+	int id;
+
+	SceneObjectXmlFormat obj;
 
 	//ia atributele: <object id=1>
 	for (rapidxml::xml_attribute<>* pAttr = objectNode->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 	{
 		if (strcmp(pAttr->name(), ID_ATTRIBUTE) != 0) {
 			std::cout << "Expected id attribute" << std::endl;
-			delete sceneObject;
 			return nullptr;
 		}
-		sceneObject->SetId(atoi(pAttr->value()));
+		obj.id = atoi(pAttr->value());
 	}
 
 	//treci prin fiecare nod copil: model, textures, shader, etc.
-	Vector3 pos, rotation, scale;
 	for (rapidxml::xml_node<>* node = objectNode->first_node(); node; node = node->next_sibling()) {
 
-		ReadModel(node, sceneObject);
-		ReadShader(node, sceneObject);
-		ReadTextures(node, sceneObject);
-		ReadVector3_xyz(node, POSITION_NODE, pos);
-		ReadVector3_xyz(node, ROTATION_NODE, rotation);
-		ReadVector3_xyz(node, SCALE_NODE, scale);
+		ReadString(node, MODEL_NODE, obj.modelId);
+		ReadInt(node, SHADER_NODE, obj.shaderId);
+		ReadTexturesVector(node, TEXTURES_NODE, TEXTURE_NODE, obj.texturesId);
+		ReadVector3_xyz(node, POSITION_NODE, obj.position);
+		ReadVector3_xyz(node, ROTATION_NODE, obj.rotation);
+		ReadVector3_xyz(node, SCALE_NODE, obj.scale);
+		ReadString(node, NAME_NODE, obj.name);
 	}
-	sceneObject->SetPosition(pos);
-	sceneObject->SetRotation(rotation);
-	sceneObject->SetScale(scale);
 
+	SceneObject* sceneObject = CreateSceneObject(obj);
 	return sceneObject;
 }
 void SceneManagerXmlParser::ReadModel(rapidxml::xml_node<>* node, SceneObject* sceneObject) {
@@ -220,6 +224,23 @@ void SceneManagerXmlParser::ReadTextures(rapidxml::xml_node<>* node, SceneObject
 			}
 			texture = resourceManager.GetTexture(atoi(pAttr->value()));
 			sceneObject->AddTexture(texture);
+		}
+	}
+}
+void SceneManagerXmlParser::ReadTexturesVector(rapidxml::xml_node<>* node, std::string rootNodeName, std::string nodeName, std::vector<int>& result) {
+
+	int element;
+	if (strcmp(node->name(), rootNodeName.c_str()) == 0) {
+
+		for (rapidxml::xml_node<>* childNode = node->first_node(); childNode; childNode = childNode->next_sibling()) {
+
+			rapidxml::xml_attribute<>* pAttr = childNode->first_attribute();
+			if (strcmp(pAttr->name(), ID_ATTRIBUTE) != 0) {
+				std::cout << "Missing id attribute from texture in xml file" << std::endl;
+				return;
+			}
+			element = atoi(pAttr->value());
+			result.push_back(element);
 		}
 	}
 }
@@ -299,3 +320,49 @@ void SceneManagerXmlParser::ReadFloat(rapidxml::xml_node<>* node, std::string no
 		result = atof(node->value());
 	}
 }
+void SceneManagerXmlParser::ReadString(rapidxml::xml_node<>* node, std::string nodeName, std::string& result) {
+
+	if (strcmp(node->name(), nodeName.c_str()) == 0) {
+
+		result = node->value();
+	}
+}
+void SceneManagerXmlParser::ReadInt(rapidxml::xml_node<>* node, std::string nodeName, int& result) {
+
+	if (strcmp(node->name(), nodeName.c_str()) == 0) {
+
+		result = atoi(node->value());
+	}
+}
+
+
+SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) {
+
+	ResourceManager& resourceManager = ResourceManager::GetInstance();
+
+
+	SceneObject* sceneObject = nullptr;
+	if (obj.modelId == "generated") {
+
+		sceneObject = new TerrainObject();
+	}
+	else {
+		sceneObject = new SceneObject();
+	}
+
+	sceneObject->SetId(obj.id);
+	sceneObject->SetModel(resourceManager.GetModel(atoi(obj.modelId.c_str())));
+	sceneObject->SetShader(resourceManager.GetShader(obj.shaderId));
+	for (auto it = obj.texturesId.begin(); it != obj.texturesId.end(); it++) {
+
+		sceneObject->AddTexture(resourceManager.GetTexture(*it));
+	}
+	sceneObject->SetPosition(obj.position);
+	sceneObject->SetRotation(obj.rotation);
+	sceneObject->SetScale(obj.scale);
+	sceneObject->SetName(obj.name);
+
+	return sceneObject;
+}
+
+

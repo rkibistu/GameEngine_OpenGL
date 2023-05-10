@@ -104,7 +104,10 @@ Matrix SceneObject::GetModelMatrix() {
 
 	Matrix rotationMat;
 	rotationMat.SetRotationY(_rotation.y);
-	std::cout << _rotation.y << std::endl;
+	
+	
+	Matrix scaleMat;
+	scaleMat.SetScale(_scale);
 
-	return rotationMat *  positionMat ;
+	return scaleMat * rotationMat *  positionMat ;
 }

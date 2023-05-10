@@ -123,9 +123,9 @@
 				<z>0</z>
 			</rotation>
 			<scale>
-				<x>1.0</x>
-				<y>1.0</y>
-				<z>1.0</z>
+				<x>0.25</x>
+				<y>0.25</y>
+				<z>0.25</z>
 			</scale>
 			<!--
 			Exemple de alte configurari care vor fi adaugate si parsate mai tarziu (pentru taskuri ulterioare)
