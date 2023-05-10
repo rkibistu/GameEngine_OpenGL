@@ -32,6 +32,7 @@ int Texture::Load(TextureResource* textureResource){
 		return MY_ERROR_CODE;
 	//configure texture
 	
+	//glActiveTexture(_textureId);
 	glBindTexture(GL_TEXTURE_2D, _textureId);
 
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -48,8 +49,8 @@ int Texture::Load(TextureResource* textureResource){
 
 void Texture::Bind(int slot){
 
-	glBindTexture(GL_TEXTURE_2D, _textureId);
 	glActiveTexture(GL_TEXTURE0 + slot);
+	glBindTexture(GL_TEXTURE_2D, _textureId);
 }
 
 void Texture::Unbind(){

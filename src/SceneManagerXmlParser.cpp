@@ -78,7 +78,7 @@ int SceneManagerXmlParser::ReadCameras(std::unordered_map<unsigned int, Camera*>
 		}
 	}
 
-	if(activeCameraFound == false) {
+	if (activeCameraFound == false) {
 		std::cout << "ACTIVE CAMERA HAS BAD ID!" << std::endl;
 		return MY_ERROR_CODE;
 	}
@@ -97,7 +97,7 @@ int SceneManagerXmlParser::ReadControls() {
 		unsigned char currentKey;
 		for (rapidxml::xml_node<>* node = controlNode->first_node(); node; node = node->next_sibling()) {
 
-			if (strcmp(node->name(),KEY_NODE) == 0) {
+			if (strcmp(node->name(), KEY_NODE) == 0) {
 				currentKey = node->value()[0];
 			}
 			if (strcmp(node->name(), ACTION_NODE) == 0) {
@@ -140,7 +140,7 @@ int SceneManagerXmlParser::ReadControls() {
 int SceneManagerXmlParser::ReadBackgroundColor(Vector3& backgroundColor) {
 
 	rapidxml::xml_node<>* backgroundNode = _xmlRoot->first_node(BACKGROUND_COLOR_NODE);
-	ReadVector3_rgb(backgroundNode,BACKGROUND_COLOR_NODE, backgroundColor);
+	ReadVector3_rgb(backgroundNode, BACKGROUND_COLOR_NODE, backgroundColor);
 
 	return MY_SUCCES_CODE;
 }
@@ -345,13 +345,14 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 	if (obj.modelId == "generated") {
 
 		sceneObject = new TerrainObject();
+		sceneObject->SetModel(resourceManager.GetTerrainModel());
 	}
 	else {
 		sceneObject = new SceneObject();
+		sceneObject->SetModel(resourceManager.GetModel(atoi(obj.modelId.c_str())));
 	}
 
 	sceneObject->SetId(obj.id);
-	sceneObject->SetModel(resourceManager.GetModel(atoi(obj.modelId.c_str())));
 	sceneObject->SetShader(resourceManager.GetShader(obj.shaderId));
 	for (auto it = obj.texturesId.begin(); it != obj.texturesId.end(); it++) {
 

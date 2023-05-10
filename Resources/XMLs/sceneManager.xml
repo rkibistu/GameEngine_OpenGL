@@ -103,6 +103,7 @@
 		<comment>in interiorul elementelor model, shader, texture, se gaseste id-ul corespunzator resursei din sceneManager.xml
 		Elementul position se refera practic la translatia obiectului.
 		</comment>
+
 		<object id="1">
 			
 			<model>1</model>
@@ -114,7 +115,7 @@
 			</textures>
 			<position>
 				<x>0</x>
-				<y>75</y>
+				<y>5</y>
 				<z>0</z>
 			</position>
 			<rotation>
@@ -151,95 +152,34 @@
 			</lights>
 			-->
 		</object>
-		
-		<object id="35">
+		<object id="111">
 			
-			<model>2</model>
-			<shader>20</shader>
+			<model>1</model>
+			<shader>10</shader>
 			<type>normal</type>
-			<wired/>
-			<name>Mesh_minge</name>
-			<color>
-				<r>1.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</color>
+			<name>Crocodil_verde</name>
+			<textures>
+				<texture id="15"/>
+			</textures>
 			<position>
-				<x>0</x>
-				<y>0</y>
+				<x>75</x>
+				<y>5</y>
 				<z>0</z>
 			</position>
 			<rotation>
 				<x>0</x>
-				<y>45</y>
-				<z>0</z>
-			</rotation>
-			<scale>
-				<x>1.0</x>
-				<y>1.0</y>
-				<z>1.0</z>
-			</scale>
-		</object>
-		<object id="36">
-			
-			<model>2</model>
-			<shader>20</shader>
-			<type>normal</type>
-			<wired/>
-			<name>Mesh_minge</name>
-			<color>
-				<r>1.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</color>
-			<position>
-				<x>-250</x>
 				<y>0</y>
 				<z>0</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>45</y>
-				<z>0</z>
 			</rotation>
 			<scale>
-				<x>1.0</x>
-				<y>1.0</y>
-				<z>1.0</z>
+				<x>0.25</x>
+				<y>0.25</y>
+				<z>0.25</z>
 			</scale>
 		</object>
-		<object id="37">
-			
-			<model>2</model>
-			<shader>20</shader>
-			<type>normal</type>
-			<wired/>
-			<name>Mesh_minge</name>
-			<color>
-				<r>1.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</color>
-			<position>
-				<x>250</x>
-				<y>0</y>
-				<z>0</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>45</y>
-				<z>0</z>
-			</rotation>
-			<scale>
-				<x>1.0</x>
-				<y>1.0</y>
-				<z>1.0</z>
-			</scale>
-		</object>
-		
 		<object id="8">
 			<model>generated</model>
-			<shader>8</shader>
+			<shader>10</shader>
 			<type>terrain</type>
 			<name>Teren</name>
 			<textures>
@@ -263,6 +203,93 @@
 				<z>1.0</z>
 			</scale>
 		</object>
+		
+		<!-- <object id="35"> -->
+			
+			<!-- <model>2</model> -->
+			<!-- <shader>20</shader> -->
+			<!-- <type>normal</type> -->
+			<!-- <wired/> -->
+			<!-- <name>Mesh_minge</name> -->
+			<!-- <color> -->
+				<!-- <r>1.0</r> -->
+				<!-- <g>0.0</g> -->
+				<!-- <b>0.0</b> -->
+			<!-- </color> -->
+			<!-- <position> -->
+				<!-- <x>0</x> -->
+				<!-- <y>0</y> -->
+				<!-- <z>0</z> -->
+			<!-- </position> -->
+			<!-- <rotation> -->
+				<!-- <x>0</x> -->
+				<!-- <y>45</y> -->
+				<!-- <z>0</z> -->
+			<!-- </rotation> -->
+			<!-- <scale> -->
+				<!-- <x>1.0</x> -->
+				<!-- <y>1.0</y> -->
+				<!-- <z>1.0</z> -->
+			<!-- </scale> -->
+		<!-- </object> -->
+		<!-- <object id="36"> -->
+			
+			<!-- <model>2</model> -->
+			<!-- <shader>20</shader> -->
+			<!-- <type>normal</type> -->
+			<!-- <wired/> -->
+			<!-- <name>Mesh_minge</name> -->
+			<!-- <color> -->
+				<!-- <r>1.0</r> -->
+				<!-- <g>0.0</g> -->
+				<!-- <b>0.0</b> -->
+			<!-- </color> -->
+			<!-- <position> -->
+				<!-- <x>-250</x> -->
+				<!-- <y>0</y> -->
+				<!-- <z>0</z> -->
+			<!-- </position> -->
+			<!-- <rotation> -->
+				<!-- <x>0</x> -->
+				<!-- <y>45</y> -->
+				<!-- <z>0</z> -->
+			<!-- </rotation> -->
+			<!-- <scale> -->
+				<!-- <x>1.0</x> -->
+				<!-- <y>1.0</y> -->
+				<!-- <z>1.0</z> -->
+			<!-- </scale> -->
+		<!-- </object> -->
+		<!-- <object id="37"> -->
+			
+			<!-- <model>2</model> -->
+			<!-- <shader>20</shader> -->
+			<!-- <type>normal</type> -->
+			<!-- <wired/> -->
+			<!-- <name>Mesh_minge</name> -->
+			<!-- <color> -->
+				<!-- <r>1.0</r> -->
+				<!-- <g>0.0</g> -->
+				<!-- <b>0.0</b> -->
+			<!-- </color> -->
+			<!-- <position> -->
+				<!-- <x>250</x> -->
+				<!-- <y>0</y> -->
+				<!-- <z>0</z> -->
+			<!-- </position> -->
+			<!-- <rotation> -->
+				<!-- <x>0</x> -->
+				<!-- <y>45</y> -->
+				<!-- <z>0</z> -->
+			<!-- </rotation> -->
+			<!-- <scale> -->
+				<!-- <x>1.0</x> -->
+				<!-- <y>1.0</y> -->
+				<!-- <z>1.0</z> -->
+			<!-- </scale> -->
+		<!-- </object> -->
+		
+		
 	</objects>
 	
 	<!--

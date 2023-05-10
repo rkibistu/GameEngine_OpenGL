@@ -39,6 +39,10 @@ void SceneObject::Draw(Camera* camera) {
 		return;
 
 
+	if (_name == "Crocodil_verde") {
+		int x = 3;
+	}
+
 	_model->BindFilled();
 	_shader->Bind();
 	for (int i = 0; i < _textureResources.size(); i++) {
@@ -48,7 +52,7 @@ void SceneObject::Draw(Camera* camera) {
 	_shader->SetAttributes();
 
 	Matrix model = GetModelMatrix();
-	Matrix mvp = model * camera->GetMVP();
+	Matrix mvp = model * camera->GetMVP(); 
 	_shader->SetUniformMatrix4fv("u_mvp", mvp);
 
 	//_shader->SetUniformMatrix4fv("u_mvp", camera->GetMVP());
@@ -64,6 +68,7 @@ void SceneObject::DrawWired(Camera* camera) {
 		return;
 	if (_shader == nullptr)
 		return;
+
 
 	_shader->Bind();
 	_model->BindWired();

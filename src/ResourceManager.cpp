@@ -317,6 +317,16 @@ Texture* ResourceManager::GetTexture(unsigned int id) {
 	return LoadTexture(id);
 }
 
+Model* ResourceManager::GetTerrainModel() {
+
+	if (_terrainModel == nullptr) {
+
+		_terrainModel = new Model();
+		_terrainModel->LoadFlatTerrain();
+	}
+	return _terrainModel;
+}
+
 Model* ResourceManager::LoadModel(unsigned int id) {
 
 	auto itResources = _modelResources.find(id);
@@ -359,3 +369,4 @@ Texture* ResourceManager::LoadTexture(unsigned int id) {
 	_textures.insert({ id,texture });
 	return texture;
 }
+

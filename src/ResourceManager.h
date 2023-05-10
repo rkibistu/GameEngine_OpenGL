@@ -41,6 +41,8 @@ public:
 	Shader* GetShader(unsigned int id);
 	Texture* GetTexture(unsigned int id);
 
+	Model* GetTerrainModel();
+
 
 private:
 
@@ -80,6 +82,8 @@ private:
 	std::unordered_map<unsigned int, Model*> _models;
 	std::unordered_map<unsigned int, Shader*> _shaders;
 	std::unordered_map<unsigned int, Texture*> _textures;
+
+	Model* _terrainModel = nullptr;
 };
 
 
