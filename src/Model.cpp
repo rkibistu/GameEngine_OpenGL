@@ -68,7 +68,7 @@ int Model::LoadFlatTerrain() {
 	std::vector<GLushort> indices;
 	std::vector<GLushort> wiredIndices;
 
-	GenerateFlatTerrain(120, 120, 80, 80, vertices, indices);
+	GenerateFlatTerrain(240, 240, 80, 80, vertices, indices);
 
 	_modelResource = new ModelResource();
 

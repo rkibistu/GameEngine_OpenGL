@@ -15,7 +15,7 @@ public:
 	SceneObject();
 	virtual ~SceneObject();
 
-	void Update(float deltaTime);
+	virtual void Update(float deltaTime);
 
 	void Draw(Camera* camera);
 	void DrawWired(Camera* camera);
@@ -36,6 +36,8 @@ public:
 protected:
 
 	Matrix GetModelMatrix();
+
+	virtual void SetUniforms(Camera* camera);
 
 protected:
 	unsigned int _id;

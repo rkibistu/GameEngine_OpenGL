@@ -39,10 +39,6 @@ void SceneObject::Draw(Camera* camera) {
 		return;
 
 
-	if (_name == "Crocodil_verde") {
-		int x = 3;
-	}
-
 	_model->BindFilled();
 	_shader->Bind();
 	for (int i = 0; i < _textureResources.size(); i++) {
@@ -51,12 +47,7 @@ void SceneObject::Draw(Camera* camera) {
 
 	_shader->SetAttributes();
 
-	Matrix model = GetModelMatrix();
-	Matrix mvp = model * camera->GetMVP(); 
-	_shader->SetUniformMatrix4fv("u_mvp", mvp);
-
-	//_shader->SetUniformMatrix4fv("u_mvp", camera->GetMVP());
-	_shader->SetUniform1i("u_Texture", 0);
+	SetUniforms(camera);
 
 	glDrawElements(GL_TRIANGLES, _model->GetIndicesFilledCount(), GL_UNSIGNED_SHORT, nullptr);
 
@@ -100,7 +91,7 @@ void SceneObject::AddTexture(Texture* texture){
 	_textureResources.push_back(texture);
 }
 
-// PRIVATE
+// PROTECTED
 
 Matrix SceneObject::GetModelMatrix() {
 
@@ -115,4 +106,14 @@ Matrix SceneObject::GetModelMatrix() {
 	scaleMat.SetScale(_scale);
 
 	return scaleMat * rotationMat *  positionMat ;
+}
+
+void SceneObject::SetUniforms(Camera* camera) {
+
+	Matrix model = GetModelMatrix();
+	Matrix mvp = model * camera->GetMVP();
+	_shader->SetUniformMatrix4fv("u_mvp", mvp);
+
+	//_shader->SetUniformMatrix4fv("u_mvp", camera->GetMVP());
+	_shader->SetUniform1i("u_Texture", 0);
 }

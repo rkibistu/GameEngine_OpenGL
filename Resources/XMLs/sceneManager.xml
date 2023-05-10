@@ -124,9 +124,9 @@
 				<z>0</z>
 			</rotation>
 			<scale>
-				<x>0.25</x>
-				<y>0.25</y>
-				<z>0.25</z>
+				<x>0.5</x>
+				<y>0.5</y>
+				<z>0.5</z>
 			</scale>
 			<!--
 			Exemple de alte configurari care vor fi adaugate si parsate mai tarziu (pentru taskuri ulterioare)
@@ -188,9 +188,9 @@
 				<!-- TO DO adaugati texturile-->
 			</textures>
 			<position>
-				<x>1.5</x>
-				<y>2.4</y>
-				<z>7</z>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
 			</position>
 			<rotation>
 				<x>0.0</x>
@@ -204,90 +204,90 @@
 			</scale>
 		</object>
 		
-		<!-- <object id="35"> -->
+		<object id="35">
 			
-			<!-- <model>2</model> -->
-			<!-- <shader>20</shader> -->
-			<!-- <type>normal</type> -->
-			<!-- <wired/> -->
-			<!-- <name>Mesh_minge</name> -->
-			<!-- <color> -->
-				<!-- <r>1.0</r> -->
-				<!-- <g>0.0</g> -->
-				<!-- <b>0.0</b> -->
-			<!-- </color> -->
-			<!-- <position> -->
-				<!-- <x>0</x> -->
-				<!-- <y>0</y> -->
-				<!-- <z>0</z> -->
-			<!-- </position> -->
-			<!-- <rotation> -->
-				<!-- <x>0</x> -->
-				<!-- <y>45</y> -->
-				<!-- <z>0</z> -->
-			<!-- </rotation> -->
-			<!-- <scale> -->
-				<!-- <x>1.0</x> -->
-				<!-- <y>1.0</y> -->
-				<!-- <z>1.0</z> -->
-			<!-- </scale> -->
-		<!-- </object> -->
-		<!-- <object id="36"> -->
+			<model>2</model>
+			<shader>20</shader>
+			<type>normal</type>
+			<wired/>
+			<name>mesh_minge</name>
+			<color>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</color>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>45</y>
+				<z>0</z>
+			</rotation>
+			<scale>
+				<x>1.0</x>
+				<y>1.0</y>
+				<z>1.0</z>
+			</scale>
+		</object>
+		<object id="36">
 			
-			<!-- <model>2</model> -->
-			<!-- <shader>20</shader> -->
-			<!-- <type>normal</type> -->
-			<!-- <wired/> -->
-			<!-- <name>Mesh_minge</name> -->
-			<!-- <color> -->
-				<!-- <r>1.0</r> -->
-				<!-- <g>0.0</g> -->
-				<!-- <b>0.0</b> -->
-			<!-- </color> -->
-			<!-- <position> -->
-				<!-- <x>-250</x> -->
-				<!-- <y>0</y> -->
-				<!-- <z>0</z> -->
-			<!-- </position> -->
-			<!-- <rotation> -->
-				<!-- <x>0</x> -->
-				<!-- <y>45</y> -->
-				<!-- <z>0</z> -->
-			<!-- </rotation> -->
-			<!-- <scale> -->
-				<!-- <x>1.0</x> -->
-				<!-- <y>1.0</y> -->
-				<!-- <z>1.0</z> -->
-			<!-- </scale> -->
-		<!-- </object> -->
-		<!-- <object id="37"> -->
+			<model>2</model>
+			<shader>20</shader>
+			<type>normal</type>
+			<wired/>
+			<name>mesh_minge</name>
+			<color>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</color>
+			<position>
+				<x>-250</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>45</y>
+				<z>0</z>
+			</rotation>
+			<scale>
+				<x>1.0</x>
+				<y>1.0</y>
+				<z>1.0</z>
+			</scale>
+		</object>
+		<object id="37">
 			
-			<!-- <model>2</model> -->
-			<!-- <shader>20</shader> -->
-			<!-- <type>normal</type> -->
-			<!-- <wired/> -->
-			<!-- <name>Mesh_minge</name> -->
-			<!-- <color> -->
-				<!-- <r>1.0</r> -->
-				<!-- <g>0.0</g> -->
-				<!-- <b>0.0</b> -->
-			<!-- </color> -->
-			<!-- <position> -->
-				<!-- <x>250</x> -->
-				<!-- <y>0</y> -->
-				<!-- <z>0</z> -->
-			<!-- </position> -->
-			<!-- <rotation> -->
-				<!-- <x>0</x> -->
-				<!-- <y>45</y> -->
-				<!-- <z>0</z> -->
-			<!-- </rotation> -->
-			<!-- <scale> -->
-				<!-- <x>1.0</x> -->
-				<!-- <y>1.0</y> -->
-				<!-- <z>1.0</z> -->
-			<!-- </scale> -->
-		<!-- </object> -->
+			<model>2</model>
+			<shader>20</shader>
+			<type>normal</type>
+			<wired/>
+			<name>mesh_minge</name>
+			<color>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</color>
+			<position>
+				<x>250</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>45</y>
+				<z>0</z>
+			</rotation>
+			<scale>
+				<x>1.0</x>
+				<y>1.0</y>
+				<z>1.0</z>
+			</scale>
+		</object>
 		
 		
 	</objects>

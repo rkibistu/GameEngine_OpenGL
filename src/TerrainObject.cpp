@@ -7,4 +7,8 @@ TerrainObject::TerrainObject() {
 
 }
 
+void TerrainObject::Update(float deltaTime) {
+
+
+}
 
