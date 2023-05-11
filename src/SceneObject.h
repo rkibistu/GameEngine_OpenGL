@@ -36,7 +36,8 @@ public:
 protected:
 
 	Matrix GetModelMatrix();
-
+	
+	//Diffrent type of objects -> diffrent uniforms
 	virtual void SetUniforms(Camera* camera);
 
 protected:

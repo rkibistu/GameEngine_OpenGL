@@ -159,7 +159,7 @@
 			<type>normal</type>
 			<name>Crocodil_verde</name>
 			<textures>
-				<texture id="15"/>
+				<texture id="14"/>
 			</textures>
 			<position>
 				<x>75</x>
@@ -183,8 +183,8 @@
 			<type>terrain</type>
 			<name>Teren</name>
 			<textures>
-				<texture id="14"/>
 				<texture id="15"/>
+				<texture id="14"/>
 				<!-- TO DO adaugati texturile-->
 			</textures>
 			<position>

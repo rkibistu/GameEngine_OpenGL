@@ -68,7 +68,7 @@ int Model::LoadFlatTerrain() {
 	std::vector<GLushort> indices;
 	std::vector<GLushort> wiredIndices;
 
-	GenerateFlatTerrain(240, 240, 80, 80, vertices, indices);
+	GenerateFlatTerrain(120, 120, 40, 40, vertices, indices);
 
 	_modelResource = new ModelResource();
 
@@ -96,6 +96,8 @@ int Model::LoadFlatTerrain() {
 
 	return MY_SUCCES_CODE;
 }
+
+// IMPORTANT: numBerticesWidth * numVerticesDepth sa nu fie mai mare decat range-ul pt unsigned short!!
 void Model::GenerateFlatTerrain(float width, float depth, int numVerticesWidth, int numVerticesDepth, std::vector<Vertex>& vertices, std::vector<GLushort>& indices)
 {
 	// Calculate the size of each grid cell
@@ -121,6 +123,10 @@ void Model::GenerateFlatTerrain(float width, float depth, int numVerticesWidth, 
 			temp.color = Vector3(1.0f, 0.0f, 1.0f);
 			temp.norm = Vector3(0.0f, 1.0f, 0.0f);
 			
+			float u = x / width;
+			float v = z / depth;
+			temp.uv = Vector2(u, v);
+
 			vertices.push_back(temp);
 		}
 	}
@@ -130,10 +136,10 @@ void Model::GenerateFlatTerrain(float width, float depth, int numVerticesWidth, 
 		for (int wx = 0; wx < numVerticesWidth - 1; ++wx)
 		{
 			// Calculate indices for the current cell
-			unsigned int topLeft = dz * numVerticesWidth + wx;
-			unsigned int topRight = topLeft + 1;
-			unsigned int bottomLeft = (dz + 1) * numVerticesWidth + wx;
-			unsigned int bottomRight = bottomLeft + 1;
+			unsigned short topLeft = dz * numVerticesWidth + wx;
+			unsigned short topRight = topLeft + 1;
+			unsigned short bottomLeft = (dz + 1) * numVerticesWidth + wx;
+			unsigned short bottomRight = bottomLeft + 1;
 
 			// Create two triangles for the current cell
 			indices.push_back(topLeft);
