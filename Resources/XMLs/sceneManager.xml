@@ -183,8 +183,10 @@
 			<type>terrain</type>
 			<name>Teren</name>
 			<textures>
-				<texture id="15"/>
+				<texture id="17"/>
 				<texture id="14"/>
+				<texture id="15"/>
+				<texture id="16"/>
 				<!-- TO DO adaugati texturile-->
 			</textures>
 			<position>
