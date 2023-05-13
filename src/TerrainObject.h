@@ -19,7 +19,7 @@ private:
 
     int _size;
     int _countCells;
-    float _width;
+    int _width;
 };
 
 

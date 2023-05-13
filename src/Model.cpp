@@ -69,15 +69,7 @@ int Model::LoadFlatTerrain(int sizeWidht, int sizeHeight, int cellCountWidth, in
 	std::vector<GLushort> indices;
 	std::vector<GLushort> wiredIndices;
 	
-	
-	ResourceManager& resourceManager = ResourceManager::GetInstance();
-	Vector2 size = Vector2(480, 480);
-	Vector2 _countCells = Vector2(48,48);
-
-	resourceManager._terrainSize = size; 
-	resourceManager._terrainCountCells = _countCells;
-
-	GenerateFlatTerrain(size.x, size.y,_countCells.x, _countCells.y, vertices, indices);
+	GenerateFlatTerrain(sizeWidht, sizeHeight, cellCountWidth, cellCountHeight, vertices, indices);
 
 	_modelResource = new ModelResource();
 

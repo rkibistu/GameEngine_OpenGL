@@ -344,8 +344,8 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 	SceneObject* sceneObject = nullptr;
 	if (obj.modelId == "generated") {
 
-		int size = 2500;
-		int cells = 250;
+		int size = 480;
+		int cells = 48;
 		sceneObject = new TerrainObject(size,cells);
 		sceneObject->SetModel(resourceManager.GetTerrainModel(size,size,cells,cells));
 
