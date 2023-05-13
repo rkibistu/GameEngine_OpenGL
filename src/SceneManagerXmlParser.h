@@ -49,6 +49,7 @@
 #define SCREEN_HEIGTH "height"
 #define ACTION_NODE "action"
 #define KEY_NODE "key"
+#define HEIGHTS_PER_COLOR_NODE "heights"
 
 #define ID_ATTRIBUTE "id"
 
@@ -112,4 +113,5 @@ struct SceneObjectXmlFormat {
 	Vector3 position;
 	Vector3 rotation;
 	Vector3 scale;
+	Vector3 heights;
 };

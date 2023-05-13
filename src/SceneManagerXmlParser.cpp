@@ -174,6 +174,7 @@ SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* object
 		ReadVector3_xyz(node, POSITION_NODE, obj.position);
 		ReadVector3_xyz(node, ROTATION_NODE, obj.rotation);
 		ReadVector3_xyz(node, SCALE_NODE, obj.scale);
+		ReadVector3_rgb(node, HEIGHTS_PER_COLOR_NODE, obj.heights);
 		ReadString(node, NAME_NODE, obj.name);
 	}
 
@@ -344,11 +345,11 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 	SceneObject* sceneObject = nullptr;
 	if (obj.modelId == "generated") {
 
-		int size = 480;
-		int cells = 48;
-		sceneObject = new TerrainObject(size,cells);
+		int size = 2500;
+		int cells = 250;
+		sceneObject = new TerrainObject(size,cells,obj.heights);
 		sceneObject->SetModel(resourceManager.GetTerrainModel(size,size,cells,cells));
-
+		
 	}
 	else {
 		sceneObject = new SceneObject();
