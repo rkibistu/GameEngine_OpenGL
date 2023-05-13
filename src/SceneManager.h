@@ -31,6 +31,7 @@ private:
 	SceneManager(const SceneManager&) = delete;
 	SceneManager& operator= (const SceneManager&) = delete;
 
+	//orderrede
 	std::unordered_map<unsigned int, SceneObject*> _sceneObjects;
 	std::unordered_map<unsigned int, Camera*> _cameras;
 	Camera* _activeCamera;
