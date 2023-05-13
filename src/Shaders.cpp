@@ -79,10 +79,10 @@ void Shader::SetAttributes() {
 		glEnableVertexAttribArray(uvAttribute);
 		glVertexAttribPointer(uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, uv)));
 	}
-	if (uvAttribute != -1) {
+	if (uv2Attribute != -1) {
 
-		glEnableVertexAttribArray(uvAttribute);
-		glVertexAttribPointer(uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, uv)));
+		glEnableVertexAttribArray(uv2Attribute);
+		glVertexAttribPointer(uv2Attribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, uv2)));
 	}
 	if (normAttribute != -1) {
 

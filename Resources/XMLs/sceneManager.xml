@@ -179,7 +179,7 @@
 		</object>
 		<object id="8">
 			<model>generated</model>
-			<shader>10</shader>
+			<shader>3</shader>
 			<type>terrain</type>
 			<name>Teren</name>
 			<textures>

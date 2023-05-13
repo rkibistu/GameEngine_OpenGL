@@ -35,10 +35,10 @@ int Texture::Load(TextureResource* textureResource){
 	//glActiveTexture(_textureId);
 	glBindTexture(GL_TEXTURE_2D, _textureId);
 
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GetParam(_textureResource->MinFilter));
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GetParam(_textureResource->MagFilter));
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GetParam(_textureResource->MagFilter));
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GetParam(_textureResource->MagFilter));
 
 	glTexImage2D(GL_TEXTURE_2D, 0, BPP, textureWidth, textureHeight, 0, BPP, GL_UNSIGNED_BYTE, imgBuffer);
 
@@ -128,4 +128,16 @@ bool Texture::loadTGA(const char* fileName, int* width, int* height, GLenum* for
 
 
 	return true;
+}
+
+GLfloat Texture::GetParam(std::string param) {
+
+	if (param == "NEAREST")
+		return GL_NEAREST;
+	if (param == "LINEAR")
+		return GL_LINEAR;
+	if (param == "GL_REPEAT")
+		return GL_REPEAT;
+	if (param == "CLAMP_TO_EDGE")
+		return GL_CLAMP_TO_EDGE;
 }

@@ -68,7 +68,7 @@ int Model::LoadFlatTerrain() {
 	std::vector<GLushort> indices;
 	std::vector<GLushort> wiredIndices;
 
-	GenerateFlatTerrain(120, 120, 40, 40, vertices, indices);
+	GenerateFlatTerrain(120,120,40,40, vertices, indices);
 
 	_modelResource = new ModelResource();
 
@@ -98,9 +98,13 @@ int Model::LoadFlatTerrain() {
 }
 
 // IMPORTANT: numBerticesWidth * numVerticesDepth sa nu fie mai mare decat range-ul pt unsigned short!!
-void Model::GenerateFlatTerrain(float width, float depth, int numVerticesWidth, int numVerticesDepth, std::vector<Vertex>& vertices, std::vector<GLushort>& indices)
+void Model::GenerateFlatTerrain(float width, float depth, int numCellsWidth, int numCellsDepth, std::vector<Vertex>& vertices, std::vector<GLushort>& indices)
 {
 	// Calculate the size of each grid cell
+
+	int numVerticesWidth = numCellsWidth * 2;
+	int numVerticesDepth = numCellsDepth * 2;
+
 	float cellWidth = width / (numVerticesWidth - 1);
 	float cellDepth = depth / (numVerticesDepth - 1);
 
@@ -128,7 +132,9 @@ void Model::GenerateFlatTerrain(float width, float depth, int numVerticesWidth, 
 			float v = static_cast<float>(wx) / (numVerticesDepth);
 			temp.uv = Vector2(u, v);
 
-			
+			float u2 = u * numCellsWidth;
+			float v2 = v * numCellsDepth;
+			temp.uv2 = Vector2(u2, v2);
 			
 
 			vertices.push_back(temp);

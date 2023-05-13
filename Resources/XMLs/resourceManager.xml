@@ -30,16 +30,16 @@
 	<shaders>
 		<folder path="Resources/Shaders/">
 			<shader id="10">
-				<vs>TriangleShaderVS.vs</vs>
-				<fs>TriangleShaderFS.fs</fs>
+				<vs>TriangleShaderVS.vert</vs>
+				<fs>TriangleShaderFS.frag</fs>
 			</shader>
 			<shader id="3">
-				<vs>terrainShader.vs</vs>
-				<fs>terrainShader.fs</fs>
+				<vs>TerrainShaderVS.vert</vs>
+				<fs>TerrainShaderFS.frag</fs>
 			</shader>
 			<shader id="20">
-				<vs>BasicColorShaderVS.vs</vs>
-				<fs>BasicColorShaderFS.fs</fs>
+				<vs>BasicColorShaderVS.vert</vs>
+				<fs>BasicColorShaderFS.frag</fs>
 			</shader>
 		<!-- si aici se adauga toate shaderele -->
 		</folder>

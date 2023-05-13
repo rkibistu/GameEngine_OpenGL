@@ -41,7 +41,7 @@ private:
 
 	void FillVerticesColor();
 
-	void GenerateFlatTerrain(float width, float depth, int numVerticesWidth, int numVerticesDepth, std::vector<Vertex>& vertices, std::vector<GLushort>& indices);
+	void GenerateFlatTerrain(float width, float depth, int numCellsWidth, int numCellsDepth, std::vector<Vertex>& vertices, std::vector<GLushort>& indices);
 private:
 	ModelResource* _modelResource;
 	

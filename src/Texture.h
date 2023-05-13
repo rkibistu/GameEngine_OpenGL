@@ -33,8 +33,11 @@ public:
 
 private:
 	bool loadTGA(const char* fileName, int* width, int* height, GLenum* format, unsigned char** pixels);
+	
+	GLfloat GetParam(std::string param);
 private:
 	TextureResource* _textureResource;
 	GLuint _textureId;
+
 };
 

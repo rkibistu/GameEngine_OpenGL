@@ -1,6 +1,7 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  Texture.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(62,15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   TerrainObject.cpp
-  Shaders.cpp
   SceneObject.cpp
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(24,32): warning C4305: '-=': truncation from 'double' to 'GLfloat'
@@ -27,4 +28,5 @@ E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\s
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
   Generating Code...
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(34): warning C4715: 'SceneManagerXmlParser::Init': not all control paths return a value
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(143): warning C4715: 'Texture::GetParam': not all control paths return a value
   NewTrainingFramework.vcxproj -> E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\BIN-Nvidia\NewTrainingFramework.exe
