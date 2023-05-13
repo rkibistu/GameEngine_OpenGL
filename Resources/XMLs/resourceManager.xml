@@ -58,16 +58,30 @@
 				<file>dirt.tga</file>			
 				<min_filter>LINEAR</min_filter>
 				<mag_filter>LINEAR</mag_filter>
-				<wrap_s>CLAMP_TO_EDGE</wrap_s>
-				<wrap_t>CLAMP_TO_EDGE</wrap_t>
+				<wrap_s>GL_REPEAT</wrap_s>
+				<wrap_t>GL_REPEAT</wrap_t>
 			</texture>
 			<texture id="15" type="2d">
 				<file>rock.tga</file>			
 				<min_filter>LINEAR</min_filter>
 				<mag_filter>LINEAR</mag_filter>
-				<wrap_s>CLAMP_TO_EDGE</wrap_s>
-				<wrap_t>CLAMP_TO_EDGE</wrap_t>
+				<wrap_s>GL_REPEAT</wrap_s>
+				<wrap_t>GL_REPEAT</wrap_t>
 			</texture>		
+			<texture id="17" type="2d">
+				<file>Terrain_blend_map.tga</file>
+				<min_filter>LINEAR</min_filter>
+				<mag_filter>LINEAR</mag_filter>
+				<wrap_s>GL_REPEAT</wrap_s>
+				<wrap_t>GL_REPEAT</wrap_t>
+			</texture>
+			<texture id="16" type="2d">
+				<file>Grass.tga</file>
+				<min_filter>LINEAR</min_filter>
+				<mag_filter>LINEAR</mag_filter>
+				<wrap_s>GL_REPEAT</wrap_s>
+				<wrap_t>GL_REPEAT</wrap_t>
+			</texture>
 			<texture id="5" type="2d">
 				<file>bus.tga</file>
 				<min_filter>LINEAR</min_filter>

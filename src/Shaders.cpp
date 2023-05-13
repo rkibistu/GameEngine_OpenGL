@@ -33,6 +33,7 @@ int Shader::Init(char * fileVertexShader, char * fileFragmentShader)
 	positionAttribute = glGetAttribLocation(_programId, "a_posL");
 	colorAttribute = glGetAttribLocation(_programId, "a_colL");
 	uvAttribute = glGetAttribLocation(_programId, "a_texCoord");
+	uv2Attribute = glGetAttribLocation(_programId, "a_texCoord2");
 	normAttribute = glGetAttribLocation(_programId, "a_norm");
 	binormAttribute = glGetAttribLocation(_programId, "a_binorm");
 	tgtAttribute = glGetAttribLocation(_programId, "a_tgt");

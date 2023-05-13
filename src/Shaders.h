@@ -49,6 +49,7 @@ private:
 	GLint positionAttribute;
 	GLint colorAttribute;
 	GLint uvAttribute;
+	GLint uv2Attribute;
 	GLint normAttribute;
 	GLint binormAttribute;
 	GLint tgtAttribute;

@@ -111,8 +111,8 @@ void Model::GenerateFlatTerrain(float width, float depth, int numVerticesWidth, 
 	{
 		for (int wx = 0; wx < numVerticesWidth; ++wx)
 		{
-			float x = wx * cellWidth;
-			float z = dz * cellDepth;
+			float x = wx * cellWidth - width / 2;
+			float z = dz * cellDepth  - depth / 2;
 			float y = 0.0f; // Flat terrain, y-coordinate is 0
 
 			// Add vertex position
@@ -123,9 +123,13 @@ void Model::GenerateFlatTerrain(float width, float depth, int numVerticesWidth, 
 			temp.color = Vector3(1.0f, 0.0f, 1.0f);
 			temp.norm = Vector3(0.0f, 1.0f, 0.0f);
 			
-			float u = x / width;
-			float v = z / depth;
+			//asta e textura mare, ai nevoie pentru harta de culori
+			float u = static_cast<float>(dz) / (numVerticesWidth);
+			float v = static_cast<float>(wx) / (numVerticesDepth);
 			temp.uv = Vector2(u, v);
+
+			
+			
 
 			vertices.push_back(temp);
 		}
