@@ -35,10 +35,10 @@ int Texture::Load(TextureResource* textureResource){
 	//glActiveTexture(_textureId);
 	glBindTexture(GL_TEXTURE_2D, _textureId);
 
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GetParam(_textureResource->MinFilter));
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GetParam(_textureResource->MagFilter));
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GetParam(_textureResource->MagFilter));
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GetParam(_textureResource->MagFilter));
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GetParam(_textureResource->MinFilter));
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GetParam(_textureResource->MagFilter));
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GetParam(_textureResource->WrapS));
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GetParam(_textureResource->WrapT));
 
 	glTexImage2D(GL_TEXTURE_2D, 0, BPP, textureWidth, textureHeight, 0, BPP, GL_UNSIGNED_BYTE, imgBuffer);
 
@@ -58,7 +58,7 @@ void Texture::Unbind(){
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-bool Texture::loadTGA(const char* fileName, int* width, int* height, GLenum* format, unsigned char** pixels) {
+bool Texture::loadTGA(const char* fileName, int* _width, int* height, GLenum* format, unsigned char** pixels) {
 	FILE* file = fopen(fileName, "rb");
 	if (!file) {
 		printf("Error: could not open file: %s\n", fileName);
@@ -81,12 +81,12 @@ bool Texture::loadTGA(const char* fileName, int* width, int* height, GLenum* for
 	}
 
 	// Get image dimensions
-	*width = header[12] + (header[13] << 8);
+	*_width = header[12] + (header[13] << 8);
 	*height = header[14] + (header[15] << 8);
 	int bpp = header[16] / 8;
 
 	// Allocate memory for image data
-	int imageSize = *width * *height * bpp;
+	int imageSize = *_width * *height * bpp;
 	*pixels = (unsigned char*)malloc(imageSize);
 	if (!*pixels) {
 		printf("Error: could not allocate memory for image data\n");

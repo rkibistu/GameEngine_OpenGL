@@ -27,7 +27,7 @@ public:
 	~Model();
 
 	int Load(ModelResource* modelResurce);
-	int LoadFlatTerrain();
+	int LoadFlatTerrain(int sizeWidht, int sizeHeight, int cellCountWidth, int cellCountHeight);
 	void BindFilled();
 	void BindWired();
 	void Unbind();
@@ -41,7 +41,7 @@ private:
 
 	void FillVerticesColor();
 
-	void GenerateFlatTerrain(float width, float depth, int numCellsWidth, int numCellsDepth, std::vector<Vertex>& vertices, std::vector<GLushort>& indices);
+	void GenerateFlatTerrain(float _width, float depth, int numCellsWidth, int numCellsDepth, std::vector<Vertex>& vertices, std::vector<GLushort>& indices);
 private:
 	ModelResource* _modelResource;
 	

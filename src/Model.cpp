@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "NfgParser.h"
 #include "Vertex.h"
+#include "ResourceManager.h"
 
 Model::Model() 
 	: _modelResource(nullptr){
@@ -61,14 +62,22 @@ int Model::Load(ModelResource* modelResurce) {
 	return MY_SUCCES_CODE;
 }
 
-int Model::LoadFlatTerrain() {
+int Model::LoadFlatTerrain(int sizeWidht, int sizeHeight, int cellCountWidth, int cellCountHeight) {
 
 	int res;
 	std::vector<Vertex> vertices;
 	std::vector<GLushort> indices;
 	std::vector<GLushort> wiredIndices;
+	
+	
+	ResourceManager& resourceManager = ResourceManager::GetInstance();
+	Vector2 size = Vector2(480, 480);
+	Vector2 _countCells = Vector2(48,48);
 
-	GenerateFlatTerrain(120,120,40,40, vertices, indices);
+	resourceManager._terrainSize = size; 
+	resourceManager._terrainCountCells = _countCells;
+
+	GenerateFlatTerrain(size.x, size.y,_countCells.x, _countCells.y, vertices, indices);
 
 	_modelResource = new ModelResource();
 
@@ -102,11 +111,11 @@ void Model::GenerateFlatTerrain(float width, float depth, int numCellsWidth, int
 {
 	// Calculate the size of each grid cell
 
-	int numVerticesWidth = numCellsWidth * 2;
-	int numVerticesDepth = numCellsDepth * 2;
+	int numVerticesWidth = numCellsWidth + 1;
+	int numVerticesDepth = numCellsDepth + 1;
 
 	float cellWidth = width / (numVerticesWidth - 1);
-	float cellDepth = depth / (numVerticesDepth - 1);
+	float cellDepth = depth / (numVerticesWidth - 1);
 
 	Vertex temp;
 
@@ -115,8 +124,8 @@ void Model::GenerateFlatTerrain(float width, float depth, int numCellsWidth, int
 	{
 		for (int wx = 0; wx < numVerticesWidth; ++wx)
 		{
-			float x = wx * cellWidth - width / 2;
-			float z = dz * cellDepth  - depth / 2;
+			float x = wx * cellWidth -width / 2;
+			float z = dz * cellDepth  -depth / 2;
 			float y = 0.0f; // Flat terrain, y-coordinate is 0
 
 			// Add vertex position

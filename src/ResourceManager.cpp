@@ -319,10 +319,14 @@ Texture* ResourceManager::GetTexture(unsigned int id) {
 
 Model* ResourceManager::GetTerrainModel() {
 
+	return _terrainModel;
+}
+Model* ResourceManager::GetTerrainModel(int sizeWidht, int sizeHeight, int cellCountWidth, int cellCountHeight) {
+
 	if (_terrainModel == nullptr) {
 
 		_terrainModel = new Model();
-		_terrainModel->LoadFlatTerrain();
+		_terrainModel->LoadFlatTerrain(sizeWidht, sizeHeight,cellCountWidth,cellCountHeight);
 	}
 	return _terrainModel;
 }

@@ -41,8 +41,11 @@ public:
 	Shader* GetShader(unsigned int id);
 	Texture* GetTexture(unsigned int id);
 
+	//return terrain if exists or create one with given dimension
+	Model* GetTerrainModel(int sizeWidht, int sizeHeight, int cellCountWidth, int cellCountHeight);
+	
+	//return nullptr if terrain is not loaded
 	Model* GetTerrainModel();
-
 
 private:
 
@@ -84,6 +87,9 @@ private:
 	std::unordered_map<unsigned int, Texture*> _textures;
 
 	Model* _terrainModel = nullptr;
+public:
+	Vector2 _terrainSize;
+	Vector2 _terrainCountCells;
 };
 
 

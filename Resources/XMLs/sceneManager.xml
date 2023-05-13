@@ -88,7 +88,7 @@
 				<y>1</y>
 				<z>0</z>
 			</up>
-			<translationSpeed>200</translationSpeed>
+			<translationSpeed>75</translationSpeed>
 			<rotationSpeed>0.75</rotationSpeed>
 			<fov>45</fov>
 			<near>0.2</near>
@@ -116,7 +116,7 @@
 			<position>
 				<x>0</x>
 				<y>5</y>
-				<z>0</z>
+				<z>300</z>
 			</position>
 			<rotation>
 				<x>0</x>

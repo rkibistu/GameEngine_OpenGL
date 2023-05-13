@@ -31,14 +31,17 @@ public:
 	inline std::string GetName() { return _name; }
 	
 	inline void SetPosition(Vector3 position) { _position = position; }
+	inline void SetPosition(float v0, float v1, float v2) { _position.x = v0, _position.y = v1, _position.z = v2; }
 	inline void SetRotation(Vector3 rotation) { _rotation = rotation; }
 	inline void SetScale(Vector3 scale) { _scale = scale; }
+
 protected:
 
 	Matrix GetModelMatrix();
 	
-	//Diffrent type of objects -> diffrent uniforms
-	virtual void SetUniforms(Camera* camera);
+
+	void SetUniformsCommon(Camera* camera);
+	virtual void SetUniformsParticular(Camera* camera);
 
 protected:
 	unsigned int _id;

@@ -47,7 +47,8 @@ void SceneObject::Draw(Camera* camera) {
 
 	_shader->SetAttributes();
 
-	SetUniforms(camera);
+	SetUniformsCommon(camera);
+	SetUniformsParticular(camera);
 
 	glDrawElements(GL_TRIANGLES, _model->GetIndicesFilledCount(), GL_UNSIGNED_SHORT, nullptr);
 
@@ -68,8 +69,9 @@ void SceneObject::DrawWired(Camera* camera) {
 	}
 
 	_shader->SetAttributes();
-	_shader->SetUniformMatrix4fv("u_mvp", camera->GetMVP());
-	_shader->SetUniform1i("u_Texture", 0);
+
+	SetUniformsCommon(camera);
+	SetUniformsParticular(camera);
 
 	glDrawElements(GL_LINES, _model->GetIndicesWiredCount(), GL_UNSIGNED_SHORT, nullptr);
 
@@ -108,12 +110,14 @@ Matrix SceneObject::GetModelMatrix() {
 	return scaleMat * rotationMat *  positionMat ;
 }
 
-void SceneObject::SetUniforms(Camera* camera) {
+void SceneObject::SetUniformsCommon(Camera* camera) {
 
 	Matrix model = GetModelMatrix();
 	Matrix mvp = model * camera->GetMVP();
 	_shader->SetUniformMatrix4fv("u_mvp", mvp);
 
-	//_shader->SetUniformMatrix4fv("u_mvp", camera->GetMVP());
+}
+void SceneObject::SetUniformsParticular(Camera* camera) {
+
 	_shader->SetUniform1i("u_Texture", 0);
 }

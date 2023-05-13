@@ -45,6 +45,8 @@ public:
 	inline Matrix GetMVP() { return _viewMatrix * _projMatrix; }
 	//inline Matrix GetMVP() { return _projMatrix; }
 
+	inline Vector3 GetPosition() { return _position; }
+
 private:
 	
 	Matrix _R;

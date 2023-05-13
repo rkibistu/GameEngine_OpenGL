@@ -11,23 +11,23 @@ Shader::~Shader()
 	glDeleteShader(_fragmentShader);
 }
 
-int Shader::Init(char * fileVertexShader, char * fileFragmentShader)
+int Shader::Init(char* fileVertexShader, char* fileFragmentShader)
 {
 	_vertexShader = esLoadShader(GL_VERTEX_SHADER, fileVertexShader);
 
-	if ( _vertexShader == 0 )
+	if (_vertexShader == 0)
 		return -1;
 
 	_fragmentShader = esLoadShader(GL_FRAGMENT_SHADER, fileFragmentShader);
 
-	if ( _fragmentShader == 0 )
+	if (_fragmentShader == 0)
 	{
-		glDeleteShader( _vertexShader );
+		glDeleteShader(_vertexShader);
 		return -2;
 	}
 
 	_programId = esLoadProgram(_vertexShader, _fragmentShader);
-	
+
 
 	//finding location of attributes
 	positionAttribute = glGetAttribLocation(_programId, "a_posL");
@@ -122,6 +122,11 @@ void Shader::SetUniform1i(const std::string& name, int value) {
 void Shader::SetUniform1f(const std::string& name, float value) {
 
 	glUniform1f(GetUniformLocation(name), value);
+}
+void Shader::SetUniform2f(const std::string& name, float v0, float v1) {
+
+	glUniform2f(GetUniformLocation(name), v0, v1);
+
 }
 void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) {
 
