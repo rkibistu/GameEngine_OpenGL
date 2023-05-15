@@ -89,6 +89,13 @@
 				<wrap_s>CLAMP_TO_EDGE</wrap_s>
 				<wrap_t>CLAMP_TO_EDGE</wrap_t>
 			</texture>
+			<texture id="100" type="cube">
+				<file>envMap.tga</file>
+				<min_filter>LINEAR</min_filter>
+				<mag_filter>LINEAR</mag_filter>
+				<wrap_s>CLAMP_TO_EDGE</wrap_s>
+				<wrap_t>CLAMP_TO_EDGE</wrap_t>
+			</texture>
 			<!-- si aici se adauga toate texturile -->
 		</folder>
 	</textures>	

@@ -243,7 +243,7 @@ int ResourceManager::InitTextures(rapidxml::xml_node<>* pRoot) {
 					tempTexture->ID = atoi(pAttr->value());
 				}
 				else if (pAttr->name() == Elements::TextureType) {
-					tempTexture->Type == pAttr->value();
+					tempTexture->Type = pAttr->value();
 				}
 				else {
 					std::cout << "Wrong texture attribute, expected if or type!" << std::endl;

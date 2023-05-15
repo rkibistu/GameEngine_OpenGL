@@ -295,7 +295,31 @@
 				<z>1.0</z>
 			</scale>
 		</object>
-		
+		<object id="38">
+			
+			<model>1</model>
+			<shader>10</shader>
+			<type>normal</type>
+			<name>Skybox</name>
+			<textures>
+				<texture id="100"/>
+			</textures>
+			<position>
+				<x>0</x>
+				<y>25</y>
+				<z>0</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</rotation>
+			<scale>
+				<x>0.25</x>
+				<y>0.25</y>
+				<z>0.25</z>
+			</scale>
+		</object>
 		
 	</objects>
 	
