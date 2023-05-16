@@ -297,8 +297,8 @@
 		</object>
 		<object id="38">
 			
-			<model>1</model>
-			<shader>10</shader>
+			<model>1002</model>
+			<shader>21</shader>
 			<type>normal</type>
 			<name>Skybox</name>
 			<textures>
@@ -315,9 +315,9 @@
 				<z>0</z>
 			</rotation>
 			<scale>
-				<x>0.25</x>
-				<y>0.25</y>
-				<z>0.25</z>
+				<x>1000</x>
+				<y>1000</y>
+				<z>1000</z>
 			</scale>
 		</object>
 		

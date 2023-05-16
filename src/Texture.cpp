@@ -4,20 +4,20 @@
 #include "Defines.h"
 
 
-Texture::Texture(){
+Texture::Texture() {
 
 	_textureResource = nullptr;
 	glGenTextures(1, &_textureId);
 }
 
-Texture::~Texture(){
+Texture::~Texture() {
 
 	glDeleteTextures(1, &_textureId);
 
 	//Don't delete texture resources, it is going to be deletele by ResourceManager
 }
 
-int Texture::Load(TextureResource* textureResource){
+int Texture::Load(TextureResource* textureResource) {
 
 	bool res;
 	char* imgBuffer = nullptr;
@@ -28,29 +28,107 @@ int Texture::Load(TextureResource* textureResource){
 	_textureResource = textureResource;
 
 	res = loadTGA(_textureResource->FilePath().c_str(), &textureWidth, &textureHeight, &BPP, &imgBuffer);
-	
-	//glActiveTexture(_textureId);
-	glBindTexture(GL_TEXTURE_2D, _textureId);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GetParam(_textureResource->MinFilter));
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GetParam(_textureResource->MagFilter));
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GetParam(_textureResource->WrapS));
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GetParam(_textureResource->WrapT));
 
-	glTexImage2D(GL_TEXTURE_2D, 0, BPP, textureWidth, textureHeight, 0, BPP, GL_UNSIGNED_BYTE, imgBuffer);
+	int bits = 3;
+
+	if (_textureResource->Type == "cube") {
+
+		int faceWidth = textureWidth / 4;
+		int faceHeight = textureHeight / 3;
+
+		char** subBuffers;
+		subBuffers = new char* [12];
+		for (int i = 0; i < 12; i++) {
+
+			int startX = i / 4 * faceHeight;
+			int startY = i % 4 * faceWidth;
+
+			subBuffers[i] = new char[faceWidth * faceHeight * bits];
+
+			int j = 0;
+			std::cout << startX << " " << startY << "\n";
+			for (int x = startX * bits; x < (startX + faceHeight) * bits; x=x+3) {
+				for (int y = startY * bits; y < (startY + faceWidth) * bits; y=y+3) {
+
+					subBuffers[i][j] = imgBuffer[x * textureWidth + y];
+					subBuffers[i][j + 1] = imgBuffer[x * textureWidth + y + 1];
+					subBuffers[i][j + 2] = imgBuffer[x * textureWidth + y + 2];
+					j += 3;
+				}
+			}
+		}
+
+		GLenum error;
+		while ((error = glGetError()) != GL_NO_ERROR) {}
+
+
+		Bind(_textureId);
+
+		while ((error = glGetError()) != GL_NO_ERROR) {
+			std::cout << error << std::endl;
+		}
+
+
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GetParam(_textureResource->MinFilter));
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GetParam(_textureResource->MagFilter));
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GetParam(_textureResource->WrapS));
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GetParam(_textureResource->WrapT));
+
+		while ((error = glGetError()) != GL_NO_ERROR) {
+			std::cout << error << std::endl;
+		}
+
+		unsigned int x = sizeof(imgBuffer);
+
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, BPP, faceWidth, faceHeight, 0, BPP, GL_UNSIGNED_BYTE, subBuffers[6]);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, BPP, faceWidth, faceHeight, 0, BPP, GL_UNSIGNED_BYTE, subBuffers[4]);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, BPP, faceWidth, faceHeight, 0, BPP, GL_UNSIGNED_BYTE, subBuffers[1]);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, BPP, faceWidth, faceHeight, 0, BPP, GL_UNSIGNED_BYTE, subBuffers[9]);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, BPP, faceWidth, faceHeight, 0, BPP, GL_UNSIGNED_BYTE, subBuffers[5]);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, BPP, faceWidth, faceHeight, 0, BPP, GL_UNSIGNED_BYTE, subBuffers[7]);
+
+		while ((error = glGetError()) != GL_NO_ERROR) {
+			std::cout << error << std::endl;
+		}
+
+
+		// DONT FORGET TO FREE THE BUFFERS
+	}
+	else {
+
+
+		//glActiveTexture(_textureId);
+		glBindTexture(GL_TEXTURE_2D, _textureId);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GetParam(_textureResource->MinFilter));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GetParam(_textureResource->MagFilter));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GetParam(_textureResource->WrapS));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GetParam(_textureResource->WrapT));
+
+		glTexImage2D(GL_TEXTURE_2D, 0, BPP, textureWidth, textureHeight, 0, BPP, GL_UNSIGNED_BYTE, imgBuffer);
+	}
 
 	free(imgBuffer);
 
 	return MY_SUCCES_CODE;
 }
 
-void Texture::Bind(int slot){
+void Texture::Bind(int slot) {
 
 	glActiveTexture(GL_TEXTURE0 + slot);
-	glBindTexture(GL_TEXTURE_2D, _textureId);
+
+	if (_textureResource->Type == "2d") {
+
+		glBindTexture(GL_TEXTURE_2D, _textureId);
+	}
+	else {
+		glBindTexture(GL_TEXTURE_CUBE_MAP, _textureId);
+	}
+
 }
 
-void Texture::Unbind(){
+void Texture::Unbind() {
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
@@ -58,7 +136,7 @@ void Texture::Unbind(){
 bool Texture::loadTGA(const char* fileName, int* width, int* height, GLenum* format, char** pixels) {
 
 	int outBpp;
-	*pixels = LoadTGA(fileName, width,height, &outBpp);
+	*pixels = LoadTGA(fileName, width, height, &outBpp);
 	if (*pixels == nullptr)
 		return MY_ERROR_CODE;
 

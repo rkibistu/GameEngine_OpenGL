@@ -171,6 +171,8 @@
     <None Include="Resources\Shaders\BasicColorShaderVS.vert" />
     <None Include="Resources\Shaders\TerrainShaderVS.vert" />
     <None Include="Resources\Shaders\TerrainShaderFS.frag" />
+    <None Include="Resources\Shaders\SkyboxShaderVS.vert" />
+    <None Include="Resources\Shaders\SkyboxShaderFS.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />
