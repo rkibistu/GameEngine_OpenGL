@@ -13,6 +13,16 @@ SceneManager& SceneManager::GetInstance() {
 }
 void SceneManager::DestroyInstance() {
 
+	//free memory for camera and for sceneobjects
+	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
+		if(it->second)
+			delete it->second;
+	}
+	for (auto it = _cameras.begin(); it != _cameras.end(); it++) {
+		if (it->second)
+			delete it->second;
+	}
+
 	if (_spInstance)
 		delete _spInstance;
 }
@@ -30,6 +40,8 @@ void SceneManager::Init(ESContext* esContext) {
 	glClearColor(_backgroundColor.x, _backgroundColor.y, _backgroundColor.z, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 
+
+	
 }
 
 void SceneManager::Update(ESContext* esContext, 

@@ -32,6 +32,10 @@ int SceneManagerXmlParser::Init(std::string filepath) {
 	_camerasRoot = _xmlRoot->first_node(CAMERAS_ROOT);
 	_activeCameraNode = _xmlRoot->first_node(ACTIVE_CAMERA_NODE);
 }
+void SceneManagerXmlParser::Destroy() {
+
+	delete _doc;
+}
 
 //citest toate obiectele din cml aflate dub nodul <objects>
 //	creeaza un SceneObject pt fiecare <object> si il adauga in mapa data ca parametru
