@@ -253,6 +253,13 @@ void Input::Destroy() {
 			delete it->second;
 	}
 	_keys.clear();
+
+	for (auto it = _movementAxes.begin(); it != _movementAxes.end(); it++) {
+
+		if (it->second)
+			delete it->second;
+	}
+	_movementAxes.clear();
 }
 
 void Input::InitKeys() {

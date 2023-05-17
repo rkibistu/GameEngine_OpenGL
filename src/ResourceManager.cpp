@@ -39,6 +39,12 @@ void ResourceManager::DestroyInstance() {
 	Clear(_textures);
 	Clear(_shaders);
 
+	if (_terrainModel) {
+
+		delete _terrainModel->GetModelResource();
+		delete _terrainModel;
+	}
+
 	if (_spInstance)
 		delete _spInstance;
 }

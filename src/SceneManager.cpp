@@ -22,6 +22,7 @@ void SceneManager::DestroyInstance() {
 		if (it->second)
 			delete it->second;
 	}
+	_xmlParser.Destroy();
 
 	if (_spInstance)
 		delete _spInstance;
