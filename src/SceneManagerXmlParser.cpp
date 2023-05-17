@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SceneManagerXmlParser.h"
 #include "ResourceManager.h"
+#include "Skybox.h"
 
 #include "Defines.h"
 
@@ -168,6 +169,7 @@ SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* object
 	for (rapidxml::xml_node<>* node = objectNode->first_node(); node; node = node->next_sibling()) {
 
 		ReadString(node, MODEL_NODE, obj.modelId);
+		ReadString(node, TYPE_NODE, obj.type);
 		ReadInt(node, SHADER_NODE, obj.shaderId);
 		ReadTexturesVector(node, TEXTURES_NODE, TEXTURE_NODE, obj.texturesId);
 		ReadVector3_xyz(node, POSITION_NODE, obj.position);
@@ -175,6 +177,7 @@ SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* object
 		ReadVector3_xyz(node, SCALE_NODE, obj.scale);
 		ReadVector3_rgb(node, HEIGHTS_PER_COLOR_NODE, obj.heights);
 		ReadString(node, NAME_NODE, obj.name);
+		ReadFollowingCamera(node, FOLLOWING_CAMERA_NODE, obj.followCameraDirections);
 	}
 
 	SceneObject* sceneObject = CreateSceneObject(obj);
@@ -242,6 +245,25 @@ void SceneManagerXmlParser::ReadTexturesVector(rapidxml::xml_node<>* node, std::
 			element = atoi(pAttr->value());
 			result.push_back(element);
 		}
+	}
+}
+void SceneManagerXmlParser::ReadFollowingCamera(rapidxml::xml_node<>* node, std::string rootNodeName, Vector3& directions) {
+
+	if (strcmp(node->name(), rootNodeName.c_str()) == 0) {
+
+		for (rapidxml::xml_node<>* childNode = node->first_node(); childNode; childNode = childNode->next_sibling()) {
+
+			if (strcmp(childNode->name(), OX_AXIS_NODE) == 0) {
+				directions.x = 1;
+			}
+			if (strcmp(childNode->name(), OY_AXIS_NODE) == 0) {
+				directions.y = 1;
+			}
+			if (strcmp(childNode->name(), OZ_AXIS_NODE) == 0) {
+				directions.z = 1;
+			}
+		}	
+		
 	}
 }
 
@@ -343,15 +365,26 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 
 	SceneObject* sceneObject = nullptr;
 	if (obj.modelId == "generated") {
-
+		//specific for generated terrain
 		int size = 2500;
 		int cells = 250;
-		sceneObject = new TerrainObject(size,cells,obj.heights);
-		sceneObject->SetModel(resourceManager.GetTerrainModel(size,size,cells,cells));
-		
-	}
+		sceneObject = new TerrainObject(size, cells, obj.heights);
+		sceneObject->SetModel(resourceManager.GetTerrainModel(size, size, cells, cells));
+	} 
 	else {
-		sceneObject = new SceneObject();
+
+		if (obj.type == "skybox") {
+
+			//specific for skybox
+			sceneObject = new Skybox();
+			sceneObject->SetFollowCameraDirections(obj.followCameraDirections);
+			sceneObject->SetFollowCameraOffset(obj.position);
+		}
+		else {
+
+			//general scene objects
+			sceneObject = new SceneObject();
+		}
 		sceneObject->SetModel(resourceManager.GetModel(atoi(obj.modelId.c_str())));
 	}
 

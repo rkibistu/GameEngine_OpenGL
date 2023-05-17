@@ -51,6 +51,10 @@
 #define ACTION_NODE "action"
 #define KEY_NODE "key"
 #define HEIGHTS_PER_COLOR_NODE "heights"
+#define FOLLOWING_CAMERA_NODE "followingcamera"
+#define OX_AXIS_NODE "ox"
+#define OY_AXIS_NODE "oy"
+#define OZ_AXIS_NODE "oz"
 
 #define ID_ATTRIBUTE "id"
 
@@ -77,7 +81,8 @@ private:
 	void ReadShader(rapidxml::xml_node<>* node, SceneObject* sceneObject);
 	void ReadTextures(rapidxml::xml_node<>* node, SceneObject* sceneObject);
 	void ReadTexturesVector(rapidxml::xml_node<>* node, std::string rootNodeName, std::string nodeName, std::vector<int>& result);
-	
+	void ReadFollowingCamera(rapidxml::xml_node<>* node, std::string rootNodeName, Vector3& directions);
+
 	Camera* ReadCamera(rapidxml::xml_node<>* ccameraNode);
 
 	//functia asta primeste nodul pentru care cuatam copii, numele nodului copil cuatat si un vector3 unde sa puen rezzultatul
@@ -107,7 +112,7 @@ struct SceneObjectXmlFormat {
 
 	int id;
 	std::string name;
-
+	std::string type;
 	std::string modelId;
 	int shaderId;
 	std::vector<int> texturesId;
@@ -116,4 +121,5 @@ struct SceneObjectXmlFormat {
 	Vector3 rotation;
 	Vector3 scale;
 	Vector3 heights;
+	Vector3 followCameraDirections;
 };

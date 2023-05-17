@@ -34,12 +34,14 @@ public:
 	inline void SetPosition(float v0, float v1, float v2) { _position.x = v0, _position.y = v1, _position.z = v2; }
 	inline void SetRotation(Vector3 rotation) { _rotation = rotation; }
 	inline void SetScale(Vector3 scale) { _scale = scale; }
-
+	inline void SetFollowCameraDirections(Vector3 directions) { _followCameraDirections = directions; }
+	inline void SetFollowCameraOffset(Vector3 offset) { _followCameraOffset = offset; }
 protected:
+
+	void FollowCamera();
 
 	Matrix GetModelMatrix();
 	
-
 	void SetUniformsCommon(Camera* camera);
 	virtual void SetUniformsParticular(Camera* camera);
 
@@ -56,4 +58,6 @@ protected:
 	Shader* _shader;
 	std::vector<Texture*> _textureResources;
 
+	Vector3 _followCameraDirections;
+	Vector3 _followCameraOffset;
 };

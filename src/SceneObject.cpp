@@ -2,8 +2,8 @@
 
 #include "SceneObject.h"
 #include "Vertex.h"
-
 #include "Input.h"
+#include "SceneManager.h"
 
 SceneObject::SceneObject()
 	: _model(nullptr), _shader(nullptr) {
@@ -94,6 +94,20 @@ void SceneObject::AddTexture(Texture* texture){
 }
 
 // PROTECTED
+
+void SceneObject::FollowCamera() {
+
+	SceneManager& sceneManager = SceneManager::GetInstance();
+	Vector3 cameraPos = sceneManager.GetActiveCamera()->GetPosition();
+
+	Vector3 move = _position;
+	move.x = _followCameraDirections.x != 0 ? cameraPos.x + _followCameraOffset.x : move.x;
+	move.y = _followCameraDirections.y != 0 ? cameraPos.y + _followCameraOffset.y : move.y;
+	move.z = _followCameraDirections.z != 0 ? cameraPos.z + _followCameraOffset.z : move.z;
+
+
+	SetPosition(move);
+}
 
 Matrix SceneObject::GetModelMatrix() {
 

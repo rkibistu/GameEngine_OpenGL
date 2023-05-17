@@ -299,14 +299,14 @@
 			
 			<model>1002</model>
 			<shader>21</shader>
-			<type>normal</type>
+			<type>skybox</type>
 			<name>Skybox</name>
 			<textures>
 				<texture id="100"/>
 			</textures>
 			<position>
 				<x>0</x>
-				<y>25</y>
+				<y>900</y>
 				<z>0</z>
 			</position>
 			<rotation>
@@ -319,6 +319,10 @@
 				<y>1000</y>
 				<z>1000</z>
 			</scale>
+			<followingcamera>
+				<ox/>
+				<oz/>
+			</followingcamera>
 		</object>
 		
 	</objects>
