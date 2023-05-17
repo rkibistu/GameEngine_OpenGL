@@ -186,7 +186,7 @@ void Model::CreateWiredindicesBuffer(std::vector<GLushort>& indices, std::vector
 
 	wiredIndices.reserve(indices.size() * 2);
 
-	for (int i = 0; i < indices.size(); i += 3) {
+	for (unsigned int i = 0; i < indices.size(); i += 3) {
 		uint32_t index1 = indices[i];
 		uint32_t index2 = indices[i + 1];
 		uint32_t index3 = indices[i + 2];
@@ -202,7 +202,7 @@ void Model::CreateWiredindicesBuffer(std::vector<GLushort>& indices, std::vector
 
 void Model::FillVerticesColor() {
 
-	for (int i = 0; i < _modelResource->Vertices.size(); i++) {
+	for (unsigned int i = 0; i < _modelResource->Vertices.size(); i++) {
 
 		_modelResource->Vertices[i].color.x = 1.0f;
 		_modelResource->Vertices[i].color.y = 1.0f;

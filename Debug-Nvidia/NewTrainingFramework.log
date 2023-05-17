@@ -1,15 +1,37 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
   Texture.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(73,71): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(74,71): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(75,67): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(76,67): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(104,65): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(105,65): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(106,61): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(107,61): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(25,6): warning C4101: 'outBpp': unreferenced local variable
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(141,23): warning C4305: 'return': truncation from 'int' to 'bool'
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(152,23): warning C4305: 'return': truncation from 'int' to 'bool'
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(233): warning C4715: 'Texture::GetParam': not all control paths return a value
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(82,23): warning C4305: 'return': truncation from 'int' to 'bool'
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(93,23): warning C4305: 'return': truncation from 'int' to 'bool'
+  TerrainObject.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\TerrainObject.cpp(48,40): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\TerrainObject.cpp(49,36): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\TerrainObject.cpp(50,36): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\TerrainObject.cpp(61,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Skybox.cpp
+  SceneObject.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(24,32): warning C4305: '-=': truncation from 'double' to 'GLfloat'
+  SceneManagerXmlParser.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(13,6): warning C4101: 'res': unreferenced local variable
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(289,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(291,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(293,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(304,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(306,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(308,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(316,16): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  SceneManager.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
+  ResourceManager.cpp
+  Model.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Model.cpp(72,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Model.cpp(72,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Model.cpp(67,6): warning C4101: 'res': unreferenced local variable
+  Main.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
+  Generating Code...
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(34): warning C4715: 'SceneManagerXmlParser::Init': not all control paths return a value
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Texture.cpp(275): warning C4715: 'Texture::GetParam': not all control paths return a value
   NewTrainingFramework.vcxproj -> E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\BIN-Nvidia\NewTrainingFramework.exe

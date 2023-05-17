@@ -147,11 +147,6 @@ int SceneManagerXmlParser::ReadBackgroundColor(Vector3& backgroundColor) {
 
 SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* objectNode) {
 
-	Vector3 pos, rotation, scale;
-	int modelId, shaderId;
-	std::vector<int> texturesId;
-	std::string name;
-	int id;
 
 	SceneObjectXmlFormat obj;
 

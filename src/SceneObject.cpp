@@ -41,7 +41,7 @@ void SceneObject::Draw(Camera* camera) {
 
 	_model->BindFilled();
 	_shader->Bind();
-	for (int i = 0; i < _textureResources.size(); i++) {
+	for (unsigned int i = 0; i < _textureResources.size(); i++) {
 		_textureResources[i]->Bind(i);
 	}
 
@@ -64,7 +64,7 @@ void SceneObject::DrawWired(Camera* camera) {
 
 	_shader->Bind();
 	_model->BindWired();
-	for (int i = 0; i < _textureResources.size(); i++) {
+	for (unsigned int i = 0; i < _textureResources.size(); i++) {
 		_textureResources[i]->Bind(i);
 	}
 
