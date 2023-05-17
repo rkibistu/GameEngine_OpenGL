@@ -35,7 +35,7 @@ int SceneManagerXmlParser::Init(std::string filepath) {
 
 //citest toate obiectele din cml aflate dub nodul <objects>
 //	creeaza un SceneObject pt fiecare <object> si il adauga in mapa data ca parametru
-int SceneManagerXmlParser::ReadObjects(std::unordered_map<unsigned int, SceneObject*>& sceneObjects) {
+int SceneManagerXmlParser::ReadObjects(std::map<unsigned int, SceneObject*>& sceneObjects) {
 
 	for (rapidxml::xml_node<>* objectNode = _objectsRoot->first_node(); objectNode; objectNode = objectNode->next_sibling()) {
 		if (strcmp(objectNode->name(), COMMENT_NODE) == 0)

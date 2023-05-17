@@ -4,6 +4,7 @@
 #include "SceneManagerXmlParser.h"
 
 #include <unordered_map>
+#include <map>
 
 
 class SceneManager {
@@ -32,7 +33,7 @@ private:
 	SceneManager& operator= (const SceneManager&) = delete;
 
 	//orderrede
-	std::unordered_map<unsigned int, SceneObject*> _sceneObjects;
+	std::map<unsigned int, SceneObject*> _sceneObjects;
 	std::unordered_map<unsigned int, Camera*> _cameras;
 	Camera* _activeCamera;
 

@@ -7,6 +7,7 @@
 #include "Input.h"
 
 #include <unordered_map>
+#include <map>
 
 
 
@@ -62,7 +63,7 @@ class SceneManagerXmlParser {
 public:
 	int Init(std::string filepath);
 
-	int ReadObjects(std::unordered_map<unsigned int, SceneObject*>& sceneObjects);
+	int ReadObjects(std::map<unsigned int, SceneObject*>& sceneObjects);
 	int ReadCameras(std::unordered_map<unsigned int, Camera*>& camers, Camera** activeCamera);
 	int ReadControls();
 	int ReadBackgroundColor(Vector3& backgroundColor);
