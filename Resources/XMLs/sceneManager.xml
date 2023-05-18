@@ -114,6 +114,7 @@
 				<texture id="4"/>
 				<texture id="100"/>
 			</textures>
+			<material>301</material>
 			<position>
 				<x>0</x>
 				<y>5</y>

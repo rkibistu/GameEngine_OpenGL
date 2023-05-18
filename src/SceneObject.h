@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "Texture.h"
 #include "Shaders.h"
+#include "Material.h"
 #include "Camera.h"
 
 #include <vector>
@@ -23,6 +24,7 @@ public:
 	void SetModel(Model* model);
 	void SetShader(Shader* shader);
 	void AddTexture(Texture* texture);
+	void SetMaterial(Material* material);
 
 	inline void SetId(unsigned int id) { _id = id; }
 	inline unsigned int GetId() { return _id; }
@@ -57,6 +59,9 @@ protected:
 	Model* _model;
 	Shader* _shader;
 	std::vector<Texture*> _textureResources;
+	Material* _material;
+
+	//Material*
 
 	Vector3 _followCameraDirections;
 	Vector3 _followCameraOffset;

@@ -93,7 +93,12 @@ void SceneObject::AddTexture(Texture* texture){
 	_textureResources.push_back(texture);
 }
 
-// PROTECTED
+void SceneObject::SetMaterial(Material* material) {
+
+	_material = material;
+}
+
+// PROTECTED 
 
 void SceneObject::FollowCamera() {
 
@@ -132,8 +137,8 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 
 	_shader->SetUniformMatrix4fv("u_model", model);
 	_shader->SetUniform1i("u_TextureCube", 1);
-	_shader->SetUniform1f("u_factorReflect", 0.2);
-	_shader->SetUniform1f("u_factorTexture", 0.8);
+	_shader->SetUniform1f("u_factorTexture", _material->GetFactorTextura());
+	_shader->SetUniform1f("u_factorReflect", _material->GetFactorReflexieTextura());
 }
 void SceneObject::SetUniformsParticular(Camera* camera) {
 

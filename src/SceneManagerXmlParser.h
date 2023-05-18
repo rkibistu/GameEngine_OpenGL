@@ -29,6 +29,7 @@
 #define NAME_NODE "name"
 #define TEXTURES_NODE "textures"
 #define TEXTURE_NODE "texture"
+#define MATERIAL_NODE "material"
 #define POSITION_NODE "position"
 #define ROTATION_NODE "rotation"
 #define SCALE_NODE "scale"
@@ -72,7 +73,6 @@ public:
 	int ReadCameras(std::unordered_map<unsigned int, Camera*>& camers, Camera** activeCamera);
 	int ReadControls();
 	int ReadBackgroundColor(Vector3& backgroundColor);
-
 private:
 
 	SceneObject* ReadSceneObject(rapidxml::xml_node<>* objectNode);
@@ -82,6 +82,7 @@ private:
 	void ReadTextures(rapidxml::xml_node<>* node, SceneObject* sceneObject);
 	void ReadTexturesVector(rapidxml::xml_node<>* node, std::string rootNodeName, std::string nodeName, std::vector<int>& result);
 	void ReadFollowingCamera(rapidxml::xml_node<>* node, std::string rootNodeName, Vector3& directions);
+	
 
 	Camera* ReadCamera(rapidxml::xml_node<>* ccameraNode);
 
@@ -114,6 +115,7 @@ struct SceneObjectXmlFormat {
 	std::string name;
 	std::string type;
 	std::string modelId;
+	std::string materialId;
 	int shaderId;
 	std::vector<int> texturesId;
 

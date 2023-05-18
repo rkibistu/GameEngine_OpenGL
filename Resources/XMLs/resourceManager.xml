@@ -54,7 +54,6 @@
 			</shader>
 		<!-- si aici se adauga toate shaderele -->
 		</folder>
-		
 	</shaders>
 	<textures>
 		<folder path="Resources/Textures/">
@@ -110,4 +109,20 @@
 			<!-- si aici se adauga toate texturile -->
 		</folder>
 	</textures>	
+	<materials>
+		<folder path="Resources/Materials/">
+			<material id="300" type="idkYet">
+				<factor_textura>1.0</factor_textura>
+				<factor_reflexie_skybox>0.0</factor_reflexie_skybox>
+			</material>
+			<material id="301" type="idkYet">
+				<factor_textura>0.8</factor_textura>
+				<factor_reflexie_skybox>0.2</factor_reflexie_skybox>
+			</material>
+			<material id="302" type="idkYet">
+				<factor_textura>0.0</factor_textura>
+				<factor_reflexie_skybox>1.0</factor_reflexie_skybox>
+			</material>
+		</folder>
+	</materials>
 </resourceManager>

@@ -9,6 +9,8 @@
 #include <sstream>
 #include <vector>
 
+#define DEFAULT_MATERIAL_ID 300
+
 int SceneManagerXmlParser::Init(std::string filepath) {
 
 	int res;
@@ -172,6 +174,7 @@ SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* object
 		ReadString(node, TYPE_NODE, obj.type);
 		ReadInt(node, SHADER_NODE, obj.shaderId);
 		ReadTexturesVector(node, TEXTURES_NODE, TEXTURE_NODE, obj.texturesId);
+		ReadString(node, MATERIAL_NODE, obj.materialId);
 		ReadVector3_xyz(node, POSITION_NODE, obj.position);
 		ReadVector3_xyz(node, ROTATION_NODE, obj.rotation);
 		ReadVector3_xyz(node, SCALE_NODE, obj.scale);
@@ -262,8 +265,8 @@ void SceneManagerXmlParser::ReadFollowingCamera(rapidxml::xml_node<>* node, std:
 			if (strcmp(childNode->name(), OZ_AXIS_NODE) == 0) {
 				directions.z = 1;
 			}
-		}	
-		
+		}
+
 	}
 }
 
@@ -370,7 +373,7 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 		int cells = 250;
 		sceneObject = new TerrainObject(size, cells, obj.heights);
 		sceneObject->SetModel(resourceManager.GetTerrainModel(size, size, cells, cells));
-	} 
+	}
 	else {
 
 		if (obj.type == "skybox") {
@@ -394,6 +397,15 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 
 		sceneObject->AddTexture(resourceManager.GetTexture(*it));
 	}
+
+	if (obj.materialId.empty()) {
+
+		sceneObject->SetMaterial(resourceManager.GetMaterial(DEFAULT_MATERIAL_ID));
+	}
+	else {
+		sceneObject->SetMaterial(resourceManager.GetMaterial(atoi(obj.materialId.c_str())));
+	}
+
 	sceneObject->SetPosition(obj.position);
 	sceneObject->SetRotation(obj.rotation);
 	sceneObject->SetScale(obj.scale);

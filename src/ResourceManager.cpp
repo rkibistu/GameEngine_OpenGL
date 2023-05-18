@@ -7,6 +7,7 @@
 std::string ResourceManager::Elements::ModelsRoot = "models";
 std::string ResourceManager::Elements::ShadersRoot = "shaders";
 std::string ResourceManager::Elements::TexturesRoot = "textures";
+std::string ResourceManager::Elements::MaterialsRoot = "materials";
 std::string ResourceManager::Elements::Filename = "file";
 std::string ResourceManager::Elements::Path = "path";
 std::string ResourceManager::Elements::Id = "id";
@@ -17,6 +18,9 @@ std::string ResourceManager::Elements::MinFilterMode = "min_filter";
 std::string ResourceManager::Elements::MagFilterMode = "mag_filter";
 std::string ResourceManager::Elements::WrapS = "wrap_s";
 std::string ResourceManager::Elements::WrapT = "wrap_t";
+
+std::string ResourceManager::Elements::FactorTextura = "factor_textura";
+std::string ResourceManager::Elements::FactorReflexieSkyblox = "factor_reflexie_skybox";
 
 ResourceManager* ResourceManager::_spInstance = nullptr;
 
@@ -85,7 +89,11 @@ int ResourceManager::Init() {
 		delete doc;
 		return res;
 	}
-
+	res = InitMaterials(pRoot);
+	if (res != MY_SUCCES_CODE) {
+		delete doc;
+		return res;
+	}
 
 	delete doc;
 	return MY_SUCCES_CODE;
@@ -258,7 +266,7 @@ int ResourceManager::InitTextures(rapidxml::xml_node<>* pRoot) {
 
 			}
 
-			// get in every property
+			// get in every node
 			for (rapidxml::xml_node<>* fileNode = modelNode->first_node(); fileNode; fileNode = fileNode->next_sibling())
 			{
 				//get the IDs
@@ -294,6 +302,72 @@ int ResourceManager::InitTextures(rapidxml::xml_node<>* pRoot) {
 
 	return MY_SUCCES_CODE;
 }
+int ResourceManager::InitMaterials(rapidxml::xml_node<>* pRoot) {
+
+	if (pRoot == nullptr) {
+		std::cout << "pRoot for xml parser is nullptr" << std::endl;;
+		return MY_ERROR_CODE;
+	}
+
+	std::string path;
+
+	rapidxml::xml_node<>* pNode = pRoot->first_node(ResourceManager::Elements::MaterialsRoot.c_str());
+
+	//get in every <folder>
+	for (rapidxml::xml_node<>* resourceNode = pNode->first_node(); resourceNode; resourceNode = resourceNode->next_sibling())
+	{
+		//get the paths
+		for (rapidxml::xml_attribute<>* pAttr = resourceNode->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
+		{
+			if (pAttr->name() != Elements::Path) {
+				std::cout << "Wrong path attribute!" << std::endl;
+				return MY_ERROR_CODE;
+			}
+			path = pAttr->value();
+
+		}
+
+		// get in every texture
+		for (rapidxml::xml_node<>* materialNode = resourceNode->first_node(); materialNode; materialNode = materialNode->next_sibling())
+		{
+			MaterialResource* tempResource = new MaterialResource();
+			tempResource->Path = path;
+
+			//get the IDs
+			for (rapidxml::xml_attribute<>* pAttr = materialNode->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
+			{
+				if (pAttr->name() == Elements::Id) {
+					tempResource->ID = atoi(pAttr->value());
+				}
+				else if (pAttr->name() == Elements::TextureType) {
+					tempResource->Type = pAttr->value();
+				}
+				else {
+					std::cout << "Wrong texture attribute, expected if or type!" << std::endl;
+					return MY_ERROR_CODE;
+				}
+
+			}
+
+			// get in every node
+			for (rapidxml::xml_node<>* node = materialNode->first_node(); node; node = node->next_sibling())
+			{
+				//get the IDs
+				if (node->name() == Elements::FactorTextura) {
+
+					tempResource->FactorTextura = node->value();
+				}
+				else if (node->name() == Elements::FactorReflexieSkyblox) {
+
+					tempResource->FactorReflexieSkybox = node->value();
+				}
+			}
+
+			_materialResources.insert({tempResource->ID,tempResource});
+		}
+
+	}
+}
 
 Model* ResourceManager::GetModel(unsigned int id) {
 
@@ -322,6 +396,16 @@ Texture* ResourceManager::GetTexture(unsigned int id) {
 
 	return LoadTexture(id);
 }
+Material* ResourceManager::GetMaterial(unsigned int id) {
+
+	auto itMaterials = _materials.find(id);
+	if (itMaterials != _materials.end()) {
+		return itMaterials->second;
+	}
+
+	return LoadMaterial(id);
+}
+
 
 Model* ResourceManager::GetTerrainModel() {
 
@@ -332,7 +416,7 @@ Model* ResourceManager::GetTerrainModel(int sizeWidht, int sizeHeight, int cellC
 	if (_terrainModel == nullptr) {
 
 		_terrainModel = new Model();
-		_terrainModel->LoadFlatTerrain(sizeWidht, sizeHeight,cellCountWidth,cellCountHeight);
+		_terrainModel->LoadFlatTerrain(sizeWidht, sizeHeight, cellCountWidth, cellCountHeight);
 	}
 	return _terrainModel;
 }
@@ -369,7 +453,7 @@ Texture* ResourceManager::LoadTexture(unsigned int id) {
 
 	auto itResources = _textureResources.find(id);
 	if (itResources == _textureResources.end()) {
-		std::cout << "Resursa pentru modelul cu ID-ul " << id << " nu exista!" << std::endl;
+		std::cout << "Resursa pentru textura cu ID-ul " << id << " nu exista!" << std::endl;
 		return nullptr;
 	}
 
@@ -379,4 +463,17 @@ Texture* ResourceManager::LoadTexture(unsigned int id) {
 	_textures.insert({ id,texture });
 	return texture;
 }
+Material* ResourceManager::LoadMaterial(unsigned int id) {
 
+	auto itResources = _materialResources.find(id);
+	if (itResources == _materialResources.end()) {
+		std::cout << "Resursa pentru materialul cu ID-ul " << id << " nu exista!" << std::endl;
+		return nullptr;
+	}
+
+	Material* material = new Material();
+	material->Load(itResources->second);
+
+	_materials.insert({ id,material });
+	return material;
+}
