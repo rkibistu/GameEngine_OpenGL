@@ -130,6 +130,10 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	Matrix mvp = model * camera->GetMVP();
 	_shader->SetUniformMatrix4fv("u_mvp", mvp);
 
+	_shader->SetUniformMatrix4fv("u_model", model);
+	_shader->SetUniform1i("u_TextureCube", 1);
+	_shader->SetUniform1f("u_factorReflect", 0.2);
+	_shader->SetUniform1f("u_factorTexture", 0.8);
 }
 void SceneObject::SetUniformsParticular(Camera* camera) {
 

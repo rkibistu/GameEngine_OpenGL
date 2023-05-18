@@ -38,7 +38,6 @@ int Shader::Init(char* fileVertexShader, char* fileFragmentShader)
 	binormAttribute = glGetAttribLocation(_programId, "a_binorm");
 	tgtAttribute = glGetAttribLocation(_programId, "a_tgt");
 
-
 	//finding location of uniforms
 	textureUniform = glGetUniformLocation(_programId, "u_Texture");
 	mvpUniform = glGetUniformLocation(_programId, "u_mvp");
@@ -108,7 +107,9 @@ int Shader::GetUniformLocation(const std::string& name) {
 
 	int location = glGetUniformLocation(_programId, name.c_str());
 	if (location == -1) {
-		std::cout << "Warning: uniform '" << name << "' doesn't exist!" << std::endl;
+
+		std::string generalName = _shaderResource->FragmentShaderFilename.substr(0, _shaderResource->FragmentShaderFilename.find("FS"));
+		std::cout << "Warning: uniform '" << name << "' doesn't exist on shader " << generalName << "!" << std::endl;
 	}
 
 	m_UniformLocationCache[name] = location;
