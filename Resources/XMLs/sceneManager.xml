@@ -166,7 +166,7 @@
 		<object id="111">
 			
 			<model>1</model>
-			<shader>10</shader>
+			<shader>23</shader>
 			<type>normal</type>
 			<name>Crocodil_verde</name>
 			<textures>
@@ -224,7 +224,7 @@
 		
 		<object id="35">
 			<model>1003</model>
-			<shader>22</shader>
+			<shader>23</shader>
 			<type>normal</type>
 			<textures>
 				<texture id="15"/>
@@ -250,7 +250,7 @@
 		</object>
 		<object id="39">
 			<model>1003</model>
-			<shader>22</shader>
+			<shader>23</shader>
 			<type>normal</type>
 			<textures>
 				<texture id="15"/>
@@ -276,7 +276,7 @@
 		</object>
 		<object id="40">
 			<model>1003</model>
-			<shader>22</shader>
+			<shader>23</shader>
 			<type>normal</type>
 			<textures>
 				<texture id="15"/>
@@ -303,7 +303,7 @@
 		<object id="36">
 			
 			<model>2</model>
-			<shader>20</shader>
+			<shader>23</shader>
 			<type>normal</type>
 			<wired/>
 			<name>mesh_minge</name>
@@ -331,7 +331,7 @@
 		<object id="37">
 			
 			<model>2</model>
-			<shader>20</shader>
+			<shader>23</shader>
 			<type>normal</type>
 			<wired/>
 			<name>mesh_minge</name>
