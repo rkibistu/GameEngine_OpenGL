@@ -16,6 +16,15 @@
 		<g>0.0</g>
 		<b>0.0</b>
 	</backgroundColor>
+	<fog>
+		<near>50</near>
+		<far>150</far>
+		<color>
+			<r>1.0</r>
+			<g>0.0</g>
+			<b>0.0</b>
+		</color>
+	</fog>
 	<controls>
 		<control>
 			<key>W</key>

@@ -151,6 +151,17 @@ int SceneManagerXmlParser::ReadBackgroundColor(Vector3& backgroundColor) {
 
 	return MY_SUCCES_CODE;
 }
+int SceneManagerXmlParser::ReadFog(Fog& fog) {
+
+	rapidxml::xml_node<>* fogNode = _xmlRoot->first_node(FOG_ROOT_NODE);
+	for (rapidxml::xml_node<>* node = fogNode->first_node(); node; node = node->next_sibling()) {
+	
+		ReadFloat(node, FOG_NEAR_PLANE, fog.NearPlane);
+		ReadFloat(node, FOG_FAR_PLANE, fog.FarPlane);
+		ReadVector3_rgb(node, COLOR_NODE, fog.Color);
+	}
+	return MY_SUCCES_CODE;
+}
 
 SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* objectNode) {
 

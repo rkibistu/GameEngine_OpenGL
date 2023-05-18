@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "SceneObject.h"
 #include "SceneManagerXmlParser.h"
+#include "Fog.h"
 
 #include <unordered_map>
 #include <map>
@@ -38,6 +39,7 @@ private:
 	Camera* _activeCamera;
 
 	Vector3 _backgroundColor;
+	Fog _fog;
 
 	SceneManagerXmlParser _xmlParser;
 };

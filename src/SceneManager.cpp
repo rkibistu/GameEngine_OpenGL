@@ -37,16 +37,13 @@ void SceneManager::Init(ESContext* esContext) {
 	_xmlParser.ReadControls();
 
 	_xmlParser.ReadBackgroundColor(_backgroundColor);
+	_xmlParser.ReadFog(_fog);
 
 	glClearColor(_backgroundColor.x, _backgroundColor.y, _backgroundColor.z, 0.0f);
 	glEnable(GL_DEPTH_TEST);
-
-
-	
 }
 
-void SceneManager::Update(ESContext* esContext, 
-	float deltaTime) {
+void SceneManager::Update(ESContext* esContext, float deltaTime) {
 
 	_activeCamera->Update(deltaTime);
 	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {

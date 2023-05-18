@@ -5,6 +5,7 @@
 #include "SceneObject.h"
 #include "TerrainObject.h"
 #include "Input.h"
+#include "Fog.h"
 
 #include <unordered_map>
 #include <map>
@@ -19,6 +20,7 @@
 #define SCREEN_SIZE_NODE "defaultScreenSize"
 #define BACKGROUND_COLOR_NODE "backgroundColor"
 #define CONTROLS_ROOT_NODE "controls"
+#define FOG_ROOT_NODE "fog"
 
 #define COMMENT_NODE "comment"
 #define OBJECT_NODE "object"
@@ -32,6 +34,7 @@
 #define MATERIAL_NODE "material"
 #define POSITION_NODE "position"
 #define ROTATION_NODE "rotation"
+#define COLOR_NODE "color"
 #define SCALE_NODE "scale"
 #define X_AX_NODE "x"
 #define Y_AX_NODE "y"
@@ -56,6 +59,8 @@
 #define OX_AXIS_NODE "ox"
 #define OY_AXIS_NODE "oy"
 #define OZ_AXIS_NODE "oz"
+#define FOG_NEAR_PLANE "near"
+#define FOG_FAR_PLANE "far"
 
 #define ID_ATTRIBUTE "id"
 
@@ -73,6 +78,7 @@ public:
 	int ReadCameras(std::unordered_map<unsigned int, Camera*>& camers, Camera** activeCamera);
 	int ReadControls();
 	int ReadBackgroundColor(Vector3& backgroundColor);
+	int ReadFog(Fog& fog);
 private:
 
 	SceneObject* ReadSceneObject(rapidxml::xml_node<>* objectNode);

@@ -192,6 +192,7 @@
     <ClInclude Include="rapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Defines.h" />
+    <ClInclude Include="src\Fog.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\Material.h" />
