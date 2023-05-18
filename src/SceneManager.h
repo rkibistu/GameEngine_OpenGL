@@ -22,7 +22,7 @@ public:
 	void Draw(ESContext* esContext);
 
 	inline Camera* GetActiveCamera() { return _activeCamera; }
-
+	inline Fog& GetFog() { return _fog; }
 private:
 
 	

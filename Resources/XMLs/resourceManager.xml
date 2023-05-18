@@ -55,6 +55,10 @@
 				<vs>ReflectSkyboxShaderVS.vert</vs>
 				<fs>ReflectSkyboxShaderFS.frag</fs>
 			</shader>
+			<shader id="23">
+				<vs>FogShaderVS.vert</vs>
+				<fs>FogShaderFS.frag</fs>
+			</shader>
 		<!-- si aici se adauga toate shaderele -->
 		</folder>
 	</shaders>

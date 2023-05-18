@@ -1,3 +1,5 @@
+//Asta e shader-ul folosit doar pe obiectul de tip skybox 
+
 attribute vec3 a_posL;
 attribute vec3 a_colL;
 

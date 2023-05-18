@@ -134,11 +134,19 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	Matrix model = GetModelMatrix();
 	Matrix mvp = model * camera->GetMVP();
 	_shader->SetUniformMatrix4fv("u_mvp", mvp);
+	_shader->SetUniform3f("u_cameraPos", camera->GetPosition());
 
 	_shader->SetUniformMatrix4fv("u_model", model);
 	_shader->SetUniform1i("u_TextureCube", 1);
 	_shader->SetUniform1f("u_factorTexture", _material->GetFactorTextura());
 	_shader->SetUniform1f("u_factorReflect", _material->GetFactorReflexieTextura());
+
+	SceneManager& sceneManager = SceneManager::GetInstance();
+	Fog fog = sceneManager.GetFog();
+	_shader->SetUniform1f("u_fogNear", fog.NearPlane);
+	_shader->SetUniform1f("u_fogFar", fog.FarPlane);
+	_shader->SetUniform3f("u_fogColor", fog.Color);
+
 }
 void SceneObject::SetUniformsParticular(Camera* camera) {
 

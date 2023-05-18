@@ -17,8 +17,8 @@
 		<b>0.0</b>
 	</backgroundColor>
 	<fog>
-		<near>50</near>
-		<far>150</far>
+		<near>450</near>
+		<far>550</far>
 		<color>
 			<r>1.0</r>
 			<g>0.0</g>
@@ -116,7 +116,7 @@
 		<object id="1">
 			
 			<model>1</model>
-			<shader>22</shader>
+			<shader>23</shader>
 			<type>normal</type>
 			<name>Crocodil_verde</name>
 			<textures>
