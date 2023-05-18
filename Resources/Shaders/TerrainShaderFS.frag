@@ -18,6 +18,8 @@ uniform float u_fogFar;
 uniform vec3 u_fogColor;
 uniform vec3 u_cameraPos;
 
+uniform samplerCube u_TextureCube;
+
 void main()
 {
 	//gl_FragColor = vec4(v_color, 1.0);
@@ -33,11 +35,16 @@ void main()
 	float dist = distance(vec3(v_Wpos), u_cameraPos);
 	float alpha = (dist - u_fogNear)/(u_fogFar - u_fogNear);
 	alpha = clamp(alpha,0.0,1.0);
-	
+
+
+	//this part is just a atest -> incercanm sa iau culaore din skybox
+//	vec3 vectCam = vec3(v_Wpos) - u_cameraPos;
+//	vec3 test = normalize(vectCam);
+//	vec4 fogColor = textureCube(u_TextureCube, test);
+//	
+//	vec4 final =  blend.x * grass + blend.y * rock + blend.z * dirt;
+//	gl_FragColor = alpha * fogColor + (1.0 - alpha) * final;
+
 	vec4 final =  blend.x * grass + blend.y * rock + blend.z * dirt;
 	gl_FragColor = alpha * vec4(u_fogColor,1.0) + (1.0 - alpha) * final;
-
-
-	//gl_FragColor = final;
-	//gl_FragColor = vec4(u_deplasament,0.0,1.0);
 }

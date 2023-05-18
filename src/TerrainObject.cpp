@@ -56,6 +56,7 @@ void TerrainObject::SetUniformsParticular(Camera* camera) {
 	_shader->SetUniform1i("u_TextureDirt", 1);
 	_shader->SetUniform1i("u_TextureRock", 2);
 	_shader->SetUniform1i("u_TextureGrass", 3);
+	_shader->SetUniform1i("u_TextureCube", 4);
 
 	_shader->SetUniform2f("u_deplasament", _deplasament.z, _deplasament.x);
 	_shader->SetUniform1f("u_countCells", _countCells);

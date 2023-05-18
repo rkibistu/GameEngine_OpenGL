@@ -8,8 +8,6 @@ varying vec3 v_texCoord;
 
 uniform mat4 u_mvp;
 
-uniform mat4 u_rotate;
-
 void main()
 {
 	vec4 posL = vec4(a_posL, 1.0);

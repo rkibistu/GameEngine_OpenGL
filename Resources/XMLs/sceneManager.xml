@@ -20,9 +20,9 @@
 		<near>450</near>
 		<far>550</far>
 		<color>
-			<r>1.0</r>
-			<g>0.0</g>
-			<b>0.0</b>
+			<r>0.352</r>
+			<g>0.47</g>
+			<b>0.564</b>
 		</color>
 	</fog>
 	<controls>
@@ -198,6 +198,7 @@
 				<texture id="14"/>
 				<texture id="15"/>
 				<texture id="16"/>
+				<texture id="100"/>
 				<!-- TO DO adaugati texturile-->
 			</textures>
 			<position>

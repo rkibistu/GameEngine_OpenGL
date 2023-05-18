@@ -34,7 +34,12 @@ void main()
 	float alpha = (dist - u_fogNear)/(u_fogFar - u_fogNear);
 	alpha = clamp(alpha,0.0,1.0);
 
+	//this part is just a atest -> incercam sa iau culoare din skybox. Da nu arata chiar bine.
+	//vec3 test = normalize(vectCam);
+	//vec4 fogColor = textureCube(u_TextureCube, test);
+	//gl_FragColor = alpha * fogColor + (1.0 - alpha) * culoareObiect;
+
 	vec4 culoareObiect =  texColor * u_factorTexture + texColorCube * u_factorReflect;
 	gl_FragColor = alpha * vec4(u_fogColor,1.0) + (1.0 - alpha) * culoareObiect;
-	//gl_FragColor = vec4(normalize(u_cameraPos),1.0);
+	
 }
