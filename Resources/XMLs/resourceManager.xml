@@ -14,6 +14,9 @@
 			<model id="1002">
 				<file>SkyBox.nfg</file>
 			</model>
+			<model id="1003">
+				<file>Bila.nfg</file>
+			</model>
 		</folder>
 
 		<folder path="Res/Models2/">
@@ -116,8 +119,8 @@
 				<factor_reflexie_skybox>0.0</factor_reflexie_skybox>
 			</material>
 			<material id="301" type="idkYet">
-				<factor_textura>0.8</factor_textura>
-				<factor_reflexie_skybox>0.2</factor_reflexie_skybox>
+				<factor_textura>0.5</factor_textura>
+				<factor_reflexie_skybox>0.5</factor_reflexie_skybox>
 			</material>
 			<material id="302" type="idkYet">
 				<factor_textura>0.0</factor_textura>
