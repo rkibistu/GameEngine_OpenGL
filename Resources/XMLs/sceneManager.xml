@@ -17,8 +17,8 @@
 		<b>0.0</b>
 	</backgroundColor>
 	<fog>
-		<near>450</near>
-		<far>550</far>
+		<near>900</near>
+		<far>1000</far>
 		<color>
 			<r>0.352</r>
 			<g>0.47</g>

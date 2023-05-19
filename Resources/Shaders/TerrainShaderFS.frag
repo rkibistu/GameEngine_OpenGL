@@ -38,13 +38,27 @@ void main()
 
 
 	//this part is just a atest -> incercanm sa iau culaore din skybox
-//	vec3 vectCam = vec3(v_Wpos) - u_cameraPos;
-//	vec3 test = normalize(vectCam);
-//	vec4 fogColor = textureCube(u_TextureCube, test);
-//	
-//	vec4 final =  blend.x * grass + blend.y * rock + blend.z * dirt;
-//	gl_FragColor = alpha * fogColor + (1.0 - alpha) * final;
 
+	// ASK HERE!!!
+	// mutam camera la nivelul fragmentului
+	//	luam vectorul de la camera mutata la fragment
+	//	si luam culoarea respectiva de pe skybox
+	// de ce nu da exact aceeasi culoare ca la baza skyboxului ?
+	vec3 cameraPosLow;
+	cameraPosLow.x = u_cameraPos.x;
+	cameraPosLow.y = v_Wpos.y;
+	cameraPosLow.z = u_cameraPos.z;
+
+	vec3 vectCam = vec3(v_Wpos) - cameraPosLow;
+	
+	vec3 test = normalize(vectCam);
+	vec4 fogColor = textureCube(u_TextureCube, test);
+
+	
 	vec4 final =  blend.x * grass + blend.y * rock + blend.z * dirt;
-	gl_FragColor = alpha * vec4(u_fogColor,1.0) + (1.0 - alpha) * final;
+	gl_FragColor = alpha * fogColor + (1.0 - alpha) * final;
+	
+
+	//vec4 final =  blend.x * grass + blend.y * rock + blend.z * dirt;
+	//gl_FragColor = alpha * vec4(u_fogColor,1.0) + (1.0 - alpha) * final;
 }
