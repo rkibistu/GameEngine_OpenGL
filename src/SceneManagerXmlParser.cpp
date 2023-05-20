@@ -2,7 +2,7 @@
 #include "SceneManagerXmlParser.h"
 #include "ResourceManager.h"
 #include "Skybox.h"
-
+#include "Fire.h"
 #include "Defines.h"
 
 #include <fstream>
@@ -10,6 +10,8 @@
 #include <vector>
 
 #define DEFAULT_MATERIAL_ID 300
+
+
 
 int SceneManagerXmlParser::Init(std::string filepath) {
 
@@ -192,6 +194,7 @@ SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* object
 		ReadVector3_rgb(node, HEIGHTS_PER_COLOR_NODE, obj.heights);
 		ReadString(node, NAME_NODE, obj.name);
 		ReadFollowingCamera(node, FOLLOWING_CAMERA_NODE, obj.followCameraDirections);
+		ReadFloat(node, DISPLACEMENT_MAX_VALUE_NODE, obj.fireDisplMax);
 	}
 
 	SceneObject* sceneObject = CreateSceneObject(obj);
@@ -393,6 +396,10 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 			sceneObject = new Skybox();
 			sceneObject->SetFollowCameraDirections(obj.followCameraDirections);
 			sceneObject->SetFollowCameraOffset(obj.position);
+		}
+		else if (obj.type == "fire") {
+
+			sceneObject = new Fire(obj.fireDisplMax);
 		}
 		else {
 

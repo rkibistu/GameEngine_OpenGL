@@ -30,6 +30,8 @@ void SceneManager::DestroyInstance() {
 
 void SceneManager::Init(ESContext* esContext) {
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	_xmlParser.Init("Resources/XMLs/sceneManager.xml");
 	_xmlParser.ReadObjects(_sceneObjects);

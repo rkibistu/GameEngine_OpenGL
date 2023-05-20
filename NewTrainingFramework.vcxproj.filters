@@ -78,6 +78,9 @@
     <ClCompile Include="src\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fire.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rapidXML\rapidxml.hpp">
@@ -170,6 +173,9 @@
     <ClInclude Include="src\Fog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Fire.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="pcviewer_es2.cfg" />
@@ -186,6 +192,8 @@
     <None Include="Resources\Shaders\ReflectSkyboxShaderFS.frag" />
     <None Include="Resources\Shaders\FogShaderVS.vert" />
     <None Include="Resources\Shaders\FogShaderFS.frag" />
+    <None Include="Resources\Shaders\FireShaderVS.vert" />
+    <None Include="Resources\Shaders\FireShaderFS.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />

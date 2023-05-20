@@ -61,6 +61,7 @@
 #define OZ_AXIS_NODE "oz"
 #define FOG_NEAR_PLANE "near"
 #define FOG_FAR_PLANE "far"
+#define DISPLACEMENT_MAX_VALUE_NODE "displMax"
 
 #define ID_ATTRIBUTE "id"
 
@@ -130,4 +131,6 @@ struct SceneObjectXmlFormat {
 	Vector3 scale;
 	Vector3 heights;
 	Vector3 followCameraDirections;
+
+	float fireDisplMax;
 };

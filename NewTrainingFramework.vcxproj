@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Fire.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Camera.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="rapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Defines.h" />
+    <ClInclude Include="src\Fire.h" />
     <ClInclude Include="src\Fog.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\Input.h" />
@@ -222,6 +224,8 @@
     <None Include="pcviewer_es2.cfg" />
     <None Include="Resources\Shaders\BasicColorShaderFS.frag" />
     <None Include="Resources\Shaders\BasicColorShaderVS.vert" />
+    <None Include="Resources\Shaders\FireShaderFS.frag" />
+    <None Include="Resources\Shaders\FireShaderVS.vert" />
     <None Include="Resources\Shaders\FogShaderFS.frag" />
     <None Include="Resources\Shaders\FogShaderVS.vert" />
     <None Include="Resources\Shaders\ReflectSkyboxShaderFS.frag" />

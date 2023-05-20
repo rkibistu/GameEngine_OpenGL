@@ -119,14 +119,17 @@ Matrix SceneObject::GetModelMatrix() {
 	Matrix positionMat;
 	positionMat.SetTranslation(_position);
 
-	Matrix rotationMat;
-	rotationMat.SetRotationY(_rotation.y);
+	Matrix rotationMatOY;
+	rotationMatOY.SetRotationY(_rotation.y * PI / 180.f);
+	Matrix rotationMatOX;
+	rotationMatOX.SetRotationX(_rotation.x * PI / 180.f);
+	Matrix rotationMatOZ;
+	rotationMatOZ.SetRotationZ(_rotation.z * PI / 180.f);
 	
-	
-	Matrix scaleMat;
+	Matrix scaleMat; 
 	scaleMat.SetScale(_scale);
 
-	return scaleMat * rotationMat *  positionMat ;
+	return scaleMat * rotationMatOX * rotationMatOZ * rotationMatOY *  positionMat ;
 }
 
 void SceneObject::SetUniformsCommon(Camera* camera) {
