@@ -174,8 +174,16 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 		lightUniform = lightUniformBase + "position";
 		_shader->SetUniform3f(lightUniform, it->second->GetPosition());
 
+		//add this 2 in xml!!
+		lightUniform = lightUniformBase + "direction";
+		_shader->SetUniform3f(lightUniform, it->second->GetPosition());
+		lightUniform = lightUniformBase + "spotAngle";
+		_shader->SetUniform1f(lightUniform, 0.7f);
+
+
 		index++;
 	}
+	_shader->SetUniform1i("u_lightsCount", lights.size());
 	//ambiental
 	_shader->SetUniform3f("u_ambientColor", sceneManager.GetAmbientalLight().Color);
 	_shader->SetUniform1f("u_ambientRatio", sceneManager.GetAmbientalLight().Ratio);
@@ -187,6 +195,7 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	_shader->SetUniform1f("u_ambientFactor", 0.2);
 	_shader->SetUniform1f("u_specularFactor", 0.8);
 	_shader->SetUniform1f("u_diffuseFactor", 0.5);
+	
 
 }
 void SceneObject::SetUniformsParticular(Camera* camera) {

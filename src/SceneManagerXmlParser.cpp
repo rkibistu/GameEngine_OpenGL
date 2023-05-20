@@ -504,6 +504,10 @@ LightObject* SceneManagerXmlParser::CreateLightObject(LightObjectXmlFormat obj) 
 	LightObject::Type type;
 	if (obj.type == "point")
 		type = LightObject::Type::Point;
+	else if(obj.type == "directional")
+		type = LightObject::Type::Directional;
+	else if (obj.type == "spot")
+		type = LightObject::Type::Spot;
 
 	LightObject* lightObject = new LightObject(type,obj.diffuseColor,obj.specularColor);
 	lightObject->SetId(obj.id);

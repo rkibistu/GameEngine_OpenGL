@@ -441,7 +441,7 @@
 			<displMax>0.2</displMax>
 		</object>
 		<object id="43">
-			<model>1003</model>
+			<model>2</model>
 			<shader>26</shader>
 			<textures>
 				<texture id="14"/>
@@ -450,8 +450,8 @@
 			<name>lightedObject</name>
 			<position>
 				<x>0</x>
-				<y>50</y>
-				<z>250</z>
+				<y>0</y>
+				<z>200</z>
 			</position>
 			<rotation>
 				<x>0</x>
@@ -459,9 +459,9 @@
 				<z>0</z>
 			</rotation>
 			<scale>
-				<x>0.4</x>
-				<y>0.4</y>
-				<z>0.4</z>
+				<x>3.0</x>
+				<y>3.0</y>
+				<z>3.0</z>
 			</scale>
 			<displMax>0.2</displMax>
 		</object>
@@ -482,40 +482,40 @@
 			<associatedObject>2</associatedObject>
 			<position>
 				<x>0</x>
-				<y>50</y>
-				<z>0</z>
-			</position>
-			<diffuseColor>
-				<r>1.0</r>
-				<g>1.0</g>
-				<b>1.0</b>
-			</diffuseColor>
-			<specularColor>
-				<r>1.0</r>
-				<g>1.0</g>
-				<b>1.0</b>
-			</specularColor>
-			<type>point</type>
-		</light>
-		<light id="2">
-			<associatedObject>2</associatedObject>
-			<position>
-				<x>0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>183</z>
 			</position>
 			<diffuseColor>
-				<r>0.0</r>
-				<g>0.0</g>
+				<r>1.0</r>
+				<g>1.0</g>
 				<b>1.0</b>
 			</diffuseColor>
 			<specularColor>
 				<r>1.0</r>
-				<g>0.0</g>
+				<g>1.0</g>
 				<b>1.0</b>
 			</specularColor>
-			<type>point</type>
+			<type>spot</type>
 		</light>
+		<!-- <light id="2"> -->
+			<!-- <associatedObject>2</associatedObject> -->
+			<!-- <position> -->
+				<!-- <x>100</x> -->
+				<!-- <y>50</y> -->
+				<!-- <z>25</z> -->
+			<!-- </position> -->
+			<!-- <diffuseColor> -->
+				<!-- <r>1.0</r> -->
+				<!-- <g>0.0</g> -->
+				<!-- <b>1.0</b> -->
+			<!-- </diffuseColor> -->
+			<!-- <specularColor> -->
+				<!-- <r>1.0</r> -->
+				<!-- <g>0.0</g> -->
+				<!-- <b>1.0</b> -->
+			<!-- </specularColor> -->
+			<!-- <type>point</type> -->
+		<!-- </light> -->
 	</lights>
 
 	<debugSettings>

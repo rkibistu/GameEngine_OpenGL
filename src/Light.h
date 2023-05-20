@@ -7,6 +7,8 @@ class LightObject : public SceneObject {
 public:
 	enum Type {
 		Point = 0,
+		Directional,
+		Spot
 	};
 
 public:
