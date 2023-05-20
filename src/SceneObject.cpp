@@ -9,7 +9,7 @@ SceneObject::SceneObject()
 	: _model(nullptr), _shader(nullptr) {
 }
 
-SceneObject::~SceneObject(){
+SceneObject::~SceneObject() {
 
 	//i dont want to free the pointers here, because they are create in Resource manager
 	/// they can be used later or by more SceneObjects
@@ -32,7 +32,7 @@ void SceneObject::Update(float deltaTime) {
 }
 
 void SceneObject::Draw(Camera* camera) {
-	
+
 	if (_model == nullptr)
 		return;
 	if (_shader == nullptr)
@@ -55,7 +55,7 @@ void SceneObject::Draw(Camera* camera) {
 	_model->Unbind();
 }
 void SceneObject::DrawWired(Camera* camera) {
-	
+
 	if (_model == nullptr)
 		return;
 	if (_shader == nullptr)
@@ -78,17 +78,17 @@ void SceneObject::DrawWired(Camera* camera) {
 	_model->Unbind();
 }
 
-void SceneObject::SetModel(Model* model){
+void SceneObject::SetModel(Model* model) {
 
 	_model = model;
 }
 
-void SceneObject::SetShader(Shader* shader){
+void SceneObject::SetShader(Shader* shader) {
 
 	_shader = shader;
 }
 
-void SceneObject::AddTexture(Texture* texture){
+void SceneObject::AddTexture(Texture* texture) {
 
 	_textureResources.push_back(texture);
 }
@@ -125,11 +125,11 @@ Matrix SceneObject::GetModelMatrix() {
 	rotationMatOX.SetRotationX(_rotation.x * PI / 180.f);
 	Matrix rotationMatOZ;
 	rotationMatOZ.SetRotationZ(_rotation.z * PI / 180.f);
-	
-	Matrix scaleMat; 
+
+	Matrix scaleMat;
 	scaleMat.SetScale(_scale);
 
-	return scaleMat * rotationMatOX * rotationMatOZ * rotationMatOY *  positionMat ;
+	return scaleMat * rotationMatOX * rotationMatOZ * rotationMatOY * positionMat;
 }
 
 void SceneObject::SetUniformsCommon(Camera* camera) {
@@ -149,6 +149,15 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	_shader->SetUniform1f("u_fogNear", fog.NearPlane);
 	_shader->SetUniform1f("u_fogFar", fog.FarPlane);
 	_shader->SetUniform3f("u_fogColor", fog.Color);
+
+
+	_shader->SetUniform3f("u_objectColor", 1.0, 1.0, 1.0);
+	_shader->SetUniform3f("u_cameraPos", camera->GetPosition());
+	_shader->SetUniform3f("u_lightColor", 1.0, 0.0, 0.0);
+	_shader->SetUniform3f("u_lightPos", 0.0, 0.0, 0.0);
+	_shader->SetUniform1f("u_ambientFactor", 0.2);
+	_shader->SetUniform1f("u_specularFactor", 0.8);
+	_shader->SetUniform1f("u_diffuseFactor", 0.5);
 
 }
 void SceneObject::SetUniformsParticular(Camera* camera) {

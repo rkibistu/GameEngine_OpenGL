@@ -422,7 +422,7 @@
 			<type>normal</type>
 			<name>lightedObject</name>
 			<position>
-				<x>0</x>
+				<x>-20</x>
 				<y>0</y>
 				<z>0</z>
 			</position>
