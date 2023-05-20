@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="src\Fire.cpp" />
     <ClCompile Include="src\Input.cpp" />
+    <ClCompile Include="src\Light.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Material.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="src\Fog.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\Input.h" />
+    <ClInclude Include="src\Light.h" />
     <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\NfgParser.h" />

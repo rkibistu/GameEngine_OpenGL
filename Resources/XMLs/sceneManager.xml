@@ -440,7 +440,7 @@
 		</object>
 	</objects>
 	
-	<!--
+
 	<ambientalLight>
 		<color>
 			<r>1.0</r>
@@ -465,8 +465,22 @@
 			</specularColor>
 			<type>point</type>
 		</light>
+		<light id="2">
+			<associatedObject>2</associatedObject>
+			<diffuseColor>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>1.0</b>
+			</diffuseColor>
+			<specularColor>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>1.0</b>
+			</specularColor>
+			<type>point</type>
+		</light>
 	</lights>
-	-->
+
 	<debugSettings>
 		<objectAxes>
 			<OXColor>

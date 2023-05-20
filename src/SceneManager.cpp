@@ -34,6 +34,7 @@ void SceneManager::Init(ESContext* esContext) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	_xmlParser.Init("Resources/XMLs/sceneManager.xml");
+	_xmlParser.ReadLights(_lightObjects);
 	_xmlParser.ReadObjects(_sceneObjects);
 	_xmlParser.ReadCameras(_cameras, &_activeCamera);
 	_xmlParser.ReadControls();

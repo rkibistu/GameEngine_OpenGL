@@ -33,6 +33,7 @@ int SceneManagerXmlParser::Init(std::string filepath) {
 
 	_xmlRoot = _doc->first_node();
 	_objectsRoot = _xmlRoot->first_node(OBJECTS_ROOT);
+	_lightsRoot = _xmlRoot->first_node(LIGHTS_ROOT);
 	_controlsRoot = _xmlRoot->first_node(CONTROLS_ROOT);
 	_camerasRoot = _xmlRoot->first_node(CAMERAS_ROOT);
 	_activeCameraNode = _xmlRoot->first_node(ACTIVE_CAMERA_NODE);
@@ -57,6 +58,22 @@ int SceneManagerXmlParser::ReadObjects(std::map<unsigned int, SceneObject*>& sce
 
 	return MY_SUCCES_CODE;
 }
+
+// citeste toate nodurile light de sub nodul lights
+int SceneManagerXmlParser::ReadLights(std::unordered_map<unsigned int, Light*>& lightObjects) {
+
+	for (rapidxml::xml_node<>* objectNode = _lightsRoot->first_node(); objectNode; objectNode = objectNode->next_sibling()) {
+		if (strcmp(objectNode->name(), COMMENT_NODE) == 0)
+			continue;
+
+		Light* lightObject = ReadLightObject(objectNode);
+		if (lightObject != nullptr)
+			lightObjects.insert({ lightObject->GetId() ,lightObject });
+	}
+
+	return MY_SUCCES_CODE;
+}
+
 
 //citeste toate camerer din xml aflate sub nodul <cameras>
 //	creaza o clasa Camera pt fiecare <camera> si populeaza mapa din parametru cameras
@@ -284,6 +301,36 @@ void SceneManagerXmlParser::ReadFollowingCamera(rapidxml::xml_node<>* node, std:
 	}
 }
 
+Light* SceneManagerXmlParser::ReadLightObject(rapidxml::xml_node<>* objectNode) {
+
+	LightObjectXmlFormat obj;
+
+	//ia atributele: <object id=1>
+	for (rapidxml::xml_attribute<>* pAttr = objectNode->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
+	{
+		if (strcmp(pAttr->name(), ID_ATTRIBUTE) != 0) {
+			std::cout << "Expected id attribute" << std::endl;
+			return nullptr;
+		}
+		obj.id = atoi(pAttr->value());
+	}
+
+	//treci prin fiecare nod copil: associatedobject, diffusecolor, specularcolor, etc
+	int associatedObjId;
+	for (rapidxml::xml_node<>* node = objectNode->first_node(); node; node = node->next_sibling()) {
+
+		if (ReadInt(node, ASSOCIATED_OBJECTED_NODE, associatedObjId)) {
+			obj.associatedObjects.push_back(associatedObjId);
+		}
+		ReadVector3_rgb(node, DIFFUSE_COLOR_NODE, obj.diffuseColor);
+		ReadVector3_rgb(node, SPECULAR_COLOR_NODE, obj.specularColor);
+		ReadString(node, TYPE_NODE, obj.type);
+	}
+
+	Light* lightObject = CreateLightObject(obj);
+	return lightObject;
+}
+
 Camera* SceneManagerXmlParser::ReadCamera(rapidxml::xml_node<>* ccameraNode) {
 
 	Camera* camera = new Camera();
@@ -322,7 +369,7 @@ Camera* SceneManagerXmlParser::ReadCamera(rapidxml::xml_node<>* ccameraNode) {
 	camera->SetRotationSpeed(rotationSpeed);
 	return camera;
 }
-void SceneManagerXmlParser::ReadVector3_xyz(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result) {
+bool SceneManagerXmlParser::ReadVector3_xyz(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result) {
 
 	if (strcmp(node->name(), nodeName.c_str()) == 0) {
 
@@ -335,9 +382,11 @@ void SceneManagerXmlParser::ReadVector3_xyz(rapidxml::xml_node<>* node, std::str
 			if (strcmp(coordonateNode->name(), Z_AX_NODE) == 0)
 				result.z = atof(coordonateNode->value());
 		}
+		return true;
 	}
+	return false;
 }
-void SceneManagerXmlParser::ReadVector3_rgb(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result) {
+bool SceneManagerXmlParser::ReadVector3_rgb(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result) {
 
 	if (strcmp(node->name(), nodeName.c_str()) == 0) {
 
@@ -350,28 +399,36 @@ void SceneManagerXmlParser::ReadVector3_rgb(rapidxml::xml_node<>* node, std::str
 			if (strcmp(coordonateNode->name(), B_COLOR_NODE) == 0)
 				result.z = atof(coordonateNode->value());
 		}
+		return true;
 	}
+	return false;
 }
-void SceneManagerXmlParser::ReadFloat(rapidxml::xml_node<>* node, std::string nodeName, float& result) {
+bool SceneManagerXmlParser::ReadFloat(rapidxml::xml_node<>* node, std::string nodeName, float& result) {
 
 	if (strcmp(node->name(), nodeName.c_str()) == 0) {
 
 		result = atof(node->value());
+		return true;
 	}
+	return false;
 }
-void SceneManagerXmlParser::ReadString(rapidxml::xml_node<>* node, std::string nodeName, std::string& result) {
+bool SceneManagerXmlParser::ReadString(rapidxml::xml_node<>* node, std::string nodeName, std::string& result) {
 
 	if (strcmp(node->name(), nodeName.c_str()) == 0) {
 
 		result = node->value();
+		return true;
 	}
+	return false;
 }
-void SceneManagerXmlParser::ReadInt(rapidxml::xml_node<>* node, std::string nodeName, int& result) {
+bool SceneManagerXmlParser::ReadInt(rapidxml::xml_node<>* node, std::string nodeName, int& result) {
 
 	if (strcmp(node->name(), nodeName.c_str()) == 0) {
 
 		result = atoi(node->value());
+		return true;
 	}
+	return false;
 }
 
 
@@ -431,5 +488,17 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 
 	return sceneObject;
 }
+Light* SceneManagerXmlParser::CreateLightObject(LightObjectXmlFormat obj) {
+
+	Light::Type type;
+	if (obj.type == "point")
+		type = Light::Type::Point;
+
+	Light* lightObject = new Light(type,obj.diffuseColor,obj.specularColor);
+	lightObject->SetId(obj.id);
+	
+	return lightObject;
+}
+
 
 

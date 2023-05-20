@@ -3,6 +3,7 @@
 #include "SceneObject.h"
 #include "SceneManagerXmlParser.h"
 #include "Fog.h"
+#include "Light.h"
 
 #include <unordered_map>
 #include <map>
@@ -35,6 +36,7 @@ private:
 
 	//orderrede
 	std::map<unsigned int, SceneObject*> _sceneObjects;
+	std::unordered_map<unsigned int, Light*> _lightObjects;
 	std::unordered_map<unsigned int, Camera*> _cameras;
 	Camera* _activeCamera;
 
