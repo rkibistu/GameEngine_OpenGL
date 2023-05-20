@@ -68,6 +68,16 @@
 			</shader>
 		<!-- si aici se adauga toate shaderele -->
 		</folder>
+		<folder path="Resources/Shaders/Lights/">
+			<shader id="25">
+				<vs>LightSourceShaderVS.vert</vs>
+				<fs>LightSourceShaderFS.frag</fs>
+			</shader>
+			<shader id="26">
+				<vs>LightedShaderVS.vert</vs>
+				<fs>LightedShaderFS.frag</fs>
+			</shader>
+		</folder>
 	</shaders>
 	<textures>
 		<folder path="Resources/Textures/">
@@ -144,6 +154,22 @@
 			<!-- si aici se adauga toate texturile -->
 		</folder>
 	</textures>	
+	<materials>
+		<folder path="Resources/Materials/">
+			<material id="300" type="idkYet">
+				<factor_textura>1.0</factor_textura>
+				<factor_reflexie_skybox>0.0</factor_reflexie_skybox>
+			</material>
+			<material id="301" type="idkYet">
+				<factor_textura>0.5</factor_textura>
+				<factor_reflexie_skybox>0.5</factor_reflexie_skybox>
+			</material>
+			<material id="302" type="idkYet">
+				<factor_textura>0.0</factor_textura>
+				<factor_reflexie_skybox>1.0</factor_reflexie_skybox>
+			</material>
+		</folder>
+	</materials>
 	<materials>
 		<folder path="Resources/Materials/">
 			<material id="300" type="idkYet">

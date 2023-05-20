@@ -194,6 +194,10 @@
     <None Include="Resources\Shaders\FogShaderFS.frag" />
     <None Include="Resources\Shaders\FireShaderVS.vert" />
     <None Include="Resources\Shaders\FireShaderFS.frag" />
+    <None Include="Resources\Shaders\Lights\LightedShaderFS.frag" />
+    <None Include="Resources\Shaders\Lights\LightedShaderVS.vert" />
+    <None Include="Resources\Shaders\Lights\LightSourceShaderFS.frag" />
+    <None Include="Resources\Shaders\Lights\LightSourceShaderVS.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />
