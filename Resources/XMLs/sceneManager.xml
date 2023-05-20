@@ -17,12 +17,12 @@
 		<b>0.0</b>
 	</backgroundColor>
 	<fog>
-		<near>900</near>
-		<far>1000</far>
+		<near>300</near>
+		<far>550</far>
 		<color>
-			<r>0.352</r>
-			<g>0.47</g>
-			<b>0.564</b>
+			<r>0.2352</r>
+			<g>0.2666</g>
+			<b>0.3333</b>
 		</color>
 	</fog>
 	<controls>
@@ -314,19 +314,19 @@
 				<b>0.0</b>
 			</color>
 			<position>
-				<x>-250</x>
+				<x>0</x>
 				<y>0</y>
 				<z>0</z>
 			</position>
 			<rotation>
-				<x>0</x>
+				<x>90</x>
 				<y>45</y>
 				<z>0</z>
 			</rotation>
 			<scale>
-				<x>1.0</x>
-				<y>1.0</y>
-				<z>1.0</z>
+				<x>3.0</x>
+				<y>3.0</y>
+				<z>3.0</z>
 			</scale>
 		</object>
 		<object id="37">
@@ -368,11 +368,11 @@
 			</textures>
 			<position>
 				<x>0</x>
-				<y>900</y>
+				<y>980</y>
 				<z>0</z>
 			</position>
 			<rotation>
-				<x>0</x>
+				<x>180</x>
 				<y>0</y>
 				<z>0</z>
 			</rotation>
