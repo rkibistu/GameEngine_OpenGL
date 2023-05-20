@@ -12,6 +12,10 @@ public:
 public:
 	Light();
 	Light(Type type, Vector3 diffuseColor, Vector3 specularColor);
+
+	inline Vector3 GetDiffuseColor() { return _diffuseColor; }
+	inline Vector3 GetSpecularColor() { return _specularColor; }
+
 private:
 	Type _type;
 	Vector3 _diffuseColor;

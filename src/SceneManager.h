@@ -24,6 +24,8 @@ public:
 
 	inline Camera* GetActiveCamera() { return _activeCamera; }
 	inline Fog& GetFog() { return _fog; }
+
+	inline Light* GetLight(unsigned int id) { return _lightObjects[id]; }
 private:
 
 	

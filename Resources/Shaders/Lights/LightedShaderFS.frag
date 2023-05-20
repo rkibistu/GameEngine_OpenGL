@@ -28,8 +28,5 @@ void main()
     vec3 specular = u_specularFactor * spec * u_lightColor;
 
     vec3 result = (ambient + diffuse + specular) * u_objectColor;
-    //vec3 result = ambient  * u_objectColor;
-    //gl_FragColor = vec4(diff,diff,diff, 1.0);
-    //gl_FragColor = vec4(v_norm, 1.0);
     gl_FragColor = vec4(result, 1.0);
 }

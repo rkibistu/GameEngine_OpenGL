@@ -150,10 +150,10 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	_shader->SetUniform1f("u_fogFar", fog.FarPlane);
 	_shader->SetUniform3f("u_fogColor", fog.Color);
 
-
+	Light* debugLight = sceneManager.GetLight(2);
 	_shader->SetUniform3f("u_objectColor", 1.0, 1.0, 1.0);
 	_shader->SetUniform3f("u_cameraPos", camera->GetPosition());
-	_shader->SetUniform3f("u_lightColor", 1.0, 0.0, 0.0);
+	_shader->SetUniform3f("u_lightColor", debugLight->GetDiffuseColor());
 	_shader->SetUniform3f("u_lightPos", 0.0, 0.0, 0.0);
 	_shader->SetUniform1f("u_ambientFactor", 0.2);
 	_shader->SetUniform1f("u_specularFactor", 0.8);
