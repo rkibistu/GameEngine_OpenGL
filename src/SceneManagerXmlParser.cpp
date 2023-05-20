@@ -60,13 +60,13 @@ int SceneManagerXmlParser::ReadObjects(std::map<unsigned int, SceneObject*>& sce
 }
 
 // citeste toate nodurile light de sub nodul lights
-int SceneManagerXmlParser::ReadLights(std::unordered_map<unsigned int, Light*>& lightObjects) {
+int SceneManagerXmlParser::ReadLights(std::unordered_map<unsigned int, LightObject*>& lightObjects) {
 
 	for (rapidxml::xml_node<>* objectNode = _lightsRoot->first_node(); objectNode; objectNode = objectNode->next_sibling()) {
 		if (strcmp(objectNode->name(), COMMENT_NODE) == 0)
 			continue;
 
-		Light* lightObject = ReadLightObject(objectNode);
+		LightObject* lightObject = ReadLightObject(objectNode);
 		if (lightObject != nullptr)
 			lightObjects.insert({ lightObject->GetId() ,lightObject });
 	}
@@ -178,6 +178,16 @@ int SceneManagerXmlParser::ReadFog(Fog& fog) {
 		ReadFloat(node, FOG_NEAR_PLANE, fog.NearPlane);
 		ReadFloat(node, FOG_FAR_PLANE, fog.FarPlane);
 		ReadVector3_rgb(node, COLOR_NODE, fog.Color);
+	}
+	return MY_SUCCES_CODE;
+}
+int SceneManagerXmlParser::ReadAmbientalLight(AmbientalLight& ambientalLight) {
+
+	rapidxml::xml_node<>* lightNode = _xmlRoot->first_node(AMBIENTAL_LIGHT_NODE);
+	for (rapidxml::xml_node<>* node = lightNode->first_node(); node; node = node->next_sibling()) {
+
+		ReadVector3_rgb(node, COLOR_NODE, ambientalLight.Color);
+		ReadFloat(node, RATIO_NODE, ambientalLight.Ratio);
 	}
 	return MY_SUCCES_CODE;
 }
@@ -301,7 +311,7 @@ void SceneManagerXmlParser::ReadFollowingCamera(rapidxml::xml_node<>* node, std:
 	}
 }
 
-Light* SceneManagerXmlParser::ReadLightObject(rapidxml::xml_node<>* objectNode) {
+LightObject* SceneManagerXmlParser::ReadLightObject(rapidxml::xml_node<>* objectNode) {
 
 	LightObjectXmlFormat obj;
 
@@ -325,9 +335,10 @@ Light* SceneManagerXmlParser::ReadLightObject(rapidxml::xml_node<>* objectNode) 
 		ReadVector3_rgb(node, DIFFUSE_COLOR_NODE, obj.diffuseColor);
 		ReadVector3_rgb(node, SPECULAR_COLOR_NODE, obj.specularColor);
 		ReadString(node, TYPE_NODE, obj.type);
+		ReadVector3_xyz(node, POSITION_NODE, obj.position);
 	}
 
-	Light* lightObject = CreateLightObject(obj);
+	LightObject* lightObject = CreateLightObject(obj);
 	return lightObject;
 }
 
@@ -488,14 +499,15 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 
 	return sceneObject;
 }
-Light* SceneManagerXmlParser::CreateLightObject(LightObjectXmlFormat obj) {
+LightObject* SceneManagerXmlParser::CreateLightObject(LightObjectXmlFormat obj) {
 
-	Light::Type type;
+	LightObject::Type type;
 	if (obj.type == "point")
-		type = Light::Type::Point;
+		type = LightObject::Type::Point;
 
-	Light* lightObject = new Light(type,obj.diffuseColor,obj.specularColor);
+	LightObject* lightObject = new LightObject(type,obj.diffuseColor,obj.specularColor);
 	lightObject->SetId(obj.id);
+	lightObject->SetPosition(obj.position);
 	
 	return lightObject;
 }

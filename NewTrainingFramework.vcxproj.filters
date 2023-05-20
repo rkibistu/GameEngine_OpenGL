@@ -182,6 +182,9 @@
     <ClInclude Include="src\Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\AmbientalLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="pcviewer_es2.cfg" />

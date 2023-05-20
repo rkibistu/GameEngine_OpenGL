@@ -4,6 +4,7 @@
 #include "SceneManagerXmlParser.h"
 #include "Fog.h"
 #include "Light.h"
+#include "AmbientalLight.h"
 
 #include <unordered_map>
 #include <map>
@@ -24,8 +25,10 @@ public:
 
 	inline Camera* GetActiveCamera() { return _activeCamera; }
 	inline Fog& GetFog() { return _fog; }
+	inline AmbientalLight& GetAmbientalLight() { return _ambientalLight; }
 
-	inline Light* GetLight(unsigned int id) { return _lightObjects[id]; }
+	inline LightObject* GetLight(unsigned int id) { return _lightObjects[id]; }
+	inline std::unordered_map<unsigned int, LightObject*>& GetLights() { return _lightObjects; }
 private:
 
 	
@@ -38,12 +41,13 @@ private:
 
 	//orderrede
 	std::map<unsigned int, SceneObject*> _sceneObjects;
-	std::unordered_map<unsigned int, Light*> _lightObjects;
+	std::unordered_map<unsigned int, LightObject*> _lightObjects;
 	std::unordered_map<unsigned int, Camera*> _cameras;
 	Camera* _activeCamera;
 
 	Vector3 _backgroundColor;
 	Fog _fog;
+	AmbientalLight _ambientalLight;
 
 	SceneManagerXmlParser _xmlParser;
 };

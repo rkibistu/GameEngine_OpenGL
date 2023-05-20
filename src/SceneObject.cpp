@@ -134,27 +134,56 @@ Matrix SceneObject::GetModelMatrix() {
 
 void SceneObject::SetUniformsCommon(Camera* camera) {
 
+	SceneManager& sceneManager = SceneManager::GetInstance();
+
+	//mvp + camera
 	Matrix model = GetModelMatrix();
 	Matrix mvp = model * camera->GetMVP();
 	_shader->SetUniformMatrix4fv("u_mvp", mvp);
 	_shader->SetUniform3f("u_cameraPos", camera->GetPosition());
-
 	_shader->SetUniformMatrix4fv("u_model", model);
+
+	// skybox
 	_shader->SetUniform1i("u_TextureCube", 1);
 	_shader->SetUniform1f("u_factorTexture", _material->GetFactorTextura());
 	_shader->SetUniform1f("u_factorReflect", _material->GetFactorReflexieTextura());
 
-	SceneManager& sceneManager = SceneManager::GetInstance();
+	//fog
 	Fog fog = sceneManager.GetFog();
 	_shader->SetUniform1f("u_fogNear", fog.NearPlane);
 	_shader->SetUniform1f("u_fogFar", fog.FarPlane);
 	_shader->SetUniform3f("u_fogColor", fog.Color);
 
-	Light* debugLight = sceneManager.GetLight(2);
+	//lights
+	std::string lightUniformBase = "u_lights[";
+	std::string lightUniform;
+	auto lights = sceneManager.GetLights();
+	int index = 0;
+	for (auto it = lights.begin(); it != lights.end(); it++) {
+
+		lightUniformBase = "u_lights[";
+		lightUniformBase += std::to_string(index);
+		lightUniformBase += "].";
+
+		lightUniform = lightUniformBase + "diffuseColor";
+		_shader->SetUniform3f(lightUniform, it->second->GetDiffuseColor());
+		lightUniform = lightUniformBase + "specularColor";
+		_shader->SetUniform3f(lightUniform, it->second->GetSpecularColor());
+		lightUniform = lightUniformBase + "type";
+		_shader->SetUniform1i(lightUniform, it->second->GetType());
+		lightUniform = lightUniformBase + "position";
+		_shader->SetUniform3f(lightUniform, it->second->GetPosition());
+
+		index++;
+	}
+	//ambiental
+	_shader->SetUniform3f("u_ambientColor", sceneManager.GetAmbientalLight().Color);
+	_shader->SetUniform1f("u_ambientRatio", sceneManager.GetAmbientalLight().Ratio);
+
+	//asta va venis taersa, vol lau din shader textura
 	_shader->SetUniform3f("u_objectColor", 1.0, 1.0, 1.0);
-	_shader->SetUniform3f("u_cameraPos", camera->GetPosition());
-	_shader->SetUniform3f("u_lightColor", debugLight->GetDiffuseColor());
-	_shader->SetUniform3f("u_lightPos", 0.0, 0.0, 0.0);
+	
+	//mai jos sunt materiale
 	_shader->SetUniform1f("u_ambientFactor", 0.2);
 	_shader->SetUniform1f("u_specularFactor", 0.8);
 	_shader->SetUniform1f("u_diffuseFactor", 0.5);

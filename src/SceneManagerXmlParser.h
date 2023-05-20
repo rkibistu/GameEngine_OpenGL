@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "Fog.h"
 #include "Light.h"
+#include "AmbientalLight.h"
 
 #include <unordered_map>
 #include <map>
@@ -84,11 +85,12 @@ public:
 	void Destroy();
 
 	int ReadObjects(std::map<unsigned int, SceneObject*>& sceneObjects);
-	int ReadLights(std::unordered_map<unsigned int, Light*>& lightObjects);
+	int ReadLights(std::unordered_map<unsigned int, LightObject*>& lightObjects);
 	int ReadCameras(std::unordered_map<unsigned int, Camera*>& camers, Camera** activeCamera);
 	int ReadControls();
 	int ReadBackgroundColor(Vector3& backgroundColor);
 	int ReadFog(Fog& fog);
+	int ReadAmbientalLight(AmbientalLight& ambientalLight);
 private:
 
 	SceneObject* ReadSceneObject(rapidxml::xml_node<>* objectNode);
@@ -100,7 +102,7 @@ private:
 	void ReadFollowingCamera(rapidxml::xml_node<>* node, std::string rootNodeName, Vector3& directions);
 	
 
-	Light* ReadLightObject(rapidxml::xml_node<>* objectNode);
+	LightObject* ReadLightObject(rapidxml::xml_node<>* objectNode);
 
 	Camera* ReadCamera(rapidxml::xml_node<>* ccameraNode);
 
@@ -112,7 +114,7 @@ private:
 	bool ReadInt(rapidxml::xml_node<>* node, std::string nodeName, int& result);
 
 	SceneObject* CreateSceneObject(SceneObjectXmlFormat obj);
-	Light* CreateLightObject(LightObjectXmlFormat obj);
+	LightObject* CreateLightObject(LightObjectXmlFormat obj);
 private:
 	//Pastram pointeri spre locurile importante din XML
 	// Ma gandesc ca daca creez un obiect la runtime, vreau sa il scriu in fisier
@@ -150,7 +152,8 @@ struct LightObjectXmlFormat {
 
 	int id;
 	std::string type;
-	std::vector<int> associatedObjects;
+	Vector3 position;
 	Vector3 diffuseColor;
 	Vector3 specularColor;
+	std::vector<int> associatedObjects;
 };

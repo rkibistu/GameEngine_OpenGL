@@ -41,6 +41,7 @@ void SceneManager::Init(ESContext* esContext) {
 
 	_xmlParser.ReadBackgroundColor(_backgroundColor);
 	_xmlParser.ReadFog(_fog);
+	_xmlParser.ReadAmbientalLight(_ambientalLight);
 
 	glClearColor(_backgroundColor.x, _backgroundColor.y, _backgroundColor.z, 0.0f);
 	glEnable(GL_DEPTH_TEST);

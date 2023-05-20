@@ -2,7 +2,7 @@
 
 #include "SceneObject.h"
 
-class Light : public SceneObject {
+class LightObject : public SceneObject {
 
 public:
 	enum Type {
@@ -10,12 +10,12 @@ public:
 	};
 
 public:
-	Light();
-	Light(Type type, Vector3 diffuseColor, Vector3 specularColor);
+	LightObject();
+	LightObject(Type type, Vector3 diffuseColor, Vector3 specularColor);
 
 	inline Vector3 GetDiffuseColor() { return _diffuseColor; }
 	inline Vector3 GetSpecularColor() { return _specularColor; }
-
+	inline Type GetType() { return _type; }
 private:
 	Type _type;
 	Vector3 _diffuseColor;

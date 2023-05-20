@@ -192,6 +192,7 @@
     <ClInclude Include="rapidXML\rapidxml_iterators.hpp" />
     <ClInclude Include="rapidXML\rapidxml_print.hpp" />
     <ClInclude Include="rapidXML\rapidxml_utils.hpp" />
+    <ClInclude Include="src\AmbientalLight.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Defines.h" />
     <ClInclude Include="src\Fire.h" />
