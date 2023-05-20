@@ -3,6 +3,9 @@ precision mediump float;
 varying vec3 v_color;
 varying vec3 v_norm;
 varying vec3 v_Wpos;
+varying vec2 v_texCoord;
+
+uniform sampler2D u_Texture;
 
 uniform vec3 u_objectColor;
 uniform vec3 u_cameraPos;
@@ -40,6 +43,11 @@ void main() {
     float spec = pow(max(dot(viewDir,reflectDir),0.0),32.0);
     vec3 specular = u_specularFactor * spec * diffuseColor;
 
-    vec3 result = (ambient + diffuse + specular) * u_objectColor;
-    gl_FragColor = vec4(result, 1.0);
+    vec4 texColor = texture2D(u_Texture, v_texCoord);
+	if(texColor.a < 0.2)
+		discard;
+
+
+    vec4 result = vec4((ambient + diffuse + specular),1.0) * texColor;
+    gl_FragColor = result;
 }

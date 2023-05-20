@@ -416,14 +416,16 @@
 			<displMax>0.2</displMax>
 		</object>
 		<object id="42">
-			
 			<model>2</model>
 			<shader>26</shader>
+			<textures>
+				<texture id="14"/>
+			</textures>
 			<type>normal</type>
 			<name>lightedObject</name>
 			<position>
 				<x>-20</x>
-				<y>0</y>
+				<y>50</y>
 				<z>0</z>
 			</position>
 			<rotation>
@@ -435,6 +437,31 @@
 				<x>3.0</x>
 				<y>3.0</y>
 				<z>3.0</z>
+			</scale>
+			<displMax>0.2</displMax>
+		</object>
+		<object id="43">
+			<model>1003</model>
+			<shader>26</shader>
+			<textures>
+				<texture id="14"/>
+			</textures>
+			<type>normal</type>
+			<name>lightedObject</name>
+			<position>
+				<x>0</x>
+				<y>50</y>
+				<z>250</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</rotation>
+			<scale>
+				<x>0.4</x>
+				<y>0.4</y>
+				<z>0.4</z>
 			</scale>
 			<displMax>0.2</displMax>
 		</object>
@@ -455,13 +482,13 @@
 			<associatedObject>2</associatedObject>
 			<position>
 				<x>0</x>
-				<y>10</y>
+				<y>50</y>
 				<z>0</z>
 			</position>
 			<diffuseColor>
 				<r>1.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
+				<g>1.0</g>
+				<b>1.0</b>
 			</diffuseColor>
 			<specularColor>
 				<r>1.0</r>
