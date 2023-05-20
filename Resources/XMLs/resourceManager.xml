@@ -17,6 +17,9 @@
 			<model id="1003">
 				<file>Bila.nfg</file>
 			</model>
+			<model id="1004">
+				<file>fire.nfg</file>
+			</model>
 		</folder>
 
 		<folder path="Res/Models2/">
@@ -58,6 +61,10 @@
 			<shader id="23">
 				<vs>FogShaderVS.vert</vs>
 				<fs>FogShaderFS.frag</fs>
+			</shader>
+			<shader id="24">
+				<vs>FireShaderVS.vert</vs>
+				<fs>FireShaderFS.frag</fs>
 			</shader>
 		<!-- si aici se adauga toate shaderele -->
 		</folder>
@@ -112,6 +119,27 @@
 				<mag_filter>LINEAR</mag_filter>
 				<wrap_s>CLAMP_TO_EDGE</wrap_s>
 				<wrap_t>CLAMP_TO_EDGE</wrap_t>
+			</texture>
+			<texture id="101" type="2d">
+				<file>fire3.tga</file>
+				<min_filter>LINEAR</min_filter>
+				<mag_filter>LINEAR</mag_filter>
+				<wrap_s>CLAMP_TO_EDGE</wrap_s>
+				<wrap_t>CLAMP_TO_EDGE</wrap_t>
+			</texture>
+			<texture id="102" type="2d">
+				<file>fire_mask.tga</file>
+				<min_filter>LINEAR</min_filter>
+				<mag_filter>LINEAR</mag_filter>
+				<wrap_s>CLAMP_TO_EDGE</wrap_s>
+				<wrap_t>CLAMP_TO_EDGE</wrap_t>
+			</texture>
+			<texture id="103" type="2d">
+				<file>DisplacementMap.tga</file>
+				<min_filter>LINEAR</min_filter>
+				<mag_filter>LINEAR</mag_filter>
+				<wrap_s>GL_REPEAT</wrap_s>
+				<wrap_t>GL_REPEAT</wrap_t>
 			</texture>
 			<!-- si aici se adauga toate texturile -->
 		</folder>

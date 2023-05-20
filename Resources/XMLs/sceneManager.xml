@@ -314,7 +314,7 @@
 				<b>0.0</b>
 			</color>
 			<position>
-				<x>0</x>
+				<x>-55</x>
 				<y>0</y>
 				<z>0</z>
 			</position>
@@ -386,7 +386,35 @@
 				<oz/>
 			</followingcamera>
 		</object>
-		
+		<object id="41">
+			
+			<model>1004</model>
+			<shader>24</shader>
+			<textures>
+				<texture id="101"/>
+				<texture id="102"/>
+				<texture id="103"/>
+				<texture id="100"/>
+			</textures>
+			<type>fire</type>
+			<name>fire</name>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>15</y>
+				<z>0</z>
+			</rotation>
+			<scale>
+				<x>3.0</x>
+				<y>3.0</y>
+				<z>3.0</z>
+			</scale>
+			<displMax>0.1</displMax>
+		</object>
 	</objects>
 	
 	<!--
