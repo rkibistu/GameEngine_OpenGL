@@ -8,6 +8,7 @@ std::string ResourceManager::Elements::ModelsRoot = "models";
 std::string ResourceManager::Elements::ShadersRoot = "shaders";
 std::string ResourceManager::Elements::TexturesRoot = "textures";
 std::string ResourceManager::Elements::MaterialsRoot = "materials";
+
 std::string ResourceManager::Elements::Filename = "file";
 std::string ResourceManager::Elements::Path = "path";
 std::string ResourceManager::Elements::Id = "id";
@@ -38,15 +39,21 @@ void ResourceManager::DestroyInstance() {
 	Clear(_modelResources);
 	Clear(_shaderResources);
 	Clear(_textureResources);
+	Clear(_materialResources); 
 
 	Clear(_models);
 	Clear(_textures);
 	Clear(_shaders);
+	Clear(_materials);
 
 	if (_terrainModel) {
 
 		delete _terrainModel->GetModelResource();
 		delete _terrainModel;
+	}
+	if (_axisModel) {
+		delete _axisModel->GetModelResource();
+		delete _axisModel;
 	}
 
 	if (_spInstance)
@@ -406,7 +413,6 @@ Material* ResourceManager::GetMaterial(unsigned int id) {
 	return LoadMaterial(id);
 }
 
-
 Model* ResourceManager::GetTerrainModel() {
 
 	return _terrainModel;
@@ -419,6 +425,15 @@ Model* ResourceManager::GetTerrainModel(int sizeWidht, int sizeHeight, int cellC
 		_terrainModel->LoadFlatTerrain(sizeWidht, sizeHeight, cellCountWidth, cellCountHeight);
 	}
 	return _terrainModel;
+}
+
+Model* ResourceManager::GetSystemAxisModel() {
+
+	if (_axisModel == nullptr) {
+		_axisModel = new Model();
+		_axisModel->LoadSystemAxis();
+	}
+	return _axisModel;
 }
 
 Model* ResourceManager::LoadModel(unsigned int id) {
@@ -477,3 +492,5 @@ Material* ResourceManager::LoadMaterial(unsigned int id) {
 	_materials.insert({ id,material });
 	return material;
 }
+
+

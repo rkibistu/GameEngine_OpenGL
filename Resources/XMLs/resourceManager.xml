@@ -20,6 +20,9 @@
 			<model id="1004">
 				<file>fire.nfg</file>
 			</model>
+			<model id="1005">
+				<file>test.nfg</file>
+			</model>
 		</folder>
 
 		<folder path="Res/Models2/">

@@ -15,10 +15,14 @@ void SceneManager::DestroyInstance() {
 
 	//free memory for camera and for sceneobjects
 	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
-		if(it->second)
+		if (it->second)
 			delete it->second;
 	}
 	for (auto it = _cameras.begin(); it != _cameras.end(); it++) {
+		if (it->second)
+			delete it->second;
+	}
+	for (auto it = _lightObjects.begin(); it != _lightObjects.end(); it++) {
 		if (it->second)
 			delete it->second;
 	}
@@ -34,6 +38,7 @@ void SceneManager::Init(ESContext* esContext) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	_xmlParser.Init("Resources/XMLs/sceneManager.xml");
+	_xmlParser.ReadDefaultSettings(_defaultSettings);
 	_xmlParser.ReadLights(_lightObjects);
 	_xmlParser.ReadObjects(_sceneObjects);
 	_xmlParser.ReadCameras(_cameras, &_activeCamera);
@@ -45,6 +50,8 @@ void SceneManager::Init(ESContext* esContext) {
 
 	glClearColor(_backgroundColor.x, _backgroundColor.y, _backgroundColor.z, 0.0f);
 	glEnable(GL_DEPTH_TEST);
+
+	CreateDebugAxisObject();
 }
 
 void SceneManager::Update(ESContext* esContext, float deltaTime) {
@@ -63,9 +70,25 @@ void SceneManager::Draw(ESContext* esContext) {
 
 	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
 
-		it->second->Draw(_activeCamera);
+		if (it->second->GetDrawWired())
+			it->second->DrawWired(_activeCamera);
+		else
+			it->second->Draw(_activeCamera);
 	}
 
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 
+}
+
+void SceneManager::CreateDebugAxisObject() {
+
+	ResourceManager& resourceManager = ResourceManager::GetInstance();
+
+	SceneObject* axisObject = new SceneObject();
+	axisObject->SetModel(resourceManager.GetSystemAxisModel());
+	axisObject->SetDrawWired(true);
+	axisObject->SetName("axis");
+
+
+	_sceneObjects.insert({ 999,axisObject });
 }

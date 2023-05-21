@@ -114,7 +114,6 @@
 		</comment>
 
 		<object id="1">
-			
 			<model>1</model>
 			<shader>23</shader>
 			<type>normal</type>
@@ -517,6 +516,12 @@
 			<!-- <type>point</type> -->
 		<!-- </light> -->
 	</lights>
+
+	<defaultSetting>
+		<debugShader>20</debugShader>
+		<shader>20</shader>
+		<material>300</material>
+	</defaultSetting>
 
 	<debugSettings>
 		<objectAxes>

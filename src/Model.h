@@ -28,6 +28,7 @@ public:
 
 	int Load(ModelResource* modelResurce);
 	int LoadFlatTerrain(int sizeWidht, int sizeHeight, int cellCountWidth, int cellCountHeight);
+	int LoadSystemAxis();
 	void BindFilled();
 	void BindWired();
 	void Unbind();

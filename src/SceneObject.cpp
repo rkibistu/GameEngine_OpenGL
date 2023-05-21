@@ -4,9 +4,26 @@
 #include "Vertex.h"
 #include "Input.h"
 #include "SceneManager.h"
+#include "ResourceManager.h"
+#include "DebugObject.h"
 
-SceneObject::SceneObject()
-	: _model(nullptr), _shader(nullptr) {
+SceneObject::SceneObject(bool isDebugObj){
+
+	SceneManager& sceneManager = SceneManager::GetInstance();
+	SetShader(sceneManager.GetDefaultShader());
+	SetMaterial(sceneManager.GetDefaultMaterial());
+
+	_position = Vector3(0.0f, 0.0f, 0.0f);
+	_rotation = Vector3(0.0f, 0.0f, 0.0f);
+	_scale = Vector3(1.0f, 1.0f, 1.0f);
+
+	_parent = nullptr;
+
+	_drawWired = false;
+	_name = "sceneObject";
+
+	if(!isDebugObj)
+		CreateDebugObjects();
 }
 
 SceneObject::~SceneObject() {
@@ -14,6 +31,11 @@ SceneObject::~SceneObject() {
 	//i dont want to free the pointers here, because they are create in Resource manager
 	/// they can be used later or by more SceneObjects
 	//	they will be destroyd bu ResourceManager when it is the case
+
+	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
+		
+		delete it->second;
+	}
 }
 
 void SceneObject::Update(float deltaTime) {
@@ -29,6 +51,7 @@ void SceneObject::Update(float deltaTime) {
 		_rotation.y += 0.25f;
 	}
 
+	UpdateDebugObjects(deltaTime);
 }
 
 void SceneObject::Draw(Camera* camera) {
@@ -53,6 +76,8 @@ void SceneObject::Draw(Camera* camera) {
 	glDrawElements(GL_TRIANGLES, _model->GetIndicesFilledCount(), GL_UNSIGNED_SHORT, nullptr);
 
 	_model->Unbind();
+
+	DrawDebugObjects(camera);
 }
 void SceneObject::DrawWired(Camera* camera) {
 
@@ -60,7 +85,6 @@ void SceneObject::DrawWired(Camera* camera) {
 		return;
 	if (_shader == nullptr)
 		return;
-
 
 	_shader->Bind();
 	_model->BindWired();
@@ -76,6 +100,8 @@ void SceneObject::DrawWired(Camera* camera) {
 	glDrawElements(GL_LINES, _model->GetIndicesWiredCount(), GL_UNSIGNED_SHORT, nullptr);
 
 	_model->Unbind();
+
+	DrawDebugObjects(camera);
 }
 
 void SceneObject::SetModel(Model* model) {
@@ -140,6 +166,10 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	Matrix model = GetModelMatrix();
 	Matrix mvp = model * camera->GetMVP();
 	_shader->SetUniformMatrix4fv("u_mvp", mvp);
+
+	if (_name == "test")
+		return;
+
 	_shader->SetUniform3f("u_cameraPos", camera->GetPosition());
 	_shader->SetUniformMatrix4fv("u_model", model);
 
@@ -149,7 +179,7 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	_shader->SetUniform1f("u_factorReflect", _material->GetFactorReflexieTextura());
 
 	//fog
-	Fog fog = sceneManager.GetFog();
+	Fog fog = sceneManager.GetFog(); 
 	_shader->SetUniform1f("u_fogNear", fog.NearPlane);
 	_shader->SetUniform1f("u_fogFar", fog.FarPlane);
 	_shader->SetUniform3f("u_fogColor", fog.Color);
@@ -180,7 +210,6 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 		lightUniform = lightUniformBase + "spotAngle";
 		_shader->SetUniform1f(lightUniform, 0.7f);
 
-
 		index++;
 	}
 	_shader->SetUniform1i("u_lightsCount", lights.size());
@@ -201,4 +230,33 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 void SceneObject::SetUniformsParticular(Camera* camera) {
 
 	_shader->SetUniform1i("u_Texture", 0);
+}
+
+void SceneObject::CreateDebugObjects() {
+
+	ResourceManager& resourceManager = ResourceManager::GetInstance();
+
+	SceneObject* axisObject = new SceneObject(true);
+	axisObject->SetModel(resourceManager.GetSystemAxisModel());
+	axisObject->SetDrawWired(true);
+	axisObject->SetName("axis");
+	axisObject->SetScale(10.0f, 10.0f, 10.0f);
+	axisObject->SetPosition(_position);
+
+	_debugObjects.insert({ _debugObjects.size() + 1,axisObject});
+}
+
+void SceneObject::UpdateDebugObjects(float deltaTime) {
+
+	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
+
+		it->second->SetPosition(_position);
+	}
+}
+void SceneObject::DrawDebugObjects(Camera* camera) {
+
+	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
+
+		it->second->DrawWired(camera);
+	}
 }

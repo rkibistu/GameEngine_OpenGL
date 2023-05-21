@@ -42,7 +42,7 @@ int Model::Load(ModelResource* modelResurce) {
 	_modelResource->Indices = indices;
 	_modelResource->WiredIndices = wiredIndices;
 
-	FillVerticesColor();
+	//FillVerticesColor();
 	
 	//bind and load vertices buffer
 	glBindBuffer(GL_ARRAY_BUFFER, _vboid);
@@ -78,7 +78,76 @@ int Model::LoadFlatTerrain(int sizeWidht, int sizeHeight, int cellCountWidth, in
 	_modelResource->Indices = indices;
 	_modelResource->WiredIndices = wiredIndices;
 
-	FillVerticesColor();
+	//FillVerticesColor();
+
+	//bind and load vertices buffer
+	glBindBuffer(GL_ARRAY_BUFFER, _vboid);
+	glBufferData(GL_ARRAY_BUFFER, _modelResource->Vertices.size() * sizeof(Vertex), _modelResource->Vertices.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	//bind and load indices buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _iboid);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _modelResource->Indices.size() * sizeof(GLushort), _modelResource->Indices.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	//bind and load indices buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _iboidWired);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _modelResource->WiredIndices.size() * sizeof(GLushort), _modelResource->WiredIndices.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	return MY_SUCCES_CODE;
+}
+
+int Model::LoadSystemAxis() {
+
+	int res;
+	std::vector<Vertex> vertices;
+	std::vector<GLushort> indices;
+	std::vector<GLushort> wiredIndices;
+
+	Vertex vertex;
+
+	//OZ
+	vertex.pos = Vector3(0.0, 0.0, 0.0);
+	vertex.color = Vector3(0.0, 0.0, 1.0);
+	vertices.push_back(vertex);
+	vertex.pos = Vector3(0.0, 0.0, 1.0);
+	vertex.color = Vector3(0.0, 0.0, 1.0);
+	vertices.push_back(vertex);
+
+
+	//OY
+	vertex.pos = Vector3(0.0, 0.0, 0.0);
+	vertex.color = Vector3(0.0, 1.0, 0.0);
+	vertices.push_back(vertex);
+	vertex.pos = Vector3(0.0, 1.0, 0.0);
+	vertex.color = Vector3(0.0, 1.0, 0.0);
+	vertices.push_back(vertex);
+
+	//OX
+	vertex.pos = Vector3(0.0, 0.0, 0.0);
+	vertex.color = Vector3(1.0, 0.0, 0.0);
+	vertices.push_back(vertex);
+	vertex.pos = Vector3(1.0, 0.0, 0.0);
+	vertex.color = Vector3(1.0, 0.0, 0.0);
+	vertices.push_back(vertex);
+
+	//indices
+	wiredIndices.push_back(0);
+	wiredIndices.push_back(1);
+	wiredIndices.push_back(2);
+	wiredIndices.push_back(3);
+	wiredIndices.push_back(4);
+	wiredIndices.push_back(5);
+
+	indices.push_back(0);
+	indices.push_back(1);
+	indices.push_back(3);
+
+	_modelResource = new ModelResource();
+	_modelResource->Vertices = vertices;
+	_modelResource->Indices = indices;
+	_modelResource->WiredIndices = wiredIndices;
 
 	//bind and load vertices buffer
 	glBindBuffer(GL_ARRAY_BUFFER, _vboid);

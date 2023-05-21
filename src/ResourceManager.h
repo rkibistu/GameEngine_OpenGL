@@ -49,6 +49,8 @@ public:
 	//return terrain if exists or create one with given dimension
 	Model* GetTerrainModel(int sizeWidht, int sizeHeight, int cellCountWidth, int cellCountHeight);
 	
+	Model* GetSystemAxisModel();
+
 	//return nullptr if terrain is not loaded
 	Model* GetTerrainModel();
 
@@ -95,9 +97,12 @@ private:
 	std::unordered_map<unsigned int, Material*> _materials;
 
 	Model* _terrainModel = nullptr;
-public:
-	Vector2 _terrainSize;
-	Vector2 _terrainCountCells;
+	Model* _axisModel = nullptr;
+
+	//defaultValues fot empty scneObjects
+	Shader* _defaultShader;
+	Shader* _debugShader;
+	Shader* _defaultMaterial;
 };
 
 

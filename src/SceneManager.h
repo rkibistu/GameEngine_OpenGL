@@ -9,6 +9,12 @@
 #include <unordered_map>
 #include <map>
 
+struct DefaultSettings {
+
+	Shader* DefaultShader;
+	Shader* DebugShader;
+	Material* DefaultMaterial;
+};
 
 class SceneManager {
 
@@ -29,9 +35,12 @@ public:
 
 	inline LightObject* GetLight(unsigned int id) { return _lightObjects[id]; }
 	inline std::unordered_map<unsigned int, LightObject*>& GetLights() { return _lightObjects; }
+
+	inline Material* GetDefaultMaterial() { return _defaultSettings.DefaultMaterial; }
+	inline Shader* GetDefaultShader() { return _defaultSettings.DefaultShader; }
 private:
 
-	
+	void CreateDebugAxisObject();
 
 private:
 	static SceneManager* _spInstance;
@@ -48,6 +57,8 @@ private:
 	Vector3 _backgroundColor;
 	Fog _fog;
 	AmbientalLight _ambientalLight;
+
+	DefaultSettings _defaultSettings;
 
 	SceneManagerXmlParser _xmlParser;
 };

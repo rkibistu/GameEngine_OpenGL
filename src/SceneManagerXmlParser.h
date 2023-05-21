@@ -12,7 +12,7 @@
 #include <unordered_map>
 #include <map>
 
-
+struct DefaultSettings;
 
 #define OBJECTS_ROOT "objects"
 #define CONTROLS_ROOT "controls"
@@ -24,6 +24,7 @@
 #define CONTROLS_ROOT_NODE "controls"
 #define FOG_ROOT_NODE "fog"
 #define LIGHTS_ROOT "lights"
+#define DEFAULT_SETTINGS_ROOT "defaultSetting"
 
 #define COMMENT_NODE "comment"
 #define OBJECT_NODE "object"
@@ -71,8 +72,8 @@
 #define AMBIENTAL_LIGHT_NODE "ambientalLight"
 #define RATIO_NODE "ratio"
 #define ASSOCIATED_OBJECTED_NODE "associatedObject"
+#define DEBUG_SHADER_NODE "debugShader"
 #define ID_ATTRIBUTE "id"
-
 
 
 struct SceneObjectXmlFormat;
@@ -84,6 +85,7 @@ public:
 	int Init(std::string filepath);
 	void Destroy();
 
+	int ReadDefaultSettings(DefaultSettings& defaultSettings);
 	int ReadObjects(std::map<unsigned int, SceneObject*>& sceneObjects);
 	int ReadLights(std::unordered_map<unsigned int, LightObject*>& lightObjects);
 	int ReadCameras(std::unordered_map<unsigned int, Camera*>& camers, Camera** activeCamera);

@@ -4,6 +4,7 @@
 #include "Skybox.h"
 #include "Fire.h"
 #include "Defines.h"
+#include "SceneManager.h"
 
 #include <fstream>
 #include <sstream>
@@ -41,6 +42,31 @@ int SceneManagerXmlParser::Init(std::string filepath) {
 void SceneManagerXmlParser::Destroy() {
 
 	delete _doc;
+}
+
+// read default settings, this are going to be used where is not specified a specific avalue
+int SceneManagerXmlParser::ReadDefaultSettings(DefaultSettings& defaultSettings) {
+
+	rapidxml::xml_node<>* settingsRoot = _xmlRoot->first_node(DEFAULT_SETTINGS_ROOT);
+	int value;
+	ResourceManager& resourceManager = ResourceManager::GetInstance();
+
+	for (rapidxml::xml_node<>* node = settingsRoot->first_node(); node; node = node->next_sibling()) {
+		if (strcmp(node->name(), COMMENT_NODE) == 0)
+			continue;
+
+		if (ReadInt(node, SHADER_NODE, value)) {
+			defaultSettings.DefaultShader = resourceManager.GetShader(value);
+		}
+		if (ReadInt(node, DEBUG_SHADER_NODE, value)) {
+			defaultSettings.DebugShader = resourceManager.GetShader(value);
+		}
+		if (ReadInt(node, MATERIAL_NODE, value)) {
+			defaultSettings.DefaultMaterial = resourceManager.GetMaterial(value);
+		}
+	}
+
+	return MY_SUCCES_CODE;
 }
 
 //citest toate obiectele din cml aflate dub nodul <objects>
@@ -446,6 +472,7 @@ bool SceneManagerXmlParser::ReadInt(rapidxml::xml_node<>* node, std::string node
 SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) {
 
 	ResourceManager& resourceManager = ResourceManager::GetInstance();
+	SceneManager& sceneManager = SceneManager::GetInstance();
 
 
 	SceneObject* sceneObject = nullptr;
@@ -489,7 +516,8 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 		sceneObject->SetMaterial(resourceManager.GetMaterial(DEFAULT_MATERIAL_ID));
 	}
 	else {
-		sceneObject->SetMaterial(resourceManager.GetMaterial(atoi(obj.materialId.c_str())));
+		//sceneObject->SetMaterial(resourceManager.GetMaterial(atoi(obj.materialId.c_str())));
+		sceneObject->SetMaterial(sceneManager.GetDefaultMaterial());
 	}
 
 	sceneObject->SetPosition(obj.position);
