@@ -19,8 +19,8 @@ public:
 
 	virtual void Update(float deltaTime);
 
-	void Draw(Camera* camera);
-	void DrawWired(Camera* camera);
+	virtual void Draw(Camera* camera);
+	void DrawDebug(Camera* camera);
 
 	void SetModel(Model* model);
 	void SetShader(Shader* shader);
@@ -37,6 +37,8 @@ public:
 	inline void SetPosition(float v0, float v1, float v2) { _position.x = v0; _position.y = v1;_position.z = v2; }
 	inline Vector3 GetPosition() { return _position; }
 
+	inline Vector3 GetRotation() { return _rotation; }
+
 	inline void SetRotation(Vector3 rotation) { _rotation = rotation; }
 	inline void SetScale(Vector3 scale) { _scale = scale; }
 	inline void SetScale(float v0, float v1, float v2) { _scale.x = v0, _scale.y = v1, _scale.z = v2; }
@@ -45,6 +47,8 @@ public:
 	
 	inline void SetDrawWired(bool state) { _drawWired = state; }
 	inline bool GetDrawWired() { return _drawWired; }
+	
+	inline void SetParent(SceneObject* parent) { _parent = parent; }
 protected:
 
 	void FollowCamera();
@@ -53,6 +57,7 @@ protected:
 	
 	void SetUniformsCommon(Camera* camera);
 	virtual void SetUniformsParticular(Camera* camera);
+	void SetUniformsCommonDebug(Camera* camera);
 
 	virtual void CreateDebugObjects();
 
@@ -73,7 +78,7 @@ protected:
 
 	Model* _model;
 	Shader* _shader;
-	Shader* _debugShader;
+	Shader* _debugShader; //used in wiredMode
 	std::vector<Texture*> _textureResources;
 	Material* _material;
 

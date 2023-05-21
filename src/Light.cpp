@@ -6,6 +6,8 @@ LightObject::LightObject()
 
 	_diffuseColor = Vector3();
 	_specularColor = Vector3();
+
+	//create more debug objects
 }
 
 LightObject::LightObject(Type type, Vector3 diffuseColor, Vector3 specularColor)

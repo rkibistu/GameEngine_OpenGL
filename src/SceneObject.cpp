@@ -5,7 +5,7 @@
 #include "Input.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
-#include "DebugObject.h"
+#include "DebugAxisObject.h"
 
 SceneObject::SceneObject(bool isDebugObj){
 
@@ -62,7 +62,6 @@ void SceneObject::Draw(Camera* camera) {
 	if (_shader == nullptr)
 		return;
 
-
 	_model->BindFilled();
 	_shader->Bind();
 	for (unsigned int i = 0; i < _textureResources.size(); i++) {
@@ -77,11 +76,9 @@ void SceneObject::Draw(Camera* camera) {
 	glDrawElements(GL_TRIANGLES, _model->GetIndicesFilledCount(), GL_UNSIGNED_SHORT, nullptr);
 
 	_model->Unbind();
-
-	DrawDebugObjects(camera);
 }
-void SceneObject::DrawWired(Camera* camera) {
-
+void SceneObject::DrawDebug(Camera* camera) {
+	//Draw wired + call draw for all debug objects
 	if (_model == nullptr)
 		return;
 	if (_shader == nullptr)
@@ -89,13 +86,10 @@ void SceneObject::DrawWired(Camera* camera) {
 
 	_debugShader->Bind();
 	_model->BindWired();
-	for (unsigned int i = 0; i < _textureResources.size(); i++) {
-		_textureResources[i]->Bind(i);
-	}
 
 	_shader->SetAttributes();
 
-	SetUniformsCommon(camera);
+	SetUniformsCommonDebug(camera);
 	SetUniformsParticular(camera);
 
 	glDrawElements(GL_LINES, _model->GetIndicesWiredCount(), GL_UNSIGNED_SHORT, nullptr);
@@ -168,11 +162,10 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	Matrix mvp = model * camera->GetMVP();
 	_shader->SetUniformMatrix4fv("u_mvp", mvp);
 
-	if (_name == "test")
-		return;
-
 	_shader->SetUniform3f("u_cameraPos", camera->GetPosition());
 	_shader->SetUniformMatrix4fv("u_model", model);
+
+	_shader->SetUniform1i("u_Texture", 0);
 
 	// skybox
 	_shader->SetUniform1i("u_TextureCube", 1);
@@ -230,19 +223,22 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 }
 void SceneObject::SetUniformsParticular(Camera* camera) {
 
-	_shader->SetUniform1i("u_Texture", 0);
+	
+}
+void SceneObject::SetUniformsCommonDebug(Camera* camera) {
+
+	SceneManager& sceneManager = SceneManager::GetInstance();
+
+	//mvp + camera
+	Matrix model = GetModelMatrix();
+	Matrix mvp = model * camera->GetMVP();
+	_shader->SetUniformMatrix4fv("u_mvp", mvp);
 }
 
 void SceneObject::CreateDebugObjects() {
 
-	ResourceManager& resourceManager = ResourceManager::GetInstance();
-
-	SceneObject* axisObject = new SceneObject(true);
-	axisObject->SetModel(resourceManager.GetSystemAxisModel());
-	axisObject->SetDrawWired(true);
-	axisObject->SetName("axis");
-	axisObject->SetScale(10.0f, 10.0f, 10.0f);
-	axisObject->SetPosition(_position);
+	SceneObject* axisObject = new DebugAxisObject();
+	axisObject->SetParent(this);
 
 	_debugObjects.insert({ _debugObjects.size() + 1,axisObject});
 }
@@ -251,13 +247,13 @@ void SceneObject::UpdateDebugObjects(float deltaTime) {
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
-		it->second->SetPosition(_position);
+		it->second->Update(deltaTime);
 	}
 }
 void SceneObject::DrawDebugObjects(Camera* camera) {
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
-		it->second->DrawWired(camera);
+		it->second->Draw(camera);
 	}
 }

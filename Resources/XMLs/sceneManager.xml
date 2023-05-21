@@ -405,7 +405,7 @@
 			<rotation>
 				<x>0</x>
 				<y>15</y>
-				<z>0</z>
+				<z>-200</z>
 			</rotation>
 			<scale>
 				<x>3.0</x>
@@ -425,7 +425,7 @@
 			<position>
 				<x>-20</x>
 				<y>50</y>
-				<z>0</z>
+				<z>200</z>
 			</position>
 			<rotation>
 				<x>0</x>
@@ -448,7 +448,7 @@
 			<name>lightedObject</name>
 			<position>
 				<x>0</x>
-				<y>0</y>
+				<y>50</y>
 				<z>200</z>
 			</position>
 			<rotation>
@@ -517,7 +517,6 @@
 
 	<defaultSetting>
 		<debugShader>20</debugShader>
-		<wiredShader>27</wiredShader>
 		<shader>20</shader>
 		<material>300</material>
 	</defaultSetting>

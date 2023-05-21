@@ -5,5 +5,7 @@
 class DebugObject : public SceneObject {
 
 public:
-	virtual void CreateDebugObjects() override;
+	DebugObject();
+
+	virtual void Update(float deltaTime) override;
 };

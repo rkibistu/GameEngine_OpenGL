@@ -76,7 +76,7 @@ void SceneManager::Draw(ESContext* esContext) {
 
 
 		if (_debugMode)
-			it->second->DrawWired(_activeCamera);
+			it->second->DrawDebug(_activeCamera);
 		else
 			it->second->Draw(_activeCamera);
 	}
