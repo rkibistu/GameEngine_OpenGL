@@ -29,6 +29,7 @@ public:
 	int Load(ModelResource* modelResurce);
 	int LoadFlatTerrain(int sizeWidht, int sizeHeight, int cellCountWidth, int cellCountHeight);
 	int LoadSystemAxis();
+	int LoadNormalModel(std::vector<Vertex>& vertices);
 	void BindFilled();
 	void BindWired();
 	void Unbind();
@@ -39,6 +40,7 @@ public:
 private:
 
 	void CreateWiredindicesBuffer(std::vector<GLushort>& indices, std::vector<GLushort>& wiredIndices);
+
 
 	void FillVerticesColor();
 

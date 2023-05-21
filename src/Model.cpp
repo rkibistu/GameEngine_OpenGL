@@ -37,6 +37,7 @@ int Model::Load(ModelResource* modelResurce) {
 		return MY_ERROR_CODE;
 	}
 
+
 	CreateWiredindicesBuffer(indices, wiredIndices); 
 	_modelResource->Vertices = vertices;
 	_modelResource->Indices = indices;
@@ -167,6 +168,55 @@ int Model::LoadSystemAxis() {
 	return MY_SUCCES_CODE;
 }
 
+int Model::LoadNormalModel(std::vector<Vertex>& vertices) {
+
+	std::vector<Vertex> normalVerteces;
+	std::vector<unsigned short> normalIndices;
+
+	int lineLength = 10;
+
+	Vector3 startPoint;
+	Vector3 endPoint;
+	Vertex temp;
+	int index = 0;
+	for (auto it = vertices.begin(); it != vertices.end(); it++) {
+
+		startPoint = it->pos;
+		endPoint = startPoint + it->norm * lineLength;
+
+		temp.pos = startPoint;
+		temp.color = Vector3(1.0f, 1.0f, 0.0f);
+		normalVerteces.push_back(temp);
+		normalIndices.push_back(index++);
+		
+		temp.pos = endPoint;
+		temp.color = Vector3(1.0f, 1.0f, 0.0f);
+		normalVerteces.push_back(temp);
+		normalIndices.push_back(index++);
+	}
+
+	_modelResource = new ModelResource();
+	_modelResource->Vertices = normalVerteces;
+	_modelResource->WiredIndices = normalIndices;
+
+	//bind and load vertices buffer
+	glBindBuffer(GL_ARRAY_BUFFER, _vboid);
+	glBufferData(GL_ARRAY_BUFFER, _modelResource->Vertices.size() * sizeof(Vertex), _modelResource->Vertices.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	//bind and load indices buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _iboid);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _modelResource->Indices.size() * sizeof(GLushort), _modelResource->Indices.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	//bind and load indices buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _iboidWired);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _modelResource->WiredIndices.size() * sizeof(GLushort), _modelResource->WiredIndices.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	return MY_SUCCES_CODE;
+}
+
 // IMPORTANT: numBerticesWidth * numVerticesDepth sa nu fie mai mare decat range-ul pt unsigned short!!
 void Model::GenerateFlatTerrain(float width, float depth, int numCellsWidth, int numCellsDepth, std::vector<Vertex>& vertices, std::vector<GLushort>& indices)
 {
@@ -194,7 +244,7 @@ void Model::GenerateFlatTerrain(float width, float depth, int numCellsWidth, int
 			temp.pos.y = y;
 			temp.pos.z = z;
 
-			temp.color = Vector3(1.0f, 0.0f, 1.0f);
+			temp.color = Vector3(0.5f, 0.0f, 0.5f);
 			temp.norm = Vector3(0.0f, 1.0f, 0.0f);
 			
 			//asta e textura mare, ai nevoie pentru harta de culori
@@ -268,6 +318,7 @@ void Model::CreateWiredindicesBuffer(std::vector<GLushort>& indices, std::vector
 		wiredIndices.push_back(index1);
 	}
 }
+
 
 void Model::FillVerticesColor() {
 

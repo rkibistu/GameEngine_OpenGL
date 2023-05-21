@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "DebugAxisObject.h"
+#include "DebugNormalsObject.h"
 
 SceneObject::SceneObject(bool isDebugObj){
 
@@ -101,6 +102,10 @@ void SceneObject::DrawDebug(Camera* camera) {
 void SceneObject::SetModel(Model* model) {
 
 	_model = model;
+	//create normal mode
+	SceneObject* normalsObject = new DebugNormalsObject(_model->GetModelResource()->Vertices);
+	normalsObject->SetParent(this);
+	_debugObjects.insert({ _debugObjects.size() + 1,normalsObject });
 }
 
 void SceneObject::SetShader(Shader* shader) {
@@ -238,8 +243,8 @@ void SceneObject::CreateDebugObjects() {
 	//create debug objects specific to all scene objects
 	SceneObject* axisObject = new DebugAxisObject();
 	axisObject->SetParent(this);
-
 	_debugObjects.insert({ _debugObjects.size() + 1,axisObject});
+
 }
 
 void SceneObject::UpdateDebugObjects(float deltaTime) {

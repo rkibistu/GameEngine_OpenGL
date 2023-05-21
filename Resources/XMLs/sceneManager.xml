@@ -400,7 +400,7 @@
 			<position>
 				<x>0</x>
 				<y>0</y>
-				<z>-200</z>
+				<z>0</z>
 			</position>
 			<rotation>
 				<x>0</x>
@@ -445,7 +445,7 @@
 				<texture id="14"/>
 			</textures>
 			<type>normal</type>
-			<name>lightedObject</name>
+			<name>lightedObject2</name>
 			<position>
 				<x>0</x>
 				<y>50</y>

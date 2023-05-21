@@ -40,8 +40,11 @@ public:
 	inline Vector3 GetRotation() { return _rotation; }
 
 	inline void SetRotation(Vector3 rotation) { _rotation = rotation; }
+
 	inline void SetScale(Vector3 scale) { _scale = scale; }
 	inline void SetScale(float v0, float v1, float v2) { _scale.x = v0, _scale.y = v1, _scale.z = v2; }
+	inline Vector3 GetScale() { return _scale; }
+	
 	inline void SetFollowCameraDirections(Vector3 directions) { _followCameraDirections = directions; }
 	inline void SetFollowCameraOffset(Vector3 offset) { _followCameraOffset = offset; }
 
