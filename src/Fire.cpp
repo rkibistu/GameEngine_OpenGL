@@ -13,6 +13,7 @@ void Fire::Update(float deltaTime) {
 	_time += deltaTime / 1.5f;
 	if (_time > 1.0f)
 		_time -= 1.0f;
+
 	UpdateDebugObjects(deltaTime);
 }
 
