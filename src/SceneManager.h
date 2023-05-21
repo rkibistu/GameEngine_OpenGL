@@ -38,6 +38,9 @@ public:
 
 	inline Material* GetDefaultMaterial() { return _defaultSettings.DefaultMaterial; }
 	inline Shader* GetDefaultShader() { return _defaultSettings.DefaultShader; }
+
+	inline void SetDebug(bool active) { _debugMode = active; }
+	inline bool GetDebug() { return  _debugMode; }
 private:
 
 	void CreateDebugAxisObject();
@@ -54,10 +57,11 @@ private:
 	std::unordered_map<unsigned int, Camera*> _cameras;
 	Camera* _activeCamera;
 
+	bool _debugMode = false;
+
 	Vector3 _backgroundColor;
 	Fog _fog;
 	AmbientalLight _ambientalLight;
-
 	DefaultSettings _defaultSettings;
 
 	SceneManagerXmlParser _xmlParser;

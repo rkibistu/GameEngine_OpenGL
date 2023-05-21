@@ -56,6 +56,10 @@ void SceneManager::Init(ESContext* esContext) {
 
 void SceneManager::Update(ESContext* esContext, float deltaTime) {
 
+	if (Input::GetKeyDown(KeyCode::P)) {
+		_debugMode = !_debugMode;
+	}
+
 	_activeCamera->Update(deltaTime);
 	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
 
@@ -70,7 +74,8 @@ void SceneManager::Draw(ESContext* esContext) {
 
 	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
 
-		if (it->second->GetDrawWired())
+
+		if (_debugMode)
 			it->second->DrawWired(_activeCamera);
 		else
 			it->second->Draw(_activeCamera);
