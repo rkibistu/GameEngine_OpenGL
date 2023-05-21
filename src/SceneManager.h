@@ -38,6 +38,7 @@ public:
 
 	inline Material* GetDefaultMaterial() { return _defaultSettings.DefaultMaterial; }
 	inline Shader* GetDefaultShader() { return _defaultSettings.DefaultShader; }
+	inline Shader* GetDebugShader() { return _defaultSettings.DebugShader; }
 
 	inline void SetDebug(bool active) { _debugMode = active; }
 	inline bool GetDebug() { return  _debugMode; }

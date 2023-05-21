@@ -73,6 +73,7 @@ struct DefaultSettings;
 #define RATIO_NODE "ratio"
 #define ASSOCIATED_OBJECTED_NODE "associatedObject"
 #define DEBUG_SHADER_NODE "debugShader"
+#define WIRED_SHADER_NODE "wiredShader"
 #define ID_ATTRIBUTE "id"
 
 

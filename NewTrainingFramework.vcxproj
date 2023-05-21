@@ -229,6 +229,8 @@
     <None Include="pcviewer_es2.cfg" />
     <None Include="Resources\Shaders\BasicColorShaderFS.frag" />
     <None Include="Resources\Shaders\BasicColorShaderVS.vert" />
+    <None Include="Resources\Shaders\Debug\SimpleColorShaderFS.frag" />
+    <None Include="Resources\Shaders\Debug\SimpleColorShaderVS.vert" />
     <None Include="Resources\Shaders\FireShaderFS.frag" />
     <None Include="Resources\Shaders\FireShaderVS.vert" />
     <None Include="Resources\Shaders\FogShaderFS.frag" />

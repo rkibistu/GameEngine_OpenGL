@@ -73,6 +73,7 @@ protected:
 
 	Model* _model;
 	Shader* _shader;
+	Shader* _debugShader;
 	std::vector<Texture*> _textureResources;
 	Material* _material;
 

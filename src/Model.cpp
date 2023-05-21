@@ -37,12 +37,12 @@ int Model::Load(ModelResource* modelResurce) {
 		return MY_ERROR_CODE;
 	}
 
-	CreateWiredindicesBuffer(indices, wiredIndices);
+	CreateWiredindicesBuffer(indices, wiredIndices); 
 	_modelResource->Vertices = vertices;
 	_modelResource->Indices = indices;
 	_modelResource->WiredIndices = wiredIndices;
 
-	//FillVerticesColor();
+	FillVerticesColor();
 	
 	//bind and load vertices buffer
 	glBindBuffer(GL_ARRAY_BUFFER, _vboid);
@@ -248,7 +248,7 @@ void Model::Unbind() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
-
+ 
 // PRIVATE
 
 void Model::CreateWiredindicesBuffer(std::vector<GLushort>& indices, std::vector<GLushort>& wiredIndices) {
@@ -271,10 +271,15 @@ void Model::CreateWiredindicesBuffer(std::vector<GLushort>& indices, std::vector
 
 void Model::FillVerticesColor() {
 
+	Vector3 color;
 	for (unsigned int i = 0; i < _modelResource->Vertices.size(); i++) {
 
-		_modelResource->Vertices[i].color.x = 1.0f;
-		_modelResource->Vertices[i].color.y = 1.0f;
-		_modelResource->Vertices[i].color.z = 1.0f;
+		color = _modelResource->Vertices[i].color;
+		if (color.x == 0 && color.y == 0 && color.z == 0) {
+			_modelResource->Vertices[i].color.x = 1.0f;
+			_modelResource->Vertices[i].color.y = 1.0f;
+			_modelResource->Vertices[i].color.z = 1.0f;
+		}
+		
 	}
 }

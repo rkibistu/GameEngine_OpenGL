@@ -12,6 +12,7 @@ SceneObject::SceneObject(bool isDebugObj){
 	SceneManager& sceneManager = SceneManager::GetInstance();
 	SetShader(sceneManager.GetDefaultShader());
 	SetMaterial(sceneManager.GetDefaultMaterial());
+	_debugShader = sceneManager.GetDebugShader();
 
 	_position = Vector3(0.0f, 0.0f, 0.0f);
 	_rotation = Vector3(0.0f, 0.0f, 0.0f);
@@ -86,7 +87,7 @@ void SceneObject::DrawWired(Camera* camera) {
 	if (_shader == nullptr)
 		return;
 
-	_shader->Bind();
+	_debugShader->Bind();
 	_model->BindWired();
 	for (unsigned int i = 0; i < _textureResources.size(); i++) {
 		_textureResources[i]->Bind(i);

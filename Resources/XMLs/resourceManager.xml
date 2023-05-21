@@ -81,6 +81,12 @@
 				<fs>LightedShaderFS.frag</fs>
 			</shader>
 		</folder>
+		<folder path="Resources/Shaders/Debug/">
+			<shader id="27">
+				<vs>SimpleColorShaderVS.vert</vs>
+				<fs>SimpleColorShaderFS.frag</fs>
+			</shader>
+		</folder>
 	</shaders>
 	<textures>
 		<folder path="Resources/Textures/">
@@ -189,4 +195,5 @@
 			</material>
 		</folder>
 	</materials>
+	
 </resourceManager>

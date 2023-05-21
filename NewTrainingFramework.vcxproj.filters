@@ -213,6 +213,8 @@
     <None Include="Resources\Shaders\Lights\LightedShaderVS.vert" />
     <None Include="Resources\Shaders\Lights\LightSourceShaderFS.frag" />
     <None Include="Resources\Shaders\Lights\LightSourceShaderVS.vert" />
+    <None Include="Resources\Shaders\Debug\SimpleColorShaderVS.vert" />
+    <None Include="Resources\Shaders\Debug\SimpleColorShaderFS.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />
