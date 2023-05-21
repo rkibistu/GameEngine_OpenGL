@@ -51,7 +51,6 @@ void SceneObject::Update(float deltaTime) {
 
 		_rotation.y += 0.25f;
 	}
-
 	UpdateDebugObjects(deltaTime);
 }
 
@@ -87,7 +86,7 @@ void SceneObject::DrawDebug(Camera* camera) {
 	_debugShader->Bind();
 	_model->BindWired();
 
-	_shader->SetAttributes();
+	_debugShader->SetAttributes();
 
 	SetUniformsCommonDebug(camera);
 	SetUniformsParticular(camera);
@@ -236,7 +235,7 @@ void SceneObject::SetUniformsCommonDebug(Camera* camera) {
 }
 
 void SceneObject::CreateDebugObjects() {
-
+	//create debug objects specific to all scene objects
 	SceneObject* axisObject = new DebugAxisObject();
 	axisObject->SetParent(this);
 

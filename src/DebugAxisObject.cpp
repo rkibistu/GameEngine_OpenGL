@@ -20,7 +20,7 @@ void DebugAxisObject::Draw(Camera* camera) {
 	_debugShader->Bind();
 	_model->BindWired();
 	 
-	_shader->SetAttributes();
+	_debugShader->SetAttributes();
 
 	SetUniformsCommon(camera);
 	SetUniformsParticular(camera);

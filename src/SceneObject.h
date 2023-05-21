@@ -20,7 +20,7 @@ public:
 	virtual void Update(float deltaTime);
 
 	virtual void Draw(Camera* camera);
-	void DrawDebug(Camera* camera);
+	virtual void DrawDebug(Camera* camera);
 
 	void SetModel(Model* model);
 	void SetShader(Shader* shader);
@@ -32,9 +32,9 @@ public:
 
 	inline void SetName(std::string name) { _name = name; }
 	inline std::string GetName() { return _name; }
-	
+
 	inline void SetPosition(Vector3 position) { _position = position; }
-	inline void SetPosition(float v0, float v1, float v2) { _position.x = v0; _position.y = v1;_position.z = v2; }
+	inline void SetPosition(float v0, float v1, float v2) { _position.x = v0; _position.y = v1; _position.z = v2; }
 	inline Vector3 GetPosition() { return _position; }
 
 	inline Vector3 GetRotation() { return _rotation; }
@@ -44,17 +44,17 @@ public:
 	inline void SetScale(float v0, float v1, float v2) { _scale.x = v0, _scale.y = v1, _scale.z = v2; }
 	inline void SetFollowCameraDirections(Vector3 directions) { _followCameraDirections = directions; }
 	inline void SetFollowCameraOffset(Vector3 offset) { _followCameraOffset = offset; }
-	
+
 	inline void SetDrawWired(bool state) { _drawWired = state; }
 	inline bool GetDrawWired() { return _drawWired; }
-	
+
 	inline void SetParent(SceneObject* parent) { _parent = parent; }
 protected:
 
 	void FollowCamera();
 
 	Matrix GetModelMatrix();
-	
+
 	void SetUniformsCommon(Camera* camera);
 	virtual void SetUniformsParticular(Camera* camera);
 	void SetUniformsCommonDebug(Camera* camera);

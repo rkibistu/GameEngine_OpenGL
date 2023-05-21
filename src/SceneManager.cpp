@@ -51,7 +51,6 @@ void SceneManager::Init(ESContext* esContext) {
 	glClearColor(_backgroundColor.x, _backgroundColor.y, _backgroundColor.z, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 
-	CreateDebugAxisObject();
 }
 
 void SceneManager::Update(ESContext* esContext, float deltaTime) {
@@ -65,8 +64,12 @@ void SceneManager::Update(ESContext* esContext, float deltaTime) {
 
 		it->second->Update(deltaTime);
 	}
-}
 
+	for (auto it = _lightObjects.begin(); it != _lightObjects.end(); it++) {
+
+		it->second->Update(deltaTime);
+	}
+}
 void SceneManager::Draw(ESContext* esContext) {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -79,6 +82,14 @@ void SceneManager::Draw(ESContext* esContext) {
 			it->second->DrawDebug(_activeCamera);
 		else
 			it->second->Draw(_activeCamera);
+	}
+
+	if (_debugMode) {
+
+		for (auto it = _lightObjects.begin(); it != _lightObjects.end(); it++) {
+
+			it->second->DrawDebug(_activeCamera);
+		}
 	}
 
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);

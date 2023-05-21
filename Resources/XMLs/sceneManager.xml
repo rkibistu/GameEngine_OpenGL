@@ -400,12 +400,12 @@
 			<position>
 				<x>0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-200</z>
 			</position>
 			<rotation>
 				<x>0</x>
-				<y>15</y>
-				<z>-200</z>
+				<y>0</y>
+				<z>0</z>
 			</rotation>
 			<scale>
 				<x>3.0</x>
@@ -480,12 +480,12 @@
 			<position>
 				<x>0</x>
 				<y>0</y>
-				<z>183</z>
+				<z>180</z>
 			</position>
 			<diffuseColor>
 				<r>1.0</r>
-				<g>1.0</g>
-				<b>1.0</b>
+				<g>0.0</g>
+				<b>0.0</b>
 			</diffuseColor>
 			<specularColor>
 				<r>1.0</r>
@@ -494,31 +494,33 @@
 			</specularColor>
 			<type>point</type>
 		</light>
-		<!-- <light id="2"> -->
-			<!-- <associatedObject>2</associatedObject> -->
-			<!-- <position> -->
-				<!-- <x>100</x> -->
-				<!-- <y>50</y> -->
-				<!-- <z>25</z> -->
-			<!-- </position> -->
-			<!-- <diffuseColor> -->
-				<!-- <r>1.0</r> -->
-				<!-- <g>0.0</g> -->
-				<!-- <b>1.0</b> -->
-			<!-- </diffuseColor> -->
-			<!-- <specularColor> -->
-				<!-- <r>1.0</r> -->
-				<!-- <g>0.0</g> -->
-				<!-- <b>1.0</b> -->
-			<!-- </specularColor> -->
-			<!-- <type>point</type> -->
-		<!-- </light> -->
+		<light id="2">
+			<associatedObject>2</associatedObject>
+			<position>
+				<x>100</x>
+				<y>50</y>
+				<z>25</z>
+			</position>
+			<diffuseColor>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>1.0</b>
+			</diffuseColor>
+			<specularColor>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>1.0</b>
+			</specularColor>
+			<type>point</type>
+		</light>
 	</lights>
 
 	<defaultSetting>
 		<debugShader>20</debugShader>
 		<shader>20</shader>
 		<material>300</material>
+		<lightDebugModel>1003</lightDebugModel>
+		<lightDebugShader>27</lightDebugShader>
 	</defaultSetting>
 
 	<debugSettings>

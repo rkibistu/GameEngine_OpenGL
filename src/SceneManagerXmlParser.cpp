@@ -64,6 +64,12 @@ int SceneManagerXmlParser::ReadDefaultSettings(DefaultSettings& defaultSettings)
 		if (ReadInt(node, MATERIAL_NODE, value)) {
 			defaultSettings.DefaultMaterial = resourceManager.GetMaterial(value);
 		}
+		if (ReadInt(node, DEBUG_LIGHT_MODEL_NODE, value)) {
+			defaultSettings.DebugLightModel = resourceManager.GetModel(value);
+		}
+		if (ReadInt(node, DEBUG_LIGHT_SHADER_NODE, value)) {
+			defaultSettings.DebugLightShader = resourceManager.GetShader(value);
+		}
 	}
 
 	return MY_SUCCES_CODE;

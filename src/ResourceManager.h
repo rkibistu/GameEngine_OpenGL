@@ -98,11 +98,6 @@ private:
 
 	Model* _terrainModel = nullptr;
 	Model* _axisModel = nullptr;
-
-	//defaultValues fot empty scneObjects
-	Shader* _defaultShader;
-	Shader* _debugShader;
-	Shader* _defaultMaterial;
 };
 
 
