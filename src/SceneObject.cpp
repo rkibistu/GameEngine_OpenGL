@@ -5,8 +5,6 @@
 #include "Input.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
-#include "DebugAxisObject.h"
-#include "DebugNormalsObject.h"
 
 SceneObject::SceneObject(bool isDebugObj) {
 

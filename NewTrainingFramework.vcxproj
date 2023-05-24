@@ -162,10 +162,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\DebugAxisObject.cpp" />
-    <ClCompile Include="src\DebugLightObject.cpp" />
-    <ClCompile Include="src\DebugNormalsObject.cpp" />
-    <ClCompile Include="src\DebugObject.cpp" />
     <ClCompile Include="src\Fire.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Light.cpp" />
@@ -198,10 +194,6 @@
     <ClInclude Include="rapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="src\AmbientalLight.h" />
     <ClInclude Include="src\Camera.h" />
-    <ClInclude Include="src\DebugAxisObject.h" />
-    <ClInclude Include="src\DebugLightObject.h" />
-    <ClInclude Include="src\DebugNormalsObject.h" />
-    <ClInclude Include="src\DebugObject.h" />
     <ClInclude Include="src\Defines.h" />
     <ClInclude Include="src\Fire.h" />
     <ClInclude Include="src\Fog.h" />
