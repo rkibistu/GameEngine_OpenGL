@@ -8,7 +8,7 @@
 #include "DebugAxisObject.h"
 #include "DebugNormalsObject.h"
 
-SceneObject::SceneObject(bool isDebugObj){
+SceneObject::SceneObject(bool isDebugObj) {
 
 	SceneManager& sceneManager = SceneManager::GetInstance();
 	SetShader(sceneManager.GetDefaultShader());
@@ -21,10 +21,12 @@ SceneObject::SceneObject(bool isDebugObj){
 
 	_parent = nullptr;
 
+	_isDebug = isDebugObj;
 	_drawWired = false;
 	_name = "sceneObject";
 
-	if(!isDebugObj)
+
+	if (!isDebugObj)
 		CreateDebugObjects();
 }
 
@@ -35,7 +37,7 @@ SceneObject::~SceneObject() {
 	//	they will be destroyd bu ResourceManager when it is the case
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
-		
+
 		delete it->second;
 	}
 }
@@ -52,7 +54,6 @@ void SceneObject::Update(float deltaTime) {
 
 		_rotation.y += 0.25f;
 	}
-	UpdateDebugObjects(deltaTime);
 }
 
 void SceneObject::Draw(Camera* camera) {
@@ -77,7 +78,48 @@ void SceneObject::Draw(Camera* camera) {
 
 	_model->Unbind();
 }
+void SceneObject::DrawWired(Camera* camera) {
+	//Draw wired + call draw for all debug objects
+	if (_model == nullptr)
+		return;
+	if (_shader == nullptr)
+		return;
+
+	_shader->Bind();
+	_model->BindWired();
+
+	_shader->SetAttributes();
+
+	SetUniformsCommonDebug(camera);
+	SetUniformsParticular(camera);
+
+	glDrawElements(GL_LINES, _model->GetIndicesWiredCount(), GL_UNSIGNED_SHORT, nullptr);
+
+	_model->Unbind();
+}
 void SceneObject::DrawDebug(Camera* camera) {
+
+	if (_model == nullptr)
+		return;
+	if (_shader == nullptr)
+		return;
+
+	_model->BindFilled();
+	_debugShader->Bind();
+	for (unsigned int i = 0; i < _textureResources.size(); i++) {
+		_textureResources[i]->Bind(i);
+	}
+
+	_debugShader->SetAttributes();
+
+	SetUniformsCommon(camera);
+	SetUniformsParticular(camera);
+
+	glDrawElements(GL_TRIANGLES, _model->GetIndicesFilledCount(), GL_UNSIGNED_SHORT, nullptr);
+
+	_model->Unbind();
+}
+void SceneObject::DrawDebugWired(Camera* camera) {
 	//Draw wired + call draw for all debug objects
 	if (_model == nullptr)
 		return;
@@ -95,22 +137,31 @@ void SceneObject::DrawDebug(Camera* camera) {
 	glDrawElements(GL_LINES, _model->GetIndicesWiredCount(), GL_UNSIGNED_SHORT, nullptr);
 
 	_model->Unbind();
-
-	DrawDebugObjects(camera);
 }
 
 void SceneObject::SetModel(Model* model) {
 
 	_model = model;
+
 	//create normal mode
-	SceneObject* normalsObject = new DebugNormalsObject(_model->GetModelResource()->Vertices);
+	SceneObject* normalsObject = new SceneObject(true);
 	normalsObject->SetParent(this);
+	Model* normalModel = new Model();
+	normalModel->LoadNormalModel(_model->GetModelResource()->Vertices);
+	normalsObject->_model = normalModel;
+	normalsObject->SetName("normals");
+	normalsObject->SetDrawWired(true);
+
 	_debugObjects.insert({ _debugObjects.size() + 1,normalsObject });
 }
 
 void SceneObject::SetShader(Shader* shader) {
 
 	_shader = shader;
+}
+void SceneObject::SetDebugShader(Shader* shader) {
+
+	_debugShader = shader;
 }
 
 void SceneObject::AddTexture(Texture* texture) {
@@ -177,7 +228,7 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	_shader->SetUniform1f("u_factorReflect", _material->GetFactorReflexieTextura());
 
 	//fog
-	Fog fog = sceneManager.GetFog(); 
+	Fog fog = sceneManager.GetFog();
 	_shader->SetUniform1f("u_fogNear", fog.NearPlane);
 	_shader->SetUniform1f("u_fogFar", fog.FarPlane);
 	_shader->SetUniform3f("u_fogColor", fog.Color);
@@ -217,17 +268,17 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 
 	//asta va venis taersa, vol lau din shader textura
 	_shader->SetUniform3f("u_objectColor", 1.0, 1.0, 1.0);
-	
+
 	//mai jos sunt materiale
 	_shader->SetUniform1f("u_ambientFactor", 0.2);
 	_shader->SetUniform1f("u_specularFactor", 0.8);
 	_shader->SetUniform1f("u_diffuseFactor", 0.5);
-	
+
 
 }
 void SceneObject::SetUniformsParticular(Camera* camera) {
 
-	
+
 }
 void SceneObject::SetUniformsCommonDebug(Camera* camera) {
 
@@ -240,10 +291,17 @@ void SceneObject::SetUniformsCommonDebug(Camera* camera) {
 }
 
 void SceneObject::CreateDebugObjects() {
+	ResourceManager& resourceManager = ResourceManager::GetInstance();
+
 	//create debug objects specific to all scene objects
-	SceneObject* axisObject = new DebugAxisObject();
+	SceneObject* axisObject = new SceneObject(true);
 	axisObject->SetParent(this);
-	_debugObjects.insert({ _debugObjects.size() + 1,axisObject});
+	axisObject->SetModel(resourceManager.GetSystemAxisModel());
+	axisObject->SetName("axis");
+	axisObject->SetScale(10.0f, 10.0f, 10.0f);
+	axisObject->SetDrawWired(true);
+
+	_debugObjects.insert({ _debugObjects.size() + 1,axisObject });
 
 }
 
@@ -251,13 +309,21 @@ void SceneObject::UpdateDebugObjects(float deltaTime) {
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
-		it->second->Update(deltaTime);
+		it->second->CopyParentTransform();
 	}
 }
 void SceneObject::DrawDebugObjects(Camera* camera) {
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
-
-		it->second->Draw(camera);
+		if(it->second->GetDrawWired())
+			it->second->DrawDebugWired(camera);
+		else
+			it->second->DrawDebug(camera);
 	}
+}
+void SceneObject::CopyParentTransform() {
+
+	SetPosition(_parent->GetPosition());
+	SetRotation(_parent->GetRotation());
+	SetScale(_parent->GetScale());
 }

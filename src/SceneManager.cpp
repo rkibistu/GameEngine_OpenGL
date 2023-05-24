@@ -63,11 +63,17 @@ void SceneManager::Update(ESContext* esContext, float deltaTime) {
 	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
 
 		it->second->Update(deltaTime);
+		if (_debugMode) {
+			it->second->UpdateDebugObjects(deltaTime);
+		}
 	}
 
 	for (auto it = _lightObjects.begin(); it != _lightObjects.end(); it++) {
 
 		it->second->Update(deltaTime);
+		if (_debugMode) {
+			it->second->UpdateDebugObjects(deltaTime);
+		}
 	}
 }
 void SceneManager::Draw(ESContext* esContext) {
@@ -77,9 +83,11 @@ void SceneManager::Draw(ESContext* esContext) {
 
 	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
 
+		if (_debugMode) {
 
-		if (_debugMode)
-			it->second->DrawDebug(_activeCamera);
+			it->second->DrawDebugWired(_activeCamera);
+			it->second->DrawDebugObjects(_activeCamera);
+		}
 		else
 			it->second->Draw(_activeCamera);
 	}
@@ -88,7 +96,7 @@ void SceneManager::Draw(ESContext* esContext) {
 
 		for (auto it = _lightObjects.begin(); it != _lightObjects.end(); it++) {
 
-			it->second->DrawDebug(_activeCamera);
+			it->second->DrawDebugObjects(_activeCamera);
 		}
 	}
 

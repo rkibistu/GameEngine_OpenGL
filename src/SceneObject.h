@@ -20,10 +20,16 @@ public:
 	virtual void Update(float deltaTime);
 
 	virtual void Draw(Camera* camera);
+	virtual void DrawWired(Camera* camera);
 	virtual void DrawDebug(Camera* camera);
+	virtual void DrawDebugWired(Camera* camera);
+
+	void UpdateDebugObjects(float deltaTime);
+	void DrawDebugObjects(Camera* camera);
 
 	void SetModel(Model* model);
 	void SetShader(Shader* shader);
+	void SetDebugShader(Shader* shader);
 	void AddTexture(Texture* texture);
 	void SetMaterial(Material* material);
 
@@ -64,8 +70,8 @@ protected:
 
 	virtual void CreateDebugObjects();
 
-	void UpdateDebugObjects(float deltaTime);
-	void DrawDebugObjects(Camera* camera);
+
+	void CopyParentTransform();
 
 protected:
 	unsigned int _id;
@@ -87,6 +93,7 @@ protected:
 
 	bool _depthTest;
 	bool _drawWired;
+	bool _isDebug;
 
 	Vector3 _followCameraDirections;
 	Vector3 _followCameraOffset;

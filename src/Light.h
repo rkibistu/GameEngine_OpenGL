@@ -15,14 +15,17 @@ public:
 	LightObject(bool isDebug = false);
 	LightObject(Type type, Vector3 diffuseColor, Vector3 specularColor, bool isDebug = false);
 
-	void DrawDebug(Camera* camera) override;
+	//void DrawDebug(Camera* camera, GLenum DrawMode) override;
 
 	inline Vector3 GetDiffuseColor() { return _diffuseColor; }
 	inline Vector3 GetSpecularColor() { return _specularColor; }
 	inline Type GetType() { return _type; }
-private:
+protected:
 
+	void SetUniformsParticular(Camera* camera) override;
+	
 	void CreateDebugObjects() override;
+
 protected:
 	Type _type;
 	Vector3 _diffuseColor;
