@@ -21,7 +21,6 @@ struct DefaultSettings {
 class SceneManager {
 
 public:
-
 	static SceneManager& GetInstance();
 	void DestroyInstance();
 
@@ -51,14 +50,16 @@ private:
 
 	void CreateDebugAxisObject();
 
+	void UpdateDebugObjects();
+
 private:
 	static SceneManager* _spInstance;
 	SceneManager() { ; }
 	SceneManager(const SceneManager&) = delete;
 	SceneManager& operator= (const SceneManager&) = delete;
 
-	//orderrede
 	std::map<unsigned int, SceneObject*> _sceneObjects;
+	std::unordered_map<unsigned int, SceneObject*> _debugObjects;
 	std::unordered_map<unsigned int, LightObject*> _lightObjects;
 	std::unordered_map<unsigned int, Camera*> _cameras;
 	Camera* _activeCamera;

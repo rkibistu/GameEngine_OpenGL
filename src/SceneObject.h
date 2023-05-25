@@ -44,6 +44,8 @@ public:
 	void AddTexture(Texture* texture);
 	void SetMaterial(Material* material);
 
+	void FollowCamera();
+
 	inline void SetId(unsigned int id) { _id = id; }
 	inline unsigned int GetId() { return _id; }
 
@@ -71,7 +73,6 @@ public:
 	inline void SetParent(SceneObject* parent) { _parent = parent; }
 protected:
 
-	void FollowCamera();
 
 	Matrix GetModelMatrix();
 

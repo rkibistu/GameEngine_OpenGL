@@ -51,6 +51,7 @@ void SceneManager::Init(ESContext* esContext) {
 	glClearColor(_backgroundColor.x, _backgroundColor.y, _backgroundColor.z, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 
+	CreateDebugAxisObject();
 }
 
 void SceneManager::Update(ESContext* esContext, float deltaTime) {
@@ -75,6 +76,8 @@ void SceneManager::Update(ESContext* esContext, float deltaTime) {
 			it->second->UpdateDebugObjects(deltaTime);
 		}
 	}
+
+	UpdateDebugObjects();
 }
 void SceneManager::Draw(ESContext* esContext) {
 
@@ -98,6 +101,10 @@ void SceneManager::Draw(ESContext* esContext) {
 
 			it->second->DrawDebugObjects(_activeCamera);
 		}
+		for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
+
+			it->second->DrawDebugWired(_activeCamera);
+		}
 	}
 
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
@@ -108,11 +115,28 @@ void SceneManager::CreateDebugAxisObject() {
 
 	ResourceManager& resourceManager = ResourceManager::GetInstance();
 
-	SceneObject* axisObject = new SceneObject();
+	SceneObject* axisObject = new SceneObject(true);
 	axisObject->SetModel(resourceManager.GetSystemAxisModel());
+
 	axisObject->SetDrawWired(true);
-	axisObject->SetName("axis");
+	axisObject->SetName("sceneAxis");
+	axisObject->SetScale(4.0f, 4.0f, 4.0f);
 
 
-	_sceneObjects.insert({ 999,axisObject });
+	_debugObjects.insert({ _debugObjects.size() + 1,axisObject});
+}
+void SceneManager::UpdateDebugObjects() {
+
+	if (!_debugMode)
+		return;
+
+	Vector3 cameraPos = _activeCamera->GetPosition();
+	Vector3 offset(9, 7, +20);
+	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
+
+		//it->second->SetPosition(cameraPos + offset);
+		it->second->SetFollowCameraDirections(Vector3(1, 1, 1));
+		it->second->SetFollowCameraOffset(Vector3(0, 0, +20));
+		it->second->FollowCamera();
+	}
 }

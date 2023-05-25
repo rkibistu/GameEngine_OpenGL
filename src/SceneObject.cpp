@@ -50,7 +50,7 @@ void SceneObject::Update(float deltaTime) {
 
 	if (Input::GetKeyDown(KeyCode::K)) {
 
-		_rotation.y += 0.25f;
+		_rotation.y += 2.5f;
 	}
 }
 
