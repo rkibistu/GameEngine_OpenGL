@@ -11,11 +11,11 @@
 
 struct DefaultSettings {
 
-	Shader* DefaultShader;
-	Shader* DebugShader;
-	Material* DefaultMaterial;
-	Model* DebugLightModel;
-	Shader* DebugLightShader;
+	Shader* DefaultShader;		//used to all objects that don't specify one
+	Shader* DebugShader;		//used to draw debug
+	Shader* DebugLightShader;	//used to draw debug light source
+	Model* DebugLightModel;		//used to draw debug light source
+	Material* DefaultMaterial;	//used to all objects that don't specify one
 };
 
 class SceneManager {

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Light.h"
-#include "DebugLightObject.h"
 #include "SceneManager.h"
 
 LightObject::LightObject(bool isDebug)
@@ -24,20 +23,19 @@ LightObject::LightObject(Type type, Vector3 diffuseColor, Vector3 specularColor,
 		CreateDebugObjects();
 }
 
+void LightObject::UpdateDebugObjects(float deltaTime) {
 
-//
-//void LightObject::DrawDebug(Camera* camera, GLenum DrawMode) {
-//
-//	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
-//
-//		if(it->second->GetDrawWired())
-//			it->second->DrawDebug(camera, GL_LINES);
-//		else
-//			it->second->DrawDebug(camera, GL_TRIANGLES);
-//	}
-//}
+	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
+
+		it->second->SetPosition(_position);
+		it->second->SetRotation(_rotation);
+	}
+}
 
 void LightObject::SetUniformsParticular(Camera* camera) {
+
+}
+void LightObject::SetUniformsParticularDebug(Camera* camera) {
 
 	_debugShader->SetUniform3f("u_color", GetDiffuseColor());
 }

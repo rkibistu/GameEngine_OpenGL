@@ -7,7 +7,6 @@ varying vec2 v_texCoord;
 
 uniform sampler2D u_Texture;
 
-uniform vec3 u_objectColor;
 uniform vec3 u_cameraPos;
 
 uniform float u_ambientFactor;

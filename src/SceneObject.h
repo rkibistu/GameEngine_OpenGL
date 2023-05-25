@@ -19,12 +19,23 @@ public:
 
 	virtual void Update(float deltaTime);
 
+	//Deseneaza triunghiuri folsoind _shader
 	virtual void Draw(Camera* camera);
+
+	//Deseneaza linii folsoind _shader
 	virtual void DrawWired(Camera* camera);
+
+	//Deseneaza triunghiuri folsoind debug shader
 	virtual void DrawDebug(Camera* camera);
+
+	//Deseneaza linii folsoind debug shader
 	virtual void DrawDebugWired(Camera* camera);
 
-	void UpdateDebugObjects(float deltaTime);
+
+	//itereaza prin obiectele de debug si apelaza DrawDebug pt ele
+	virtual void UpdateDebugObjects(float deltaTime);
+
+	//itereaza prin obiectele de debug si apelaza UpdateDebug pt ele
 	void DrawDebugObjects(Camera* camera);
 
 	void SetModel(Model* model);
@@ -67,12 +78,12 @@ protected:
 	void SetUniformsCommon(Camera* camera);
 	virtual void SetUniformsParticular(Camera* camera);
 	void SetUniformsCommonDebug(Camera* camera);
+	virtual void SetUniformsParticularDebug(Camera* camera);
 
+	//creeaza obiecte de debug comune tutor obiectelor (axele de coordonote)
 	virtual void CreateDebugObjects();
 
-
 	void CopyParentTransform();
-
 protected:
 	unsigned int _id;
 	std::string _name;

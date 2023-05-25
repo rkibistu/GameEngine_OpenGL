@@ -11,6 +11,7 @@ SceneObject::SceneObject(bool isDebugObj) {
 	SceneManager& sceneManager = SceneManager::GetInstance();
 	SetShader(sceneManager.GetDefaultShader());
 	SetMaterial(sceneManager.GetDefaultMaterial());
+
 	_debugShader = sceneManager.GetDebugShader();
 
 	_position = Vector3(0.0f, 0.0f, 0.0f);
@@ -22,7 +23,6 @@ SceneObject::SceneObject(bool isDebugObj) {
 	_isDebug = isDebugObj;
 	_drawWired = false;
 	_name = "sceneObject";
-
 
 	if (!isDebugObj)
 		CreateDebugObjects();
@@ -88,7 +88,7 @@ void SceneObject::DrawWired(Camera* camera) {
 
 	_shader->SetAttributes();
 
-	SetUniformsCommonDebug(camera);
+	SetUniformsCommon(camera);
 	SetUniformsParticular(camera);
 
 	glDrawElements(GL_LINES, _model->GetIndicesWiredCount(), GL_UNSIGNED_SHORT, nullptr);
@@ -110,8 +110,8 @@ void SceneObject::DrawDebug(Camera* camera) {
 
 	_debugShader->SetAttributes();
 
-	SetUniformsCommon(camera);
-	SetUniformsParticular(camera);
+	SetUniformsCommonDebug(camera);
+	SetUniformsParticularDebug(camera);
 
 	glDrawElements(GL_TRIANGLES, _model->GetIndicesFilledCount(), GL_UNSIGNED_SHORT, nullptr);
 
@@ -130,7 +130,7 @@ void SceneObject::DrawDebugWired(Camera* camera) {
 	_debugShader->SetAttributes();
 
 	SetUniformsCommonDebug(camera);
-	SetUniformsParticular(camera);
+	SetUniformsParticularDebug(camera);
 
 	glDrawElements(GL_LINES, _model->GetIndicesWiredCount(), GL_UNSIGNED_SHORT, nullptr);
 
@@ -140,12 +140,12 @@ void SceneObject::DrawDebugWired(Camera* camera) {
 void SceneObject::SetModel(Model* model) {
 
 	_model = model;
+	Model* normalModel = new Model();
+	normalModel->LoadNormalModel(_model->GetModelResource()->Vertices);
 
 	//create normal mode
 	SceneObject* normalsObject = new SceneObject(true);
 	normalsObject->SetParent(this);
-	Model* normalModel = new Model();
-	normalModel->LoadNormalModel(_model->GetModelResource()->Vertices);
 	normalsObject->_model = normalModel;
 	normalsObject->SetName("normals");
 	normalsObject->SetDrawWired(true);
@@ -264,15 +264,11 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	_shader->SetUniform3f("u_ambientColor", sceneManager.GetAmbientalLight().Color);
 	_shader->SetUniform1f("u_ambientRatio", sceneManager.GetAmbientalLight().Ratio);
 
-	//asta va venis taersa, vol lau din shader textura
-	_shader->SetUniform3f("u_objectColor", 1.0, 1.0, 1.0);
 
 	//mai jos sunt materiale
 	_shader->SetUniform1f("u_ambientFactor", 0.2);
 	_shader->SetUniform1f("u_specularFactor", 0.8);
 	_shader->SetUniform1f("u_diffuseFactor", 0.5);
-
-
 }
 void SceneObject::SetUniformsParticular(Camera* camera) {
 
@@ -287,6 +283,8 @@ void SceneObject::SetUniformsCommonDebug(Camera* camera) {
 	Matrix mvp = model * camera->GetMVP();
 	_shader->SetUniformMatrix4fv("u_mvp", mvp);
 }
+void SceneObject::SetUniformsParticularDebug(Camera* camera){
+}
 
 void SceneObject::CreateDebugObjects() {
 	ResourceManager& resourceManager = ResourceManager::GetInstance();
@@ -300,7 +298,6 @@ void SceneObject::CreateDebugObjects() {
 	axisObject->SetDrawWired(true);
 
 	_debugObjects.insert({ _debugObjects.size() + 1,axisObject });
-
 }
 
 void SceneObject::UpdateDebugObjects(float deltaTime) {
