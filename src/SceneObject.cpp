@@ -322,7 +322,12 @@ void SceneObject::UpdateDebugObjects(float deltaTime) {
 			it->second->SetScale(_scale);
 
 		if (it->second->GetName() == "aabb") {
-			it->second->_model->UpdateAabbModel(_model->GetModelResource()->Vertices, _scale);
+			if (_oldScale != _scale || _oldRotation != _rotation) {
+
+				it->second->_model->UpdateAabbModel(_model->GetModelResource()->Vertices, _scale);
+				_oldScale = _scale;
+				_oldRotation = _rotation;
+			}
 		}
 	}
 }

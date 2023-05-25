@@ -1,4 +1,10 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  SceneManager.cpp
+  SceneObject.cpp
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(48,32): warning C4305: '-=': truncation from 'double' to 'GLfloat'
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(207,46): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(209,46): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(211,46): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(279,46): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(280,47): warning C4305: 'argument': truncation from 'double' to 'float'
   NewTrainingFramework.vcxproj -> E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\BIN-Nvidia\NewTrainingFramework.exe

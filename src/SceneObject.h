@@ -92,6 +92,9 @@ protected:
 	Vector3 _rotation;
 	Vector3 _scale;
 
+	Vector3 _oldScale;
+	Vector3 _oldRotation;
+
 	SceneObject* _parent;
 	std::map<unsigned int, SceneObject*> _children;
 	std::map<unsigned int, SceneObject*> _debugObjects;
