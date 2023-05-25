@@ -282,11 +282,11 @@ int Model::UpdateAabbModel(std::vector<Vertex> vertices, Vector3 scale, Vector3 
 	Matrix scaleMatrix;
 	scaleMatrix.SetScale(scale);
 	Matrix rotationOx;
-	rotationOx.SetRotationX(rotation.x * PI / 180.f);
+	rotationOx.SetRotationX(- rotation.x);
 	Matrix rotationOy;
-	rotationOy.SetRotationY(rotation.y * PI / 180.f);
+	rotationOy.SetRotationY(- rotation.y);
 	Matrix rotationOz;
-	rotationOz.SetRotationZ(rotation.z * PI / 180.f);
+	rotationOz.SetRotationZ(- rotation.z);
 
 	Vector4 temp;
 	for (auto it = vertices.begin(); it != vertices.end(); it++) {

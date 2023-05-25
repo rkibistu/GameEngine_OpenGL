@@ -519,11 +519,12 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 
 	if (obj.materialId.empty()) {
 
-		sceneObject->SetMaterial(resourceManager.GetMaterial(DEFAULT_MATERIAL_ID));
+		//sceneObject->SetMaterial(resourceManager.GetMaterial(DEFAULT_MATERIAL_ID));
+		sceneObject->SetMaterial(sceneManager.GetDefaultMaterial());
 	}
 	else {
-		//sceneObject->SetMaterial(resourceManager.GetMaterial(atoi(obj.materialId.c_str())));
-		sceneObject->SetMaterial(sceneManager.GetDefaultMaterial());
+		sceneObject->SetMaterial(resourceManager.GetMaterial(atoi(obj.materialId.c_str())));
+		//sceneObject->SetMaterial(sceneManager.GetDefaultMaterial());
 	}
 
 	sceneObject->SetPosition(obj.position);

@@ -204,11 +204,11 @@ Matrix SceneObject::GetModelMatrix() {
 	positionMat.SetTranslation(_position);
 
 	Matrix rotationMatOY;
-	rotationMatOY.SetRotationY(_rotation.y * PI / 180.f);
+	rotationMatOY.SetRotationY(_rotation.y);
 	Matrix rotationMatOX;
-	rotationMatOX.SetRotationX(_rotation.x * PI / 180.f);
+	rotationMatOX.SetRotationX(_rotation.x);
 	Matrix rotationMatOZ;
-	rotationMatOZ.SetRotationZ(_rotation.z * PI / 180.f);
+	rotationMatOZ.SetRotationZ(_rotation.z);
 
 	Matrix scaleMat;
 	scaleMat.SetScale(_scale);
