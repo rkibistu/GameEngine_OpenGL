@@ -142,14 +142,14 @@ void SceneObject::SetModel(Model* model) {
 	_model = model;
 
 	//create normal mode
-	Model* normalModel = new Model();
-	normalModel->LoadNormalModel(_model->GetModelResource()->Vertices);
-	SceneObject* normalsObject = new SceneObject(true);
-	normalsObject->SetParent(this);
-	normalsObject->_model = normalModel;
-	normalsObject->SetName("normals");
-	normalsObject->SetDrawWired(true);
-	_debugObjects.insert({ _debugObjects.size() + 1,normalsObject });
+	//Model* normalModel = new Model();
+	//normalModel->LoadNormalModel(_model->GetModelResource()->Vertices);
+	//SceneObject* normalsObject = new SceneObject(true);
+	//normalsObject->SetParent(this);
+	//normalsObject->_model = normalModel;
+	//normalsObject->SetName("normals");
+	//normalsObject->SetDrawWired(true);
+	//_debugObjects.insert({ _debugObjects.size() + 1,normalsObject });
 
 	//create AABB
 	Model* aabbModel = new Model();
@@ -293,7 +293,7 @@ void SceneObject::SetUniformsCommonDebug(Camera* camera) {
 	Matrix mvp = model * camera->GetMVP();
 	_shader->SetUniformMatrix4fv("u_mvp", mvp);
 }
-void SceneObject::SetUniformsParticularDebug(Camera* camera){
+void SceneObject::SetUniformsParticularDebug(Camera* camera) {
 }
 
 void SceneObject::CreateDebugObjects() {
@@ -315,16 +315,17 @@ void SceneObject::UpdateDebugObjects(float deltaTime) {
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
 		it->second->SetPosition(_position);
-		it->second->SetRotation(_rotation);
+		if (it->second->GetName() != "aabb")
+			it->second->SetRotation(_rotation);
 
 		//asta trb abstractizata de aici. e ok momentan
-		if(it->second->GetName() == "normals")
+		if (it->second->GetName() == "normals")
 			it->second->SetScale(_scale);
 
 		if (it->second->GetName() == "aabb") {
 			if (_oldScale != _scale || _oldRotation != _rotation) {
 
-				it->second->_model->UpdateAabbModel(_model->GetModelResource()->Vertices, _scale);
+				it->second->_model->UpdateAabbModel(_model->GetModelResource()->Vertices, _scale, _rotation);
 				_oldScale = _scale;
 				_oldRotation = _rotation;
 			}
@@ -334,7 +335,7 @@ void SceneObject::UpdateDebugObjects(float deltaTime) {
 void SceneObject::DrawDebugObjects(Camera* camera) {
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
-		if(it->second->GetDrawWired())
+		if (it->second->GetDrawWired())
 			it->second->DrawDebugWired(camera);
 		else
 			it->second->DrawDebug(camera);

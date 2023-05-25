@@ -242,7 +242,7 @@ int Model::LoadAabbModel(std::vector<Vertex>& vertices) {
 	aabbWiredIndices.push_back(6);
 	aabbWiredIndices.push_back(5);
 	aabbWiredIndices.push_back(6);
-	aabbWiredIndices.push_back(4);
+	aabbWiredIndices.push_back(2);
 	aabbWiredIndices.push_back(4);
 	aabbWiredIndices.push_back(5);
 
@@ -256,6 +256,7 @@ int Model::LoadAabbModel(std::vector<Vertex>& vertices) {
 
 	return MY_SUCCES_CODE;
 }
+
 
 void Model::BindFilled() {
 
@@ -273,23 +274,27 @@ void Model::Unbind() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
  
-int Model::UpdateAabbModel(std::vector<Vertex> vertices, Vector3 scale) {
+int Model::UpdateAabbModel(std::vector<Vertex> vertices, Vector3 scale, Vector3 rotation) {
 
 	//std::vector<Vertex> aabbVertices;
 	//aabbVertices = _modelResource->Vertices;
 
 	Matrix scaleMatrix;
 	scaleMatrix.SetScale(scale);
+	Matrix rotationOx;
+	rotationOx.SetRotationX(rotation.x * PI / 180.f);
+	Matrix rotationOy;
+	rotationOy.SetRotationY(rotation.y * PI / 180.f);
+	Matrix rotationOz;
+	rotationOz.SetRotationZ(rotation.z * PI / 180.f);
 
 	Vector4 temp;
 	for (auto it = vertices.begin(); it != vertices.end(); it++) {
 
-		if (scale.x != 1.0)
-			int x = 0;
-		temp = scaleMatrix * Vector4(it->pos, 1.0f);
+		temp = scaleMatrix *  rotationOy * rotationOx * rotationOz *   Vector4(it->pos, 1.0f);
 		it->pos = Vector3(temp);
 	}
-	LoadAabbModel(vertices);
+	LoadAabbModel(vertices); 
 	//BindAndLoadVertices();
 
 	return MY_SUCCES_CODE;

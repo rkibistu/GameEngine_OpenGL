@@ -32,7 +32,7 @@ public:
 	int LoadNormalModel(std::vector<Vertex>& vertices);
 	int LoadAabbModel(std::vector<Vertex>& vertices);
 
-	int UpdateAabbModel(std::vector<Vertex> vertices, Vector3 scale);
+	int UpdateAabbModel(std::vector<Vertex> vertices, Vector3 scale, Vector3 rotation);
 
 	void BindFilled();
 	void BindWired();
