@@ -47,6 +47,11 @@ public:
 
 	inline Vector3 GetPosition() { return _position; }
 
+	inline Vector3 GetForward() { return _zAxis; }
+	inline Vector3 GetRight() { return _xAxis; }
+	inline Vector3 GetTarget() { return _target; }
+	inline Vector3 GetUp() { return _up; }
+
 private:
 	
 	Matrix _R;

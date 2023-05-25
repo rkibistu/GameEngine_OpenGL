@@ -45,6 +45,7 @@ public:
 	void SetMaterial(Material* material);
 
 	void FollowCamera();
+	void StayOnSreen();
 
 	inline void SetId(unsigned int id) { _id = id; }
 	inline unsigned int GetId() { return _id; }

@@ -120,8 +120,7 @@ void SceneManager::CreateDebugAxisObject() {
 
 	axisObject->SetDrawWired(true);
 	axisObject->SetName("sceneAxis");
-	axisObject->SetScale(4.0f, 4.0f, 4.0f);
-
+	axisObject->SetScale(0.1f, 0.1f, 0.1f);
 
 	_debugObjects.insert({ _debugObjects.size() + 1,axisObject});
 }
@@ -134,9 +133,7 @@ void SceneManager::UpdateDebugObjects() {
 	Vector3 offset(9, 7, +20);
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
-		//it->second->SetPosition(cameraPos + offset);
-		it->second->SetFollowCameraDirections(Vector3(1, 1, 1));
-		it->second->SetFollowCameraOffset(Vector3(0, 0, +20));
-		it->second->FollowCamera();
+		//this for scene axis
+		it->second->StayOnSreen();
 	}
 }

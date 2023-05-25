@@ -197,6 +197,14 @@ void SceneObject::FollowCamera() {
 
 	SetPosition(move);
 }
+void SceneObject::StayOnSreen() {
+
+	SceneManager& sceneManager = SceneManager::GetInstance();
+	Camera* camera = sceneManager.GetActiveCamera();
+	Vector3 cameraPos = sceneManager.GetActiveCamera()->GetPosition();
+
+	SetPosition(camera->GetTarget() + camera->GetUp()/2.5 + camera->GetRight()/1.7);
+}
 
 Matrix SceneObject::GetModelMatrix() {
 
