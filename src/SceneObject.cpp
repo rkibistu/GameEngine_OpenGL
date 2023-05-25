@@ -304,7 +304,12 @@ void SceneObject::UpdateDebugObjects(float deltaTime) {
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
-		it->second->CopyParentTransform();
+		it->second->SetPosition(_position);
+		it->second->SetRotation(_rotation);
+
+		//asta trb abstractizata de aici. e ok momentan
+		if(it->second->GetName() == "normals")
+			it->second->SetScale(_scale);
 	}
 }
 void SceneObject::DrawDebugObjects(Camera* camera) {

@@ -39,12 +39,21 @@ public:
 	inline ModelResource* GetModelResource() { return _modelResource; }
 private:
 
+	//get indices for triangle mode and create indices for wired mode
 	void CreateWiredindicesBuffer(std::vector<GLushort>& indices, std::vector<GLushort>& wiredIndices);
 
+	//Bind and load to opengl the vertices and idncies buffers
+	//	get values from _modelResource
+	void BindAndLoadVertices();
 
+	//fill the color attribute of vertex (most of models don't have this in nfg)
+	// DebugShader use color to draw lines
 	void FillVerticesColor();
 
+	//generate the terrain
 	void GenerateFlatTerrain(float _width, float depth, int numCellsWidth, int numCellsDepth, std::vector<Vertex>& vertices, std::vector<GLushort>& indices);
+
+
 private:
 	ModelResource* _modelResource;
 	

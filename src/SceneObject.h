@@ -98,7 +98,7 @@ protected:
 
 	Model* _model;
 	Shader* _shader;
-	Shader* _debugShader; //used in wiredMode
+	Shader* _debugShader; //used in debugMode
 	std::vector<Texture*> _textureResources;
 	Material* _material;
 
