@@ -173,8 +173,8 @@
 			</textures>
 			<position>
 				<x>75</x>
-				<y>5</y>
-				<z>0</z>
+				<y>25</y>
+				<z>400</z>
 			</position>
 			<rotation>
 				<x>0</x>
@@ -182,9 +182,9 @@
 				<z>0</z>
 			</rotation>
 			<scale>
-				<x>0.25</x>
-				<y>0.25</y>
-				<z>0.25</z>
+				<x>1</x>
+				<y>1</y>
+				<z>1</z>
 			</scale>
 		</object>
 		<object id="8">
@@ -313,8 +313,8 @@
 				<b>0.0</b>
 			</color>
 			<position>
-				<x>-55</x>
-				<y>0</y>
+				<x>-200</x>
+				<y>25</y>
 				<z>0</z>
 			</position>
 			<rotation>
@@ -323,9 +323,9 @@
 				<z>0</z>
 			</rotation>
 			<scale>
-				<x>3.0</x>
-				<y>3.0</y>
-				<z>3.0</z>
+				<x>1.0</x>
+				<y>1.0</y>
+				<z>1.0</z>
 			</scale>
 		</object>
 		<object id="37">
@@ -408,9 +408,9 @@
 				<z>0</z>
 			</rotation>
 			<scale>
-				<x>3.0</x>
-				<y>3.0</y>
-				<z>3.0</z>
+				<x>1.0</x>
+				<y>1.0</y>
+				<z>1.0</z>
 			</scale>
 			<displMax>0.2</displMax>
 		</object>
@@ -457,9 +457,9 @@
 				<z>0</z>
 			</rotation>
 			<scale>
-				<x>3.0</x>
-				<y>3.0</y>
-				<z>3.0</z>
+				<x>1.0</x>
+				<y>1.0</y>
+				<z>1.0</z>
 			</scale>
 		</object>
 	</objects>

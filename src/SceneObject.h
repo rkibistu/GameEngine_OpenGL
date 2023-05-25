@@ -82,8 +82,6 @@ protected:
 
 	//creeaza obiecte de debug comune tutor obiectelor (axele de coordonote)
 	virtual void CreateDebugObjects();
-
-	void CopyParentTransform();
 protected:
 	unsigned int _id;
 	std::string _name;

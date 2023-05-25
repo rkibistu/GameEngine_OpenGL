@@ -30,6 +30,7 @@ public:
 	int LoadFlatTerrain(int sizeWidht, int sizeHeight, int cellCountWidth, int cellCountHeight);
 	int LoadSystemAxis();
 	int LoadNormalModel(std::vector<Vertex>& vertices);
+	int LoadAabbModel(std::vector<Vertex>& vertices);
 	void BindFilled();
 	void BindWired();
 	void Unbind();
@@ -48,7 +49,7 @@ private:
 
 	//fill the color attribute of vertex (most of models don't have this in nfg)
 	// DebugShader use color to draw lines
-	void FillVerticesColor();
+	void FillVerticesColor(Vector3 fillColor = Vector3(1.0,1.0,1.0));
 
 	//generate the terrain
 	void GenerateFlatTerrain(float _width, float depth, int numCellsWidth, int numCellsDepth, std::vector<Vertex>& vertices, std::vector<GLushort>& indices);

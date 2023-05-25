@@ -140,17 +140,27 @@ void SceneObject::DrawDebugWired(Camera* camera) {
 void SceneObject::SetModel(Model* model) {
 
 	_model = model;
-	Model* normalModel = new Model();
-	normalModel->LoadNormalModel(_model->GetModelResource()->Vertices);
 
 	//create normal mode
+	Model* normalModel = new Model();
+	normalModel->LoadNormalModel(_model->GetModelResource()->Vertices);
 	SceneObject* normalsObject = new SceneObject(true);
 	normalsObject->SetParent(this);
 	normalsObject->_model = normalModel;
 	normalsObject->SetName("normals");
 	normalsObject->SetDrawWired(true);
-
 	_debugObjects.insert({ _debugObjects.size() + 1,normalsObject });
+
+	//create AABB
+	Model* aabbModel = new Model();
+	aabbModel->LoadAabbModel(_model->GetModelResource()->Vertices);
+	SceneObject* aabbObject = new SceneObject(true);
+	aabbObject->SetParent(this);
+	aabbObject->_model = aabbModel;
+	aabbObject->SetName("aabb");
+	aabbObject->SetDrawWired(true);
+	_debugObjects.insert({ _debugObjects.size() + 1,aabbObject });
+
 }
 
 void SceneObject::SetShader(Shader* shader) {
@@ -320,10 +330,4 @@ void SceneObject::DrawDebugObjects(Camera* camera) {
 		else
 			it->second->DrawDebug(camera);
 	}
-}
-void SceneObject::CopyParentTransform() {
-
-	SetPosition(_parent->GetPosition());
-	SetRotation(_parent->GetRotation());
-	SetScale(_parent->GetScale());
 }

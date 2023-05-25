@@ -4,6 +4,8 @@
 #include "Vertex.h"
 #include "ResourceManager.h"
 
+#include <climits>
+
 Model::Model() 
 	: _modelResource(nullptr){
 
@@ -165,7 +167,95 @@ int Model::LoadNormalModel(std::vector<Vertex>& vertices) {
 	return MY_SUCCES_CODE;
 }
 
+int Model::LoadAabbModel(std::vector<Vertex>& vertices) {
 
+	std::vector<Vertex> aabbVertices;
+	std::vector<unsigned short> aabbWiredIndices;
+	std::vector<unsigned short> aabbIndices;
+
+	//Vector2 (min_value, max_valuea)
+	Vector2 ox(INT_MAX, INT_MIN);
+	Vector2 oy(INT_MAX, INT_MIN);
+	Vector2 oz(INT_MAX, INT_MIN);
+	for (auto it = vertices.begin(); it != vertices.end(); it++) {
+
+		//min max pe axa OX
+		if (it->pos.x < ox.x)
+			ox.x = it->pos.x;
+		if (it->pos.x > ox.y) {
+			ox.y = it->pos.x;
+		}
+
+		//min max pe axa OY
+		if (it->pos.y < oy.x)
+			oy.x = it->pos.y;
+		if (it->pos.y > oy.y) {
+			oy.y = it->pos.y;
+		}
+
+		//min max pe axa OZ
+		if (it->pos.z < oz.x)
+			oz.x = it->pos.z;
+		if (it->pos.z > oz.y) {
+			oz.y = it->pos.z;
+		}
+	}
+
+	Vertex temp;
+	temp.pos = Vector3(ox.x, oy.x, oz.x);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.y, oy.x, oz.x);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.y, oy.y, oz.x);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.x, oy.y, oz.x);
+	aabbVertices.push_back(temp);
+
+	temp.pos = Vector3(ox.x, oy.x, oz.y);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.y, oy.x, oz.y);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.y, oy.y, oz.y);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.x, oy.y, oz.y);
+	aabbVertices.push_back(temp);
+
+
+	aabbWiredIndices.push_back(0);
+	aabbWiredIndices.push_back(1);
+	aabbWiredIndices.push_back(0);
+	aabbWiredIndices.push_back(3);
+	aabbWiredIndices.push_back(0);
+	aabbWiredIndices.push_back(4);
+	aabbWiredIndices.push_back(1);
+	aabbWiredIndices.push_back(5);
+	aabbWiredIndices.push_back(1);
+	aabbWiredIndices.push_back(2);
+	aabbWiredIndices.push_back(3);
+	aabbWiredIndices.push_back(2);
+	aabbWiredIndices.push_back(3);
+	aabbWiredIndices.push_back(7);
+	aabbWiredIndices.push_back(7);
+	aabbWiredIndices.push_back(4);
+	aabbWiredIndices.push_back(7);
+	aabbWiredIndices.push_back(6);
+	aabbWiredIndices.push_back(6);
+	aabbWiredIndices.push_back(5);
+	aabbWiredIndices.push_back(6);
+	aabbWiredIndices.push_back(4);
+	aabbWiredIndices.push_back(4);
+	aabbWiredIndices.push_back(5);
+
+	_modelResource = new ModelResource();
+	_modelResource->Vertices = aabbVertices;
+	_modelResource->WiredIndices = aabbWiredIndices;
+
+	FillVerticesColor(Vector3(0.0, 1.0, 1.0));
+
+	BindAndLoadVertices();
+
+	return MY_SUCCES_CODE;
+}
 void Model::BindFilled() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, _vboid);
@@ -219,16 +309,16 @@ void Model::CreateWiredindicesBuffer(std::vector<GLushort>& indices, std::vector
 	}
 }
 
-void Model::FillVerticesColor() {
+void Model::FillVerticesColor(Vector3 fillColor) {
 
 	Vector3 color;
 	for (unsigned int i = 0; i < _modelResource->Vertices.size(); i++) {
 
 		color = _modelResource->Vertices[i].color;
 		if (color.x == 0 && color.y == 0 && color.z == 0) {
-			_modelResource->Vertices[i].color.x = 1.0f;
-			_modelResource->Vertices[i].color.y = 1.0f;
-			_modelResource->Vertices[i].color.z = 1.0f;
+			_modelResource->Vertices[i].color.x = fillColor.x;
+			_modelResource->Vertices[i].color.y = fillColor.y;
+			_modelResource->Vertices[i].color.z = fillColor.z;
 		}
 		
 	}
