@@ -256,6 +256,7 @@ int Model::LoadAabbModel(std::vector<Vertex>& vertices) {
 
 	return MY_SUCCES_CODE;
 }
+
 void Model::BindFilled() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, _vboid);
@@ -272,6 +273,27 @@ void Model::Unbind() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
  
+int Model::UpdateAabbModel(std::vector<Vertex> vertices, Vector3 scale) {
+
+	//std::vector<Vertex> aabbVertices;
+	//aabbVertices = _modelResource->Vertices;
+
+	Matrix scaleMatrix;
+	scaleMatrix.SetScale(scale);
+
+	Vector4 temp;
+	for (auto it = vertices.begin(); it != vertices.end(); it++) {
+
+		if (scale.x != 1.0)
+			int x = 0;
+		temp = scaleMatrix * Vector4(it->pos, 1.0f);
+		it->pos = Vector3(temp);
+	}
+	LoadAabbModel(vertices);
+	//BindAndLoadVertices();
+
+	return MY_SUCCES_CODE;
+}
 // PRIVATE
 
 void Model::BindAndLoadVertices() {

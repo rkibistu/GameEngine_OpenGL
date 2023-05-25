@@ -320,6 +320,10 @@ void SceneObject::UpdateDebugObjects(float deltaTime) {
 		//asta trb abstractizata de aici. e ok momentan
 		if(it->second->GetName() == "normals")
 			it->second->SetScale(_scale);
+
+		if (it->second->GetName() == "aabb") {
+			it->second->_model->UpdateAabbModel(_model->GetModelResource()->Vertices, _scale);
+		}
 	}
 }
 void SceneObject::DrawDebugObjects(Camera* camera) {
