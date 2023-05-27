@@ -167,6 +167,37 @@ int Model::LoadNormalModel(std::vector<Vertex>& vertices) {
 	return MY_SUCCES_CODE;
 }
 
+int Model::LoadLineUp(Vector3 up, float length) {
+
+	Vector3 origin(0.0f, 0.0f, 0.0f);
+	Vector3 color(1.0f, 1.0f, 0.0f);
+
+	std::vector<Vertex> vertices;
+	std::vector<GLushort> indices;
+	std::vector<GLushort> wiredIndices;
+
+	Vertex vertex;
+	vertex.pos = origin;
+	vertex.color = color;
+	vertices.push_back(vertex);
+
+	vertex.pos = (origin + up) * length;
+	vertex.color = color;
+	vertices.push_back(vertex);
+
+	wiredIndices.push_back(0);
+	wiredIndices.push_back(1);
+
+	_modelResource = new ModelResource();
+	_modelResource->Vertices = vertices;
+	_modelResource->Indices = indices;
+	_modelResource->WiredIndices = wiredIndices;
+
+	BindAndLoadVertices();
+
+	return MY_SUCCES_CODE;
+}
+
 int Model::LoadAabbModel(std::vector<Vertex>& vertices) {
 
 	std::vector<Vertex> aabbVertices;
@@ -246,6 +277,8 @@ int Model::LoadAabbModel(std::vector<Vertex>& vertices) {
 	aabbWiredIndices.push_back(4);
 	aabbWiredIndices.push_back(5);
 
+	if (_modelResource)
+		delete _modelResource;
 	_modelResource = new ModelResource();
 	_modelResource->Vertices = aabbVertices;
 	_modelResource->WiredIndices = aabbWiredIndices;

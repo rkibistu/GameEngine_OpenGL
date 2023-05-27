@@ -50,6 +50,7 @@ public:
 	Model* GetTerrainModel(int sizeWidht, int sizeHeight, int cellCountWidth, int cellCountHeight);
 	
 	Model* GetSystemAxisModel();
+	Model* GetLineUpModel();
 
 	//return nullptr if terrain is not loaded
 	Model* GetTerrainModel();
@@ -98,6 +99,7 @@ private:
 
 	Model* _terrainModel = nullptr;
 	Model* _axisModel = nullptr;
+	Model* _upLine = nullptr;
 };
 
 

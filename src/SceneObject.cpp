@@ -36,6 +36,11 @@ SceneObject::~SceneObject() {
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
+		if (it->second->GetName() == "aabb") {
+			
+			delete it->second->_model->GetModelResource();
+			delete it->second->_model;
+		}
 		delete it->second;
 	}
 }
@@ -152,6 +157,9 @@ void SceneObject::SetModel(Model* model) {
 	//_debugObjects.insert({ _debugObjects.size() + 1,normalsObject });
 
 	//create AABB
+	// MOVE THIS FROM HERE AND CALL IT MANUALLY!
+	if (_isDebug)
+		return;
 	Model* aabbModel = new Model();
 	aabbModel->LoadAabbModel(_model->GetModelResource()->Vertices);
 	SceneObject* aabbObject = new SceneObject(true);
@@ -160,7 +168,6 @@ void SceneObject::SetModel(Model* model) {
 	aabbObject->SetName("aabb");
 	aabbObject->SetDrawWired(true);
 	_debugObjects.insert({ _debugObjects.size() + 1,aabbObject });
-
 }
 
 void SceneObject::SetShader(Shader* shader) {

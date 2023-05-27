@@ -31,6 +31,7 @@ public:
 	int LoadSystemAxis();
 	int LoadNormalModel(std::vector<Vertex>& vertices);
 	int LoadAabbModel(std::vector<Vertex>& vertices);
+	int LoadLineUp(Vector3 up, float length);
 
 	int UpdateAabbModel(std::vector<Vertex> vertices, Vector3 scale, Vector3 rotation);
 

@@ -55,6 +55,10 @@ void ResourceManager::DestroyInstance() {
 		delete _axisModel->GetModelResource();
 		delete _axisModel;
 	}
+	if (_upLine) {
+		delete _upLine->GetModelResource();
+		delete _upLine;
+	}
 
 	if (_spInstance)
 		delete _spInstance;
@@ -434,6 +438,15 @@ Model* ResourceManager::GetSystemAxisModel() {
 		_axisModel->LoadSystemAxis();
 	}
 	return _axisModel;
+}
+Model* ResourceManager::GetLineUpModel() {
+
+	
+	if (_upLine == nullptr) {
+		_upLine = new Model();
+		_upLine->LoadLineUp(Vector3(0.0f,1.0f,0.0f),10.0f);
+	}
+	return _upLine;
 }
 
 Model* ResourceManager::LoadModel(unsigned int id) {

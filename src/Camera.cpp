@@ -56,8 +56,8 @@ void Camera::DoFirstPersonMovement() {
 	Move(cameraMoveDirection);
 
 
-	//RotateUsingArrows();
-	RotateUsingMouse();
+	RotateUsingArrows();
+	//RotateUsingMouse();
 }
 void Camera::RotateUsingArrows() {
 	//Rotation
@@ -176,6 +176,8 @@ void Camera::RotateOX(int direction) {
 	Matrix rotateOX;
 	rotateOX.SetRotationX(_rotationSpeed * _deltaTime * Math::Sign(direction));
 
+	_rotation.x += _rotationSpeed * _deltaTime * Math::Sign(direction);
+
 	Vector4 rotateLocalUp = Vector4(_localUp, 1.0f) * rotateOX;
 	Vector4 up = (rotateLocalUp * _worldMatrix).Normalize();
 	_up = Vector3(up.x, up.y, up.z);
@@ -203,6 +205,7 @@ void Camera::RotateOY(int direction) {
 
 	Matrix rotateOY;
 	rotateOY.SetRotationY(_rotationSpeed * _deltaTime * Math::Sign(direction));
+	_rotation.y += _rotationSpeed * _deltaTime * Math::Sign(direction);
 
 	Vector4 rotatedTarget = localTarget * rotateOY;
 
@@ -224,11 +227,9 @@ void Camera::RotateOZ(int direction) {
 	Vector3 goBackPos(_position);
 	TranslateToOrigin();
 
-	std::cout << "RESET: " << _position.x << " " << _position.y << " " << _position.z << std::endl;
-
-
 	Matrix rotateOZ;
 	rotateOZ.SetRotationZ(_rotationSpeed * _deltaTime * Math::Sign(direction));
+	_rotation.z += _rotationSpeed * _deltaTime * Math::Sign(direction);
 
 	Vector4 rotateLocalUp = Vector4(_localUp, 1.0f) * rotateOZ;
 	Vector4 up = (rotateLocalUp * _worldMatrix).Normalize();

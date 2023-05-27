@@ -93,5 +93,8 @@ private:
 	Matrix _viewMatrix;; //inverse of world matrix
 
 	Matrix _projMatrix;
+
+public:
+	Vector3 _rotation;
 };
 
