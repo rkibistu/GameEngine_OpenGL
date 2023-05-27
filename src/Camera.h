@@ -52,6 +52,7 @@ public:
 	inline Vector3 GetTarget() { return _target; }
 	inline Vector3 GetUp() { return _up; }
 
+	inline Vector3 GetRotation() { return _rotation; }
 private:
 	
 	Matrix _R;
@@ -94,7 +95,6 @@ private:
 
 	Matrix _projMatrix;
 
-public:
 	Vector3 _rotation;
 };
 

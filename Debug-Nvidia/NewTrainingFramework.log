@@ -1,17 +1,4 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  SceneManager.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
-  Camera.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Camera.cpp(122,18): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Camera.cpp(123,18): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Camera.cpp(124,18): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Camera.cpp(130,40): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Camera.cpp(141,37): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Camera.cpp(152,67): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Camera.cpp(164,20): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Camera.cpp(165,20): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Camera.cpp(166,20): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-  Generating Code...
-Fire.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  Trajectory.cpp
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Trajectory.h(44,32): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   NewTrainingFramework.vcxproj -> E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\BIN-Nvidia\NewTrainingFramework.exe

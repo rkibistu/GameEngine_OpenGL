@@ -84,6 +84,9 @@
     <ClCompile Include="src\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Trajectory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rapidXML\rapidxml.hpp">
@@ -185,6 +188,9 @@
     <ClInclude Include="src\AmbientalLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Trajectory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="pcviewer_es2.cfg" />
@@ -209,6 +215,8 @@
     <None Include="Resources\Shaders\Lights\LightSourceShaderVS.vert" />
     <None Include="Resources\Shaders\Debug\SimpleColorShaderVS.vert" />
     <None Include="Resources\Shaders\Debug\SimpleColorShaderFS.frag" />
+    <None Include="Resources\Shaders\Lights\NormalMapShaderVS.vert" />
+    <None Include="Resources\Shaders\Lights\NormalMapShaderFS.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />

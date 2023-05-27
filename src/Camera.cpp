@@ -56,8 +56,8 @@ void Camera::DoFirstPersonMovement() {
 	Move(cameraMoveDirection);
 
 
-	RotateUsingArrows();
-	//RotateUsingMouse();
+	//RotateUsingArrows();
+	RotateUsingMouse();
 }
 void Camera::RotateUsingArrows() {
 	//Rotation

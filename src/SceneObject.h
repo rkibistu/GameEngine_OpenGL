@@ -6,6 +6,7 @@
 #include "Shaders.h"
 #include "Material.h"
 #include "Camera.h"
+#include "Trajectory.h"
 
 #include <vector>
 #include <map>
@@ -72,6 +73,8 @@ public:
 	inline bool GetDrawWired() { return _drawWired; }
 
 	inline void SetParent(SceneObject* parent) { _parent = parent; }
+
+	inline void SetTrajectory(Trajectory* trajectory) { _trajectory = trajectory; }
 protected:
 
 
@@ -106,6 +109,8 @@ protected:
 	Shader* _debugShader; //used in debugMode
 	std::vector<Texture*> _textureResources;
 	Material* _material;
+
+	Trajectory* _trajectory = nullptr;
 
 	bool _depthTest;
 	bool _drawWired;

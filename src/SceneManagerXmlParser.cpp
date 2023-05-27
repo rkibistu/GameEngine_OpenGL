@@ -206,7 +206,7 @@ int SceneManagerXmlParser::ReadFog(Fog& fog) {
 
 	rapidxml::xml_node<>* fogNode = _xmlRoot->first_node(FOG_ROOT_NODE);
 	for (rapidxml::xml_node<>* node = fogNode->first_node(); node; node = node->next_sibling()) {
-	
+
 		ReadFloat(node, FOG_NEAR_PLANE, fog.NearPlane);
 		ReadFloat(node, FOG_FAR_PLANE, fog.FarPlane);
 		ReadVector3_rgb(node, COLOR_NODE, fog.Color);
@@ -228,6 +228,7 @@ SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* object
 
 
 	SceneObjectXmlFormat obj;
+	TrajectoryXmlFormat trajXml;
 
 	//ia atributele: <object id=1>
 	for (rapidxml::xml_attribute<>* pAttr = objectNode->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
@@ -254,9 +255,12 @@ SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* object
 		ReadString(node, NAME_NODE, obj.name);
 		ReadFollowingCamera(node, FOLLOWING_CAMERA_NODE, obj.followCameraDirections);
 		ReadFloat(node, DISPLACEMENT_MAX_VALUE_NODE, obj.fireDisplMax);
+		ReadTrajectory(node, TRAJECTORY_NODE, trajXml);
 	}
 
 	SceneObject* sceneObject = CreateSceneObject(obj);
+	sceneObject->SetTrajectory(CreateTrajectory(trajXml));
+	
 	return sceneObject;
 }
 void SceneManagerXmlParser::ReadModel(rapidxml::xml_node<>* node, SceneObject* sceneObject) {
@@ -340,6 +344,47 @@ void SceneManagerXmlParser::ReadFollowingCamera(rapidxml::xml_node<>* node, std:
 			}
 		}
 
+	}
+}
+void SceneManagerXmlParser::ReadTrajectory(rapidxml::xml_node<>* node, std::string noodName, TrajectoryXmlFormat& trajXml) {
+
+	if (strcmp(node->name(), TRAJECTORY_NODE) == 0) {
+
+		//ia atributele
+		for (rapidxml::xml_attribute<>* pAttr = node->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
+		{
+			if (strcmp(pAttr->name(), TRAJECTORY_TYPE_ATTRIBUTE) == 0) {
+
+				trajXml.type = pAttr->value();
+			}
+			if (strcmp(pAttr->name(), TRAJECTORY_ITERATION_COUNT_ATTRIBUTE) == 0) {
+
+				if (strcmp(pAttr->value(), "infinite") == 0) {
+
+					trajXml.iterationInfinity = true;
+				}
+				else {
+
+					trajXml.iterationInfinity = false;
+					trajXml.iterationCount = atoi(pAttr->value());
+				}
+			}
+			if (strcmp(pAttr->name(), TRAJECTORY_DIRECTION_ATTRIBUTE) == 0) {
+
+				trajXml.direction = pAttr->value();
+			}
+			if (strcmp(pAttr->name(), TRAJECTORY_SPEED_ATTRIBUTE) == 0) {
+
+				trajXml.speed = atoi(pAttr->value());
+			}
+		}
+
+		for (rapidxml::xml_node<>* childNode = node->first_node(); childNode; childNode = childNode->next_sibling()) {
+
+			ReadVector3_xyz(childNode, TRAJECTORY_CENTER_NODE, trajXml.center);
+			ReadFloat(childNode, TRAJECTORY_RADIUS_NODE, trajXml.radius);
+			ReadVectors3_xyz(childNode, TRAJECTORY_POINTS_ROOT, TRAJECTORY_POINT_NODE, trajXml.checkpoints);
+		}
 	}
 }
 
@@ -446,6 +491,23 @@ bool SceneManagerXmlParser::ReadVector3_rgb(rapidxml::xml_node<>* node, std::str
 	}
 	return false;
 }
+bool SceneManagerXmlParser::ReadVectors3_xyz(rapidxml::xml_node<>* node, std::string rootNodeName, std::string nodeName, std::vector<Vector3>& result) {
+
+	if (strcmp(node->name(), rootNodeName.c_str()) == 0) {
+
+		Vector3 temp;
+		for (rapidxml::xml_node<>* childNode = node->first_node(); childNode; childNode = childNode->next_sibling()) {
+
+			if (ReadVector3_xyz(childNode, nodeName, temp)) {
+				result.push_back(temp);
+			}
+		}
+		return true;
+	}
+	return false;
+
+
+}
 bool SceneManagerXmlParser::ReadFloat(rapidxml::xml_node<>* node, std::string nodeName, float& result) {
 
 	if (strcmp(node->name(), nodeName.c_str()) == 0) {
@@ -539,17 +601,37 @@ LightObject* SceneManagerXmlParser::CreateLightObject(LightObjectXmlFormat obj) 
 	LightObject::Type type;
 	if (obj.type == "point")
 		type = LightObject::Type::Point;
-	else if(obj.type == "directional")
+	else if (obj.type == "directional")
 		type = LightObject::Type::Directional;
 	else if (obj.type == "spot")
 		type = LightObject::Type::Spot;
 
-	LightObject* lightObject = new LightObject(type,obj.diffuseColor,obj.specularColor);
+	LightObject* lightObject = new LightObject(type, obj.diffuseColor, obj.specularColor);
 	lightObject->SetId(obj.id);
 	lightObject->SetPosition(obj.position);
-	
+
 	return lightObject;
 }
+Trajectory* SceneManagerXmlParser::CreateTrajectory(TrajectoryXmlFormat trajXml) {
 
+	Trajectory::Type type;
+	if (trajXml.type == TRAJECTORY_TYPE_LINEAR)
+		type = Trajectory::Type::Linear;
+	else if (trajXml.type == TRAJECTORY_TYPE_LINEAR_STRIP)
+		type = Trajectory::Type::LineStrip;
+	else if (trajXml.type == TRAJECTORY_TYPE_LINEAR_LOOP)
+		type = Trajectory::Type::LineLoop;
+	else if (trajXml.type == TRAJECTORY_TYPE_CIRCLE)
+		type = Trajectory::Type::Circle;
+	else {
+		std::cout << "Bad type of trajectory: " << trajXml.type << std::endl;
+		return nullptr;
+	}
+
+	Trajectory* traj = new Trajectory(type,trajXml.speed);
+	traj->AddCheckpoint(trajXml.checkpoints);
+
+	return traj;
+}
 
 

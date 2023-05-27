@@ -75,11 +75,30 @@ struct DefaultSettings;
 #define DEBUG_SHADER_NODE "debugShader"
 #define DEBUG_LIGHT_MODEL_NODE "lightDebugModel"
 #define DEBUG_LIGHT_SHADER_NODE "lightDebugShader"
+
 #define ID_ATTRIBUTE "id"
 
+//trajectory defines
+#define TRAJECTORY_NODE "trajectory"
+#define TRAJECTORY_TYPE_ATTRIBUTE "type"
+#define TRAJECTORY_ITERATION_COUNT_ATTRIBUTE "iteration-count"
+#define TRAJECTORY_ITERATION_ATTRIBUTE "iteration"
+#define TRAJECTORY_SPEED_ATTRIBUTE "speed"
+#define TRAJECTORY_DIRECTION_ATTRIBUTE "direction"
+#define TRAJECTORY_POINTS_ROOT "points"
+#define TRAJECTORY_POINT_NODE "point"
+#define TRAJECTORY_CENTER_NODE "center"
+#define TRAJECTORY_RADIUS_NODE "radius"
+#define TRAJECTORY_ROTATION_PLANE_NODE "rotationPlane"
+
+#define TRAJECTORY_TYPE_LINEAR "linear"
+#define TRAJECTORY_TYPE_LINEAR_STRIP "line-strip"
+#define TRAJECTORY_TYPE_LINEAR_LOOP "line-loop"
+#define TRAJECTORY_TYPE_CIRCLE "circle"
 
 struct SceneObjectXmlFormat;
 struct LightObjectXmlFormat;
+struct TrajectoryXmlFormat;
 
 class SceneManagerXmlParser {
 
@@ -104,7 +123,7 @@ private:
 	void ReadTextures(rapidxml::xml_node<>* node, SceneObject* sceneObject);
 	void ReadTexturesVector(rapidxml::xml_node<>* node, std::string rootNodeName, std::string nodeName, std::vector<int>& result);
 	void ReadFollowingCamera(rapidxml::xml_node<>* node, std::string rootNodeName, Vector3& directions);
-	
+	void ReadTrajectory(rapidxml::xml_node<>* node, std::string noodName, TrajectoryXmlFormat& trajXml);
 
 	LightObject* ReadLightObject(rapidxml::xml_node<>* objectNode);
 
@@ -113,12 +132,14 @@ private:
 	//functia asta primeste nodul pentru care cuatam copii, numele nodului copil cuatat si un vector3 unde sa puen rezzultatul
 	bool ReadVector3_xyz(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result);
 	bool ReadVector3_rgb(rapidxml::xml_node<>* node, std::string nodeName, Vector3& result);
+	bool ReadVectors3_xyz(rapidxml::xml_node<>* node, std::string rootNodeName, std::string nodeName, std::vector<Vector3>& result);
 	bool ReadFloat(rapidxml::xml_node<>* node, std::string nodeName, float& result);
 	bool ReadString(rapidxml::xml_node<>* node, std::string nodeName, std::string& result);
 	bool ReadInt(rapidxml::xml_node<>* node, std::string nodeName, int& result);
 
 	SceneObject* CreateSceneObject(SceneObjectXmlFormat obj);
 	LightObject* CreateLightObject(LightObjectXmlFormat obj);
+	Trajectory* CreateTrajectory(TrajectoryXmlFormat trajXml);
 private:
 	//Pastram pointeri spre locurile importante din XML
 	// Ma gandesc ca daca creez un obiect la runtime, vreau sa il scriu in fisier
@@ -160,4 +181,16 @@ struct LightObjectXmlFormat {
 	Vector3 diffuseColor;
 	Vector3 specularColor;
 	std::vector<int> associatedObjects;
+};
+
+struct TrajectoryXmlFormat {
+
+	std::string type;
+	std::string direction;
+	unsigned int iterationCount;
+	bool iterationInfinity;
+	float speed;
+	std::vector<Vector3> checkpoints;
+	Vector3 center;
+	float radius;
 };

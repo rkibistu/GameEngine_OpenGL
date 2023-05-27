@@ -184,6 +184,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-Nvidia|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\TerrainObject.cpp" />
+    <ClCompile Include="src\Trajectory.cpp" />
     <ClCompile Include="src\vendor\fastObj\fast_obj.cpp" />
     <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
@@ -214,6 +215,7 @@
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\targetver.h" />
     <ClInclude Include="src\TerrainObject.h" />
+    <ClInclude Include="src\Trajectory.h" />
     <ClInclude Include="src\vendor\fastObj\fast_obj.h" />
     <ClInclude Include="src\vendor\rapidXML\rapidxml.hpp" />
     <ClInclude Include="src\vendor\rapidXML\rapidxml_iterators.hpp" />
@@ -237,6 +239,8 @@
     <None Include="Resources\Shaders\Lights\LightedShaderVS.vert" />
     <None Include="Resources\Shaders\Lights\LightSourceShaderFS.frag" />
     <None Include="Resources\Shaders\Lights\LightSourceShaderVS.vert" />
+    <None Include="Resources\Shaders\Lights\NormalMapShaderFS.frag" />
+    <None Include="Resources\Shaders\Lights\NormalMapShaderVS.vert" />
     <None Include="Resources\Shaders\ReflectSkyboxShaderFS.frag" />
     <None Include="Resources\Shaders\ReflectSkyboxShaderVS.vert" />
     <None Include="Resources\Shaders\SkyboxShaderFS.frag" />

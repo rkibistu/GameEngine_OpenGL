@@ -444,7 +444,7 @@ Model* ResourceManager::GetLineUpModel() {
 	
 	if (_upLine == nullptr) {
 		_upLine = new Model();
-		_upLine->LoadLineUp(Vector3(0.0f,1.0f,0.0f),10.0f);
+		_upLine->LoadLineUp(Vector3(0.0f,1.0f,0.0f),0.15f);
 	}
 	return _upLine;
 }

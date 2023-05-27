@@ -43,6 +43,9 @@ SceneObject::~SceneObject() {
 		}
 		delete it->second;
 	}
+
+	if (_trajectory)
+		delete _trajectory;
 }
 
 void SceneObject::Update(float deltaTime) {
@@ -51,11 +54,16 @@ void SceneObject::Update(float deltaTime) {
 
 	if (_rotation.y > 180 * 2 * 3.14) {
 		_rotation.y -= 180 * 2 * 3.14;
-	}
+	} 
 
 	if (Input::GetKeyDown(KeyCode::K)) {
 
 		_rotation.y += 2.5f;
+	}
+
+	if (_trajectory) {
+
+		_trajectory->Update(deltaTime, _position);
 	}
 }
 
@@ -250,6 +258,9 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	_shader->SetUniform1f("u_factorTexture", _material->GetFactorTextura());
 	_shader->SetUniform1f("u_factorReflect", _material->GetFactorReflexieTextura());
 
+	//normal mapping
+	_shader->SetUniform1i("u_normalMap", 2);
+
 	//fog
 	Fog fog = sceneManager.GetFog();
 	_shader->SetUniform1f("u_fogNear", fog.NearPlane);
@@ -294,6 +305,8 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	_shader->SetUniform1f("u_ambientFactor", 0.2);
 	_shader->SetUniform1f("u_specularFactor", 0.8);
 	_shader->SetUniform1f("u_diffuseFactor", 0.5);
+
+	
 }
 void SceneObject::SetUniformsParticular(Camera* camera) {
 

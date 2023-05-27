@@ -73,8 +73,8 @@
 				<y>1</y>
 				<z>0</z>
 			</up>
-			<translationSpeed>300</translationSpeed>
-			<rotationSpeed>200</rotationSpeed>
+			<translationSpeed>75</translationSpeed>
+			<rotationSpeed>35</rotationSpeed>
 			<fov>45</fov>
 			<near>0.2</near>
 			<far>10000</far>
@@ -117,7 +117,7 @@
 			<model>1</model>
 			<shader>23</shader>
 			<type>normal</type>
-			<name>Crocodil_verde</name>
+			<name>Croco_traj</name>
 			<textures>
 				<texture id="4"/>
 				<texture id="100"/>
@@ -148,15 +148,40 @@
 				<oy/>
 				<oz/>
 			</followingCamera>
-			<trajectory type="linear" iteration="infinite" direction="alternate">
+			-->
+			
+			<trajectory type="line-loop" iteration-count="infinite" direction="alternate" speed="35">
 				<comment>startPoint e chiar Pos</comment>
-				<endPoint>
-					<x>0.5</x>
-					<y>100.0</y>
-					<z>1.0</z>				
-				</endPoint>
+				<points>
+					<point>
+						<x>0</x>
+						<y>25</y>
+						<z>300</z>			
+					</point>
+					<!-- <point> -->
+						<!-- <x>0</x> -->
+						<!-- <y>225</y> -->
+						<!-- <z>300</z>			 -->
+					<!-- </point> -->
+					<!-- <point> -->
+						<!-- <x>200</x> -->
+						<!-- <y>225</y> -->
+						<!-- <z>300</z>			 -->
+					<!-- </point> -->
+					<!-- <point> -->
+						<!-- <x>200</x> -->
+						<!-- <y>25</y> -->
+						<!-- <z>300</z>			 -->
+					<!-- </point> -->
+					<point>
+						<x>0</x>
+						<y>225</y>
+						<z>300</z>			
+					</point>
+				</points>
 				<speed>0.1</speed>
 			</trajectory>
+			<!--
 			<lights>
 				<light>1</light>
 			</lights>
@@ -302,8 +327,13 @@
 		</object>
 		<object id="36">
 			
-			<model>2</model>
-			<shader>23</shader>
+			<model>1003</model>
+			<shader>28</shader>
+			<textures>
+				<texture id="15"/>
+				<texture id="100"/>
+				<texture id="104"/>
+			</textures>
 			<type>normal</type>
 			<wired/>
 			<name>mesh_minge</name>
@@ -323,9 +353,9 @@
 				<z>90</z>
 			</rotation>
 			<scale>
-				<x>4.0</x>
-				<y>4.0</y>
-				<z>4.0</z>
+				<x>1.0</x>
+				<y>1.0</y>
+				<z>1.0</z>
 			</scale>
 		</object>
 		<object id="37">
@@ -453,13 +483,89 @@
 			</position>
 			<rotation>
 				<x>0</x>
-				<y>45</y>
+				<y>0</y>
 				<z>0</z>
 			</rotation>
 			<scale>
-				<x>2.0</x>
-				<y>2.0</y>
-				<z>2.0</z>
+				<x>3.0</x>
+				<y>3.0</y>
+				<z>3.0</z>
+			</scale>
+		</object>
+		<object id="44">
+				<model>1003</model>
+				<shader>28</shader>
+				<type>normal</type>
+				<textures>
+					<texture id="15"/>
+					<texture id="100"/>
+					<texture id="104"/>
+				</textures>
+				<material>302</material>
+				<name>mesh_minge</name>
+				<position>
+					<x>300</x>
+					<y>30</y>
+					<z>0</z>
+				</position>
+				<rotation>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</rotation>
+				<scale>
+					<x>1.0</x>
+					<y>1.0</y>
+					<z>1.0</z>
+				</scale>
+			</object>
+	
+		<object id="45">
+			<model>2</model>
+			<shader>26</shader>
+			<textures>
+				<texture id="14"/>
+			</textures>
+			<type>normal</type>
+			<name>lightedObject2</name>
+			<position>
+				<x>0</x>
+				<y>25</y>
+				<z>300</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</rotation>
+			<scale>
+				<x>3.0</x>
+				<y>3.0</y>
+				<z>3.0</z>
+			</scale>
+		</object>
+				<object id="46">
+			<model>2</model>
+			<shader>26</shader>
+			<textures>
+				<texture id="14"/>
+			</textures>
+			<type>normal</type>
+			<name>lightedObject2</name>
+			<position>
+				<x>0</x>
+				<y>225</y>
+				<z>300</z>
+			</position>
+			<rotation>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</rotation>
+			<scale>
+				<x>3.0</x>
+				<y>3.0</y>
+				<z>3.0</z>
 			</scale>
 		</object>
 	</objects>
@@ -479,7 +585,7 @@
 			<associatedObject>2</associatedObject>
 			<position>
 				<x>0</x>
-				<y>0</y>
+				<y>50</y>
 				<z>180</z>
 			</position>
 			<diffuseColor>
@@ -492,27 +598,27 @@
 				<g>1.0</g>
 				<b>1.0</b>
 			</specularColor>
-			<type>point</type>
+			<type>spot</type>
 		</light>
-		<light id="2">
-			<associatedObject>2</associatedObject>
-			<position>
-				<x>100</x>
-				<y>50</y>
-				<z>25</z>
-			</position>
-			<diffuseColor>
-				<r>1.0</r>
-				<g>0.0</g>
-				<b>1.0</b>
-			</diffuseColor>
-			<specularColor>
-				<r>1.0</r>
-				<g>0.0</g>
-				<b>1.0</b>
-			</specularColor>
-			<type>point</type>
-		</light>
+		<!-- <light id="2"> -->
+			<!-- <associatedObject>2</associatedObject> -->
+			<!-- <position> -->
+				<!-- <x>100</x> -->
+				<!-- <y>50</y> -->
+				<!-- <z>25</z> -->
+			<!-- </position> -->
+			<!-- <diffuseColor> -->
+				<!-- <r>1.0</r> -->
+				<!-- <g>1.0</g> -->
+				<!-- <b>1.0</b> -->
+			<!-- </diffuseColor> -->
+			<!-- <specularColor> -->
+				<!-- <r>1.0</r> -->
+				<!-- <g>1.0</g> -->
+				<!-- <b>1.0</b> -->
+			<!-- </specularColor> -->
+			<!-- <type>point</type> -->
+		<!-- </light> -->
 	</lights>
 
 	<defaultSetting>

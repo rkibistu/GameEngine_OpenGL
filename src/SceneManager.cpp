@@ -148,7 +148,7 @@ void SceneManager::UpdateDebugObjects() {
 		if (it->second->GetName() == "targetLine") {
 
 			it->second->SetPosition(_activeCamera->GetTarget());
-			it->second->SetRotation(-_activeCamera->_rotation);
+			it->second->SetRotation(-_activeCamera->GetRotation());
 		}
 	}
 }

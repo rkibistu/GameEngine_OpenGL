@@ -23,6 +23,9 @@
 			<model id="1005">
 				<file>test.nfg</file>
 			</model>
+			<model id="1006">
+				<file>House.nfg</file>
+			</model>
 		</folder>
 
 		<folder path="Res/Models2/">
@@ -52,7 +55,7 @@
 			<shader id="20">
 				<vs>BasicColorShaderVS.vert</vs>
 				<fs>BasicColorShaderFS.frag</fs>
-			</shader>
+			</shader>p;
 			<shader id="21">
 				<vs>SkyboxShaderVS.vert</vs>
 				<fs>SkyboxShaderFS.frag</fs>
@@ -79,6 +82,10 @@
 			<shader id="26">
 				<vs>LightedShaderVS.vert</vs>
 				<fs>LightedShaderFS.frag</fs>
+			</shader>
+			<shader id="28">
+				<vs>NormalMapShaderVS.vert</vs>
+				<fs>NormalMapShaderFS.frag</fs>
 			</shader>
 		</folder>
 		<folder path="Resources/Shaders/Debug/">
@@ -159,6 +166,20 @@
 				<mag_filter>LINEAR</mag_filter>
 				<wrap_s>GL_REPEAT</wrap_s>
 				<wrap_t>GL_REPEAT</wrap_t>
+			</texture>
+			<texture id="104" type="2d">
+				<file>NormalMap.tga</file>
+				<min_filter>LINEAR</min_filter>
+				<mag_filter>LINEAR</mag_filter>
+				<wrap_s>GL_REPEAT</wrap_s>
+				<wrap_t>GL_REPEAT</wrap_t>
+			</texture>
+			<texture id="105" type="2d">
+				<file>House.tga</file>
+				<min_filter>LINEAR</min_filter>
+				<mag_filter>LINEAR</mag_filter>
+				<wrap_s>CLAMP_TO_EDGE</wrap_s>
+				<wrap_t>CLAMP_TO_EDGE</wrap_t>
 			</texture>
 			<!-- si aici se adauga toate texturile -->
 		</folder>
