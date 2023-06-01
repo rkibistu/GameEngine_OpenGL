@@ -6,7 +6,8 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "DebugObjects/LocalCoordonatesAxeObject.h"
-
+#include "DebugObjects/HitboxVisualObject.h"
+#include "DebugObjects/NormalsVisualObject.h"
 
 SceneObject::SceneObject(bool isDebugObj) {
 
@@ -157,26 +158,17 @@ void SceneObject::SetModel(Model* model) {
 	_model = model;
 
 	//create normal mode
-	//Model* normalModel = new Model();
-	//normalModel->LoadNormalModel(_model->GetModelResource()->Vertices);
-	//SceneObject* normalsObject = new SceneObject(true);
-	//normalsObject->SetParent(this);
-	//normalsObject->_model = normalModel;
-	//normalsObject->SetName("normals");
-	//normalsObject->SetDrawWired(true);
-	//_debugObjects.insert({ _debugObjects.size() + 1,normalsObject });
+	SceneObject* normalsObject = new NormalsVisualObject(_model);
+	normalsObject->SetParent(this);
+	_debugObjects.insert({ _debugObjects.size() + 1,normalsObject });
 
 	//create AABB
 	// MOVE THIS FROM HERE AND CALL IT MANUALLY!
 	if (_isDebug)
 		return;
-	Model* aabbModel = new Model();
-	aabbModel->LoadAabbModel(_model->GetModelResource()->Vertices);
-	SceneObject* aabbObject = new SceneObject(true);
+
+	SceneObject* aabbObject = new HitboxVisualObject(_model);
 	aabbObject->SetParent(this);
-	aabbObject->_model = aabbModel;
-	aabbObject->SetName("aabb");
-	aabbObject->SetDrawWired(true);
 	_debugObjects.insert({ _debugObjects.size() + 1,aabbObject });
 }
 
@@ -326,15 +318,6 @@ void SceneObject::SetUniformsCommonDebug(Camera* camera) {
 void SceneObject::SetUniformsParticularDebug(Camera* camera) {}
 
 void SceneObject::CreateDebugObjects() {
-	ResourceManager& resourceManager = ResourceManager::GetInstance();
-
-	//create debug objects specific to all scene objects
-	/*SceneObject* axisObject = new SceneObject(true);
-	axisObject->SetParent(this);
-	axisObject->SetModel(resourceManager.GetSystemAxisModel());
-	axisObject->SetName("axis");
-	axisObject->SetScale(10.0f, 10.0f, 10.0f);
-	axisObject->SetDrawWired(true);*/
 
 	SceneObject* axisObject = new LocalCoordonatesAxeObject();
 	axisObject->SetParent(this);
@@ -346,47 +329,13 @@ void SceneObject::UpdateDebugObjects(float deltaTime) {
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
-		if (it->second->GetName() == "axis") {
-
-			it->second->Update(deltaTime);
-		}
-		else {
-			it->second->SetPosition(_position);
-			if (it->second->GetName() != "aabb")
-				it->second->SetRotation(_rotation);
-
-			//asta trb abstractizata de aici. e ok momentan
-			if (it->second->GetName() == "normals")
-				it->second->SetScale(_scale);
-
-			if (it->second->GetName() == "aabb") {
-				if (_oldScale != _scale || _oldRotation != _rotation) {
-
-					it->second->_model->UpdateAabbModel(_model->GetModelResource()->Vertices, _scale, _rotation);
-					_oldScale = _scale;
-					_oldRotation = _rotation;
-				}
-			}
-		}
-
-
+		it->second->Update(deltaTime);
 	}
 }
 void SceneObject::DrawDebugObjects(Camera* camera) {
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
-		if (it->second->GetName() == "axis") {
-
-			it->second->Draw(camera);
-		}
-		else {
-			if (it->second->GetDrawWired())
-				it->second->DrawDebugWired(camera);
-			else
-				it->second->DrawDebug(camera);
-		}
-
-
+		it->second->Draw(camera);
 	}
 }

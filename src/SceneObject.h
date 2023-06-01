@@ -40,6 +40,7 @@ public:
 	void DrawDebugObjects(Camera* camera);
 
 	void SetModel(Model* model);
+	inline Model* GetModel() { return _model; }
 	void SetShader(Shader* shader);
 	void SetDebugShader(Shader* shader);
 	void AddTexture(Texture* texture);

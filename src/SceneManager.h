@@ -50,7 +50,7 @@ private:
 
 	void CreateDebugAxisObject();
 
-	void UpdateDebugObjects();
+	void UpdateDebugObjects(float deltaTime);
 
 private:
 	static SceneManager* _spInstance;

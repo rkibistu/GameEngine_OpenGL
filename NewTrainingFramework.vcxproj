@@ -163,7 +163,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\DebugObjects\CoordonatesAxeObject.cpp" />
+    <ClCompile Include="src\DebugObjects\HitboxVisualObject.cpp" />
     <ClCompile Include="src\DebugObjects\LocalCoordonatesAxeObject.cpp" />
+    <ClCompile Include="src\DebugObjects\NormalsVisualObject.cpp" />
+    <ClCompile Include="src\DebugObjects\TargetLineVisual.cpp" />
     <ClCompile Include="src\DebugObjects\WorldCoordonatesAxeObject.cpp" />
     <ClCompile Include="src\Fire.cpp" />
     <ClCompile Include="src\Input.cpp" />
@@ -199,7 +202,10 @@
     <ClInclude Include="src\AmbientalLight.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\DebugObjects\CoordonatesAxeObject.h" />
+    <ClInclude Include="src\DebugObjects\HitboxVisualObject.h" />
     <ClInclude Include="src\DebugObjects\LocalCoordonatesAxeObject.h" />
+    <ClInclude Include="src\DebugObjects\NormalsVisualObject.h" />
+    <ClInclude Include="src\DebugObjects\TargetLineVisual.h" />
     <ClInclude Include="src\DebugObjects\WorldCoordonatesAxeObject.h" />
     <ClInclude Include="src\Defines.h" />
     <ClInclude Include="src\Fire.h" />

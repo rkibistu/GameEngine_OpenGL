@@ -2,6 +2,8 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "Input.h"
+#include "DebugObjects/WorldCoordonatesAxeObject.h"
+#include "DebugObjects/TargetLineVisual.h"
 
 SceneManager* SceneManager::_spInstance = nullptr;
 
@@ -81,7 +83,7 @@ void SceneManager::Update(ESContext* esContext, float deltaTime) {
 		}
 	}
 
-	UpdateDebugObjects();
+	UpdateDebugObjects(deltaTime);
 }
 void SceneManager::Draw(ESContext* esContext) {
 
@@ -107,7 +109,7 @@ void SceneManager::Draw(ESContext* esContext) {
 		}
 		for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
-			it->second->DrawDebugWired(_activeCamera);
+			it->second->Draw(_activeCamera);
 		}
 	}
 
@@ -120,35 +122,21 @@ void SceneManager::CreateDebugAxisObject() {
 	ResourceManager& resourceManager = ResourceManager::GetInstance();
 
 	//axis scene
-	SceneObject* axisObject = new SceneObject(true);
-	axisObject->SetModel(resourceManager.GetSystemAxisModel());
-	axisObject->SetDrawWired(true);
-	axisObject->SetName("sceneAxis");
-	axisObject->SetScale(0.1f, 0.1f, 0.1f);
-	_debugObjects.insert({ _debugObjects.size() + 1,axisObject});
+	SceneObject* axisObject = new WorldCoordonatesAxeObject();
+	_debugObjects.insert({ _debugObjects.size() + 1,axisObject });
 
-	//target line
-	SceneObject* targetLine = new SceneObject(true);
-	targetLine->SetModel(resourceManager.GetLineUpModel());
-	targetLine->SetDrawWired(true);
-	targetLine->SetName("targetLine");
-	_debugObjects.insert({ _debugObjects.size() + 1,targetLine});
+	//targetLine
+	SceneObject* targetLine = new TargetLineVisual();
+	_debugObjects.insert({ _debugObjects.size() + 1,targetLine });
 
 }
-void SceneManager::UpdateDebugObjects() {
+void SceneManager::UpdateDebugObjects(float deltaTime) {
 
 	if (!_debugMode)
 		return;
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
-		//this for scene axis
-		if(it->second->GetName() == "sceneAxis")
-			it->second->StayOnSreen();
-		if (it->second->GetName() == "targetLine") {
-
-			it->second->SetPosition(_activeCamera->GetTarget());
-			it->second->SetRotation(-_activeCamera->GetRotation());
-		}
+		it->second->Update(deltaTime);
 	}
 }
