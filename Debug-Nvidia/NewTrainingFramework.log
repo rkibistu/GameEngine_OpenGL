@@ -1,48 +1,9 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  Trajectory.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Trajectory.h(45,32): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
-  TerrainObject.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Trajectory.h(45,32): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\TerrainObject.cpp(48,40): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\TerrainObject.cpp(49,36): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\TerrainObject.cpp(50,36): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\TerrainObject.cpp(62,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Skybox.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Trajectory.h(45,32): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   SceneObject.cpp
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Trajectory.h(45,32): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(56,32): warning C4305: '-=': truncation from 'double' to 'GLfloat'
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(221,80): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(305,46): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(306,47): warning C4305: 'argument': truncation from 'double' to 'float'
-  SceneManagerXmlParser.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Trajectory.h(45,32): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(19,6): warning C4101: 'res': unreferenced local variable
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(378,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(467,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(469,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(471,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(484,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(486,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(488,20): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(515,16): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  SceneManager.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Trajectory.h(45,32): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
-  Main.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Trajectory.h(45,32): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Main.cpp(18,1): warning C4005: 'PI': macro redefinition
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\Utilities\Math.h(8): message : see previous definition of 'PI'
-  Light.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Trajectory.h(45,32): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
-  Fire.cpp
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Trajectory.h(45,32): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
-  Generating Code...
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneManagerXmlParser.cpp(41): warning C4715: 'SceneManagerXmlParser::Init': not all control paths return a value
-Fire.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(58,32): warning C4305: '-=': truncation from 'double' to 'GLfloat'
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(223,84): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(307,46): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\SceneObject.cpp(308,47): warning C4305: 'argument': truncation from 'double' to 'float'
   NewTrainingFramework.vcxproj -> E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\BIN-Nvidia\NewTrainingFramework.exe

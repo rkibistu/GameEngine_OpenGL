@@ -5,6 +5,8 @@
 #include "Input.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include "DebugObjects/LocalCoordonatesAxeObject.h"
+
 
 SceneObject::SceneObject(bool isDebugObj) {
 
@@ -37,7 +39,7 @@ SceneObject::~SceneObject() {
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
 		if (it->second->GetName() == "aabb") {
-			
+
 			delete it->second->_model->GetModelResource();
 			delete it->second->_model;
 		}
@@ -54,7 +56,7 @@ void SceneObject::Update(float deltaTime) {
 
 	if (_rotation.y > 180 * 2 * 3.14) {
 		_rotation.y -= 180 * 2 * 3.14;
-	} 
+	}
 
 	if (Input::GetKeyDown(KeyCode::K)) {
 
@@ -63,7 +65,7 @@ void SceneObject::Update(float deltaTime) {
 
 	if (_trajectory) {
 
-		_trajectory->Update(deltaTime, _position);
+		//_trajectory->Update(deltaTime, _position);
 	}
 }
 
@@ -112,7 +114,7 @@ void SceneObject::DrawDebug(Camera* camera) {
 
 	if (_model == nullptr)
 		return;
-	if (_shader == nullptr)
+	if (_debugShader == nullptr)
 		return;
 
 	_model->BindFilled();
@@ -134,7 +136,7 @@ void SceneObject::DrawDebugWired(Camera* camera) {
 	//Draw wired + call draw for all debug objects
 	if (_model == nullptr)
 		return;
-	if (_shader == nullptr)
+	if (_debugShader == nullptr)
 		return;
 
 	_debugShader->Bind();
@@ -218,7 +220,7 @@ void SceneObject::StayOnSreen() {
 	Camera* camera = sceneManager.GetActiveCamera();
 	Vector3 cameraPos = sceneManager.GetActiveCamera()->GetPosition();
 
-	SetPosition(camera->GetTarget() + camera->GetUp()/2.5 + camera->GetRight()/1.7);
+	SetPosition(camera->GetTarget() + camera->GetUp() / 2.5 + camera->GetRight() / 1.7);
 }
 
 Matrix SceneObject::GetModelMatrix() {
@@ -306,7 +308,7 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 	_shader->SetUniform1f("u_specularFactor", 0.8);
 	_shader->SetUniform1f("u_diffuseFactor", 0.5);
 
-	
+
 }
 void SceneObject::SetUniformsParticular(Camera* camera) {
 
@@ -319,21 +321,23 @@ void SceneObject::SetUniformsCommonDebug(Camera* camera) {
 	//mvp + camera
 	Matrix model = GetModelMatrix();
 	Matrix mvp = model * camera->GetMVP();
-	_shader->SetUniformMatrix4fv("u_mvp", mvp);
+	_debugShader->SetUniformMatrix4fv("u_mvp", mvp);
 }
-void SceneObject::SetUniformsParticularDebug(Camera* camera) {
-}
+void SceneObject::SetUniformsParticularDebug(Camera* camera) {}
 
 void SceneObject::CreateDebugObjects() {
 	ResourceManager& resourceManager = ResourceManager::GetInstance();
 
 	//create debug objects specific to all scene objects
-	SceneObject* axisObject = new SceneObject(true);
+	/*SceneObject* axisObject = new SceneObject(true);
 	axisObject->SetParent(this);
 	axisObject->SetModel(resourceManager.GetSystemAxisModel());
 	axisObject->SetName("axis");
 	axisObject->SetScale(10.0f, 10.0f, 10.0f);
-	axisObject->SetDrawWired(true);
+	axisObject->SetDrawWired(true);*/
+
+	SceneObject* axisObject = new LocalCoordonatesAxeObject();
+	axisObject->SetParent(this);
 
 	_debugObjects.insert({ _debugObjects.size() + 1,axisObject });
 }
@@ -342,30 +346,47 @@ void SceneObject::UpdateDebugObjects(float deltaTime) {
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
-		it->second->SetPosition(_position);
-		if (it->second->GetName() != "aabb")
-			it->second->SetRotation(_rotation);
+		if (it->second->GetName() == "axis") {
 
-		//asta trb abstractizata de aici. e ok momentan
-		if (it->second->GetName() == "normals")
-			it->second->SetScale(_scale);
+			it->second->Update(deltaTime);
+		}
+		else {
+			it->second->SetPosition(_position);
+			if (it->second->GetName() != "aabb")
+				it->second->SetRotation(_rotation);
 
-		if (it->second->GetName() == "aabb") {
-			if (_oldScale != _scale || _oldRotation != _rotation) {
+			//asta trb abstractizata de aici. e ok momentan
+			if (it->second->GetName() == "normals")
+				it->second->SetScale(_scale);
 
-				it->second->_model->UpdateAabbModel(_model->GetModelResource()->Vertices, _scale, _rotation);
-				_oldScale = _scale;
-				_oldRotation = _rotation;
+			if (it->second->GetName() == "aabb") {
+				if (_oldScale != _scale || _oldRotation != _rotation) {
+
+					it->second->_model->UpdateAabbModel(_model->GetModelResource()->Vertices, _scale, _rotation);
+					_oldScale = _scale;
+					_oldRotation = _rotation;
+				}
 			}
 		}
+
+
 	}
 }
 void SceneObject::DrawDebugObjects(Camera* camera) {
 
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
-		if (it->second->GetDrawWired())
-			it->second->DrawDebugWired(camera);
-		else
-			it->second->DrawDebug(camera);
+
+		if (it->second->GetName() == "axis") {
+
+			it->second->Draw(camera);
+		}
+		else {
+			if (it->second->GetDrawWired())
+				it->second->DrawDebugWired(camera);
+			else
+				it->second->DrawDebug(camera);
+		}
+
+
 	}
 }

@@ -162,6 +162,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\DebugObjects\CoordonatesAxeObject.cpp" />
+    <ClCompile Include="src\DebugObjects\LocalCoordonatesAxeObject.cpp" />
+    <ClCompile Include="src\DebugObjects\WorldCoordonatesAxeObject.cpp" />
     <ClCompile Include="src\Fire.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Light.cpp" />
@@ -195,6 +198,9 @@
     <ClInclude Include="rapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="src\AmbientalLight.h" />
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\DebugObjects\CoordonatesAxeObject.h" />
+    <ClInclude Include="src\DebugObjects\LocalCoordonatesAxeObject.h" />
+    <ClInclude Include="src\DebugObjects\WorldCoordonatesAxeObject.h" />
     <ClInclude Include="src\Defines.h" />
     <ClInclude Include="src\Fire.h" />
     <ClInclude Include="src\Fog.h" />

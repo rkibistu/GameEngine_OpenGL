@@ -106,7 +106,7 @@ protected:
 
 	Model* _model;
 	Shader* _shader;
-	Shader* _debugShader; //used in debugMode
+	Shader* _debugShader; //used in wiremode
 	std::vector<Texture*> _textureResources;
 	Material* _material;
 
