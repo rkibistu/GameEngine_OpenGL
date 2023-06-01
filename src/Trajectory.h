@@ -40,6 +40,7 @@ private:
 	//rotation plane
 
 	unsigned int _lastCheckpoint;
+	unsigned int _nextCheckpoint;
 	Vector3 _currentDirection;
 	const unsigned int _epsilon = 5.0f;
 	Vector3 _epsilonChecked;
@@ -49,7 +50,7 @@ private:
 
 private:
 
-	void CalculateDirection();
+	void CalculateDirection(unsigned int sourceIndex, unsigned int destIndex);
 	bool CheckTouchCheckpoint(Vector3 currentPosition);
 	void PassToNextCheckpoint(Vector3& currentPosition);
 };

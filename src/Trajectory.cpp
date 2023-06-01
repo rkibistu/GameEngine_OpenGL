@@ -48,7 +48,9 @@ void Trajectory::Update(float deltaTime, Vector3& position) {
 	if (!_init) {
 
 		_init = true;
-		CalculateDirection();
+		_lastCheckpoint = 0;
+		_nextCheckpoint = 1;
+		CalculateDirection(_lastCheckpoint, _nextCheckpoint);
 	}
 
 	if (_finished)
@@ -57,7 +59,7 @@ void Trajectory::Update(float deltaTime, Vector3& position) {
 	if (CheckTouchCheckpoint(position)) {
 
 		PassToNextCheckpoint(position);
-		CalculateDirection();
+		CalculateDirection(_lastCheckpoint,_nextCheckpoint);
 	}
 	
 	position += _currentDirection * deltaTime * _speed;
@@ -67,11 +69,12 @@ void Trajectory::Update(float deltaTime, Vector3& position) {
 void Trajectory::PassToNextCheckpoint(Vector3& currentPosition) {
 
 	_lastCheckpoint++;
+	_nextCheckpoint++;
 	_epsilonChecked.SetZero();
 
 	if (_type == Type::Linear) {
 
-		if (_lastCheckpoint == _checkpoints.size() - 1) {
+		if (_nextCheckpoint == _checkpoints.size()) {
 			std::cout << "END OF TRAJECTORY\n";
 			_finished = true;
 		}
@@ -79,17 +82,18 @@ void Trajectory::PassToNextCheckpoint(Vector3& currentPosition) {
 	else if (_type == Type::LineStrip) {
 
 		_lastCheckpoint %= (_checkpoints.size() - 1);
+		_nextCheckpoint %= (_checkpoints.size() - 1);
 	}
 
 	currentPosition = _checkpoints[_lastCheckpoint];
 
 }
-void Trajectory::CalculateDirection() {
+void Trajectory::CalculateDirection(unsigned int sourceIndex, unsigned int destIndex) {
 
-	if (_lastCheckpoint == _checkpoints.size() - 1) {
+	if (destIndex >= _checkpoints.size())
 		return;
-	}
-	_currentDirection = _checkpoints[_lastCheckpoint + 1] - _checkpoints[_lastCheckpoint];
+
+	_currentDirection = _checkpoints[destIndex] - _checkpoints[sourceIndex];
 	_currentDirection.Normalize();
 }
 bool Trajectory::CheckTouchCheckpoint(Vector3 currentPosition) {
