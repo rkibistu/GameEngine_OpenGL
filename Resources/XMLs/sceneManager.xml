@@ -150,7 +150,7 @@
 			</followingCamera>
 			-->
 			
-			<trajectory type="line-loop" iteration-count="infinite" direction="alternate" speed="85">
+			<trajectory type="line-strip" iteration-count="4" direction="alternate" speed="85">
 				<comment>startPoint e chiar Pos</comment>
 				<points>
 					<point>
@@ -168,11 +168,11 @@
 						<y>225</y>
 						<z>300</z>			
 					</point>
-					<!-- <point> -->
-						<!-- <x>200</x> -->
-						<!-- <y>25</y> -->
-						<!-- <z>300</z>			 -->
-					<!-- </point> -->
+					<point>
+						<x>200</x>
+						<y>25</y>
+						<z>300</z>			
+					</point>
 				</points>
 				<speed>0.1</speed>
 			</trajectory>
