@@ -150,7 +150,7 @@
 			</followingCamera>
 			-->
 			
-			<trajectory type="line-strip" iteration-count="4" direction="alternate" speed="85">
+			<trajectory type="circle" iteration-count="infinite" direction="alternate" speed="1.5">
 				<comment>startPoint e chiar Pos</comment>
 				<points>
 					<point>
@@ -176,7 +176,7 @@
 				</points>
 				<speed>0.1</speed>
 			</trajectory>
-			<!-- <trajectory type="linear" iteration-count="2" direction="forward" speed="85"> -->
+			<!-- <trajectory type="linear" iteration-count="4" direction="alternate" speed="85"> -->
 				<!-- <comment>startPoint e chiar Pos</comment> -->
 				<!-- <points> -->
 					<!-- <point> -->
