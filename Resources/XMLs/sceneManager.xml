@@ -150,7 +150,7 @@
 			</followingCamera>
 			-->
 			
-			<trajectory type="line-loop" iteration-count="infinite" direction="alternate" speed="35">
+			<trajectory type="line-strip" iteration-count="infinite" direction="forward" speed="85">
 				<comment>startPoint e chiar Pos</comment>
 				<points>
 					<point>
@@ -158,29 +158,40 @@
 						<y>25</y>
 						<z>300</z>			
 					</point>
-					<!-- <point> -->
-						<!-- <x>0</x> -->
-						<!-- <y>225</y> -->
-						<!-- <z>300</z>			 -->
-					<!-- </point> -->
-					<!-- <point> -->
-						<!-- <x>200</x> -->
-						<!-- <y>225</y> -->
-						<!-- <z>300</z>			 -->
-					<!-- </point> -->
-					<!-- <point> -->
-						<!-- <x>200</x> -->
-						<!-- <y>25</y> -->
-						<!-- <z>300</z>			 -->
-					<!-- </point> -->
 					<point>
 						<x>0</x>
 						<y>225</y>
 						<z>300</z>			
 					</point>
+					<point>
+						<x>200</x>
+						<y>225</y>
+						<z>300</z>			
+					</point>
+					<point>
+						<x>200</x>
+						<y>25</y>
+						<z>300</z>			
+					</point>
 				</points>
 				<speed>0.1</speed>
 			</trajectory>
+			<!-- <trajectory type="linear" iteration-count="infinite" direction="alternate" speed="85"> -->
+				<!-- <comment>startPoint e chiar Pos</comment> -->
+				<!-- <points> -->
+					<!-- <point> -->
+						<!-- <x>0</x> -->
+						<!-- <y>25</y> -->
+						<!-- <z>300</z>			 -->
+					<!-- </point> -->
+					<!-- <point> -->
+						<!-- <x>0</x> -->
+						<!-- <y>225</y> -->
+						<!-- <z>300</z>			 -->
+					<!-- </point> -->
+				<!-- </points> -->
+				<!-- <speed>0.1</speed> -->
+			<!-- </trajectory> -->
 			<!--
 			<lights>
 				<light>1</light>
