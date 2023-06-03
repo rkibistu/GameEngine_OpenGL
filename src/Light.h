@@ -26,7 +26,6 @@ public:
 protected:
 
 	void SetUniformsParticular(Camera* camera) override;
-	void SetUniformsParticularDebug(Camera* camera) override;
 	
 	//Create debug objects specific to lights
 	void CreateDebugObjects() override;

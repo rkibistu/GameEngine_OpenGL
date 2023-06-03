@@ -84,7 +84,7 @@
     <ClCompile Include="src\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Trajectory.cpp">
+    <ClCompile Include="src\Trajectories\TrajectoryLinear.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\DebugObjects\CoordonatesAxeObject.cpp">
@@ -103,6 +103,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\DebugObjects\TargetLineVisual.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugObjects\LightDebugObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Trajectories\TrajectoryStripLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Trajectories\TrajectoryLineLoop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Trajectories\Trajectory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Trajectories\TrajectoryCircle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -206,7 +221,7 @@
     <ClInclude Include="src\AmbientalLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Trajectory.h">
+    <ClInclude Include="src\Trajectories\TrajectoryLinear.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DebugObjects\CoordonatesAxeObject.h">
@@ -225,6 +240,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DebugObjects\TargetLineVisual.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugObjects\LightDebugObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Trajectories\TrajectoryLineStrip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Trajectories\TrajectoryLineLoop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Trajectories\Trajectory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Trajectories\TrajectoryCircle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

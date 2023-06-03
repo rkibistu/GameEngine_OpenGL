@@ -35,7 +35,7 @@ int Init(ESContext* esContext)
 	return 0;
 }
 
-void Draw(ESContext* esContext)
+void DrawTriangles(ESContext* esContext)
 {
 
 	sceneManager.Draw(esContext);
@@ -87,7 +87,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	if (Init(&esContext) != 0)
 		return 0;
 	
-	esRegisterDrawFunc(&esContext, Draw);
+	esRegisterDrawFunc(&esContext, DrawTriangles);
 	esRegisterUpdateFunc(&esContext, Update);
 	esRegisterKeyFunc(&esContext, Key);
 	esRegisterMouseFunc(&esContext, Mouse);

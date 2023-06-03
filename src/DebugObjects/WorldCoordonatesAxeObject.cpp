@@ -12,10 +12,3 @@ void WorldCoordonatesAxeObject::Update(float deltaTime) {
 
 	StayOnSreen();
 }
-
-void WorldCoordonatesAxeObject::Draw(Camera* camera) {
-
-	if (_drawWired) {
-		DrawDebugWired(camera);
-	}
-}

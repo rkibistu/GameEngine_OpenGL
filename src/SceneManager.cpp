@@ -58,8 +58,21 @@ void SceneManager::Init(ESContext* esContext) {
 	glEnable(GL_DEPTH_TEST);
 
 	CreateDebugAxisObject();
+
+	Start();
 }
 
+void SceneManager::Start() {
+
+	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
+
+		it->second->Start();
+	}
+	for (auto it = _lightObjects.begin(); it != _lightObjects.end(); it++) {
+
+		it->second->Start();
+	}
+}
 void SceneManager::Update(ESContext* esContext, float deltaTime) {
 
 	if (Input::GetKeyDown(KeyCode::P)) {
@@ -89,24 +102,24 @@ void SceneManager::Draw(ESContext* esContext) {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+	//Call draw for every object in scene
 	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
 
-		if (_debugMode) {
-
-			it->second->DrawDebugWired(_activeCamera);
+		it->second->SetDrawWired(_debugMode);
+		it->second->Draw(_activeCamera);
+		if (_debugMode)
 			it->second->DrawDebugObjects(_activeCamera);
-		}
-		else
-			it->second->Draw(_activeCamera);
 	}
 
 	if (_debugMode) {
 
+		//call draw for every light in scene, only in debug
 		for (auto it = _lightObjects.begin(); it != _lightObjects.end(); it++) {
 
 			it->second->DrawDebugObjects(_activeCamera);
 		}
+
+		//call draw for every debug boject specific to scene
 		for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
 			it->second->Draw(_activeCamera);

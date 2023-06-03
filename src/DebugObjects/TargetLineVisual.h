@@ -8,6 +8,4 @@ public:
 	TargetLineVisual();
 
 	void Update(float deltaTime) override;
-
-	void Draw(Camera* camera) override;
 };

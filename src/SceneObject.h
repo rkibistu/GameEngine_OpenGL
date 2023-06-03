@@ -18,19 +18,13 @@ public:
 	SceneObject(bool isDebugObj = false);
 	virtual ~SceneObject();
 
+	virtual void Start();
+
 	virtual void Update(float deltaTime);
 
 	//Deseneaza triunghiuri folsoind _shader
 	virtual void Draw(Camera* camera);
 
-	//Deseneaza linii folsoind _shader
-	virtual void DrawWired(Camera* camera);
-
-	//Deseneaza triunghiuri folsoind debug shader
-	virtual void DrawDebug(Camera* camera);
-
-	//Deseneaza linii folsoind debug shader
-	virtual void DrawDebugWired(Camera* camera);
 
 
 	//itereaza prin obiectele de debug si apelaza DrawDebug pt ele
@@ -46,7 +40,13 @@ public:
 	void AddTexture(Texture* texture);
 	void SetMaterial(Material* material);
 
+
+	//Va face ca acest obiect sa urmareasca camera pe axele care au valorea 1 in vectorul _followCameraDirections;
+	//	cu un offset fata de camera cu valoarea de: _followCameraOffset;
+	//	Trb apelata in Update
 	void FollowCamera();
+
+	//This is not generalized, if you change window size -> not working
 	void StayOnSreen();
 
 	inline void SetId(unsigned int id) { _id = id; }
@@ -83,11 +83,17 @@ protected:
 
 	void SetUniformsCommon(Camera* camera);
 	virtual void SetUniformsParticular(Camera* camera);
-	void SetUniformsCommonDebug(Camera* camera);
-	virtual void SetUniformsParticularDebug(Camera* camera);
 
 	//creeaza obiecte de debug comune tutor obiectelor (axele de coordonote)
 	virtual void CreateDebugObjects();
+
+private:
+
+	//Deseneaza triunghiuri folsoind _shader
+	void DrawTriangles(Camera* camera);
+
+	//Deseneaza linii folsoind _wiredShader
+	void DrawWired(Camera* camera);
 
 	
 protected:
@@ -107,11 +113,11 @@ protected:
 
 	Model* _model;
 	Shader* _shader;
-	Shader* _debugShader; //used in wiremode
+	Shader* _wiredShader; //used in wiremode
 	std::vector<Texture*> _textureResources;
 	Material* _material;
 
-	Trajectory* _trajectory = nullptr;
+	Trajectory* _trajectory;
 
 	bool _depthTest;
 	bool _drawWired;

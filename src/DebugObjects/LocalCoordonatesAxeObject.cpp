@@ -11,10 +11,3 @@ void LocalCoordonatesAxeObject::Update(float deltaTime) {
 	SetPosition(_parent->GetPosition());
 	SetRotation(_parent->GetRotation());
 }
-
-void LocalCoordonatesAxeObject::Draw(Camera* camera) {
-
-	if (_drawWired) {
-		DrawDebugWired(camera);
-	}
-}

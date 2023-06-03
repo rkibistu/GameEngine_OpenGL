@@ -5,6 +5,9 @@
 #include "Fire.h"
 #include "Defines.h"
 #include "SceneManager.h"
+#include "TrajectoryLineStrip.h"
+#include "TrajectoryLineLoop.h"
+#include "TrajectoryCircle.h"
 
 #include <fstream>
 #include <sstream>
@@ -59,7 +62,7 @@ int SceneManagerXmlParser::ReadDefaultSettings(DefaultSettings& defaultSettings)
 			defaultSettings.DefaultShader = resourceManager.GetShader(value);
 		}
 		if (ReadInt(node, DEBUG_SHADER_NODE, value)) {
-			defaultSettings.DebugShader = resourceManager.GetShader(value);
+			defaultSettings.WiredShader = resourceManager.GetShader(value);
 		}
 		if (ReadInt(node, MATERIAL_NODE, value)) {
 			defaultSettings.DefaultMaterial = resourceManager.GetMaterial(value);
@@ -260,7 +263,7 @@ SceneObject* SceneManagerXmlParser::ReadSceneObject(rapidxml::xml_node<>* object
 
 	SceneObject* sceneObject = CreateSceneObject(obj);
 	sceneObject->SetTrajectory(CreateTrajectory(trajXml));
-	
+
 	return sceneObject;
 }
 void SceneManagerXmlParser::ReadModel(rapidxml::xml_node<>* node, SceneObject* sceneObject) {
@@ -614,22 +617,41 @@ LightObject* SceneManagerXmlParser::CreateLightObject(LightObjectXmlFormat obj) 
 }
 Trajectory* SceneManagerXmlParser::CreateTrajectory(TrajectoryXmlFormat trajXml) {
 
-	Trajectory::Type type;
+	TrajectoryLinear::Type type;
+	Trajectory* traj = nullptr;
 	if (trajXml.type == TRAJECTORY_TYPE_LINEAR)
-		type = Trajectory::Type::Linear;
+		traj = new TrajectoryLinear();
 	else if (trajXml.type == TRAJECTORY_TYPE_LINEAR_STRIP)
-		type = Trajectory::Type::LineStrip;
+		traj = new TrajectoryStripLine();
 	else if (trajXml.type == TRAJECTORY_TYPE_LINEAR_LOOP)
-		type = Trajectory::Type::LineLoop;
+		traj = new TrajectoryLineLoop();
 	else if (trajXml.type == TRAJECTORY_TYPE_CIRCLE)
-		type = Trajectory::Type::Circle;
+		traj = new TrajectoryCircle();
 	else {
 		std::cout << "Bad type of trajectory: " << trajXml.type << std::endl;
 		return nullptr;
 	}
 
-	Trajectory* traj = new Trajectory(type,trajXml.speed);
+	TrajectoryLinear::Direction direction;
+	if (trajXml.direction == TRAJECTORY_DIRECTION_ALTERNATE)
+		direction = TrajectoryLinear::Direction::Alternate;
+	else if (trajXml.direction == TRAJECTORY_DIRECTION_FORWARD)
+		direction = TrajectoryLinear::Direction::Forward;
+	else {
+		std::cout << "Bad type of trajectory direction: " << trajXml.type << std::endl;
+		return nullptr;
+	}
+
+	traj->SetDirection(direction);
+	traj->SetSpeed(trajXml.speed);
 	traj->AddCheckpoint(trajXml.checkpoints);
+	traj->SetIterationInfinity(trajXml.iterationInfinity);
+	if (trajXml.iterationInfinity == false)
+		traj->SetIterationCount(trajXml.iterationCount);
+	
+	
+	traj->SetCenter(Vector3(0.0f, 0.0f, 0.0f));
+	traj->SetRadius(100.0f);
 
 	return traj;
 }

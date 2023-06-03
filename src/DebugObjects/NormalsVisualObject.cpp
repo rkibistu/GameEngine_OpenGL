@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "NormalsVisualObject.h"
+#include "Vertex.h"
 
 NormalsVisualObject::NormalsVisualObject(Model* baseModel) 
 	: SceneObject(true) {
@@ -9,6 +10,15 @@ NormalsVisualObject::NormalsVisualObject(Model* baseModel)
 	_model = normalModel;
 	_name = "normals";
 	_drawWired = TRUE;
+}
+NormalsVisualObject::~NormalsVisualObject() {
+
+	if (_model) {
+		if (_model->GetModelResource())
+			delete _model->GetModelResource();
+		delete _model;
+		_model = nullptr;
+	}
 }
 
 void NormalsVisualObject::Update(float deltaTime) {
@@ -23,9 +33,3 @@ void NormalsVisualObject::Update(float deltaTime) {
 	SetScale(_parent->GetScale());
 }
 
-void NormalsVisualObject::Draw(Camera* camera) {
-
-	if (_drawWired) {
-		DrawDebugWired(camera);
-	}
-}

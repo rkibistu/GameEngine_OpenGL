@@ -6,11 +6,9 @@ class HitboxVisualObject : public SceneObject {
 
 public:
 	HitboxVisualObject(Model* baseModel);
+	~HitboxVisualObject();
 
 	void Update(float deltaTime) override;
-
-	void Draw(Camera* camera) override;
-
 private:
 
 };

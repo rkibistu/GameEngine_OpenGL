@@ -52,7 +52,7 @@ private:
 	void BindAndLoadVertices();
 
 	//fill the color attribute of vertex (most of models don't have this in nfg)
-	// DebugShader use color to draw lines
+	// WiredShader use color to draw lines
 	void FillVerticesColor(Vector3 fillColor = Vector3(1.0,1.0,1.0));
 
 	//generate the terrain

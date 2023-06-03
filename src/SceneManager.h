@@ -12,7 +12,7 @@
 struct DefaultSettings {
 
 	Shader* DefaultShader;		//used to all objects that don't specify one
-	Shader* DebugShader;		//used to draw debug
+	Shader* WiredShader;		//used to draw all wired objects
 	Shader* DebugLightShader;	//used to draw debug light source
 	Model* DebugLightModel;		//used to draw debug light source
 	Material* DefaultMaterial;	//used to all objects that don't specify one
@@ -25,6 +25,9 @@ public:
 	void DestroyInstance();
 
 	void Init(ESContext* esContext);
+
+	//called once per object, at the beggining
+	void Start();
 
 	void Update(ESContext* esContext, float deltaTime);
 
@@ -39,7 +42,7 @@ public:
 
 	inline Material* GetDefaultMaterial() { return _defaultSettings.DefaultMaterial; }
 	inline Shader* GetDefaultShader() { return _defaultSettings.DefaultShader; }
-	inline Shader* GetDebugShader() { return _defaultSettings.DebugShader; }
+	inline Shader* GetWiredShader() { return _defaultSettings.WiredShader; }
 	inline Model* GetDebugLightModel() { return _defaultSettings.DebugLightModel; }
 	inline Shader* GetDebugLightShader() { return _defaultSettings.DebugLightShader; }
 

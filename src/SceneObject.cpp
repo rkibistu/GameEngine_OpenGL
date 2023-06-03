@@ -13,9 +13,13 @@ SceneObject::SceneObject(bool isDebugObj) {
 
 	SceneManager& sceneManager = SceneManager::GetInstance();
 	SetShader(sceneManager.GetDefaultShader());
+	SetDebugShader(sceneManager.GetWiredShader());
 	SetMaterial(sceneManager.GetDefaultMaterial());
+	_model = nullptr;
+	_trajectory = nullptr;
+	_parent = nullptr;
 
-	_debugShader = sceneManager.GetDebugShader();
+	_wiredShader = sceneManager.GetWiredShader();
 
 	_position = Vector3(0.0f, 0.0f, 0.0f);
 	_rotation = Vector3(0.0f, 0.0f, 0.0f);
@@ -36,19 +40,20 @@ SceneObject::~SceneObject() {
 	//i dont want to free the pointers here, because they are create in Resource manager
 	/// they can be used later or by more SceneObjects
 	//	they will be destroyd bu ResourceManager when it is the case
-
 	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
 
-		if (it->second->GetName() == "aabb") {
-
-			delete it->second->_model->GetModelResource();
-			delete it->second->_model;
-		}
 		delete it->second;
 	}
 
 	if (_trajectory)
 		delete _trajectory;
+}
+
+void SceneObject::Start() {
+
+	//call start for children maybe
+	if (_trajectory)
+		_trajectory->Start();
 }
 
 void SceneObject::Update(float deltaTime) {
@@ -66,11 +71,19 @@ void SceneObject::Update(float deltaTime) {
 
 	if (_trajectory) {
 
-		//_trajectory->Update(deltaTime, _position);
+		_trajectory->Update(deltaTime, _position);
 	}
 }
 
 void SceneObject::Draw(Camera* camera) {
+
+	if (_drawWired)
+		DrawWired(camera);
+	else
+		DrawTriangles(camera);
+}
+
+void SceneObject::DrawTriangles(Camera* camera) {
 
 	if (_model == nullptr)
 		return;
@@ -96,57 +109,16 @@ void SceneObject::DrawWired(Camera* camera) {
 	//Draw wired + call draw for all debug objects
 	if (_model == nullptr)
 		return;
-	if (_shader == nullptr)
+	if (_wiredShader == nullptr)
 		return;
 
-	_shader->Bind();
+	_wiredShader->Bind();
 	_model->BindWired();
 
-	_shader->SetAttributes();
+	_wiredShader->SetAttributes();
 
 	SetUniformsCommon(camera);
 	SetUniformsParticular(camera);
-
-	glDrawElements(GL_LINES, _model->GetIndicesWiredCount(), GL_UNSIGNED_SHORT, nullptr);
-
-	_model->Unbind();
-}
-void SceneObject::DrawDebug(Camera* camera) {
-
-	if (_model == nullptr)
-		return;
-	if (_debugShader == nullptr)
-		return;
-
-	_model->BindFilled();
-	_debugShader->Bind();
-	for (unsigned int i = 0; i < _textureResources.size(); i++) {
-		_textureResources[i]->Bind(i);
-	}
-
-	_debugShader->SetAttributes();
-
-	SetUniformsCommonDebug(camera);
-	SetUniformsParticularDebug(camera);
-
-	glDrawElements(GL_TRIANGLES, _model->GetIndicesFilledCount(), GL_UNSIGNED_SHORT, nullptr);
-
-	_model->Unbind();
-}
-void SceneObject::DrawDebugWired(Camera* camera) {
-	//Draw wired + call draw for all debug objects
-	if (_model == nullptr)
-		return;
-	if (_debugShader == nullptr)
-		return;
-
-	_debugShader->Bind();
-	_model->BindWired();
-
-	_debugShader->SetAttributes();
-
-	SetUniformsCommonDebug(camera);
-	SetUniformsParticularDebug(camera);
 
 	glDrawElements(GL_LINES, _model->GetIndicesWiredCount(), GL_UNSIGNED_SHORT, nullptr);
 
@@ -178,7 +150,7 @@ void SceneObject::SetShader(Shader* shader) {
 }
 void SceneObject::SetDebugShader(Shader* shader) {
 
-	_debugShader = shader;
+	_wiredShader = shader;
 }
 
 void SceneObject::AddTexture(Texture* texture) {
@@ -236,30 +208,30 @@ Matrix SceneObject::GetModelMatrix() {
 void SceneObject::SetUniformsCommon(Camera* camera) {
 
 	SceneManager& sceneManager = SceneManager::GetInstance();
-
+	Shader* currentShader = (_drawWired == true) ? _wiredShader : _shader;
 	//mvp + camera
 	Matrix model = GetModelMatrix();
 	Matrix mvp = model * camera->GetMVP();
-	_shader->SetUniformMatrix4fv("u_mvp", mvp);
+	currentShader->SetUniformMatrix4fv("u_mvp", mvp);
 
-	_shader->SetUniform3f("u_cameraPos", camera->GetPosition());
-	_shader->SetUniformMatrix4fv("u_model", model);
+	currentShader->SetUniform3f("u_cameraPos", camera->GetPosition());
+	currentShader->SetUniformMatrix4fv("u_model", model);
 
-	_shader->SetUniform1i("u_Texture", 0);
+	currentShader->SetUniform1i("u_Texture", 0);
 
 	// skybox
-	_shader->SetUniform1i("u_TextureCube", 1);
-	_shader->SetUniform1f("u_factorTexture", _material->GetFactorTextura());
-	_shader->SetUniform1f("u_factorReflect", _material->GetFactorReflexieTextura());
+	currentShader->SetUniform1i("u_TextureCube", 1);
+	currentShader->SetUniform1f("u_factorTexture", _material->GetFactorTextura());
+	currentShader->SetUniform1f("u_factorReflect", _material->GetFactorReflexieTextura());
 
 	//normal mapping
-	_shader->SetUniform1i("u_normalMap", 2);
+	currentShader->SetUniform1i("u_normalMap", 2);
 
 	//fog
 	Fog fog = sceneManager.GetFog();
-	_shader->SetUniform1f("u_fogNear", fog.NearPlane);
-	_shader->SetUniform1f("u_fogFar", fog.FarPlane);
-	_shader->SetUniform3f("u_fogColor", fog.Color);
+	currentShader->SetUniform1f("u_fogNear", fog.NearPlane);
+	currentShader->SetUniform1f("u_fogFar", fog.FarPlane);
+	currentShader->SetUniform3f("u_fogColor", fog.Color);
 
 	//lights
 	std::string lightUniformBase = "u_lights[";
@@ -273,49 +245,37 @@ void SceneObject::SetUniformsCommon(Camera* camera) {
 		lightUniformBase += "].";
 
 		lightUniform = lightUniformBase + "diffuseColor";
-		_shader->SetUniform3f(lightUniform, it->second->GetDiffuseColor());
+		currentShader->SetUniform3f(lightUniform, it->second->GetDiffuseColor());
 		lightUniform = lightUniformBase + "specularColor";
-		_shader->SetUniform3f(lightUniform, it->second->GetSpecularColor());
+		currentShader->SetUniform3f(lightUniform, it->second->GetSpecularColor());
 		lightUniform = lightUniformBase + "type";
-		_shader->SetUniform1i(lightUniform, it->second->GetType());
+		currentShader->SetUniform1i(lightUniform, it->second->GetType());
 		lightUniform = lightUniformBase + "position";
-		_shader->SetUniform3f(lightUniform, it->second->GetPosition());
+		currentShader->SetUniform3f(lightUniform, it->second->GetPosition());
 
 		//add this 2 in xml!!
 		lightUniform = lightUniformBase + "direction";
-		_shader->SetUniform3f(lightUniform, it->second->GetPosition());
+		currentShader->SetUniform3f(lightUniform, it->second->GetPosition());
 		lightUniform = lightUniformBase + "spotAngle";
-		_shader->SetUniform1f(lightUniform, 0.7f);
+		currentShader->SetUniform1f(lightUniform, 0.7f);
 
 		index++;
 	}
-	_shader->SetUniform1i("u_lightsCount", lights.size());
+	currentShader->SetUniform1i("u_lightsCount", lights.size());
 	//ambiental
-	_shader->SetUniform3f("u_ambientColor", sceneManager.GetAmbientalLight().Color);
-	_shader->SetUniform1f("u_ambientRatio", sceneManager.GetAmbientalLight().Ratio);
+	currentShader->SetUniform3f("u_ambientColor", sceneManager.GetAmbientalLight().Color);
+	currentShader->SetUniform1f("u_ambientRatio", sceneManager.GetAmbientalLight().Ratio);
 
 
 	//mai jos sunt materiale
-	_shader->SetUniform1f("u_ambientFactor", 0.2);
-	_shader->SetUniform1f("u_specularFactor", 0.8);
-	_shader->SetUniform1f("u_diffuseFactor", 0.5);
-
-
+	currentShader->SetUniform1f("u_ambientFactor", 0.2);
+	currentShader->SetUniform1f("u_specularFactor", 0.8);
+	currentShader->SetUniform1f("u_diffuseFactor", 0.5);
 }
 void SceneObject::SetUniformsParticular(Camera* camera) {
 
 
 }
-void SceneObject::SetUniformsCommonDebug(Camera* camera) {
-
-	SceneManager& sceneManager = SceneManager::GetInstance();
-
-	//mvp + camera
-	Matrix model = GetModelMatrix();
-	Matrix mvp = model * camera->GetMVP();
-	_debugShader->SetUniformMatrix4fv("u_mvp", mvp);
-}
-void SceneObject::SetUniformsParticularDebug(Camera* camera) {}
 
 void SceneObject::CreateDebugObjects() {
 

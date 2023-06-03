@@ -13,7 +13,7 @@ CoordonateAxeObject::CoordonateAxeObject()
 	
 	_model = resourceManager.GetSystemAxisModel();
 	_shader = nullptr;
-	_debugShader = sceneManager.GetDebugShader();
+	_wiredShader = sceneManager.GetWiredShader();
 	_name = "axis";
 	SetScale(10.0f, 10.0f, 10.0f);
 	_drawWired = true;

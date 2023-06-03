@@ -6,9 +6,7 @@ class NormalsVisualObject : public SceneObject {
 
 public:
 	NormalsVisualObject(Model* baseModel);
+	~NormalsVisualObject();
 
 	void Update(float deltaTime) override;
-
-	void Draw(Camera* camera) override;
-
 };

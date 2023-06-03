@@ -96,6 +96,9 @@ struct DefaultSettings;
 #define TRAJECTORY_TYPE_LINEAR_LOOP "line-loop"
 #define TRAJECTORY_TYPE_CIRCLE "circle"
 
+#define TRAJECTORY_DIRECTION_ALTERNATE "alternate"
+#define TRAJECTORY_DIRECTION_FORWARD "forward"
+
 struct SceneObjectXmlFormat;
 struct LightObjectXmlFormat;
 struct TrajectoryXmlFormat;

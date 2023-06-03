@@ -20,11 +20,3 @@ void TargetLineVisual::Update(float deltaTime) {
 	SetRotation(-sceneManger.GetActiveCamera()->GetRotation());
 
 }
-
-void TargetLineVisual::Draw(Camera* camera) {
-
-	if (_drawWired) {
-
-		DrawDebugWired(camera);
-	}
-}
