@@ -17,6 +17,17 @@ public:
 	void Update(float deltaTime, Vector3& position) override;
 
 protected:
+	int _lastCheckpoint;
+	int _nextCheckpoint;
+	Vector3 _currentDirection;
+	int _iterationIndex;
+	const unsigned int _epsilon = 5.0f;
+	Vector3 _epsilonChecked;
+
+	bool _finished = false;
+
+
+protected:
 
 	void CalculateDirection(unsigned int sourceIndex, unsigned int destIndex);
 	

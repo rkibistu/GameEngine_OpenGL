@@ -27,16 +27,6 @@ protected:
 	unsigned int _radius;
 	Vector3 _planeVector1;
 	Vector3 _planeVector2;
-	//rotation plane
-
-	int _lastCheckpoint;
-	int _nextCheckpoint;
-	Vector3 _currentDirection;
-	int _iterationIndex;
-	const unsigned int _epsilon = 5.0f;
-	Vector3 _epsilonChecked;
-
-	bool _finished = false;
 
 public:
 	Trajectory();
