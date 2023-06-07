@@ -387,6 +387,9 @@ void SceneManagerXmlParser::ReadTrajectory(rapidxml::xml_node<>* node, std::stri
 			ReadVector3_xyz(childNode, TRAJECTORY_CENTER_NODE, trajXml.center);
 			ReadFloat(childNode, TRAJECTORY_RADIUS_NODE, trajXml.radius);
 			ReadVectors3_xyz(childNode, TRAJECTORY_POINTS_ROOT, TRAJECTORY_POINT_NODE, trajXml.checkpoints);
+			ReadVector3_xyz(childNode, TRAJECTORY_CENTER_NODE, trajXml.center);
+			ReadFloat(childNode, TRAJECTORY_RADIUS_NODE, trajXml.radius);
+			ReadVectors3_xyz(childNode, TRAJECTORY_ROTATION_PLANE_NODE, TRAJECTORY_VECT_NODE, trajXml.planeVectors);
 		}
 	}
 }
@@ -650,8 +653,9 @@ Trajectory* SceneManagerXmlParser::CreateTrajectory(TrajectoryXmlFormat trajXml)
 		traj->SetIterationCount(trajXml.iterationCount);
 	
 	
-	traj->SetCenter(Vector3(0.0f, 0.0f, 0.0f));
-	traj->SetRadius(100.0f);
+	traj->SetCenter(trajXml.center);
+	traj->SetRadius(trajXml.radius);
+	traj->SetPlaneVectors(trajXml.planeVectors[0], trajXml.planeVectors[1]);
 
 	return traj;
 }

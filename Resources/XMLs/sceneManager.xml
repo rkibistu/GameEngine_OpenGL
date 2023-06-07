@@ -192,6 +192,27 @@
 				<!-- </points> -->
 				<!-- <speed>0.1</speed> -->
 			<!-- </trajectory> -->
+			<trajectory type="circle" iteration-count="infinite" speed="1.5">
+				<center> 
+					<x>0</x>
+					<y>0</y>
+					<z>300</z>
+				</center>
+				<radius>100</radius>
+				<rotationPlane>
+					<vect>
+						<x>1</x>
+						<y>0</y>
+						<z>0</z>
+					</vect>
+					<vect>
+						<x>0</x>
+						<y>1</y>
+						<z>0</z>
+					</vect>
+				</rotationPlane>
+			</trajectory>
+
 			<!--
 			<lights>
 				<light>1</light>

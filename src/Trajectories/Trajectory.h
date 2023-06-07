@@ -25,6 +25,8 @@ protected:
 	std::vector<Vector3> _checkpoints;
 	Vector3 _center;
 	unsigned int _radius;
+	Vector3 _planeVector1;
+	Vector3 _planeVector2;
 	//rotation plane
 
 	int _lastCheckpoint;
@@ -50,4 +52,5 @@ public:
 	void AddCheckpoint(std::vector<Vector3> checkpoints);
 	inline void SetCenter(Vector3 position) { _center = position; }
 	inline void SetRadius(float radius) { _radius = radius; }
+	inline void SetPlaneVectors(Vector3 v1, Vector3 v2) { _planeVector1 = v1; _planeVector2 = v2; }
 };

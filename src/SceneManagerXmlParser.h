@@ -89,6 +89,7 @@ struct DefaultSettings;
 #define TRAJECTORY_POINT_NODE "point"
 #define TRAJECTORY_CENTER_NODE "center"
 #define TRAJECTORY_RADIUS_NODE "radius"
+#define TRAJECTORY_VECT_NODE "vect"
 #define TRAJECTORY_ROTATION_PLANE_NODE "rotationPlane"
 
 #define TRAJECTORY_TYPE_LINEAR "linear"
@@ -196,4 +197,5 @@ struct TrajectoryXmlFormat {
 	std::vector<Vector3> checkpoints;
 	Vector3 center;
 	float radius;
+	std::vector<Vector3> planeVectors;
 };
