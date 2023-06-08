@@ -7,7 +7,7 @@
 #include "Material.h"
 #include "Camera.h"
 #include "Trajectory.h"
-#include "Collidable.h"
+#include "CollisionController.h"
 
 #include <vector>
 #include <map>
@@ -76,6 +76,8 @@ public:
 	inline void SetParent(SceneObject* parent) { _parent = parent; }
 
 	inline void SetTrajectory(Trajectory* trajectory) { _trajectory = trajectory; if (trajectory != nullptr) _collidable = true; }
+	inline bool IsCollidable() { return _collisionController != nullptr; }
+	inline CollisionController* GetCollisionController() { return _collisionController; }
 protected:
 
 
@@ -93,12 +95,11 @@ private:
 	//Deseneaza linii folsoind _wiredShader
 	void DrawWired(Camera* camera);
 
-	void TestColliding();
+	//void TestColliding();
 
-	bool ModelMatrixChanged();
-	void UpdateAabbColliderValues();
+	//bool ModelMatrixChanged();
+	//void UpdateAabbColliderValues();
 
-	void ConvertVectorToWorldSpace(Vector2& v);
 protected:
 	unsigned int _id;
 	std::string _name;
@@ -122,8 +123,9 @@ protected:
 	Material* _material;
 
 	Trajectory* _trajectory;
-	Model::AabbCollider* _aabbCollider;
-	Model::AabbCollider* _aabbColliderWorldSpace;
+	CollisionController* _collisionController;
+	//Model::AabbCollider* _aabbCollider;
+	//Model::AabbCollider* _aabbColliderWorldSpace;
 	bool _collidable;
 
 	bool _depthTest;

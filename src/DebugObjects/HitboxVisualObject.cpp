@@ -5,16 +5,20 @@
 #include "Vertex.h"
 
 
-HitboxVisualObject::HitboxVisualObject(Model* baseModel)
+HitboxVisualObject::HitboxVisualObject(SceneObject* parent, Model* baseModel)
 	: SceneObject(true) {
+
+	_parent = parent;
 
 	SceneManager& scneneManager = SceneManager::GetInstance();
 
 	Model* aabbModel = new Model();
 	aabbModel->LoadAabbModel(baseModel->GetModelResource()->Vertices);
+	aabbModel->UpdateAabbModel(_parent->GetModel()->GetModelResource()->Vertices, _parent->GetScale(), _parent->GetRotation());
+
 	_model = aabbModel;
 	_wiredShader = scneneManager.GetWiredShader();
-	_name = "aabb";
+	_name = "aabb"; 
 	_drawWired = true;
 }
 HitboxVisualObject::~HitboxVisualObject() {

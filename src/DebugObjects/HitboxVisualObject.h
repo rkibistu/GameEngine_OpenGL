@@ -5,7 +5,7 @@
 class HitboxVisualObject : public SceneObject {
 
 public:
-	HitboxVisualObject(Model* baseModel);
+	HitboxVisualObject(SceneObject* parent, Model* baseModel);
 	~HitboxVisualObject();
 
 	void Update(float deltaTime) override;

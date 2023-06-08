@@ -31,9 +31,8 @@ SceneObject::SceneObject(bool isDebugObj) {
 	_drawWired = false;
 	_name = "sceneObject";
 
-	_aabbCollider = nullptr;
-	_aabbColliderWorldSpace = new Model::AabbCollider();
 	_collidable = true;
+	_collisionController = nullptr;
 
 	if (!isDebugObj)
 		CreateDebugObjects();
@@ -51,8 +50,8 @@ SceneObject::~SceneObject() {
 
 	if (_trajectory)
 		delete _trajectory;
-	if (_aabbColliderWorldSpace)
-		delete _aabbColliderWorldSpace;
+	if (_collisionController)
+		delete _collisionController;
 }
 
 void SceneObject::Start() {
@@ -80,20 +79,24 @@ void SceneObject::Update(float deltaTime) {
 		_trajectory->Update(deltaTime, _position);
 	}
 
-	bool modelMatrixChanged = ModelMatrixChanged();
-	if (modelMatrixChanged && _aabbCollider != nullptr) {
-
-		//recalculate aabb
-		//std::cout << "Recalculate aabb for " << _name << std::endl;
-		UpdateAabbColliderValues();
-
-		//verif coliziuni
-		//verifiam doar daca s-aschimbat pozitia/rotatia/scara. Vara miscare nu exista coliziune
-		if (_collidable) {
-
-			TestColliding();
-		}
+	if (_collisionController) {
+		_collisionController->Update(deltaTime);
 	}
+
+	//bool modelMatrixChanged = ModelMatrixChanged();
+	//if (modelMatrixChanged && _aabbCollider != nullptr) {
+
+	//	//recalculate aabb
+	//	//std::cout << "Recalculate aabb for " << _name << std::endl;
+	//	UpdateAabbColliderValues();
+
+	//	//verif coliziuni
+	//	//verifiam doar daca s-aschimbat pozitia/rotatia/scara. Vara miscare nu exista coliziune
+	//	if (_collidable) {
+
+	//		TestColliding();
+	//	}
+	//}
 
 
 	//Collidable::Update();
@@ -178,10 +181,11 @@ void SceneObject::SetModel(Model* model) {
 	_debugObjects.insert({ _debugObjects.size() + 1,normalsObject });
 
 	//create AABB
-	SceneObject* aabbObject = new HitboxVisualObject(_model);
-	aabbObject->SetParent(this);
+	SceneObject* aabbObject = new HitboxVisualObject(this, _model);
+	//aabbObject->SetParent(this);
 	_debugObjects.insert({ _debugObjects.size() + 1,aabbObject });
-	_aabbCollider = aabbObject->GetModel()->GetAabbCollider();
+	_collisionController = new CollisionController(this, aabbObject->GetModel()->GetAabbCollider());
+	//_aabbCollider = aabbObject->GetModel()->GetAabbCollider();
 }
 
 void SceneObject::SetShader(Shader* shader) {
@@ -325,64 +329,51 @@ void SceneObject::CreateDebugObjects() {
 	_debugObjects.insert({ _debugObjects.size() + 1,axisObject });
 }
 
-void SceneObject::TestColliding() {
-
-	SceneManager& sceneManager = SceneManager::GetInstance();
-	auto sceneObejcts = sceneManager.GetSceneObjects();
-
-	for (auto it = sceneObejcts.begin(); it != sceneObejcts.end(); it++) {
-
-		if (it->second->_collidable == false)
-			continue;
-		if (it->second == this)
-			continue;
-
-		Model::AabbCollider* otherAabbColl = it->second->_aabbColliderWorldSpace;
-		if (_aabbColliderWorldSpace->OX.x <= otherAabbColl->OX.y && _aabbColliderWorldSpace->OX.y >= otherAabbColl->OX.x &&
-			_aabbColliderWorldSpace->OY.x <= otherAabbColl->OY.y && _aabbColliderWorldSpace->OY.y >= otherAabbColl->OY.x &&
-			_aabbColliderWorldSpace->OZ.x <= otherAabbColl->OZ.y && _aabbColliderWorldSpace->OZ.y >= otherAabbColl->OZ.x) {
-
-			std::cout << "Collide " << _name << " with " << it->second->GetName() << std::endl;
-		}
-
-	}
-}
-
-bool SceneObject::ModelMatrixChanged() {
-
-	bool res = false;
-
-	if (_position != _oldPosition) {
-		res = true;
-		_oldPosition = _position;
-	}
-	if (_rotation != _oldRotation) {
-		res = true;
-		_oldRotation = _rotation;
-	}
-	if (_scale != _oldScale) {
-		res = true;
-		_oldScale = _scale;
-	}
-	return res;
-}
-void SceneObject::UpdateAabbColliderValues() {
-
-	_aabbColliderWorldSpace->OX = _aabbCollider->OX + Vector2(_position.x, _position.x);
-	_aabbColliderWorldSpace->OY = _aabbCollider->OY + Vector2(_position.y, _position.y);
-	_aabbColliderWorldSpace->OZ = _aabbCollider->OZ + Vector2(_position.z, _position.z);
-}
-void SceneObject::ConvertVectorToWorldSpace(Vector2& v) {
-
-	Matrix modelMatrix = GetModelMatrix();
-	Vector4 temp;
-
-	temp.x = v.x;
-	temp.y = v.y;
-	temp.z = 0;
-	temp.w = 1;
-
-	temp = modelMatrix * temp;
-	v.x = temp.x;
-	v.y = temp.y;
-}
+//void SceneObject::TestColliding() {
+//
+//	SceneManager& sceneManager = SceneManager::GetInstance();
+//	auto sceneObejcts = sceneManager.GetSceneObjects();
+//
+//	for (auto it = sceneObejcts.begin(); it != sceneObejcts.end(); it++) {
+//
+//		if (it->second->_collidable == false)
+//			continue;
+//		if (it->second == this)
+//			continue;
+//
+//		Model::AabbCollider* otherAabbColl = it->second->_aabbColliderWorldSpace;
+//		if (_aabbColliderWorldSpace->OX.x <= otherAabbColl->OX.y && _aabbColliderWorldSpace->OX.y >= otherAabbColl->OX.x &&
+//			_aabbColliderWorldSpace->OY.x <= otherAabbColl->OY.y && _aabbColliderWorldSpace->OY.y >= otherAabbColl->OY.x &&
+//			_aabbColliderWorldSpace->OZ.x <= otherAabbColl->OZ.y && _aabbColliderWorldSpace->OZ.y >= otherAabbColl->OZ.x) {
+//
+//			std::cout << "Collide " << _name << " with " << it->second->GetName() << std::endl;
+//		}
+//
+//	}
+//}
+//
+//bool SceneObject::ModelMatrixChanged() {
+//
+//	bool res = false;
+//
+//	if (_position != _oldPosition) {
+//		res = true;
+//		_oldPosition = _position;
+//	}
+//	if (_rotation != _oldRotation) {
+//		res = true;
+//		_oldRotation = _rotation;
+//	}
+//	if (_scale != _oldScale) {
+//		res = true;
+//		_oldScale = _scale;
+//	}
+//	return res;
+//}
+//void SceneObject::UpdateAabbColliderValues() {
+//
+//	_aabbColliderWorldSpace->OX = _aabbCollider->OX + Vector2(_position.x, _position.x);
+//	_aabbColliderWorldSpace->OY = _aabbCollider->OY + Vector2(_position.y, _position.y);
+//	_aabbColliderWorldSpace->OZ = _aabbCollider->OZ + Vector2(_position.z, _position.z);
+//}
+//

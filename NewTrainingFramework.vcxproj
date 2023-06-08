@@ -163,6 +163,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Collidable.cpp" />
+    <ClCompile Include="src\CollisionController.cpp" />
     <ClCompile Include="src\DebugObjects\CoordonatesAxeObject.cpp" />
     <ClCompile Include="src\DebugObjects\HitboxVisualObject.cpp" />
     <ClCompile Include="src\DebugObjects\LightDebugObject.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="src\AmbientalLight.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Collidable.h" />
+    <ClInclude Include="src\CollisionController.h" />
     <ClInclude Include="src\DebugObjects\CoordonatesAxeObject.h" />
     <ClInclude Include="src\DebugObjects\HitboxVisualObject.h" />
     <ClInclude Include="src\DebugObjects\LightDebugObject.h" />

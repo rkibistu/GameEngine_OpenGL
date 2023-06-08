@@ -599,6 +599,7 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 	sceneObject->SetRotation(obj.rotation);
 	sceneObject->SetScale(obj.scale);
 	sceneObject->SetName(obj.name);
+	
 
 	return sceneObject;
 }
