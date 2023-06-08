@@ -5,7 +5,6 @@
 //folosita doar pentru a afisa aabb-ul obiectelor
 //	foloeste modelul creat in CollisionController, specific fiecarui sceneObject care are aabb
 
-
 class HitboxVisualObject : public SceneObject {
 
 public:

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Model.h"
+
+#include <map>
+
 #include "Utilities/utilities.h"
 
 
@@ -18,8 +21,17 @@ public:
 	inline Model* GetAabbModel() { return _aabbModel; }
 private:
 	//verifica daca obiectul curent a atins alt obiect din scena
-	void TestColliding();
+	void CheckColiisions();
 
+	//apelata in momentul unei coliziuni
+	//	gestioneaza map-ul ce tine evidenta coliziunilor
+	//	apeleaza functia specifica de coliziune (enter sau Stay) din sceneObject
+	void CallCollisionMethods(SceneObject* collisionObj);
+
+	//apelata cand nu este detectata o colziune
+	//	verifica daca in ultimul frame coliziunea a existat
+	//	in caz afirmativ apeleaza functia specifica de exit pentru sceneObject
+	void CallExitCollisionMethids(SceneObject* collisionObj);
 	//verifica daca s-a schimbat pozitia/rotatia/scala de la ultimul frame
 	bool ModelMatrixChanged();
 
@@ -42,4 +54,7 @@ private:
 	//AabbCollider convertit in WorldSpace.
 	//		este folosit pentru a verifica coliziunile
 	Model::AabbCollider* _aabbColliderWorldSpace;
+
+	//here we keep all the objects we collided with
+	std::map<unsigned int, bool> _isColliding;
 };

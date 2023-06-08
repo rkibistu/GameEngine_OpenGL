@@ -37,12 +37,12 @@ void CollisionController::Update(float deltaTime) {
 		//verificam coliziuni
 		if (_sceneObject->IsCollidable()) {
 
-			TestColliding();
+			CheckColiisions();
 		}
 	}
 }
 
-void CollisionController::TestColliding() {
+void CollisionController::CheckColiisions() {
 
 	SceneManager& sceneManager = SceneManager::GetInstance();
 	auto sceneObejcts = sceneManager.GetSceneObjects();
@@ -59,8 +59,41 @@ void CollisionController::TestColliding() {
 			_aabbColliderWorldSpace->OY.x <= otherAabbColl->OY.y && _aabbColliderWorldSpace->OY.y >= otherAabbColl->OY.x &&
 			_aabbColliderWorldSpace->OZ.x <= otherAabbColl->OZ.y && _aabbColliderWorldSpace->OZ.y >= otherAabbColl->OZ.x) {
 
-			std::cout << "Collide " << _sceneObject->GetName() << " with " << it->second->GetName() << std::endl;
+			CallCollisionMethods(it->second);
 		}
+		else {
+			CallExitCollisionMethids(it->second);
+		}
+	}
+}
+void CollisionController::CallCollisionMethods(SceneObject* collisionObj) {
+
+	//std::cout << "Collide " << _sceneObject->GetName() << " with " << collisionObj->GetName() << std::endl;
+	auto it = _isColliding.find(collisionObj->GetId());
+	if (it == _isColliding.end()) {
+
+		//first frame of collision
+		_isColliding.insert({ collisionObj->GetId(), true});
+
+		_sceneObject->OnCollisionEnter(collisionObj);
+	}
+	else {
+
+		//the collision was on
+		_sceneObject->OnCollisionStay(collisionObj);
+	}
+
+}
+
+void CollisionController::CallExitCollisionMethids(SceneObject* collisionObj) {
+
+	auto it = _isColliding.find(collisionObj->GetId());
+	if (it != _isColliding.end()) {
+
+		//the collision ended this frame
+		_isColliding.erase(it);
+		
+		_sceneObject->OnCollisionExit(collisionObj);
 	}
 }
 

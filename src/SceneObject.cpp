@@ -108,6 +108,20 @@ void SceneObject::DrawDebugObjects(Camera* camera) {
 	}
 }
 
+void SceneObject::OnCollisionEnter(SceneObject* collisionObj) {
+
+	std::cout << "Enter collide " << GetName() << " with " << collisionObj->GetName() << std::endl;
+
+}
+void SceneObject::OnCollisionStay(SceneObject* collisionObj) {
+
+	//std::cout << "Stay collide " << GetName() << " with " << collisionObj->GetName() << std::endl;
+}
+void SceneObject::OnCollisionExit(SceneObject* collisionObj){
+
+	std::cout << "Exit collide " << GetName() << " with " << collisionObj->GetName() << std::endl;
+}
+
 void SceneObject::DrawTriangles(Camera* camera) {
 
 	if (_model == nullptr)

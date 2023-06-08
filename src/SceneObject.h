@@ -32,6 +32,11 @@ public:
 	//itereaza prin obiectele de debug si apelaza UpdateDebug pt ele. Apelat in sceneManager
 	void DrawDebugObjects(Camera* camera);
 
+	//called by CollisionController on specific moemnts (sugestive from names)
+	virtual void OnCollisionEnter(SceneObject* collisionObj);
+	virtual void OnCollisionStay(SceneObject* collisionObj);
+	virtual void OnCollisionExit(SceneObject* collisionObj);
+
 	void SetModel(Model* model);
 	inline Model* GetModel() { return _model; }
 	void SetShader(Shader* shader);
