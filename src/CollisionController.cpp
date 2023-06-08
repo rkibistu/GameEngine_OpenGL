@@ -6,10 +6,6 @@
 
 CollisionController::CollisionController(SceneObject* sceneObj, Model* baseModel) {
 
-	_oldPosition = Vector3(0, 0, 0);
-	_oldScale = Vector3(0, 0, 0);
-	_oldRotation = Vector3(0, 0, 0);
-
 	_sceneObject = sceneObj;
 
 	Model* aabbModel = new Model();
@@ -35,12 +31,10 @@ void CollisionController::Update(float deltaTime) {
 	bool modelMatrixChanged = ModelMatrixChanged();
 	if (modelMatrixChanged && _aabbModel->GetAabbCollider() != nullptr) {
 
-		//recalculate aabb
-		//std::cout << "Recalculate aabb for " << _name << std::endl;
+		//recalculate aabb and aabbWorldSpace
 		UpdateAabbColliderValues();
 
-		//verif coliziuni
-		//verifiam doar daca s-aschimbat pozitia/rotatia/scara. Vara miscare nu exista coliziune
+		//verificam coliziuni
 		if (_sceneObject->IsCollidable()) {
 
 			TestColliding();
