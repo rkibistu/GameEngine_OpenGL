@@ -10,10 +10,12 @@ class SceneObject;
 class CollisionController {
 
 public:
-	CollisionController(SceneObject* sceneObj, Model::AabbCollider* aabbCollider);
+	CollisionController(SceneObject* sceneObj, Model* baseModel);
 	~CollisionController();
+
 	void Update(float deltaTime);
 
+	inline Model* GetAabbModel() { return _aabbModel; }
 private:
 	void TestColliding();
 
@@ -26,6 +28,6 @@ private:
 	Vector3 _oldScale;
 	Vector3 _oldRotation;
 
-	Model::AabbCollider* _aabbCollider;
+	Model* _aabbModel;
 	Model::AabbCollider* _aabbColliderWorldSpace;
 };

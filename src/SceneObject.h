@@ -95,11 +95,6 @@ private:
 	//Deseneaza linii folsoind _wiredShader
 	void DrawWired(Camera* camera);
 
-	//void TestColliding();
-
-	//bool ModelMatrixChanged();
-	//void UpdateAabbColliderValues();
-
 protected:
 	unsigned int _id;
 	std::string _name;
@@ -124,8 +119,6 @@ protected:
 
 	Trajectory* _trajectory;
 	CollisionController* _collisionController;
-	//Model::AabbCollider* _aabbCollider;
-	//Model::AabbCollider* _aabbColliderWorldSpace;
 	bool _collidable;
 
 	bool _depthTest;

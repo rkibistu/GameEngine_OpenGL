@@ -9,10 +9,13 @@ Fire::Fire(float dispersionMax)
 }
 
 void Fire::Update(float deltaTime) {
+	SceneObject::Update(deltaTime);
 
 	_time += deltaTime / 1.5f;
 	if (_time > 1.0f)
 		_time -= 1.0f;
+
+	
 }
 
 void Fire::SetUniformsParticular(Camera* camera) {

@@ -2,19 +2,30 @@
 #include "CollisionController.h"
 #include "SceneObject.h"
 #include "SceneManager.h"
+#include "Vertex.h"
 
-CollisionController::CollisionController(SceneObject* sceneObj, Model::AabbCollider* aabbCollider) {
+CollisionController::CollisionController(SceneObject* sceneObj, Model* baseModel) {
 
 	_oldPosition = Vector3(0, 0, 0);
 	_oldScale = Vector3(0, 0, 0);
 	_oldRotation = Vector3(0, 0, 0);
 
 	_sceneObject = sceneObj;
-	_aabbCollider = aabbCollider;
+
+	Model* aabbModel = new Model();
+	aabbModel->LoadAabbModel(baseModel->GetModelResource()->Vertices);
+	_aabbModel = aabbModel;
 	_aabbColliderWorldSpace = new Model::AabbCollider();
 }
 CollisionController::~CollisionController() {
 
+	if (_aabbModel) {
+
+		if (_aabbModel->GetModelResource())
+			delete _aabbModel->GetModelResource();
+		delete _aabbModel;
+		_aabbModel = nullptr;
+	}
 	if (_aabbColliderWorldSpace)
 		delete _aabbColliderWorldSpace;
 }
@@ -22,7 +33,7 @@ CollisionController::~CollisionController() {
 void CollisionController::Update(float deltaTime) {
 
 	bool modelMatrixChanged = ModelMatrixChanged();
-	if (modelMatrixChanged && _aabbCollider != nullptr) {
+	if (modelMatrixChanged && _aabbModel->GetAabbCollider() != nullptr) {
 
 		//recalculate aabb
 		//std::cout << "Recalculate aabb for " << _name << std::endl;
@@ -79,9 +90,11 @@ bool CollisionController::ModelMatrixChanged() {
 }
 void CollisionController::UpdateAabbColliderValues() {
 
+	_aabbModel->UpdateAabbModel(_sceneObject->GetModel()->GetModelResource()->Vertices, _sceneObject->GetScale(), _sceneObject->GetRotation());
+
 	Vector3 position = _sceneObject->GetPosition();
-	_aabbColliderWorldSpace->OX = _aabbCollider->OX + Vector2(position.x, position.x);
-	_aabbColliderWorldSpace->OY = _aabbCollider->OY + Vector2(position.y, position.y);
-	_aabbColliderWorldSpace->OZ = _aabbCollider->OZ + Vector2(position.z, position.z);
+	_aabbColliderWorldSpace->OX = _aabbModel->GetAabbCollider()->OX + Vector2(position.x, position.x);
+	_aabbColliderWorldSpace->OY = _aabbModel->GetAabbCollider()->OY + Vector2(position.y, position.y);
+	_aabbColliderWorldSpace->OZ = _aabbModel->GetAabbCollider()->OZ + Vector2(position.z, position.z);
 }
 
