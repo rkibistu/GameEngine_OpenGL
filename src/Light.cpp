@@ -12,6 +12,8 @@ LightObject::LightObject(bool isDebug)
 
 	_isDebug = isDebug;
 
+	_collidable = false;
+
 	if (!isDebug)
 		CreateDebugObjects();
 }

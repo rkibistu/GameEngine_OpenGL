@@ -7,6 +7,7 @@
 #include "Material.h"
 #include "Camera.h"
 #include "Trajectory.h"
+#include "Collidable.h"
 
 #include <vector>
 #include <map>
@@ -25,12 +26,10 @@ public:
 	//Deseneaza triunghiuri folsoind _shader
 	virtual void Draw(Camera* camera);
 
-
-
-	//itereaza prin obiectele de debug si apelaza DrawDebug pt ele
+	//itereaza prin obiectele de debug si apelaza DrawDebug pt ele. Apelat in sceneManager
 	virtual void UpdateDebugObjects(float deltaTime);
 
-	//itereaza prin obiectele de debug si apelaza UpdateDebug pt ele
+	//itereaza prin obiectele de debug si apelaza UpdateDebug pt ele. Apelat in sceneManager
 	void DrawDebugObjects(Camera* camera);
 
 	void SetModel(Model* model);
@@ -40,6 +39,7 @@ public:
 	void AddTexture(Texture* texture);
 	void SetMaterial(Material* material);
 
+	Matrix GetModelMatrix();
 
 	//Va face ca acest obiect sa urmareasca camera pe axele care au valorea 1 in vectorul _followCameraDirections;
 	//	cu un offset fata de camera cu valoarea de: _followCameraOffset;
@@ -75,11 +75,9 @@ public:
 
 	inline void SetParent(SceneObject* parent) { _parent = parent; }
 
-	inline void SetTrajectory(Trajectory* trajectory) { _trajectory = trajectory; }
+	inline void SetTrajectory(Trajectory* trajectory) { _trajectory = trajectory; if (trajectory != nullptr) _collidable = true; }
 protected:
 
-
-	Matrix GetModelMatrix();
 
 	void SetUniformsCommon(Camera* camera);
 	virtual void SetUniformsParticular(Camera* camera);
@@ -95,7 +93,12 @@ private:
 	//Deseneaza linii folsoind _wiredShader
 	void DrawWired(Camera* camera);
 
-	
+	void TestColliding();
+
+	bool ModelMatrixChanged();
+	void UpdateAabbColliderValues();
+
+	void ConvertVectorToWorldSpace(Vector2& v);
 protected:
 	unsigned int _id;
 	std::string _name;
@@ -104,6 +107,7 @@ protected:
 	Vector3 _rotation;
 	Vector3 _scale;
 
+	Vector3 _oldPosition;
 	Vector3 _oldScale;
 	Vector3 _oldRotation;
 
@@ -118,6 +122,9 @@ protected:
 	Material* _material;
 
 	Trajectory* _trajectory;
+	Model::AabbCollider* _aabbCollider;
+	Model::AabbCollider* _aabbColliderWorldSpace;
+	bool _collidable;
 
 	bool _depthTest;
 	bool _drawWired;

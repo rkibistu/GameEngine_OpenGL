@@ -18,8 +18,6 @@ public:
 	//update all the debug objects
 	void UpdateDebugObjects(float deltaTime) override;
 
-
-
 	inline Vector3 GetDiffuseColor() { return _diffuseColor; }
 	inline Vector3 GetSpecularColor() { return _specularColor; }
 	inline Type GetType() { return _type; }

@@ -12,12 +12,19 @@ Model::Model()
 	glGenBuffers(1, &_iboid);
 	glGenBuffers(1, &_iboidWired);
 	glGenBuffers(1, &_vboid);
+
+	_aabbCollider = nullptr;
 }
 Model::~Model() {
 
 	glDeleteBuffers(1, &_iboid);
 	glDeleteBuffers(1, &_iboidWired);
 	glDeleteBuffers(1, &_vboid);
+
+	if (_aabbCollider) {
+		delete _aabbCollider;
+		_aabbCollider = nullptr;
+	}
 
 	//Do not delete ModelResource, it can be sued by another object
 	//ResourceManager is going to delete it
@@ -129,7 +136,7 @@ int Model::LoadSystemAxis() {
 	BindAndLoadVertices();	
 
 	return MY_SUCCES_CODE;
-}
+} 
 
 int Model::LoadNormalModel(std::vector<Vertex>& vertices) {
 
@@ -232,6 +239,12 @@ int Model::LoadAabbModel(std::vector<Vertex>& vertices) {
 		}
 	}
 
+	if (_aabbCollider == nullptr)
+		_aabbCollider = new AabbCollider();
+	_aabbCollider->OX = ox;
+	_aabbCollider->OY = oy;
+	_aabbCollider->OZ = oz;
+
 	Vertex temp;
 	temp.pos = Vector3(ox.x, oy.x, oz.x);
 	aabbVertices.push_back(temp);
@@ -289,7 +302,6 @@ int Model::LoadAabbModel(std::vector<Vertex>& vertices) {
 
 	return MY_SUCCES_CODE;
 }
-
 
 void Model::BindFilled() {
 
@@ -449,3 +461,5 @@ void Model::GenerateFlatTerrain(float width, float depth, int numCellsWidth, int
 		}
 	}
 }
+
+

@@ -40,12 +40,14 @@ public:
 	inline LightObject* GetLight(unsigned int id) { return _lightObjects[id]; }
 	inline std::unordered_map<unsigned int, LightObject*>& GetLights() { return _lightObjects; }
 
+	inline SceneObject* GetSceneObject(unsigned int id) { return _sceneObjects[id]; }
+	inline std::map<unsigned int, SceneObject*>& GetSceneObjects() { return _sceneObjects; }
+
 	inline Material* GetDefaultMaterial() { return _defaultSettings.DefaultMaterial; }
 	inline Shader* GetDefaultShader() { return _defaultSettings.DefaultShader; }
 	inline Shader* GetWiredShader() { return _defaultSettings.WiredShader; }
 	inline Model* GetDebugLightModel() { return _defaultSettings.DebugLightModel; }
 	inline Shader* GetDebugLightShader() { return _defaultSettings.DebugLightShader; }
-
 
 	inline void SetDebug(bool active) { _debugMode = active; }
 	inline bool GetDebug() { return  _debugMode; }

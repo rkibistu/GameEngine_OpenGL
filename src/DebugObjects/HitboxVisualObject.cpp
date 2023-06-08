@@ -20,7 +20,7 @@ HitboxVisualObject::HitboxVisualObject(Model* baseModel)
 HitboxVisualObject::~HitboxVisualObject() {
 
 	if (_model) {
-		if(_model->GetModelResource())
+		if (_model->GetModelResource())
 			delete _model->GetModelResource();
 		delete _model;
 		_model = nullptr;
@@ -34,11 +34,12 @@ void HitboxVisualObject::Update(float deltaTime) {
 	}
 
 	SetPosition(_parent->GetPosition());
-	if (_oldScale != _parent->GetScale() || _oldRotation !=  _parent->GetRotation()) {
+	if (_oldScale != _parent->GetScale() || _oldRotation != _parent->GetRotation()) {
 
 		_oldScale = _parent->GetScale();
 		_oldRotation = _parent->GetRotation();
-	
+
 		_model->UpdateAabbModel(_parent->GetModel()->GetModelResource()->Vertices, _oldScale, _oldRotation);
 	}
 }
+

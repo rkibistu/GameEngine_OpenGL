@@ -195,7 +195,7 @@
 			<trajectory type="circle" iteration-count="infinite" speed="1.5">
 				<center> 
 					<x>0</x>
-					<y>0</y>
+					<y>100</y>
 					<z>300</z>
 				</center>
 				<radius>100</radius>
@@ -230,7 +230,7 @@
 			</textures>
 			<position>
 				<x>75</x>
-				<y>25</y>
+				<y>200</y>
 				<z>400</z>
 			</position>
 			<rotation>
@@ -288,7 +288,7 @@
 				<texture id="100"/>
 			</textures>
 			<material>300</material>
-			<name>mesh_minge</name>
+			<name>mesh_minge0</name>
 			<position>
 				<x>-100</x>
 				<y>50</y>
@@ -314,7 +314,7 @@
 				<texture id="100"/>
 			</textures>
 			<material>301</material>
-			<name>mesh_minge</name>
+			<name>mesh_minge1</name>
 			<position>
 				<x>0</x>
 				<y>50</y>
@@ -340,7 +340,7 @@
 				<texture id="100"/>
 			</textures>
 			<material>302</material>
-			<name>mesh_minge</name>
+			<name>mesh_minge2</name>
 			<position>
 				<x>100</x>
 				<y>50</y>
@@ -368,7 +368,7 @@
 			</textures>
 			<type>normal</type>
 			<wired/>
-			<name>mesh_minge</name>
+			<name>mesh_minge3</name>
 			<color>
 				<r>1.0</r>
 				<g>0.0</g>
@@ -388,34 +388,6 @@
 				<x>1.0</x>
 				<y>1.0</y>
 				<z>1.0</z>
-			</scale>
-		</object>
-		<object id="37">
-			
-			<model>2</model>
-			<shader>23</shader>
-			<type>normal</type>
-			<wired/>
-			<name>mesh_minge</name>
-			<color>
-				<r>1.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</color>
-			<position>
-				<x>250</x>
-				<y>0</y>
-				<z>0</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>45</y>
-				<z>0</z>
-			</rotation>
-			<scale>
-				<x>5.0</x>
-				<y>5.0</y>
-				<z>5.0</z>
 			</scale>
 		</object>
 		<object id="38">
@@ -534,7 +506,7 @@
 					<texture id="104"/>
 				</textures>
 				<material>302</material>
-				<name>mesh_minge</name>
+				<name>mesh_minge5</name>
 				<position>
 					<x>300</x>
 					<y>30</y>
@@ -551,7 +523,6 @@
 					<z>1.0</z>
 				</scale>
 			</object>
-	
 		<object id="45">
 			<model>2</model>
 			<shader>26</shader>
@@ -559,7 +530,7 @@
 				<texture id="14"/>
 			</textures>
 			<type>normal</type>
-			<name>lightedObject2</name>
+			<name>lightedObject3</name>
 			<position>
 				<x>0</x>
 				<y>25</y>
@@ -576,14 +547,14 @@
 				<z>3.0</z>
 			</scale>
 		</object>
-				<object id="46">
+		<object id="46">
 			<model>2</model>
 			<shader>26</shader>
 			<textures>
 				<texture id="14"/>
 			</textures>
 			<type>normal</type>
-			<name>lightedObject2</name>
+			<name>lightedObject4</name>
 			<position>
 				<x>0</x>
 				<y>225</y>

@@ -31,6 +31,10 @@ SceneObject::SceneObject(bool isDebugObj) {
 	_drawWired = false;
 	_name = "sceneObject";
 
+	_aabbCollider = nullptr;
+	_aabbColliderWorldSpace = new Model::AabbCollider();
+	_collidable = true;
+
 	if (!isDebugObj)
 		CreateDebugObjects();
 }
@@ -47,6 +51,8 @@ SceneObject::~SceneObject() {
 
 	if (_trajectory)
 		delete _trajectory;
+	if (_aabbColliderWorldSpace)
+		delete _aabbColliderWorldSpace;
 }
 
 void SceneObject::Start() {
@@ -63,16 +69,34 @@ void SceneObject::Update(float deltaTime) {
 	if (_rotation.y > 180 * 2 * 3.14) {
 		_rotation.y -= 180 * 2 * 3.14;
 	}
-
 	if (Input::GetKeyDown(KeyCode::K)) {
 
 		_rotation.y += 2.5f;
 	}
 
+
 	if (_trajectory) {
 
 		_trajectory->Update(deltaTime, _position);
 	}
+
+	bool modelMatrixChanged = ModelMatrixChanged();
+	if (modelMatrixChanged && _aabbCollider != nullptr) {
+
+		//recalculate aabb
+		//std::cout << "Recalculate aabb for " << _name << std::endl;
+		UpdateAabbColliderValues();
+
+		//verif coliziuni
+		//verifiam doar daca s-aschimbat pozitia/rotatia/scara. Vara miscare nu exista coliziune
+		if (_collidable) {
+
+			TestColliding();
+		}
+	}
+
+
+	//Collidable::Update();
 }
 
 void SceneObject::Draw(Camera* camera) {
@@ -81,6 +105,22 @@ void SceneObject::Draw(Camera* camera) {
 		DrawWired(camera);
 	else
 		DrawTriangles(camera);
+}
+
+void SceneObject::UpdateDebugObjects(float deltaTime) {
+
+	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
+
+		it->second->Update(deltaTime);
+	}
+}
+
+void SceneObject::DrawDebugObjects(Camera* camera) {
+
+	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
+
+		it->second->Draw(camera);
+	}
 }
 
 void SceneObject::DrawTriangles(Camera* camera) {
@@ -129,19 +169,19 @@ void SceneObject::SetModel(Model* model) {
 
 	_model = model;
 
+	if (_isDebug)
+		return;
+
 	//create normal mode
 	SceneObject* normalsObject = new NormalsVisualObject(_model);
 	normalsObject->SetParent(this);
 	_debugObjects.insert({ _debugObjects.size() + 1,normalsObject });
 
 	//create AABB
-	// MOVE THIS FROM HERE AND CALL IT MANUALLY!
-	if (_isDebug)
-		return;
-
 	SceneObject* aabbObject = new HitboxVisualObject(_model);
 	aabbObject->SetParent(this);
 	_debugObjects.insert({ _debugObjects.size() + 1,aabbObject });
+	_aabbCollider = aabbObject->GetModel()->GetAabbCollider();
 }
 
 void SceneObject::SetShader(Shader* shader) {
@@ -285,17 +325,64 @@ void SceneObject::CreateDebugObjects() {
 	_debugObjects.insert({ _debugObjects.size() + 1,axisObject });
 }
 
-void SceneObject::UpdateDebugObjects(float deltaTime) {
+void SceneObject::TestColliding() {
 
-	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
+	SceneManager& sceneManager = SceneManager::GetInstance();
+	auto sceneObejcts = sceneManager.GetSceneObjects();
 
-		it->second->Update(deltaTime);
+	for (auto it = sceneObejcts.begin(); it != sceneObejcts.end(); it++) {
+
+		if (it->second->_collidable == false)
+			continue;
+		if (it->second == this)
+			continue;
+
+		Model::AabbCollider* otherAabbColl = it->second->_aabbColliderWorldSpace;
+		if (_aabbColliderWorldSpace->OX.x <= otherAabbColl->OX.y && _aabbColliderWorldSpace->OX.y >= otherAabbColl->OX.x &&
+			_aabbColliderWorldSpace->OY.x <= otherAabbColl->OY.y && _aabbColliderWorldSpace->OY.y >= otherAabbColl->OY.x &&
+			_aabbColliderWorldSpace->OZ.x <= otherAabbColl->OZ.y && _aabbColliderWorldSpace->OZ.y >= otherAabbColl->OZ.x) {
+
+			std::cout << "Collide " << _name << " with " << it->second->GetName() << std::endl;
+		}
+
 	}
 }
-void SceneObject::DrawDebugObjects(Camera* camera) {
 
-	for (auto it = _debugObjects.begin(); it != _debugObjects.end(); it++) {
+bool SceneObject::ModelMatrixChanged() {
 
-		it->second->Draw(camera);
+	bool res = false;
+
+	if (_position != _oldPosition) {
+		res = true;
+		_oldPosition = _position;
 	}
+	if (_rotation != _oldRotation) {
+		res = true;
+		_oldRotation = _rotation;
+	}
+	if (_scale != _oldScale) {
+		res = true;
+		_oldScale = _scale;
+	}
+	return res;
+}
+void SceneObject::UpdateAabbColliderValues() {
+
+	_aabbColliderWorldSpace->OX = _aabbCollider->OX + Vector2(_position.x, _position.x);
+	_aabbColliderWorldSpace->OY = _aabbCollider->OY + Vector2(_position.y, _position.y);
+	_aabbColliderWorldSpace->OZ = _aabbCollider->OZ + Vector2(_position.z, _position.z);
+}
+void SceneObject::ConvertVectorToWorldSpace(Vector2& v) {
+
+	Matrix modelMatrix = GetModelMatrix();
+	Vector4 temp;
+
+	temp.x = v.x;
+	temp.y = v.y;
+	temp.z = 0;
+	temp.w = 1;
+
+	temp = modelMatrix * temp;
+	v.x = temp.x;
+	v.y = temp.y;
 }

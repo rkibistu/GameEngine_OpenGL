@@ -20,7 +20,18 @@ struct ModelResource {
 	std::string FilePath() { return Path + Filename; }
 };
 
+
+
 class Model{
+	
+public:
+	//structura contine vectorii, pe fiecare axa, ce definesc colliderul
+	struct AabbCollider {
+
+		Vector2 OX; // (min,max)
+		Vector2 OY;
+		Vector2 OZ;
+	};
 
 public:
 	Model();
@@ -42,6 +53,7 @@ public:
 	inline unsigned int GetIndicesFilledCount() { return (_modelResource != nullptr) ? _modelResource->Indices.size() : 0; }
 	inline unsigned int GetIndicesWiredCount() { return (_modelResource != nullptr) ? _modelResource->WiredIndices.size() : 0; }
 	inline ModelResource* GetModelResource() { return _modelResource; }
+	inline AabbCollider* GetAabbCollider() { return _aabbCollider; }
 private:
 
 	//get indices for triangle mode and create indices for wired mode
@@ -58,7 +70,6 @@ private:
 	//generate the terrain
 	void GenerateFlatTerrain(float _width, float depth, int numCellsWidth, int numCellsDepth, std::vector<Vertex>& vertices, std::vector<GLushort>& indices);
 
-
 private:
 	ModelResource* _modelResource;
 	
@@ -66,5 +77,7 @@ private:
 	GLuint _iboidWired; //index buffer
 	GLuint _vboid; //vertex buffer
 
+	// aabbCollider centered in 0,0,0. Updates every time the obj is rotaated or scaled
+	AabbCollider* _aabbCollider;
 };
 

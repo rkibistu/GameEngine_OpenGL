@@ -26,7 +26,6 @@ protected:
 
 	bool _finished = false;
 
-
 protected:
 
 	void CalculateDirection(unsigned int sourceIndex, unsigned int destIndex);
@@ -39,6 +38,4 @@ protected:
 	virtual void IncrementIterationIndex();
 	
 	virtual void PassToNextCheckpoint(Vector3& currentPosition);
-
-
 };
