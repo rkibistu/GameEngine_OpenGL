@@ -32,4 +32,5 @@ protected:
 
 private:
 	Camera* _activeCamera;
+	Vector2 _colliderSize;
 };

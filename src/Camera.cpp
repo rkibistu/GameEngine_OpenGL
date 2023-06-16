@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "Camera.h"
+#include "SceneObject.h"
+#include "Input.h"
 
 #include <iostream>
-#include "Input.h"
 
 Camera::Camera(Vector3 position, Vector3 target, Vector3 up)
 	: _position(position), _target(target), _up(up) {
@@ -28,7 +29,6 @@ Camera::~Camera() {
 	if (_collisionController)
 		delete _collisionController;
 }
-
 
 void Camera::Init(Vector3 position, Vector3 target, Vector3 up, float fov, float nearClip, float farClip) {
 
@@ -268,6 +268,24 @@ void Camera::SetPerspective(GLfloat fov, GLfloat aspectRatio, GLfloat nearClip, 
 	_projMatrix.SetPerspective(_fov, _aspectRatio, _nearClip, _farClip);
 }
 
+
+void Camera::OnCollisionEnter(SceneObject* collisionObj) {
+
+	std::cout << "Camera enter collide  with " << collisionObj->GetName() << std::endl;
+
+}
+void Camera::OnCollisionStay(SceneObject* collisionObj) {
+
+	std::cout << "Camera stay collide  with " << collisionObj->GetName() << std::endl;
+}
+void Camera::OnCollisionExit(SceneObject* collisionObj) {
+
+	std::cout << "Camera exit collide  with " << collisionObj->GetName() << std::endl;
+}
+
+
+// PRIVATE
+
 void Camera::UpdateAxis() {
 
 	_yAxis = _up.Normalize();
@@ -337,7 +355,6 @@ void Camera::UpdateViewMatrix() {
 	_viewMatrix = _T * _R;
 }
 
-
 void Camera::TranslateToOrigin() {
 
 
@@ -355,3 +372,4 @@ void Camera::TranslateToPosition(Vector3 position) {
 
 	UpdateWorldView();
 }
+

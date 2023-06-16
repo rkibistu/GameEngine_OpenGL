@@ -7,8 +7,11 @@
 
 CollisionControllerCamera::CollisionControllerCamera() {
 
+	_colliderSize.x = 20;
+	_colliderSize.y = 40;
+
 	Model* aabbModel = new Model();
-	aabbModel->LoadAabbModelCamera(20, 40);
+	aabbModel->LoadAabbModelCamera(_colliderSize.x,_colliderSize.y);
 	_aabbModel = aabbModel;
 	_aabbColliderWorldSpace = new Model::AabbCollider();
 
@@ -32,14 +35,13 @@ void CollisionControllerCamera::PreUpdate() {
 }
 
 void CollisionControllerCamera::CallOnCollisionEnter(SceneObject* collisionObj) {
-	std::cout << "CAMERA enter with " << collisionObj->GetName() << "\n";
+	_activeCamera->OnCollisionEnter(collisionObj);
 }
 void CollisionControllerCamera::CallOnCollisionStay(SceneObject* collisionObj)  {
-	std::cout << "CAMERA stay with " << collisionObj->GetName() << "\n";
+	_activeCamera->OnCollisionStay(collisionObj);
 }
 void CollisionControllerCamera::CallOnCollisionExit(SceneObject* collisionObj)  {
-	
-	std::cout << "CAMERA exit with " << collisionObj->GetName() << "\n";
+	_activeCamera->OnCollisionExit(collisionObj);
 }
 
 bool CollisionControllerCamera::ModelMatrixChanged() {

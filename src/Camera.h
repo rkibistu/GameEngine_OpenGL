@@ -57,6 +57,12 @@ public:
 	inline Vector3 GetUp() { return _up; }
 
 	inline Vector3 GetRotation() { return _rotation; }
+
+	//called by CollisionController on specific moemnts (sugestive from names)
+	virtual void OnCollisionEnter(SceneObject* collisionObj);
+	virtual void OnCollisionStay(SceneObject* collisionObj);
+	virtual void OnCollisionExit(SceneObject* collisionObj);
+
 private:
 	
 	Matrix _R;

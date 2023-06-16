@@ -14,7 +14,7 @@ public:
 public:
 	LightObject(bool isDebug = false);
 	LightObject(Type type, Vector3 diffuseColor, Vector3 specularColor, bool isDebug = false);
-
+	virtual ~LightObject() { ; }
 	//update all the debug objects
 	void UpdateDebugObjects(float deltaTime) override;
 
