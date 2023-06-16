@@ -84,7 +84,6 @@ void SceneObject::Update(float deltaTime) {
 
 		_collisionController->Update(deltaTime);
 	}
-
 }
 
 void SceneObject::Draw(Camera* camera) {

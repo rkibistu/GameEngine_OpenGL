@@ -120,10 +120,13 @@
     <ClCompile Include="src\Trajectories\TrajectoryCircle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CollisionController.cpp">
+    <ClCompile Include="src\CollisionControllers\CollisionController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\TextRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CollisionControllers\CollisionControllerBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -263,10 +266,16 @@
     <ClInclude Include="src\Trajectories\TrajectoryCircle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\CollisionController.h">
+    <ClInclude Include="src\CollisionControllers\CollisionController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\TextRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CollisionControllers\CollisionControllerBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CollisionControllers\CollisionControllerCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
