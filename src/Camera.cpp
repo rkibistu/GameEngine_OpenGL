@@ -18,8 +18,15 @@ Camera::Camera(Vector3 position, Vector3 target, Vector3 up)
 	_aspectRatio = 800.0f / 600.0f;
 	_projMatrix.SetPerspective(_fov, _aspectRatio, _nearClip, _farClip);
 
+	_collisionController = nullptr;
+
 	UpdateAxis();
 	UpdateWorldView();
+}
+Camera::~Camera() {
+
+	if (_collisionController)
+		delete _collisionController;
 }
 
 
@@ -39,6 +46,8 @@ void Camera::Init(Vector3 position, Vector3 target, Vector3 up, float fov, float
 
 	UpdateAxis();
 	UpdateWorldView();
+
+	_collisionController = new CollisionControllerCamera();
 }
 
 void Camera::Update(float deltaTime) {
@@ -46,6 +55,8 @@ void Camera::Update(float deltaTime) {
 	SetDeltaTime(deltaTime);
 
 	DoFirstPersonMovement();
+
+	_collisionController->Update(deltaTime);
 }
 
 void Camera::DoFirstPersonMovement() {

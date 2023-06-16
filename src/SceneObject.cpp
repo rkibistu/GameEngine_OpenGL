@@ -187,7 +187,6 @@ void SceneObject::SetModel(Model* model) {
 	SceneObject* aabbObject = new HitboxVisualObject(this, _collisionController->GetAabbModel());
 	//aabbObject->SetParent(this);
 	_debugObjects.insert({ _debugObjects.size() + 1,aabbObject });
-
 }
 
 void SceneObject::SetShader(Shader* shader) {

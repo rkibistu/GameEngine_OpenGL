@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="src\CollisionControllers\CollisionController.cpp" />
     <ClCompile Include="src\CollisionControllers\CollisionControllerBase.cpp" />
+    <ClCompile Include="src\CollisionControllers\CollisionControllerCamera.cpp" />
     <ClCompile Include="src\DebugObjects\CoordonatesAxeObject.cpp" />
     <ClCompile Include="src\DebugObjects\HitboxVisualObject.cpp" />
     <ClCompile Include="src\DebugObjects\LightDebugObject.cpp" />

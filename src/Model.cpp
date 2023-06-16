@@ -303,6 +303,80 @@ int Model::LoadAabbModel(std::vector<Vertex>& vertices) {
 	return MY_SUCCES_CODE;
 }
 
+int Model::LoadAabbModelCamera(int width, int height) {
+
+	std::vector<Vertex> aabbVertices;
+	std::vector<unsigned short> aabbWiredIndices;
+	std::vector<unsigned short> aabbIndices;
+
+	Vector2 ox(-width, width);
+	Vector2 oy(-height,height);
+	Vector2 oz(-width,width);
+
+	if (_aabbCollider == nullptr)
+		_aabbCollider = new AabbCollider();
+	_aabbCollider->OX = ox;
+	_aabbCollider->OY = oy;
+	_aabbCollider->OZ = oz;
+
+	Vertex temp;
+	temp.pos = Vector3(ox.x, oy.x, oz.x);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.y, oy.x, oz.x);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.y, oy.y, oz.x);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.x, oy.y, oz.x);
+	aabbVertices.push_back(temp);
+
+	temp.pos = Vector3(ox.x, oy.x, oz.y);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.y, oy.x, oz.y);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.y, oy.y, oz.y);
+	aabbVertices.push_back(temp);
+	temp.pos = Vector3(ox.x, oy.y, oz.y);
+	aabbVertices.push_back(temp);
+
+
+	aabbWiredIndices.push_back(0);
+	aabbWiredIndices.push_back(1);
+	aabbWiredIndices.push_back(0);
+	aabbWiredIndices.push_back(3);
+	aabbWiredIndices.push_back(0);
+	aabbWiredIndices.push_back(4);
+	aabbWiredIndices.push_back(1);
+	aabbWiredIndices.push_back(5);
+	aabbWiredIndices.push_back(1);
+	aabbWiredIndices.push_back(2);
+	aabbWiredIndices.push_back(3);
+	aabbWiredIndices.push_back(2);
+	aabbWiredIndices.push_back(3);
+	aabbWiredIndices.push_back(7);
+	aabbWiredIndices.push_back(7);
+	aabbWiredIndices.push_back(4);
+	aabbWiredIndices.push_back(7);
+	aabbWiredIndices.push_back(6);
+	aabbWiredIndices.push_back(6);
+	aabbWiredIndices.push_back(5);
+	aabbWiredIndices.push_back(6);
+	aabbWiredIndices.push_back(2);
+	aabbWiredIndices.push_back(4);
+	aabbWiredIndices.push_back(5);
+
+	if (_modelResource)
+		delete _modelResource;
+	_modelResource = new ModelResource();
+	_modelResource->Vertices = aabbVertices;
+	_modelResource->WiredIndices = aabbWiredIndices;
+
+	FillVerticesColor(Vector3(0.0, 1.0, 1.0));
+
+	BindAndLoadVertices();
+
+	return MY_SUCCES_CODE;
+}
+
 int Model::LoadTextQuad() {
 
 	int res;
@@ -384,6 +458,7 @@ int Model::UpdateAabbModel(std::vector<Vertex> vertices, Vector3 scale, Vector3 
 
 	return MY_SUCCES_CODE;
 }
+
 // PRIVATE
 
 void Model::BindAndLoadVertices() {

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "CollisionControllerCamera.h"
+
 #include "Utilities/utilities.h" 
 
 class Camera
@@ -8,7 +10,8 @@ class Camera
 public:
 	Camera() { ; }
 	Camera(Vector3 position, Vector3 target, Vector3 up);
-	
+	~Camera();
+
 	void Init(Vector3 position, Vector3 target, Vector3 up, float fov, float nearClip, float farClip);
 
 	void Update(float deltaTime);
@@ -97,5 +100,7 @@ private:
 	Matrix _projMatrix;
 
 	Vector3 _rotation;
+
+	CollisionControllerBase* _collisionController;
 };
 

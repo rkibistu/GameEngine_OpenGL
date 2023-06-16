@@ -42,6 +42,7 @@ public:
 	int LoadSystemAxis();
 	int LoadNormalModel(std::vector<Vertex>& vertices);
 	int LoadAabbModel(std::vector<Vertex>& vertices);
+	int LoadAabbModelCamera(int width = 0, int heigth = 0);
 	int LoadLineUp(Vector3 up, float length);
 	int LoadTextQuad();
 

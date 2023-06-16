@@ -245,9 +245,9 @@
 				<z>0</z>
 			</rotation>
 			<scale>
-				<x>1</x>
-				<y>1</y>
-				<z>1</z>
+				<x>0.3</x>
+				<y>0.3</y>
+				<z>0.3</z>
 			</scale>
 		</object>
 		<object id="8">
