@@ -118,7 +118,7 @@ void SceneObject::OnCollisionEnter(SceneObject* collisionObj) {
 }
 void SceneObject::OnCollisionStay(SceneObject* collisionObj) {
 
-	std::cout << "Stay collide " << GetName() << " with " << collisionObj->GetName() << std::endl;
+	//std::cout << "Stay collide " << GetName() << " with " << collisionObj->GetName() << std::endl;
 }
 void SceneObject::OnCollisionExit(SceneObject* collisionObj) {
 

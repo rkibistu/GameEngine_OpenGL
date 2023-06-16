@@ -81,7 +81,7 @@ public:
 	inline void SetParent(SceneObject* parent) { _parent = parent; }
 
 	void SetTrajectory(Trajectory* trajectory);
-	inline bool IsCollidable() { return _collisionController != nullptr; }
+	inline bool IsCollidable() { return _collidable; }
 	inline CollisionController* GetCollisionController() { return _collisionController; }
 protected:
 
