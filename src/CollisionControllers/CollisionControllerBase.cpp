@@ -9,8 +9,6 @@ void CollisionControllerBase::Update(float deltaTime) {
 
 	PreUpdate();
 
-	/*bool modelMatrixChanged = ModelMatrixChanged();
-	if (modelMatrixChanged && _aabbModel->GetAabbCollider() != nullptr) {*/
 	if(ShouldCheckCollision()){
 		//recalculate aabb and aabbWorldSpace
 		UpdateAabbColliderValues();
@@ -62,13 +60,11 @@ void CollisionControllerBase::CallCollisionMethods(SceneObject* collisionObj) {
 		//first frame of collision
 		_isColliding.insert({ collisionObj->GetId(), true });
 
-		//_sceneObject->OnCollisionEnter(collisionObj);
 		CallOnCollisionEnter(collisionObj);
 	}
 	else {
 
 		//the collision was on
-		//_sceneObject->OnCollisionStay(collisionObj);
 		CallOnCollisionStay(collisionObj);
 	}
 
@@ -82,7 +78,6 @@ void CollisionControllerBase::CallExitCollisionMethids(SceneObject* collisionObj
 		//the collision ended this frame
 		_isColliding.erase(it);
 
-		//_sceneObject->OnCollisionExit(collisionObj);
 		CallOnCollisionExit(collisionObj);
 	}
 }
@@ -92,7 +87,6 @@ void CollisionControllerBase::CallStayCollisionMethods() {
 	SceneManager& sceneManager = SceneManager::GetInstance();
 	for (auto it = _isColliding.begin(); it != _isColliding.end(); it++) {
 
-		//_sceneObject->OnCollisionStay(sceneManager.GetSceneObject(it->first));
 		CallOnCollisionStay(sceneManager.GetSceneObject(it->first));
 	}
 }

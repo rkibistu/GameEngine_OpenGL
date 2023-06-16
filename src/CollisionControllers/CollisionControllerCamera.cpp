@@ -61,7 +61,7 @@ bool CollisionControllerCamera::ModelMatrixChanged() {
 
 void CollisionControllerCamera::UpdateAabbColliderValues() {
 
-	//_aabbModel->UpdateAabbModel(_sceneObject->GetModel()->GetModelResource()->Vertices, _sceneObject->GetScale(), _sceneObject->GetRotation());
+	//rotation? zic ca nu e necesar
 
 	Vector3 position = _activeCamera->GetPosition();
 	_aabbColliderWorldSpace->OX = _aabbModel->GetAabbCollider()->OX + Vector2(position.x, position.x);
