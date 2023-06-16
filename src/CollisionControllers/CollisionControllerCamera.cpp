@@ -36,6 +36,7 @@ void CollisionControllerCamera::PreUpdate() {
 
 void CollisionControllerCamera::CallOnCollisionEnter(SceneObject* collisionObj) {
 	_activeCamera->OnCollisionEnter(collisionObj);
+	
 }
 void CollisionControllerCamera::CallOnCollisionStay(SceneObject* collisionObj)  {
 	_activeCamera->OnCollisionStay(collisionObj);

@@ -230,7 +230,7 @@ void Camera::RotateOY(int direction) {
 
 	// go back to initial pos before starting rotation
 	TranslateToPosition(goBackPos);
-}
+} 
 void Camera::RotateOZ(int direction) {
 	if (direction == 0)
 		return;
@@ -272,15 +272,17 @@ void Camera::SetPerspective(GLfloat fov, GLfloat aspectRatio, GLfloat nearClip, 
 void Camera::OnCollisionEnter(SceneObject* collisionObj) {
 
 	std::cout << "Camera enter collide  with " << collisionObj->GetName() << std::endl;
-
+	collisionObj->OnCollisionEnter(nullptr);
 }
 void Camera::OnCollisionStay(SceneObject* collisionObj) {
 
-	std::cout << "Camera stay collide  with " << collisionObj->GetName() << std::endl;
+	//std::cout << "Camera stay collide  with " << collisionObj->GetName() << std::endl;
+	collisionObj->OnCollisionStay(nullptr);
 }
 void Camera::OnCollisionExit(SceneObject* collisionObj) {
 
 	std::cout << "Camera exit collide  with " << collisionObj->GetName() << std::endl;
+	collisionObj->OnCollisionExit(nullptr);
 }
 
 
