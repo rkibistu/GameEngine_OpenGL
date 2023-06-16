@@ -5,6 +5,7 @@
 #include "Fog.h"
 #include "Light.h"
 #include "AmbientalLight.h"
+#include "TextRenderer.h"
 
 #include <unordered_map>
 #include <map>
@@ -16,6 +17,7 @@ struct DefaultSettings {
 	Shader* DebugLightShader;	//used to draw debug light source
 	Model* DebugLightModel;		//used to draw debug light source
 	Material* DefaultMaterial;	//used to all objects that don't specify one
+	Shader* TextShader;
 };
 
 class SceneManager {
@@ -48,6 +50,7 @@ public:
 	inline Shader* GetWiredShader() { return _defaultSettings.WiredShader; }
 	inline Model* GetDebugLightModel() { return _defaultSettings.DebugLightModel; }
 	inline Shader* GetDebugLightShader() { return _defaultSettings.DebugLightShader; }
+	inline Shader* GetTextShader() { return _defaultSettings.TextShader; }
 
 	inline void SetDebug(bool active) { _debugMode = active; }
 	inline bool GetDebug() { return  _debugMode; }
@@ -77,4 +80,6 @@ private:
 	DefaultSettings _defaultSettings;
 
 	SceneManagerXmlParser _xmlParser;
+
+	TextRenderer* _textRenderer;
 };

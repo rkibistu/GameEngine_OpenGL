@@ -7,6 +7,7 @@ class TrajectoryCircle : public Trajectory {
 public:
 	void Start() override;
 	void Update(float deltaTime, Vector3& position) override;
+	void SetToStartPosition(Vector3& position) override;
 
 private:
 

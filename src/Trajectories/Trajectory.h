@@ -43,4 +43,6 @@ public:
 	inline void SetCenter(Vector3 position) { _center = position; }
 	inline void SetRadius(float radius) { _radius = radius; }
 	inline void SetPlaneVectors(Vector3 v1, Vector3 v2) { _planeVector1 = v1; _planeVector2 = v2; }
+
+	virtual void SetToStartPosition(Vector3& position) = 0;
 };

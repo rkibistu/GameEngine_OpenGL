@@ -303,6 +303,46 @@ int Model::LoadAabbModel(std::vector<Vertex>& vertices) {
 	return MY_SUCCES_CODE;
 }
 
+int Model::LoadTextQuad() {
+
+	int res;
+	std::vector<Vertex> vertices;
+	std::vector<GLushort> indices;
+	std::vector<GLushort> wiredIndices;
+
+	Vertex vertex;
+	vertex.pos = Vector3(-10.0, -10.0, 0.0);
+	vertex.color = Vector3(0.0, 0.0, 1.0);
+	vertices.push_back(vertex);
+	vertex.pos = Vector3(10.0, -10.0, 0.0);
+	vertex.color = Vector3(0.0, 0.0, 1.0);
+	vertices.push_back(vertex);
+	vertex.pos = Vector3(10.0, 10.0, 0.0);
+	vertex.color = Vector3(0.0, 0.0, 1.0);
+	vertices.push_back(vertex);
+	vertex.pos = Vector3(-10.0, 10.0, 0.0);
+	vertex.color = Vector3(0.0, 0.0, 1.0);
+	vertices.push_back(vertex);
+
+	indices.push_back(0);
+	indices.push_back(1);
+	indices.push_back(2);
+	indices.push_back(2);
+	indices.push_back(3);
+	indices.push_back(0);
+
+	CreateWiredindicesBuffer(indices, wiredIndices);
+
+	_modelResource = new ModelResource();
+	_modelResource->Vertices = vertices;
+	_modelResource->Indices = indices;
+	_modelResource->WiredIndices = wiredIndices;
+
+	BindAndLoadVertices();
+
+	return MY_SUCCES_CODE;
+}
+
 void Model::BindFilled() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, _vboid);

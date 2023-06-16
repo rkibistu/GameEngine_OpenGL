@@ -120,10 +120,10 @@
     <ClCompile Include="src\Trajectories\TrajectoryCircle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Collidable.cpp">
+    <ClCompile Include="src\CollisionController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CollisionController.cpp">
+    <ClCompile Include="src\TextRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -263,10 +263,10 @@
     <ClInclude Include="src\Trajectories\TrajectoryCircle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Collidable.h">
+    <ClInclude Include="src\CollisionController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\CollisionController.h">
+    <ClInclude Include="src\TextRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -295,6 +295,8 @@
     <None Include="Resources\Shaders\Debug\SimpleColorShaderFS.frag" />
     <None Include="Resources\Shaders\Lights\NormalMapShaderVS.vert" />
     <None Include="Resources\Shaders\Lights\NormalMapShaderFS.frag" />
+    <None Include="Resources\Shaders\TextShaderVS.vert" />
+    <None Include="Resources\Shaders\TextShaserFS.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />

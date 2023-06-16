@@ -59,6 +59,8 @@ void SceneObject::Start() {
 	//call start for children maybe
 	if (_trajectory)
 		_trajectory->Start();
+	if (_collisionController)
+		_collisionController->Start();
 }
 
 void SceneObject::Update(float deltaTime) {
@@ -78,10 +80,11 @@ void SceneObject::Update(float deltaTime) {
 
 		_trajectory->Update(deltaTime, _position);
 	}
-
 	if (_collisionController) {
+
 		_collisionController->Update(deltaTime);
 	}
+
 }
 
 void SceneObject::Draw(Camera* camera) {
@@ -115,9 +118,9 @@ void SceneObject::OnCollisionEnter(SceneObject* collisionObj) {
 }
 void SceneObject::OnCollisionStay(SceneObject* collisionObj) {
 
-	//std::cout << "Stay collide " << GetName() << " with " << collisionObj->GetName() << std::endl;
+	std::cout << "Stay collide " << GetName() << " with " << collisionObj->GetName() << std::endl;
 }
-void SceneObject::OnCollisionExit(SceneObject* collisionObj){
+void SceneObject::OnCollisionExit(SceneObject* collisionObj) {
 
 	std::cout << "Exit collide " << GetName() << " with " << collisionObj->GetName() << std::endl;
 }
@@ -128,6 +131,9 @@ void SceneObject::DrawTriangles(Camera* camera) {
 		return;
 	if (_shader == nullptr)
 		return;
+
+	if (_name == "textquad")
+		int x = 3;
 
 	_model->BindFilled();
 	_shader->Bind();
@@ -192,6 +198,16 @@ void SceneObject::SetShader(Shader* shader) {
 void SceneObject::SetDebugShader(Shader* shader) {
 
 	_wiredShader = shader;
+}
+
+void SceneObject::SetTrajectory(Trajectory* trajectory) {
+
+	if (trajectory == nullptr)
+		return;
+
+	_trajectory = trajectory;
+	_trajectory->SetToStartPosition(_position); //set object position to start of trajectory
+	_collidable = true;
 }
 
 void SceneObject::AddTexture(Texture* texture) {

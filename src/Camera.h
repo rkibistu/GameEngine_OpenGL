@@ -43,6 +43,7 @@ public:
 	inline void SetRotationSpeed(float value) { _rotationSpeed = value; }
 
 	inline Matrix GetMVP() { return _viewMatrix * _projMatrix; }
+	inline Matrix GetViewMatrix() { return _viewMatrix; }
 	//inline Matrix GetMVP() { return _projMatrix; }
 
 	inline Vector3 GetPosition() { return _position; }

@@ -2,7 +2,6 @@ attribute vec3 a_posL;
 attribute vec3 a_colL;
 
 
-
 varying vec3 v_color;
 
 

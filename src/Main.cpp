@@ -7,6 +7,7 @@
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "Input.h"
+#include "TextRenderer.h"
 
 #include <iostream>
 #include <conio.h>
@@ -28,6 +29,7 @@ SceneManager& sceneManager = SceneManager::GetInstance();
 int Init(ESContext* esContext)
 {
 
+	 
 	Input::Init();
 	resourceManager.Init();
 	sceneManager.Init(esContext);

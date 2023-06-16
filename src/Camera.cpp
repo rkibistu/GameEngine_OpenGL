@@ -35,6 +35,7 @@ void Camera::Init(Vector3 position, Vector3 target, Vector3 up, float fov, float
 	_aspectRatio = 800.0f / 600.0f;
 
 	_projMatrix.SetPerspective(_fov, _aspectRatio, _nearClip, _farClip);
+	//_projMatrix.SetOrthographic(-100.0f, 100.0f, -100.0f, 100.0f, _nearClip, _farClip);
 
 	UpdateAxis();
 	UpdateWorldView();

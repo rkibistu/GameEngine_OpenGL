@@ -73,13 +73,16 @@ int SceneManagerXmlParser::ReadDefaultSettings(DefaultSettings& defaultSettings)
 		if (ReadInt(node, DEBUG_LIGHT_SHADER_NODE, value)) {
 			defaultSettings.DebugLightShader = resourceManager.GetShader(value);
 		}
+		if (ReadInt(node, TEXT_SHADER_NODE, value)) {
+			defaultSettings.TextShader = resourceManager.GetShader(value);
+		}
 	}
 
 	return MY_SUCCES_CODE;
 }
 
 //citest toate obiectele din cml aflate dub nodul <objects>
-//	creeaza un SceneObject pt fiecare <object> si il adauga in mapa data ca parametru
+//	creeaza un SceneObject pt fiecare <object> si il adauga in mapa data ca parametru 
 int SceneManagerXmlParser::ReadObjects(std::map<unsigned int, SceneObject*>& sceneObjects) {
 
 	for (rapidxml::xml_node<>* objectNode = _objectsRoot->first_node(); objectNode; objectNode = objectNode->next_sibling()) {
@@ -557,6 +560,13 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 		sceneObject = new TerrainObject(size, cells, obj.heights);
 		sceneObject->SetModel(resourceManager.GetTerrainModel(size, size, cells, cells));
 	}
+	else if (obj.modelId == "textQuad") {
+		//delete later, just for test
+		sceneObject = new SceneObject();
+		Model* model = new Model();
+		model->LoadTextQuad();
+		sceneObject->SetModel(model);
+	}
 	else {
 
 		if (obj.type == "skybox") {
@@ -599,7 +609,7 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 	sceneObject->SetRotation(obj.rotation);
 	sceneObject->SetScale(obj.scale);
 	sceneObject->SetName(obj.name);
-	
+
 
 	return sceneObject;
 }
@@ -652,11 +662,13 @@ Trajectory* SceneManagerXmlParser::CreateTrajectory(TrajectoryXmlFormat trajXml)
 	traj->SetIterationInfinity(trajXml.iterationInfinity);
 	if (trajXml.iterationInfinity == false)
 		traj->SetIterationCount(trajXml.iterationCount);
-	
-	
-	traj->SetCenter(trajXml.center);
-	traj->SetRadius(trajXml.radius);
-	traj->SetPlaneVectors(trajXml.planeVectors[0], trajXml.planeVectors[1]);
+
+	if (trajXml.type == TRAJECTORY_TYPE_CIRCLE) {
+
+		traj->SetCenter(trajXml.center);
+		traj->SetRadius(trajXml.radius);
+		traj->SetPlaneVectors(trajXml.planeVectors[0], trajXml.planeVectors[1]);
+	}
 
 	return traj;
 }

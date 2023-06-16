@@ -16,6 +16,8 @@ public:
 	void Start() override;
 	void Update(float deltaTime, Vector3& position) override;
 
+	void SetToStartPosition(Vector3& position) override;
+
 protected:
 	int _lastCheckpoint;
 	int _nextCheckpoint;

@@ -16,22 +16,33 @@ public:
 	CollisionController(SceneObject* sceneObj, Model* baseModel);
 	~CollisionController();
 
+	void Start();
 	void Update(float deltaTime);
 
 	inline Model* GetAabbModel() { return _aabbModel; }
 private:
+	//apelata pt obiecetele in miscare
 	//verifica daca obiectul curent a atins alt obiect din scena
 	void CheckColiisions();
 
-	//apelata in momentul unei coliziuni
-	//	gestioneaza map-ul ce tine evidenta coliziunilor
+	//apelata in CheckCollisions
+	//apelata in momentul unei coliziuni pt obiectele in miscare
+	//	gestioneaza structura de tip  map ce tine evidenta coliziunilor
 	//	apeleaza functia specifica de coliziune (enter sau Stay) din sceneObject
 	void CallCollisionMethods(SceneObject* collisionObj);
 
-	//apelata cand nu este detectata o colziune
+	//apelata in CheckCollisions
+	//apelata cand nu este detectata o colziune pt un obiect in miscare
 	//	verifica daca in ultimul frame coliziunea a existat
 	//	in caz afirmativ apeleaza functia specifica de exit pentru sceneObject
 	void CallExitCollisionMethids(SceneObject* collisionObj);
+
+	//apelata doar cand nu are loc miscare, in Update
+	//apeleaza OnCollisionStay pentru toate obiectele cu care avem coliziuni active
+	//			= pt toate din _isColliding
+	// nu face verificari suplimentare
+	void CallStayCollisionMethods();
+
 	//verifica daca s-a schimbat pozitia/rotatia/scala de la ultimul frame
 	bool ModelMatrixChanged();
 

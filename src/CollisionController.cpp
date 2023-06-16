@@ -8,10 +8,13 @@ CollisionController::CollisionController(SceneObject* sceneObj, Model* baseModel
 
 	_sceneObject = sceneObj;
 
+	
+
 	Model* aabbModel = new Model();
 	aabbModel->LoadAabbModel(baseModel->GetModelResource()->Vertices);
 	_aabbModel = aabbModel;
 	_aabbColliderWorldSpace = new Model::AabbCollider();
+	
 }
 CollisionController::~CollisionController() {
 
@@ -24,6 +27,12 @@ CollisionController::~CollisionController() {
 	}
 	if (_aabbColliderWorldSpace)
 		delete _aabbColliderWorldSpace;
+}
+
+void CollisionController::Start() {
+
+	ModelMatrixChanged();
+	UpdateAabbColliderValues(); //used to set aabbColliderWorldSpace too
 }
 
 void CollisionController::Update(float deltaTime) {
@@ -39,6 +48,11 @@ void CollisionController::Update(float deltaTime) {
 
 			CheckColiisions();
 		}
+	}
+	else {
+
+		//obiectul nu s-a miscat, apelam OnCollisionStay pt obiectele din _isColliding
+		CallStayCollisionMethods();
 	}
 }
 
@@ -66,6 +80,7 @@ void CollisionController::CheckColiisions() {
 		}
 	}
 }
+
 void CollisionController::CallCollisionMethods(SceneObject* collisionObj) {
 
 	//std::cout << "Collide " << _sceneObject->GetName() << " with " << collisionObj->GetName() << std::endl;
@@ -73,7 +88,7 @@ void CollisionController::CallCollisionMethods(SceneObject* collisionObj) {
 	if (it == _isColliding.end()) {
 
 		//first frame of collision
-		_isColliding.insert({ collisionObj->GetId(), true});
+		_isColliding.insert({ collisionObj->GetId(), true });
 
 		_sceneObject->OnCollisionEnter(collisionObj);
 	}
@@ -92,8 +107,17 @@ void CollisionController::CallExitCollisionMethids(SceneObject* collisionObj) {
 
 		//the collision ended this frame
 		_isColliding.erase(it);
-		
+
 		_sceneObject->OnCollisionExit(collisionObj);
+	}
+}
+
+void CollisionController::CallStayCollisionMethods() {
+
+	SceneManager& sceneManager = SceneManager::GetInstance();
+	for (auto it = _isColliding.begin(); it != _isColliding.end(); it++) {
+
+		_sceneObject->OnCollisionStay(sceneManager.GetSceneObject(it->first));
 	}
 }
 

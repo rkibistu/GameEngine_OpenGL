@@ -44,6 +44,11 @@ void TrajectoryLinear::Update(float deltaTime, Vector3& position) {
 	position += _currentDirection * deltaTime * _speed;
 }
 
+void TrajectoryLinear::SetToStartPosition(Vector3& position) {
+
+	position = _checkpoints[0];
+}
+
 // PRIVATE
 void TrajectoryLinear::CalculateDirection(unsigned int sourceIndex, unsigned int destIndex) {
 

@@ -72,6 +72,10 @@
 				<vs>FireShaderVS.vert</vs>
 				<fs>FireShaderFS.frag</fs>
 			</shader>
+			<shader id="29">
+				<vs>TextShaderVS.vert</vs>
+				<fs>TextShaderFS.frag</fs>
+			</shader>
 		<!-- si aici se adauga toate shaderele -->
 		</folder>
 		<folder path="Resources/Shaders/Lights/">
