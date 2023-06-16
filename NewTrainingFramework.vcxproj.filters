@@ -120,7 +120,7 @@
     <ClCompile Include="src\Trajectories\TrajectoryCircle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CollisionControllers\CollisionController.cpp">
+    <ClCompile Include="src\CollisionControllers\CollisionControllerSceneObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\TextRenderer.cpp">
@@ -269,7 +269,7 @@
     <ClInclude Include="src\Trajectories\TrajectoryCircle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\CollisionControllers\CollisionController.h">
+    <ClInclude Include="src\CollisionControllers\CollisionControllerSceneObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\TextRenderer.h">

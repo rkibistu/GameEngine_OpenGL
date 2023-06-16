@@ -30,6 +30,8 @@ protected:
 
 	bool IsSelf(SceneObject* other) override;
 
+	bool ShouldCheckCollision() override;
+	 
 private:
 	Camera* _activeCamera;
 	Vector2 _colliderSize;

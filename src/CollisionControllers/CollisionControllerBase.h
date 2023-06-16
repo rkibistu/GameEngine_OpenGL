@@ -14,8 +14,11 @@ public:
 
 	virtual ~CollisionControllerBase() { ; }
 
+	virtual void Start() { ; }
+
 	void Update(float deltaTime);
 
+	inline Model* GetAabbModel() { return _aabbModel; }
 protected:
 
 	//this is first method called in udpate every frame
@@ -62,7 +65,19 @@ protected:
 	//returneaza true daca other este acelasi cu obiectul de care e atasat controllerul
 	virtual bool IsSelf(SceneObject* other) = 0;
 
+	//verifica daca trebuie verificate coliziunile pt acest aobiect, in acest frame
+	//	Pt camera -> always true
+	//	Pt obiecte -> doar cand se misca
+	virtual bool ShouldCheckCollision() = 0;
+
 protected:
+
+	//cand are loc o coliziune:
+	//	fals -> apeleaza metodele specifice doar pentru obiectul care a detectat coliziunea
+	//				adica cel care a miscat
+	//	true -> apeleaza metodele pentru ambele obiecte
+	bool _reciprocityCall = false;
+
 	//folosite sa vedem cand s-a realizat o miscare
 	Vector3 _oldPosition;
 	Vector3 _oldScale;

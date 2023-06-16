@@ -9,9 +9,9 @@ void CollisionControllerBase::Update(float deltaTime) {
 
 	PreUpdate();
 
-	bool modelMatrixChanged = ModelMatrixChanged();
-	if (modelMatrixChanged && _aabbModel->GetAabbCollider() != nullptr) {
-
+	/*bool modelMatrixChanged = ModelMatrixChanged();
+	if (modelMatrixChanged && _aabbModel->GetAabbCollider() != nullptr) {*/
+	if(ShouldCheckCollision()){
 		//recalculate aabb and aabbWorldSpace
 		UpdateAabbColliderValues();
 

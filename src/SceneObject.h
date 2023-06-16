@@ -7,7 +7,7 @@
 #include "Material.h"
 #include "Camera.h"
 #include "Trajectory.h"
-#include "CollisionController.h"
+#include "CollisionControllerSceneObject.h"
 
 #include <vector>
 #include <map>
@@ -82,7 +82,7 @@ public:
 
 	void SetTrajectory(Trajectory* trajectory);
 	inline bool IsCollidable() { return _collidable; }
-	inline CollisionController* GetCollisionController() { return _collisionController; }
+	inline CollisionControllerBase* GetCollisionController() { return _collisionController; }
 protected:
 
 
@@ -116,14 +116,14 @@ protected:
 	std::map<unsigned int, SceneObject*> _children;
 	std::map<unsigned int, SceneObject*> _debugObjects;
 
-	Model* _model;
+	Model* _model; 
 	Shader* _shader;
 	Shader* _wiredShader; //used in wiremode
 	std::vector<Texture*> _textureResources;
 	Material* _material;
 
 	Trajectory* _trajectory;
-	CollisionController* _collisionController;
+	CollisionControllerBase* _collisionController;
 	bool _collidable;
 
 	bool _depthTest;

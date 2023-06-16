@@ -162,7 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\CollisionControllers\CollisionController.cpp" />
+    <ClCompile Include="src\CollisionControllers\CollisionControllerSceneObject.cpp" />
     <ClCompile Include="src\CollisionControllers\CollisionControllerBase.cpp" />
     <ClCompile Include="src\CollisionControllers\CollisionControllerCamera.cpp" />
     <ClCompile Include="src\DebugObjects\CoordonatesAxeObject.cpp" />
@@ -210,7 +210,7 @@
     <ClInclude Include="rapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="src\AmbientalLight.h" />
     <ClInclude Include="src\Camera.h" />
-    <ClInclude Include="src\CollisionControllers\CollisionController.h" />
+    <ClInclude Include="src\CollisionControllers\CollisionControllerSceneObject.h" />
     <ClInclude Include="src\CollisionControllers\CollisionControllerBase.h" />
     <ClInclude Include="src\CollisionControllers\CollisionControllerCamera.h" />
     <ClInclude Include="src\DebugObjects\CoordonatesAxeObject.h" />

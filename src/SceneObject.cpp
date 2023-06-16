@@ -182,7 +182,7 @@ void SceneObject::SetModel(Model* model) {
 	_debugObjects.insert({ _debugObjects.size() + 1,normalsObject });
 
 	//create AABB
-	_collisionController = new CollisionController(this, _model);
+	_collisionController = new CollisionControllerSceneObject(this, _model);
 
 	SceneObject* aabbObject = new HitboxVisualObject(this, _collisionController->GetAabbModel());
 	//aabbObject->SetParent(this);

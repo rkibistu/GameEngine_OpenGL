@@ -78,3 +78,8 @@ bool CollisionControllerCamera::IsSelf(SceneObject* other) {
 
 	return false;
 }
+
+bool CollisionControllerCamera::ShouldCheckCollision() {
+
+	return true;
+}
