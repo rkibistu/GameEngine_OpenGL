@@ -151,8 +151,6 @@ void SceneObject::DrawTriangles(Camera* camera) {
 	if (_shader == nullptr)
 		return;
 
-	if (_name == "textquad")
-		int x = 3;
 
 	_model->BindFilled();
 	_shader->Bind();

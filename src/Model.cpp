@@ -385,17 +385,21 @@ int Model::LoadTextQuad() {
 	std::vector<GLushort> wiredIndices;
 
 	Vertex vertex;
-	vertex.pos = Vector3(-10.0, -10.0, 0.0);
+	vertex.pos = Vector3(-1.0, -1.0, 0.0);
 	vertex.color = Vector3(0.0, 0.0, 1.0);
+	vertex.uv = Vector2(0.0,0.0);
 	vertices.push_back(vertex);
-	vertex.pos = Vector3(10.0, -10.0, 0.0);
+	vertex.pos = Vector3(1.0, -1.0, 0.0);
 	vertex.color = Vector3(0.0, 0.0, 1.0);
+	vertex.uv = Vector2(1.0,0.0);
 	vertices.push_back(vertex);
-	vertex.pos = Vector3(10.0, 10.0, 0.0);
+	vertex.pos = Vector3(1.0, 1.0, 0.0);
 	vertex.color = Vector3(0.0, 0.0, 1.0);
+	vertex.uv = Vector2(1.0,1.0);
 	vertices.push_back(vertex);
-	vertex.pos = Vector3(-10.0, 10.0, 0.0);
+	vertex.pos = Vector3(-1.0, 1.0, 0.0);
 	vertex.color = Vector3(0.0, 0.0, 1.0);
+	vertex.uv = Vector2(0.0,1.0);
 	vertices.push_back(vertex);
 
 	indices.push_back(0);

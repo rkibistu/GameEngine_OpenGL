@@ -80,7 +80,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Nvidia|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\include;src/CollisionControllers;src/Trajectories;$(SolutionDir);src/vendor;src;$(SolutionDir)\Include\Nvidia;%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories);Trajectories</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src/Postprocessing;E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\include;src/CollisionControllers;src/Trajectories;$(SolutionDir);src/vendor;src;$(SolutionDir)\Include\Nvidia;%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories);Trajectories</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -101,7 +101,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\include;src/CollisionControllers;src/Trajectories;$(SolutionDir);src/vendor;src;$(SolutionDir)\Include\Nvidia;%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories);Trajectories</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src/Postprocessing;E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\include;src/CollisionControllers;src/Trajectories;$(SolutionDir);src/vendor;src;$(SolutionDir)\Include\Nvidia;%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories);Trajectories</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -122,7 +122,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-ATI|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\include;src/CollisionControllers;src/Trajectories;$(SolutionDir);src/vendor;src;$(SolutionDir)\Include\ATI;%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories);Trajectories</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src/Postprocessing;E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\include;src/CollisionControllers;src/Trajectories;$(SolutionDir);src/vendor;src;$(SolutionDir)\Include\ATI;%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories);Trajectories</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -143,7 +143,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\include;src/CollisionControllers;src/Trajectories;$(SolutionDir);src/vendor;src;$(SolutionDir)\Include\ATI;%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories);Trajectories</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src/Postprocessing;E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\include;src/CollisionControllers;src/Trajectories;$(SolutionDir);src/vendor;src;$(SolutionDir)\Include\ATI;%(AdditionalIncludeDirectories);%(AdditionalIncludeDirectories);Trajectories</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -172,6 +172,7 @@
     <ClCompile Include="src\DebugObjects\NormalsVisualObject.cpp" />
     <ClCompile Include="src\DebugObjects\TargetLineVisual.cpp" />
     <ClCompile Include="src\DebugObjects\WorldCoordonatesAxeObject.cpp" />
+    <ClCompile Include="src\Postprocessing\EffectManager.cpp" />
     <ClCompile Include="src\Fire.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Light.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\NfgParser.cpp" />
     <ClCompile Include="src\ParserXML.cpp" />
+    <ClCompile Include="src\Postprocessing\EffectQuad.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\SceneManagerXmlParser.cpp" />
@@ -221,6 +223,7 @@
     <ClInclude Include="src\DebugObjects\TargetLineVisual.h" />
     <ClInclude Include="src\DebugObjects\WorldCoordonatesAxeObject.h" />
     <ClInclude Include="src\Defines.h" />
+    <ClInclude Include="src\Postprocessing\EffectManager.h" />
     <ClInclude Include="src\Fire.h" />
     <ClInclude Include="src\Fog.h" />
     <ClInclude Include="src\Globals.h" />
@@ -230,6 +233,7 @@
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\NfgParser.h" />
     <ClInclude Include="src\ParserXML.h" />
+    <ClInclude Include="src\Postprocessing\EffectQuad.h" />
     <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\SceneManagerXmlParser.h" />
@@ -271,6 +275,10 @@
     <None Include="Resources\Shaders\Lights\LightSourceShaderVS.vert" />
     <None Include="Resources\Shaders\Lights\NormalMapShaderFS.frag" />
     <None Include="Resources\Shaders\Lights\NormalMapShaderVS.vert" />
+    <None Include="Resources\Shaders\Postprocessing\GrayScaleShaderFS.frag" />
+    <None Include="Resources\Shaders\Postprocessing\GrayScaleShaderVS.vert" />
+    <None Include="Resources\Shaders\Postprocessing\SimpleRedirectShaderFS.frag" />
+    <None Include="Resources\Shaders\Postprocessing\SimpleRedirectShaderVS.vert" />
     <None Include="Resources\Shaders\ReflectSkyboxShaderFS.frag" />
     <None Include="Resources\Shaders\ReflectSkyboxShaderVS.vert" />
     <None Include="Resources\Shaders\SkyboxShaderFS.frag" />

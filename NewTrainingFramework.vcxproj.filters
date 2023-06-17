@@ -132,6 +132,12 @@
     <ClCompile Include="src\CollisionControllers\CollisionControllerCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Postprocessing\EffectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Postprocessing\EffectQuad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rapidXML\rapidxml.hpp">
@@ -281,6 +287,12 @@
     <ClInclude Include="src\CollisionControllers\CollisionControllerCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Postprocessing\EffectManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Postprocessing\EffectQuad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="pcviewer_es2.cfg" />
@@ -309,6 +321,10 @@
     <None Include="Resources\Shaders\Lights\NormalMapShaderFS.frag" />
     <None Include="Resources\Shaders\TextShaderVS.vert" />
     <None Include="Resources\Shaders\TextShaserFS.frag" />
+    <None Include="Resources\Shaders\Postprocessing\SimpleRedirectShaderVS.vert" />
+    <None Include="Resources\Shaders\Postprocessing\SimpleRedirectShaderFS.frag" />
+    <None Include="Resources\Shaders\Postprocessing\GrayScaleShaderVS.vert" />
+    <None Include="Resources\Shaders\Postprocessing\GrayScaleShaderFS.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />

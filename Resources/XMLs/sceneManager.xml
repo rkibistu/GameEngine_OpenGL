@@ -611,7 +611,7 @@
 		<material>300</material>
 		<lightDebugModel>1003</lightDebugModel>
 		<lightDebugShader>27</lightDebugShader>
-		<textShader>20</textShader>
+		<textShader>31</textShader>
 	</defaultSetting>
 
 	<debugSettings>

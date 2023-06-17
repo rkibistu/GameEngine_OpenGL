@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 #include "Input.h"
 #include "TextRenderer.h"
+#include "EffectManager.h"
 
 #include <iostream>
 #include <conio.h>
@@ -24,15 +25,15 @@ float g_deltaTimer;
 
 ResourceManager& resourceManager = ResourceManager::GetInstance();
 SceneManager& sceneManager = SceneManager::GetInstance();
-
+EffectManager* effectManager = new EffectManager();
 
 int Init(ESContext* esContext)
 {
 
-	 
 	Input::Init();
 	resourceManager.Init();
 	sceneManager.Init(esContext);
+	effectManager->Init();
 
 	return 0;
 }
@@ -40,7 +41,8 @@ int Init(ESContext* esContext)
 void DrawTriangles(ESContext* esContext)
 {
 
-	sceneManager.Draw(esContext);
+	//sceneManager.Draw(esContext);
+	effectManager->Draw(esContext);
 }
 
 void Update(ESContext* esContext, float deltaTime)
@@ -69,6 +71,7 @@ void Mouse(ESContext* esContext, unsigned int mouseButton, unsigned int mosueEve
 
 void CleanUp()
 {
+	effectManager->Destroy();
 	resourceManager.DestroyInstance();
 	sceneManager.DestroyInstance();
 	Input::Destroy();

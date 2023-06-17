@@ -98,6 +98,16 @@
 				<fs>SimpleColorShaderFS.frag</fs>
 			</shader>
 		</folder>
+		<folder path="Resources/Shaders/Postprocessing/">
+			<shader id="30">
+				<vs>SimpleRedirectShaderVS.vert</vs>
+				<fs>SimpleRedirectShaderFS.frag</fs>
+			</shader>
+			<shader id="31">
+				<vs>GrayScaleShaderVS.vert</vs>
+				<fs>GrayScaleShaderFS.frag</fs>
+			</shader>
+		</folder>
 	</shaders>
 	<textures>
 		<folder path="Resources/Textures/">

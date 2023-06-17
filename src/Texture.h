@@ -34,6 +34,10 @@ public:
 	void Bind(int slot);
 	void Unbind();
 
+	inline void SetTextureId(GLuint id) { _textureId = id; }
+	inline void SetTextureResource(TextureResource* resource) { _textureResource = resource; }
+	inline TextureResource* GetTextureResource() { return _textureResource; }
+
 private:
 	bool loadTGA(const char* fileName, int* width, int* height, GLenum* format, char** pixels);
 	

@@ -100,7 +100,7 @@ void SceneManager::Update(ESContext* esContext, float deltaTime) {
 }
 void SceneManager::Draw(ESContext* esContext) {
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//Call draw for every object in scene
 	for (auto it = _sceneObjects.begin(); it != _sceneObjects.end(); it++) {
@@ -126,9 +126,7 @@ void SceneManager::Draw(ESContext* esContext) {
 		}
 	}
 
-
-	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
-
+	//eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
 void SceneManager::CreateDebugAxisObject() {
