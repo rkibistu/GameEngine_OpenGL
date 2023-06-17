@@ -108,6 +108,9 @@ protected:
 	Vector3 _rotation;
 	Vector3 _scale;
 
+	//Vector3 _target = _position + Vector3(0,0,1); cred
+	//si gen asta ar trb rotit mereu cand e luat in calcul
+
 	Vector3 _oldPosition;
 	Vector3 _oldScale;
 	Vector3 _oldRotation;
