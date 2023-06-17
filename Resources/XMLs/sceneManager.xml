@@ -582,7 +582,7 @@
 				<g>0.0</g>
 				<b>0.0</b>
 			</specularColor>
-			<type>spot</type>
+			<type>point</type>
 		</light>
 		<!-- <light id="2"> -->
 			<!-- <associatedObject>2</associatedObject> -->
@@ -611,7 +611,7 @@
 		<material>300</material>
 		<lightDebugModel>1003</lightDebugModel>
 		<lightDebugShader>27</lightDebugShader>
-		<textShader>31</textShader>
+		<textShader>32</textShader>
 	</defaultSetting>
 
 	<debugSettings>

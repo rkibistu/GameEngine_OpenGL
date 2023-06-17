@@ -325,6 +325,8 @@
     <None Include="Resources\Shaders\Postprocessing\SimpleRedirectShaderFS.frag" />
     <None Include="Resources\Shaders\Postprocessing\GrayScaleShaderVS.vert" />
     <None Include="Resources\Shaders\Postprocessing\GrayScaleShaderFS.frag" />
+    <None Include="Resources\Shaders\Postprocessing\BlurShaderVS.vert" />
+    <None Include="Resources\Shaders\Postprocessing\BlurShaderFS.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />

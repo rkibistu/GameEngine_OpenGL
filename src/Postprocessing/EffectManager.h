@@ -11,7 +11,7 @@ public:
 	void Init();
 	void Destroy();
 	void Draw(ESContext* esContext);
-
+	void DrawBloom(ESContext* esContext);
 private:
 	GLuint _framebuffer;
 	GLuint _depthRenderBuffer;

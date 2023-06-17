@@ -13,9 +13,13 @@ public:
 
 	void Draw();
 
+
 private:
 	void Init();
 
+	void SetUniforms();
+
+	
 private:
 	//specific to quad
 	Shader* _quadShader;

@@ -84,6 +84,7 @@ void EffectManager::Draw(ESContext* esContext) {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
 
+
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//draw to a quad
@@ -93,5 +94,37 @@ void EffectManager::Draw(ESContext* esContext) {
 		eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 	}
 }
+
+void EffectManager::DrawBloom(ESContext* esContext) {
+
+	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+	// check for framebuffer complete
+	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	if (status == GL_FRAMEBUFFER_COMPLETE)
+	{
+		// render to texture using FBO
+		// clear color and depth buffer
+		glEnable(GL_DEPTH_TEST);
+
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		_sceneManager.Draw(esContext);
+
+		// render to window system provided framebuffer
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+
+
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		//draw to a quad
+		//DrawQuad();
+		_effectQuad->Draw();
+
+		eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
+	}
+}
+
 
 

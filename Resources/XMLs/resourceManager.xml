@@ -107,6 +107,10 @@
 				<vs>GrayScaleShaderVS.vert</vs>
 				<fs>GrayScaleShaderFS.frag</fs>
 			</shader>
+			<shader id="32">
+				<vs>BlurShaderVS.vert</vs>
+				<fs>BlurShaderFS.frag</fs>
+			</shader>
 		</folder>
 	</shaders>
 	<textures>

@@ -57,9 +57,15 @@ void EffectQuad::Draw() {
 
 	_quadShader->SetAttributes();
 
-	_quadShader->SetUniform1i("u_Texture", 0);
+	SetUniforms();
 
 	glDrawElements(GL_TRIANGLES, _quadModel->GetIndicesFilledCount(), GL_UNSIGNED_SHORT, nullptr);
 
 	_quadModel->Unbind();
+}
+
+void EffectQuad::SetUniforms() {
+
+	_quadShader->SetUniform1i("u_Texture", 0);
+	_quadShader->SetUniform1f("u_blurStep", 0.0);
 }

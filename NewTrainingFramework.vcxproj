@@ -275,6 +275,8 @@
     <None Include="Resources\Shaders\Lights\LightSourceShaderVS.vert" />
     <None Include="Resources\Shaders\Lights\NormalMapShaderFS.frag" />
     <None Include="Resources\Shaders\Lights\NormalMapShaderVS.vert" />
+    <None Include="Resources\Shaders\Postprocessing\BlurShaderFS.frag" />
+    <None Include="Resources\Shaders\Postprocessing\BlurShaderVS.vert" />
     <None Include="Resources\Shaders\Postprocessing\GrayScaleShaderFS.frag" />
     <None Include="Resources\Shaders\Postprocessing\GrayScaleShaderVS.vert" />
     <None Include="Resources\Shaders\Postprocessing\SimpleRedirectShaderFS.frag" />

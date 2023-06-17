@@ -1,16 +1,27 @@
 precision mediump float;
 
-varying vec2 TexCoords;
+varying vec2 v_texCoord;
 
 uniform sampler2D u_Texture;
+uniform float u_blurStep;
 
 void main()
 {    
-    vec4 tex = texture2D(u_Texture, TexCoords);
-    
-    vec3 weights = vec3(0.2,0.5,0.3);
-    tex.x = (tex.x * 0.2 + tex.y * 0.5 + tex.z * 0.3);
-    tex.y = tex.x;
-    tex.z = tex.x;
-    gl_FragColor = vec4(tex);
+    vec4 sample0, sample1, sample2, sample3;
+
+    float step = u_blurStep / 100.0;
+    sample0 = texture2D(u_Texture,
+                        vec2(v_texCoord.x - step,
+                             v_texCoord.y - step));
+    sample1 = texture2D(u_Texture,
+                        vec2(v_texCoord.x + step,
+                             v_texCoord.y + step));    
+    sample2 = texture2D(u_Texture,
+                        vec2(v_texCoord.x + step,
+                             v_texCoord.y - step));
+    sample3 = texture2D(u_Texture,
+                        vec2(v_texCoord.x - step,
+                             v_texCoord.y + step));
+
+    gl_FragColor = (sample0 + sample1 + sample2 + sample3)/4.0;
 }   
