@@ -612,6 +612,8 @@
 		<lightDebugModel>1003</lightDebugModel>
 		<lightDebugShader>27</lightDebugShader>
 		<textShader>32</textShader>
+		<onlyBrightShader>33</onlyBrightShader>
+		<blendTexturesShader>34</blendTexturesShader>
 	</defaultSetting>
 
 	<debugSettings>

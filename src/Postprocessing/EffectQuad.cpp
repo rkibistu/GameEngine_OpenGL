@@ -52,5 +52,9 @@ void EffectQuad::Draw() {
 void EffectQuad::SetUniforms() {
 
 	_quadShader->SetUniform1i("u_Texture", 0);
-	_quadShader->SetUniform1f("u_blurStep", 0.0); 
+
+	_quadShader->SetUniform1f("u_blurStep", 0.4); 
+
+	_quadShader->SetUniform1i("u_scene", 0);
+	_quadShader->SetUniform1i("u_bloom", 1);
 }

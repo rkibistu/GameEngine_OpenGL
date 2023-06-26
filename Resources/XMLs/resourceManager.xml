@@ -111,6 +111,14 @@
 				<vs>BlurShaderVS.vert</vs>
 				<fs>BlurShaderFS.frag</fs>
 			</shader>
+			<shader id="33">
+				<vs>OnlyBrightShaderVS.vert</vs>
+				<fs>OnlyBrightShaderFS.frag</fs>
+			</shader>
+			<shader id="34">
+				<vs>BlendTexturesShaderVS.vert</vs>
+				<fs>BlendTexturesShaderFS.frag</fs>
+			</shader>
 		</folder>
 	</shaders>
 	<textures>

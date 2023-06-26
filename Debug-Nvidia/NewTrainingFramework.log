@@ -1,7 +1,6 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  Main.cpp
+  EffectManager.cpp
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Trajectories\Trajectory.h(44,50): warning C4244: '=': conversion from 'float' to 'unsigned int', possible loss of data
 E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Input.h(116,2): warning C4091: 'static ': ignored on left of 'KeyCode' when no variable is declared
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Main.cpp(20,1): warning C4005: 'PI': macro redefinition
-E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\Utilities\Math.h(8): message : see previous definition of 'PI'
+E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\NewTrainingFramework\src\Postprocessing\EffectManager.cpp(78,20): warning C4018: '<': signed/unsigned mismatch
   NewTrainingFramework.vcxproj -> E:\Gameloft\proiect_2015\NewTrainingFramework_2015_MYWORK\BIN-Nvidia\NewTrainingFramework.exe

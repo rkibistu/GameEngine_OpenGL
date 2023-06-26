@@ -76,6 +76,12 @@ int SceneManagerXmlParser::ReadDefaultSettings(DefaultSettings& defaultSettings)
 		if (ReadInt(node, TEXT_SHADER_NODE, value)) {
 			defaultSettings.TextShader = resourceManager.GetShader(value);
 		}
+		if (ReadInt(node, ONLY_BRIGHT_SHADER_NODE, value)) {
+			defaultSettings.OnlyBrightShader = resourceManager.GetShader(value);
+		}
+		if (ReadInt(node, BLEND_TEXTURES_SHADER_NODE, value)) {
+			defaultSettings.BlendTexturesShader = resourceManager.GetShader(value);
+		}
 	}
 
 	return MY_SUCCES_CODE;

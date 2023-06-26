@@ -18,12 +18,12 @@ void EffectManager::Init() {
 	}
 
 	//creem obietele OpENGL
-	glGenFramebuffers(2, _framebuffer);
-	glGenRenderbuffers(2, _depthRenderBuffer);
-	glGenTextures(2, _texture);
+	glGenFramebuffers(3, _framebuffer);
+	glGenRenderbuffers(3, _depthRenderBuffer);
+	glGenTextures(3, _texture);
 
 	//setam texturile, frame buffer (color and depth attachements)
-	for (unsigned int i = 0; i < 2; i++) {
+	for (unsigned int i = 0; i < 3; i++) {
 		glBindTexture(GL_TEXTURE_2D, _texture[i]);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _texWidth, _texHeight,
 			0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, NULL);
@@ -56,6 +56,8 @@ void EffectManager::Init() {
 	_textures.push_back(tempTexture);
 	tempTexture = CreateTextureObject(_texture[1]);
 	_textures.push_back(tempTexture);
+	tempTexture = CreateTextureObject(_texture[2]);
+	_textures.push_back(tempTexture);
 
 	//shader-ul
 	Shader* tempShader = SceneManager::GetInstance().GetTextShader();
@@ -69,9 +71,9 @@ void EffectManager::Init() {
 void EffectManager::Destroy() {
 
 	// cleanup
-	glDeleteFramebuffers(2, _framebuffer);
-	glDeleteRenderbuffers(2, _depthRenderBuffer);
-	glDeleteTextures(2, _texture);
+	glDeleteFramebuffers(3, _framebuffer);
+	glDeleteRenderbuffers(3, _depthRenderBuffer);
+	glDeleteTextures(3, _texture);
 
 	for (int i = 0; i < _textures.size(); i++) {
 
@@ -111,6 +113,60 @@ void EffectManager::Draw(ESContext* esContext) {
 
 		//draw to a quad
 		//DrawQuad();
+		_effectQuad->SetTexture(_textures[0]);
+		_effectQuad->SetShader(SceneManager::GetInstance().GetOnlyBrightShader());
+		_effectQuad->Draw();
+
+		eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
+	}
+}
+void EffectManager::Draw2(ESContext* esContext) {
+
+	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer[0]);
+	// check for framebuffer complete
+	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	if (status == GL_FRAMEBUFFER_COMPLETE)
+	{
+		// va popula _textures[0]
+		glEnable(GL_DEPTH_TEST);
+
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		_sceneManager.Draw(esContext);
+
+
+		//va popula _textures[1], folosind ce este in _textures[0]
+		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer[1]);
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//draw to a quad -> draw only bright pixels
+		_effectQuad->SetShader(SceneManager::GetInstance().GetOnlyBrightShader());
+		_effectQuad->SetTexture(_textures[0]);
+		_effectQuad->Draw();
+
+		//va popula _textures[2], folosind ce este in _textures[1] -> blur
+		//glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer[2]);
+		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//_effectQuad->SetShader(SceneManager::GetInstance().GetTextShader());
+		//_effectQuad->SetTexture(_textures[1]);
+		//_effectQuad->Draw();
+
+
+		////va popula _textures[1], folosind _textures[2] -> more blur
+		//glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer[1]);
+		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//_effectQuad->SetTexture(_textures[2]);
+		//_effectQuad->Draw();
+
+		//acum ar trb pe ecran, cu 2 texturi
+		// _textures[0] - e scena initiala, fara modificari
+		// _textures[1] - e textura doar cu lumini, blurata
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		_effectQuad->SetShader(SceneManager::GetInstance().GetBlendTexturesShader());
+		_effectQuad->SetTexture(_textures[1]);
+		_textures[1]->Bind(1);
 		_effectQuad->Draw();
 
 		eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);

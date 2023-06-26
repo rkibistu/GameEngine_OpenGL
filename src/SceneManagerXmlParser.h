@@ -76,6 +76,8 @@ struct DefaultSettings;
 #define DEBUG_LIGHT_MODEL_NODE "lightDebugModel"
 #define DEBUG_LIGHT_SHADER_NODE "lightDebugShader"
 #define TEXT_SHADER_NODE "textShader"
+#define ONLY_BRIGHT_SHADER_NODE "onlyBrightShader"
+#define BLEND_TEXTURES_SHADER_NODE "blendTexturesShader"
 
 #define ID_ATTRIBUTE "id"
 

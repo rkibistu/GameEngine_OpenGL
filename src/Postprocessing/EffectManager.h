@@ -16,13 +16,15 @@ public:
 	void Destroy();
 	void Draw(ESContext* esContext);
 
+	void Draw2(ESContext* esContext);
+
 private:
 	Texture* CreateTextureObject(GLuint id);
 
 private:
-	GLuint _framebuffer[2];
-	GLuint _depthRenderBuffer[2];
-	GLuint _texture[2];
+	GLuint _framebuffer[3];
+	GLuint _depthRenderBuffer[3];
+	GLuint _texture[3];
 	std::vector<Texture*> _textures;
 	GLint _texWidth = 920, _texHeight = 720;
 	GLint _maxRenderbufferSize;

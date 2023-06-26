@@ -327,6 +327,10 @@
     <None Include="Resources\Shaders\Postprocessing\GrayScaleShaderFS.frag" />
     <None Include="Resources\Shaders\Postprocessing\BlurShaderVS.vert" />
     <None Include="Resources\Shaders\Postprocessing\BlurShaderFS.frag" />
+    <None Include="Resources\Shaders\Postprocessing\OnlyBrightShaderFS.frag" />
+    <None Include="Resources\Shaders\Postprocessing\OnlyBrightShaderVS.vert" />
+    <None Include="Resources\Shaders\Postprocessing\BlendTexturesShaderFS.frag" />
+    <None Include="Resources\Shaders\Postprocessing\BlendTexturesShaderVS.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />

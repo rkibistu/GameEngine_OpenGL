@@ -40,6 +40,9 @@ int Init(ESContext* esContext)
 
 void DrawTriangles(ESContext* esContext)
 {
+	// DE FIECARE DATA CAND DESENEZ PE UN FRAME BUFFER
+	//		IMG SE SHIFTEAZA LA DREAPTA PUTIN. nu stiu de ce
+	// SI atunci apare problema cand fac blend cu img initiala
 
 	//sceneManager.Draw(esContext);
 	effectManager->Draw(esContext);

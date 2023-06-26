@@ -18,6 +18,8 @@ struct DefaultSettings {
 	Model* DebugLightModel;		//used to draw debug light source
 	Material* DefaultMaterial;	//used to all objects that don't specify one
 	Shader* TextShader;
+	Shader* OnlyBrightShader;	//used to filter brightness, draw only pixels ce sunt mai luminosi ca un treshold
+	Shader* BlendTexturesShader;		//used to blend 2 textures
 };
 
 class SceneManager {
@@ -51,6 +53,8 @@ public:
 	inline Model* GetDebugLightModel() { return _defaultSettings.DebugLightModel; }
 	inline Shader* GetDebugLightShader() { return _defaultSettings.DebugLightShader; }
 	inline Shader* GetTextShader() { return _defaultSettings.TextShader; }
+	inline Shader* GetOnlyBrightShader() { return _defaultSettings.OnlyBrightShader; }
+	inline Shader* GetBlendTexturesShader() { return _defaultSettings.BlendTexturesShader; }
 
 	inline void SetDebug(bool active) { _debugMode = active; }
 	inline bool GetDebug() { return  _debugMode; }
