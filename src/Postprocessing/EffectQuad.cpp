@@ -4,9 +4,8 @@
 #include "SceneManager.h"
 #include "Vertex.h"
 
-EffectQuad::EffectQuad(GLuint textureId) {
+EffectQuad::EffectQuad() {
 
-	_texture = textureId;
 	_quadShader = nullptr;
 	_quadModel = nullptr;
 	_quadTexture = nullptr;
@@ -21,26 +20,12 @@ EffectQuad::~EffectQuad() {
 		delete _quadModel;
 		_quadModel = nullptr;
 	}
-	if (_quadTexture) {
-
-		delete _quadTexture->GetTextureResource();
-		delete _quadTexture;
-		_quadTexture = nullptr;
-	}
 }
 
 void EffectQuad::Init() {
 
-	_quadShader = SceneManager::GetInstance().GetTextShader();
 	_quadModel = new Model();
-	_quadModel->LoadTextQuad();
-
-	TextureResource* textureResource = new TextureResource();
-	textureResource->Type = TEXTURE_TYPE_2D;
-	Texture* texture = new Texture();
-	texture->SetTextureId(_texture);
-	texture->SetTextureResource(textureResource);
-	_quadTexture = texture;
+	_quadModel->LoadQuad();
 }
 
 void EffectQuad::Draw() {
@@ -67,5 +52,5 @@ void EffectQuad::Draw() {
 void EffectQuad::SetUniforms() {
 
 	_quadShader->SetUniform1i("u_Texture", 0);
-	_quadShader->SetUniform1f("u_blurStep", 0.0);
+	_quadShader->SetUniform1f("u_blurStep", 0.0); 
 }

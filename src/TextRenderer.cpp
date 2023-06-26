@@ -70,7 +70,7 @@ int TextRenderer::Init() {
 
     _shader = sceneManager.GetTextShader();
     _model = new Model();
-    _model->LoadTextQuad();
+    _model->LoadQuad();
 }
 
 void TextRenderer::RenderText() {

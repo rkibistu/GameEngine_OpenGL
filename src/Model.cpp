@@ -377,7 +377,7 @@ int Model::LoadAabbModelCamera(int width, int height) {
 	return MY_SUCCES_CODE;
 }
 
-int Model::LoadTextQuad() {
+int Model::LoadQuad() {
 
 	int res;
 	std::vector<Vertex> vertices;

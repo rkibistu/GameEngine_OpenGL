@@ -16,46 +16,68 @@ void EffectManager::Init() {
 		std::cout << "CANN NOT USE FRAMEBUFFE OBJECTS!\n";
 		return;
 	}
-	
-	glGenFramebuffers(1, &_framebuffer);
-	glGenRenderbuffers(1, &_depthRenderBuffer);
-	glGenTextures(1, &_texture);
 
-	glBindTexture(GL_TEXTURE_2D, _texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _texWidth, _texHeight,
-		0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//creem obietele OpENGL
+	glGenFramebuffers(2, _framebuffer);
+	glGenRenderbuffers(2, _depthRenderBuffer);
+	glGenTextures(2, _texture);
 
-	// bind renderbuffer and create a 16-bit depth buffer
-	// width and height of renderbuffer = width and height of 
-	// the texture
-	glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16,
-		_texWidth, _texHeight);
+	//setam texturile, frame buffer (color and depth attachements)
+	for (unsigned int i = 0; i < 2; i++) {
+		glBindTexture(GL_TEXTURE_2D, _texture[i]);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _texWidth, _texHeight,
+			0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	// bind the framebuffer
-	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-	// specify texture as color attachment
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-		GL_TEXTURE_2D, _texture, 0);
+		// bind renderbuffer and create a 16-bit depth buffer
+		// width and height of renderbuffer = width and height of 
+		// the texture
+		glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer[i]);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16,
+			_texWidth, _texHeight);
 
-	// specify depth_renderbufer as depth attachment
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-		GL_RENDERBUFFER, _depthRenderBuffer);
+		// bind the framebuffer
+		glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer[i]);
+		// specify texture as color attachment
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+			GL_TEXTURE_2D, _texture[i], 0);
 
+		// specify depth_renderbufer as depth attachment
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+			GL_RENDERBUFFER, _depthRenderBuffer[i]);
+	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	_effectQuad = new EffectQuad(_texture);
+	//creem obiectele de tip textura, tp fiecare textura
+	Texture* tempTexture = CreateTextureObject(_texture[0]);
+	_textures.push_back(tempTexture);
+	tempTexture = CreateTextureObject(_texture[1]);
+	_textures.push_back(tempTexture);
+
+	//shader-ul
+	Shader* tempShader = SceneManager::GetInstance().GetTextShader();
+
+	//creem effectquad, acesta cva realiza deesenarea efectiva
+	_effectQuad = new EffectQuad();
+	_effectQuad->SetTexture(_textures[0]);
+	_effectQuad->SetShader(tempShader);
+
 }
 void EffectManager::Destroy() {
 
 	// cleanup
-	glDeleteFramebuffers(1, &_framebuffer);
-	glDeleteRenderbuffers(1, &_depthRenderBuffer);
-	glDeleteTextures(1, &_texture);
+	glDeleteFramebuffers(2, _framebuffer);
+	glDeleteRenderbuffers(2, _depthRenderBuffer);
+	glDeleteTextures(2, _texture);
+
+	for (int i = 0; i < _textures.size(); i++) {
+
+		delete _textures[i]->GetTextureResource();
+		delete _textures[i];
+	}
 
 	if (_effectQuad) {
 
@@ -66,38 +88,7 @@ void EffectManager::Destroy() {
 
 void EffectManager::Draw(ESContext* esContext) {
 
-	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-	// check for framebuffer complete
-	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-	if (status == GL_FRAMEBUFFER_COMPLETE)
-	{
-		// render to texture using FBO
-		// clear color and depth buffer
-		glEnable(GL_DEPTH_TEST);
-		
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		_sceneManager.Draw(esContext);
-		
-		// render to window system provided framebuffer
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-
-
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		//draw to a quad
-		//DrawQuad();
-		_effectQuad->Draw();
-
-		eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
-	}
-}
-
-void EffectManager::DrawBloom(ESContext* esContext) {
-
-	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer[0]);
 	// check for framebuffer complete
 	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	if (status == GL_FRAMEBUFFER_COMPLETE)
@@ -111,12 +102,12 @@ void EffectManager::DrawBloom(ESContext* esContext) {
 
 		_sceneManager.Draw(esContext);
 
+
 		// render to window system provided framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
 
-
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//draw to a quad
 		//DrawQuad();
@@ -126,5 +117,12 @@ void EffectManager::DrawBloom(ESContext* esContext) {
 	}
 }
 
+Texture* EffectManager::CreateTextureObject(GLuint id) {
 
-
+	TextureResource* textureResource = new TextureResource();
+	textureResource->Type = TEXTURE_TYPE_2D;
+	Texture* texture = new Texture();
+	texture->SetTextureId(id);
+	texture->SetTextureResource(textureResource);
+	return texture;
+}

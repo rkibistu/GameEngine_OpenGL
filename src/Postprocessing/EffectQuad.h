@@ -8,18 +8,20 @@
 class EffectQuad {
 
 public:
-	EffectQuad(GLuint textureId);
+	EffectQuad();
 	~EffectQuad();
 
 	void Draw();
 
+	inline void SetTexture(Texture* texture) { _quadTexture = texture; }
+	inline void SetShader(Shader* shader) { _quadShader = shader; }
+	
 
 private:
 	void Init();
 
 	void SetUniforms();
 
-	
 private:
 	//specific to quad
 	Shader* _quadShader;

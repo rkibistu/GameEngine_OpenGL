@@ -72,6 +72,7 @@ void Mouse(ESContext* esContext, unsigned int mouseButton, unsigned int mosueEve
 void CleanUp()
 {
 	effectManager->Destroy();
+	delete effectManager;
 	resourceManager.DestroyInstance();
 	sceneManager.DestroyInstance();
 	Input::Destroy();

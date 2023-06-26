@@ -44,7 +44,7 @@ public:
 	int LoadAabbModel(std::vector<Vertex>& vertices);
 	int LoadAabbModelCamera(int width = 0, int heigth = 0);
 	int LoadLineUp(Vector3 up, float length);
-	int LoadTextQuad();
+	int LoadQuad();
 
 	int UpdateAabbModel(std::vector<Vertex> vertices, Vector3 scale, Vector3 rotation);
 

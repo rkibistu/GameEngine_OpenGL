@@ -564,7 +564,7 @@ SceneObject* SceneManagerXmlParser::CreateSceneObject(SceneObjectXmlFormat obj) 
 		//delete later, just for test
 		sceneObject = new SceneObject();
 		Model* model = new Model();
-		model->LoadTextQuad();
+		model->LoadQuad();
 		sceneObject->SetModel(model);
 	}
 	else {
