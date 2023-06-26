@@ -228,7 +228,7 @@
 	</materials>
 	<audioClips>
 		<folder path="Resources/Sounds/">
-			<audioClip name="">tic.wav</audioClip>
+			<audioClip id="1">toc.wav</audioClip>
 		</folder>
 	</audioClips>
 	

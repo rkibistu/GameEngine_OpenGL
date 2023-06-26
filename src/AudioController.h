@@ -14,10 +14,11 @@ enum SoundClips {
 class AudioController {
 public:
 	AudioController();
-
+	~AudioController();
 	
 	void AddSound(unsigned int id, std::string filepath);
 
+	void PlaySound(SoundClips clip);
 	void PlayTest();
 
 private:

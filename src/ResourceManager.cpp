@@ -8,6 +8,7 @@ std::string ResourceManager::Elements::ModelsRoot = "models";
 std::string ResourceManager::Elements::ShadersRoot = "shaders";
 std::string ResourceManager::Elements::TexturesRoot = "textures";
 std::string ResourceManager::Elements::MaterialsRoot = "materials";
+std::string ResourceManager::Elements::AudioClipsRoot = "audioClips";
 
 std::string ResourceManager::Elements::Filename = "file";
 std::string ResourceManager::Elements::Path = "path";
@@ -22,6 +23,8 @@ std::string ResourceManager::Elements::WrapT = "wrap_t";
 
 std::string ResourceManager::Elements::FactorTextura = "factor_textura";
 std::string ResourceManager::Elements::FactorReflexieSkyblox = "factor_reflexie_skybox";
+
+std::string ResourceManager::Elements::AudioClip = "audioClip";
 
 ResourceManager* ResourceManager::_spInstance = nullptr;
 
@@ -59,12 +62,16 @@ void ResourceManager::DestroyInstance() {
 		delete _upLine->GetModelResource();
 		delete _upLine;
 	}
+	if (_audioController)
+		delete _audioController;
 
 	if (_spInstance)
 		delete _spInstance;
 }
 
 int ResourceManager::Init() {
+
+	_audioController = new AudioController();
 
 	int res;
 	std::stringstream buffer;
@@ -101,6 +108,11 @@ int ResourceManager::Init() {
 		return res;
 	}
 	res = InitMaterials(pRoot);
+	if (res != MY_SUCCES_CODE) {
+		delete doc;
+		return res;
+	}
+	res = InitAudioClips(pRoot);
 	if (res != MY_SUCCES_CODE) {
 		delete doc;
 		return res;
@@ -378,6 +390,69 @@ int ResourceManager::InitMaterials(rapidxml::xml_node<>* pRoot) {
 		}
 
 	}
+	return MY_SUCCES_CODE;
+
+}
+int ResourceManager::InitAudioClips(rapidxml::xml_node<>* pRoot) {
+
+	if (pRoot == nullptr) {
+		std::cout << "pRoot for xml parser is nullptr" << std::endl;;
+		return MY_ERROR_CODE;
+	}
+
+
+
+	std::string path;
+
+	rapidxml::xml_node<>* pNode = pRoot->first_node(ResourceManager::Elements::AudioClipsRoot.c_str());
+
+	//get in every <folder>
+	for (rapidxml::xml_node<>* resourceNode = pNode->first_node(); resourceNode; resourceNode = resourceNode->next_sibling())
+	{
+		//get the paths
+		for (rapidxml::xml_attribute<>* pAttr = resourceNode->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
+		{
+			if (pAttr->name() != Elements::Path) {
+				std::cout << "Wrong path attribute!" << std::endl;
+				return MY_ERROR_CODE;
+			}
+			path = pAttr->value();
+		}
+
+		// get in every audioclip
+		for (rapidxml::xml_node<>* audioClipNode = resourceNode->first_node(); audioClipNode; audioClipNode = audioClipNode->next_sibling())
+		{
+			unsigned int id;
+			std::string filename;
+
+			//get the IDs
+			for (rapidxml::xml_attribute<>* pAttr = audioClipNode->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
+			{
+				if (pAttr->name() == Elements::Id) {
+					id = atoi(pAttr->value());
+				}
+				else {
+					std::cout << "Wrong audio clip attribute!" << std::endl;
+					return MY_ERROR_CODE;
+				}
+
+			}
+
+			//get the filenames
+			if (audioClipNode->name() == Elements::AudioClip) {
+
+				filename = audioClipNode->value();
+			}
+
+			
+
+			_audioController->AddSound(id, path + filename);
+		}
+
+	}
+
+	return MY_SUCCES_CODE;
+
 }
 
 Model* ResourceManager::GetModel(unsigned int id) {

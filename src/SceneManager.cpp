@@ -62,8 +62,6 @@ void SceneManager::Init(ESContext* esContext) {
 
 	CreateDebugAxisObject();
 
-	_audioController = new AudioController();
-
 	Start();
 }
 
@@ -106,7 +104,7 @@ void SceneManager::Update(ESContext* esContext, float deltaTime) {
 	UpdateDebugObjects(deltaTime);
 
 	if (Input::GetKeyDown('J'))
-		_audioController->PlayTest();
+		ResourceManager::GetInstance().GetAudioController()->PlaySound(SoundClips::TOC);
 }
 void SceneManager::Draw(ESContext* esContext) {
 

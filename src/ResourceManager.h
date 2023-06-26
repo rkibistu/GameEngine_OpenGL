@@ -10,6 +10,7 @@
 #include "Shaders.h"
 #include "Material.h"
 #include "Defines.h"
+#include "AudioController.h"
 
 class ResourceManager {
 public:
@@ -19,6 +20,7 @@ public:
 		static std::string ShadersRoot;
 		static std::string TexturesRoot;
 		static std::string MaterialsRoot;
+		static std::string AudioClipsRoot;
 
 		static std::string Filename;
 		static std::string Path;
@@ -34,6 +36,8 @@ public:
 
 		static std::string FactorTextura;
 		static std::string FactorReflexieSkyblox;
+
+		static std::string AudioClip;
 	};
 public:
 
@@ -41,6 +45,8 @@ public:
 	void DestroyInstance();
 
 	int Init();
+
+	inline AudioController* GetAudioController() { return _audioController; }
 
 	Model* GetModel(unsigned int id);
 	Shader* GetShader(unsigned int id);
@@ -62,6 +68,7 @@ private:
 	int InitShaders(rapidxml::xml_node<>* pRoot);
 	int InitTextures(rapidxml::xml_node<>* pRoot);
 	int InitMaterials(rapidxml::xml_node<>* pRoot);
+	int InitAudioClips(rapidxml::xml_node<>* pRoot);
 
 	Model* LoadModel(unsigned int id);
 	Shader* LoadShader(unsigned int id);
@@ -96,6 +103,8 @@ private:
 	std::unordered_map<unsigned int, Shader*> _shaders;
 	std::unordered_map<unsigned int, Texture*> _textures;
 	std::unordered_map<unsigned int, Material*> _materials;
+
+	AudioController* _audioController = nullptr;
 
 	Model* _terrainModel = nullptr;
 	Model* _axisModel = nullptr;

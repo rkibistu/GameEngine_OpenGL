@@ -84,8 +84,6 @@ private:
 	AmbientalLight _ambientalLight;
 	DefaultSettings _defaultSettings;
 
-	AudioController* _audioController;
-
 	SceneManagerXmlParser _xmlParser;
 
 	TextRenderer* _textRenderer;

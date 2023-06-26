@@ -14,9 +14,23 @@ AudioController::AudioController() {
 		_fmodSystem->init(36, FMOD_INIT_NORMAL, NULL);//initializat la 36 de canale
 	}
 
-	AddSound(1, "Resources/Sounds/toc.wav");
+	
+}
+AudioController::~AudioController() {
+
+	for (auto it = _sounds.begin(); it != _sounds.end(); it++) {
+
+		it->second->release();
+	}
+	_sounds.clear();
+
+	_fmodSystem->release();
 }
 
+void AudioController::PlaySound(SoundClips clip) {
+
+	_fmodSystem->playSound(_sounds[clip], 0, false, 0);
+}
 void AudioController::PlayTest() {
 
 	_fmodSystem->playSound(_sounds[SoundClips::TOC], 0, false, 0);
