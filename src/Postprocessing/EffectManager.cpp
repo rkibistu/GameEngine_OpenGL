@@ -114,7 +114,7 @@ void EffectManager::Draw(ESContext* esContext) {
 		//draw to a quad
 		//DrawQuad();
 		_effectQuad->SetTexture(_textures[0]);
-		_effectQuad->SetShader(SceneManager::GetInstance().GetOnlyBrightShader());
+		_effectQuad->SetShader(SceneManager::GetInstance().GetTextShader());
 		_effectQuad->Draw();
 
 		eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);

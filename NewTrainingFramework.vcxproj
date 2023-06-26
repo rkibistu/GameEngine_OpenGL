@@ -90,8 +90,8 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\objs\Win32\Debug;$(SolutionDir)\Lib\Nvidia;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;fmodL_vc.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/Lib;E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\objs\Win32\Debug;$(SolutionDir)\Lib\Nvidia;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -110,8 +110,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\objs\Win32\Debug;$(SolutionDir)\Lib\Nvidia;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;fmodL_vc.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/Lib;E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\objs\Win32\Debug;$(SolutionDir)\Lib\Nvidia;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -132,8 +132,8 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\objs\Win32\Debug;$(SolutionDir)\Lib\ATI;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;fmodL_vc.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/Lib;E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\objs\Win32\Debug;$(SolutionDir)\Lib\ATI;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -152,8 +152,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\objs\Win32\Debug;$(SolutionDir)\Lib\ATI;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;fmodL_vc.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/Lib;E:\Gameloft\proiect_2015\TestFreeType\freetype-2.13.0\objs\Win32\Debug;$(SolutionDir)\Lib\ATI;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\AudioController.cpp" />
     <ClCompile Include="src\CollisionControllers\CollisionControllerSceneObject.cpp" />
     <ClCompile Include="src\CollisionControllers\CollisionControllerBase.cpp" />
     <ClCompile Include="src\CollisionControllers\CollisionControllerCamera.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="rapidXML\rapidxml_print.hpp" />
     <ClInclude Include="rapidXML\rapidxml_utils.hpp" />
     <ClInclude Include="src\AmbientalLight.h" />
+    <ClInclude Include="src\AudioController.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\CollisionControllers\CollisionControllerSceneObject.h" />
     <ClInclude Include="src\CollisionControllers\CollisionControllerBase.h" />
@@ -251,6 +253,14 @@
     <ClInclude Include="src\Trajectories\TrajectoryLineStrip.h" />
     <ClInclude Include="src\Trajectories\TrajectoryLinear.h" />
     <ClInclude Include="src\vendor\fastObj\fast_obj.h" />
+    <ClInclude Include="src\vendor\FMOD\fmod.h" />
+    <ClInclude Include="src\vendor\FMOD\fmod.hpp" />
+    <ClInclude Include="src\vendor\FMOD\fmod_codec.h" />
+    <ClInclude Include="src\vendor\FMOD\fmod_common.h" />
+    <ClInclude Include="src\vendor\FMOD\fmod_dsp.h" />
+    <ClInclude Include="src\vendor\FMOD\fmod_dsp_effects.h" />
+    <ClInclude Include="src\vendor\FMOD\fmod_errors.h" />
+    <ClInclude Include="src\vendor\FMOD\fmod_output.h" />
     <ClInclude Include="src\vendor\rapidXML\rapidxml.hpp" />
     <ClInclude Include="src\vendor\rapidXML\rapidxml_iterators.hpp" />
     <ClInclude Include="src\vendor\rapidXML\rapidxml_print.hpp" />
@@ -295,6 +305,9 @@
     <None Include="Resources\Shaders\TextShaserFS.frag" />
     <None Include="Resources\Shaders\TriangleShaderFS.frag" />
     <None Include="Resources\Shaders\TriangleShaderVS.vert" />
+    <None Include="src\vendor\FMOD\fmod.cs" />
+    <None Include="src\vendor\FMOD\fmod_dsp.cs" />
+    <None Include="src\vendor\FMOD\fmod_errors.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">

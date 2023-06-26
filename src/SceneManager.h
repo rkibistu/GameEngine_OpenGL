@@ -6,6 +6,7 @@
 #include "Light.h"
 #include "AmbientalLight.h"
 #include "TextRenderer.h"
+#include "AudioController.h"
 
 #include <unordered_map>
 #include <map>
@@ -83,7 +84,10 @@ private:
 	AmbientalLight _ambientalLight;
 	DefaultSettings _defaultSettings;
 
+	AudioController* _audioController;
+
 	SceneManagerXmlParser _xmlParser;
 
 	TextRenderer* _textRenderer;
+
 };

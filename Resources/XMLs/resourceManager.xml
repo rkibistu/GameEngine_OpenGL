@@ -226,21 +226,10 @@
 			</material>
 		</folder>
 	</materials>
-	<materials>
-		<folder path="Resources/Materials/">
-			<material id="300" type="idkYet">
-				<factor_textura>1.0</factor_textura>
-				<factor_reflexie_skybox>0.0</factor_reflexie_skybox>
-			</material>
-			<material id="301" type="idkYet">
-				<factor_textura>0.5</factor_textura>
-				<factor_reflexie_skybox>0.5</factor_reflexie_skybox>
-			</material>
-			<material id="302" type="idkYet">
-				<factor_textura>0.0</factor_textura>
-				<factor_reflexie_skybox>1.0</factor_reflexie_skybox>
-			</material>
+	<audioClips>
+		<folder path="Resources/Sounds/">
+			<audioClip name="">tic.wav</audioClip>
 		</folder>
-	</materials>
+	</audioClips>
 	
 </resourceManager>

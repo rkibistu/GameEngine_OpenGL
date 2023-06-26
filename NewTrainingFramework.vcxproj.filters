@@ -138,6 +138,9 @@
     <ClCompile Include="src\Postprocessing\EffectQuad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\AudioController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rapidXML\rapidxml.hpp">
@@ -293,6 +296,33 @@
     <ClInclude Include="src\Postprocessing\EffectQuad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\vendor\FMOD\fmod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\FMOD\fmod.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\FMOD\fmod_codec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\FMOD\fmod_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\FMOD\fmod_dsp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\FMOD\fmod_dsp_effects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\FMOD\fmod_errors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\FMOD\fmod_output.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AudioController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="pcviewer_es2.cfg" />
@@ -331,6 +361,9 @@
     <None Include="Resources\Shaders\Postprocessing\OnlyBrightShaderVS.vert" />
     <None Include="Resources\Shaders\Postprocessing\BlendTexturesShaderFS.frag" />
     <None Include="Resources\Shaders\Postprocessing\BlendTexturesShaderVS.vert" />
+    <None Include="src\vendor\FMOD\fmod.cs" />
+    <None Include="src\vendor\FMOD\fmod_dsp.cs" />
+    <None Include="src\vendor\FMOD\fmod_errors.cs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".gitignore.txt" />

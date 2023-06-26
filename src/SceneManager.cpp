@@ -5,6 +5,9 @@
 #include "DebugObjects/WorldCoordonatesAxeObject.h"
 #include "DebugObjects/TargetLineVisual.h"
 
+#include "FMOD/fmod.h"
+#include "FMOD/fmod.hpp"
+
 SceneManager* SceneManager::_spInstance = nullptr;
 
 SceneManager& SceneManager::GetInstance() {
@@ -59,8 +62,12 @@ void SceneManager::Init(ESContext* esContext) {
 
 	CreateDebugAxisObject();
 
+	_audioController = new AudioController();
+
 	Start();
 }
+
+
 
 void SceneManager::Start() {
 
@@ -97,6 +104,9 @@ void SceneManager::Update(ESContext* esContext, float deltaTime) {
 	}
 
 	UpdateDebugObjects(deltaTime);
+
+	if (Input::GetKeyDown('J'))
+		_audioController->PlayTest();
 }
 void SceneManager::Draw(ESContext* esContext) {
 
