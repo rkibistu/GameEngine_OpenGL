@@ -46,6 +46,8 @@ void DrawTriangles(ESContext* esContext)
 
 	//sceneManager.Draw(esContext);
 	effectManager->Draw(esContext);
+
+	//
 }
 
 void Update(ESContext* esContext, float deltaTime)
